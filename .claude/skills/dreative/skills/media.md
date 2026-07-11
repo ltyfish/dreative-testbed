@@ -44,8 +44,14 @@ choreographed, distorted, revealed, and lit, never just placed.
   chapters. Quiet treatments (curtain, parallax, ken-burns) on every image
   with no set-piece = the page failed this skill even though each image
   technically "moves". The set-piece is named in the plan blueprint like a
-  signature element, ONE per page (two set-pieces compete; refined register
-  may skip with a stated reason). **At dial ≥ 8 / award tier the set-piece
+  signature element, ONE per page as the default (refined register
+  may skip with a stated reason). At award-site ambition a SECOND
+  set-piece is permitted — never required — when the plan states what the
+  page needs it FOR (e.g. an entrance spectacle and a mid-page dive
+  serving different chapters), it uses a different mechanism family than
+  the first, and the intensity curve places a genuine rest between them;
+  two set-pieces back-to-back, or two of the same family, still compete
+  and still fail. **At dial ≥ 8 / award tier the set-piece
   must transform the media at PIXEL level** — the image's own content visibly
   changes under scroll/input, not just its placement. Qualifying classes:
   particle/point-grid decomposition, shader displacement/dissolve/melt,
@@ -89,6 +95,30 @@ choreographed, distorted, revealed, and lit, never just placed.
   else reads exactly as static as no set-piece at all, and fails this floor.
   (Below dial 8 the §0 zoom/fade-floor and set-piece rules stand unchanged —
   this floor is what "award" buys.)
+- **The perceivability bar: a treatment that reads as zoom/pan doesn't
+  count.** Uniforms changing is machine evidence, not human evidence — a
+  depth shader at ±2px displacement, an RGB split a hair wide, an exposure
+  sweep too slow to catch: all "run" and all read to a visitor as a static
+  image or a plain zoom. Every pixel-class treatment must be obvious to a
+  stranger watching for 3 seconds: tune amplitude UP until a before/after
+  screenshot pair (same element, two scroll/input states) shows an
+  unmistakable difference in the image's CONTENT — pieces visibly apart,
+  pixels visibly displaced or sorted, particles visibly detached — not
+  just framing. If the honest description of what's visible is "it zooms/
+  slides a bit," raise the amplitude or swap to a bolder mechanism.
+  Subtlety is the refined register's virtue; at award tier it is a bug.
+  Mechanism CHOICE is free — dive/depth, fragment (particles, tiles,
+  slices, shards, pixel-assembly), distortion (melt, ripple, sort/smear),
+  optical (RGB split, torch, develop), scrub — pick what the brand's world
+  calls for. Two disciplines on the choice: (a) the page's tally must not
+  be all ONE family (a depth-displacement page and a particles-everywhere
+  page are equally monotone); (b) across BUILDS, don't reach for the same
+  family every time — the choice ledger records each build's set-piece
+  family, and repeating the last build's is the reflex the entropy draw
+  exists to break. The same bar applies to prop/item cutouts' §1.5 behaviors: a
+  prop whose rotation/settle can be mistaken for a static product image
+  has failed its dimensional kit — its motion must be readable at a
+  glance.
 - **Edit the asset, don't just place it.** Generation is step one; the pipeline
   (§1) continues with real editing — grade/duotone to the palette, crop to the
   blueprint's aspect, cut video to the loop point, extract posters and frame
@@ -395,8 +425,9 @@ Props beyond floating (§1.5 behaviors, upgraded):
   section. One per page; must keep an obvious conventional equivalent.
 
 Same law as §2.5: every construction here still clears §5's floors, earns one
-sentence of communication value, and ONE set-piece per page — an exploration
-catalog is not permission to ship five spectacles.
+sentence of communication value, and the §0 set-piece count (one by default;
+a justified second at award) — an exploration catalog is not permission to
+ship five spectacles.
 
 Discipline stays the law: the composed treatment must still clear §5's floors,
 DESIGN.md §6's "one sentence of communication value", and one-signature-
