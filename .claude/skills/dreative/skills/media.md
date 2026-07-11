@@ -22,6 +22,30 @@ choreographed, distorted, revealed, and lit, never just placed.
   (e.g. evidence screenshots in a refined register). At dial ≥ 8 with a canvas,
   media belongs on media planes (§3) moving in depth — parallax layers, curved
   sheets, velocity distortion — not pasted flat behind the DOM.
+- **Sourced media is media.** Everything in this file applies equally to
+  images/video that were generated, supplied by the user, or sourced from
+  stock/CDN when no generation tool exists — "we had no image-gen" changes the
+  PRODUCTION path (§1), never the treatment obligations. A picsum/stock photo
+  dropped in flat is the same failure as a generated one.
+- **The zoom/fade floor is a floor, not a treatment plan.** Fade-in entrances
+  plus ken-burns idles on every image = the minimum-compliance page, and at
+  motion dial ≥ 6 it FAILS this skill: at that dial, hero + key section
+  imagery each need at least one treatment that is scroll- or cursor-DRIVEN
+  (curtain synced to type, strip-slice, inner-zoom parallax, directional hover
+  wipe, cursor torch, velocity distortion, media plane — §2/§2.5/§3), where
+  the visitor's input visibly pushes the media. Ken-burns-everywhere is the
+  refined register's budget (refined.md), nobody else's.
+- **One media SET-PIECE per page (dial ≥ 7 / expressive+).** Beyond the
+  per-image floors, the page needs one moment where imagery itself IS the
+  spectacle — a composed §2.5 exotic (or an invention in its spirit) that a
+  visitor would describe to someone else: an image tornado/vortex the scroll
+  spins through, a hero that disintegrates into particles as you scroll past,
+  a gallery that shatters and reassembles, a melt/liquid exit between
+  chapters. Quiet treatments (curtain, parallax, ken-burns) on every image
+  with no set-piece = the page failed this skill even though each image
+  technically "moves". The set-piece is named in the plan blueprint like a
+  signature element, ONE per page (two set-pieces compete; refined register
+  may skip with a stated reason).
 - **Edit the asset, don't just place it.** Generation is step one; the pipeline
   (§1) continues with real editing — grade/duotone to the palette, crop to the
   blueprint's aspect, cut video to the loop point, extract posters and frame
@@ -97,7 +121,11 @@ motion.md's terms).
 
 Two flavors — pick per section from the blueprint, they can mix on one page:
 
-- **Cutout image props**: generate on a transparent background — prompt
+- **Cutout image props**: with no image-gen tool, source instead of generate —
+  a verified real photo of the subject, matted to transparency (rembg / sharp /
+  ImageMagick if available); if no photo source and no matting path exists, the
+  prop is cut, never approximated with coded organic geometry (3d.md §3 rung 4).
+  When generating: generate on a transparent background — prompt
   explicitly ("isolated on pure transparent background, studio product
   lighting, no backdrop, no shadow baked in") and REQUEST alpha-channel PNG
   output. **Verify the alpha is real**, not a white/checkerboard fill the
@@ -219,9 +247,94 @@ blueprint like a signature element, and stamp it consistently (§0).
 - **Shatter/scatter**: media as an instanced tile grid (WebGL) that explodes
   along scroll velocity and reassembles at rest — the §3 plane system with a
   per-instance offset uniform; cap tiles ≤ 400.
+- **Image tornado / vortex**: 8-20 image cards on a helical path (WebGL
+  planes, or DOM: `rotateY` + translate on a cylinder via per-card
+  `--angle`), scroll progress spins and tightens/loosens the helix; cards
+  face the camera (billboard) or shear with velocity. Entry/exit: cards fly
+  in from scatter, settle into the vortex, then one card breaks out and
+  expands into the next section's hero. Gallery/archive/portfolio registers;
+  damp the spin (never raw-set), cap DPR, poster fallback.
+- **Disintegration on scroll/click**: the image dissolves into particles that
+  drift away along scroll direction — WebGL: draw the texture as a point grid
+  (one point per NxN texel block, ≤ 10k), scroll/click drives `uProgress`
+  which displaces points along noise + directional velocity while alpha
+  fades; reverse the uniform to reassemble. Budget DOM version: the image
+  sliced into a coarse tile grid, tiles translate/rotate/fade with staggered
+  randomized offsets. Click-to-destroy variants pair with a rebuild on
+  scroll-back — destruction must be reversible, content is never lost.
+- **Living overlay**: a shader/canvas layer ON TOP of the media that reacts
+  while the image stays legible beneath — flowfield streaks along the
+  subject's edges, scanline/glitch bursts on scroll velocity, a displacement
+  ripple radiating from the cursor, halftone dots that swell near the
+  pointer. The overlay is the same §3 plane sampling the same texture —
+  never a second copy of the asset.
 - **Print develop**: media enters as paper-white → exposure/contrast/duotone
   ramps to full grade (CSS `filter` keyframes or a LUT shader), timed with
   the headline reveal. Photography/portfolio registers.
+
+### The exploration protocol (run it before choosing anything)
+
+The catalogs in this file are calibration, not a menu — the failure mode they
+create is pattern-matching to the nearest listed effect. At dial ≥ 7, before
+committing the media column of the blueprint, generate **three candidate
+treatments that do not appear verbatim in this file**, each derived from the
+brand's world (what does this subject physically DO? beans pour and tumble;
+fabric folds and drapes; ink bleeds; glass refracts; records spin; steam
+rises). Write the three candidates + the pick into the plan file with one
+line each on construction cost. Pick the boldest one that clears §5's floors
+and the register — if all three are weaker than a §2.5 exotic, use the
+exotic, but the exploration must have happened. A media plan assembled purely
+from listed effects, with no rejected invention on record, is minimum-effort
+compliance.
+
+### Exploration catalog (further constructions — steal the mechanics, reskin the idea)
+
+Images beyond the frame:
+
+- **Physics gallery**: images as draggable/throwable bodies (Rapier 2D or
+  a spring sim) that collide, settle, and stack; scroll shakes the pile.
+- **Infinite drag canvas**: a 2D plane of scattered media the visitor pans
+  through (drag + inertia), items waking (scale/unblur/play) near the
+  viewport center — the exploration-museum pattern.
+- **Image as terrain**: the photo's luminance drives vertex displacement on
+  a plane — the image becomes a relief the camera glides over on scroll.
+- **Fake-3D depth parallax**: one still + a (generated or estimated) depth
+  map; UV offset by depth × cursor/gyro = a photo with real parallax inside.
+- **Cursor echo trail**: moving the cursor across a gallery leaves a decaying
+  trail of image fragments/duplicates that fade behind it.
+- **Collage assembly**: a section's imagery enters as scattered scraps
+  (rotated, layered, torn edges) that scroll pulls into a composed collage —
+  the reverse of disintegration.
+- **Lens/magnifier**: a draggable optic over a large image or dense contact
+  sheet, refracting (WebGL) or scaling (CSS) what's beneath.
+
+Video beyond autoplay:
+
+- **Scrub-as-transition**: a 1-2s generated clip scrubbed by route/section
+  transition progress — the page change IS the video (door opens, liquid
+  pours, light sweeps).
+- **Video-lit scene**: sample the playing video's average/dominant color per
+  frame (offscreen canvas) and drive ambient page tint/glow from it — the
+  video becomes the room's light source.
+- **Timeline flipbook**: N generated stills of one subject across time/states
+  flipped by scroll — a bean roasting darker, a garment assembling — the
+  narrative version of a scrub sequence.
+
+Props beyond floating (§1.5 behaviors, upgraded):
+
+- **Flocking swarms**: 20-80 instanced prop cutouts with boids/noise motion
+  that scatter from the cursor and reform into a loose formation (or the
+  brand mark's silhouette) at rest.
+- **Pour/emit systems**: props emitted from a source object (beans from a
+  bag, petals from a stem) on scroll or click, falling with gravity + drag,
+  settling into a pile that persists per session.
+- **Props as UI**: the prop IS the control — a bean that drags along a
+  roast-level slider, a bottle that tilts to pour the page to the next
+  section. One per page; must keep an obvious conventional equivalent.
+
+Same law as §2.5: every construction here still clears §5's floors, earns one
+sentence of communication value, and ONE set-piece per page — an exploration
+catalog is not permission to ship five spectacles.
 
 Discipline stays the law: the composed treatment must still clear §5's floors,
 DESIGN.md §6's "one sentence of communication value", and one-signature-

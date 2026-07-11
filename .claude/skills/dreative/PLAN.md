@@ -44,15 +44,22 @@ Rules:
   question round (§3), phrased as a genuine fork, not a heads-up. Never
   install tools silently; never silently degrade either.
 - The probe result changes the blueprint: no video-gen → hero loops become
-  generated stills + ken-burns or a shader surface; no browser tools → the
+  generated stills + ken-burns or a shader surface; **no image-gen → media
+  cells become `source-image` (DESIGN.md §7's priority: verified stock/CDN
+  photography), every planned cutout prop becomes a sourced-and-matted photo
+  or is cut, and any 3D of an organic real-world subject is re-planned as a
+  photo billboard, an abstract form, or cut (3d.md §3 rungs 2/4 — coded
+  organic geometry never becomes the fallback)**; no browser tools → the
   verification protocol's manual fallback (SKILL.md) must be declared up front.
+  Missing tools change WHERE assets come from, never whether media/3D rules
+  apply — sourced media carries the same treatment obligations (media.md §0).
 
 ## 2. The blueprint (section-by-section, media-first)
 
 Draft the page as a compact table BEFORE asking anything — the question round
 presents choices about a concrete plan, not abstractions. Per section:
 
-| section | layout family | media plan | motion treatment | interaction | fallback |
+| section | layout family | media plan | motion treatment | interaction | intensity | fallback |
 
 - **media plan** — one of: `generate-image` (subject + exact aspect + palette/
   light-temperature prompt notes), `generate-video` (loop subject, 5-10s,
@@ -60,6 +67,14 @@ presents choices about a concrete plan, not abstractions. Per section:
   (exists in repo / user must supply — name it), `none`. Media enters through
   the motion system per `skills/media.md` — name the treatment (curtain reveal,
   mask-shaped, hover-woken, media-plane distortion…), never "add an image".
+  At dial ≥ 7 the blueprint also names the page's ONE media set-piece
+  (media.md §0 — image tornado, disintegration on scroll, shatter/reassemble,
+  living overlay…) and which section carries it; a dial-7+ plan whose media
+  column is all quiet treatments is incomplete. The set-piece is chosen via
+  media.md's exploration protocol: invent three brand-native candidates not
+  listed in the catalogs, record them + the pick in the plan file — a media
+  plan assembled only from listed effects with no rejected invention on
+  record is minimum-effort compliance.
 - **motion treatment** — from motion.md/immersive.md/cinematic.md vocabulary,
   with the dial-appropriate ambition. **motion.md §9's inventory is a hard
   plan gate, not a target:** at expressive/award-site ambition the blueprint
@@ -67,6 +82,14 @@ presents choices about a concrete plan, not abstractions. Per section:
   triggers it — or explicitly name the item as cut with a reason. A plan that
   neither covers nor justifies a §9 item is incomplete; rework it before
   presenting, don't ship the gap to the build.
+- **intensity (the pacing map)** — 1–10 per section: how loud this section is
+  (motion + media + visual weight combined). The page must read as a CURVE, not
+  a flat line: uniform intensity fails in both directions (all loud = exhausting,
+  all quiet = the set-piece feels bolted on). Place deliberate rests (≤ 3)
+  immediately before and after the set-piece so it lands; the hero and the
+  set-piece section are the peaks, nothing else matches them. A blueprint whose
+  intensity column is all the same number is incomplete — rework the pacing
+  before presenting.
 - **fallback** — for every ambitious cell (WebGL, sim, scrubbed sequence,
   generated video), the concrete boring version that ships if the fancy one
   fails runtime verification. A plan cell without a fallback is not ambitious,
@@ -240,8 +263,13 @@ should explicitly invite extra direction.
    **"Mockup first" is the recommended option.** Recommend "Straight to
    build" only when depth is restyle/re-layout AND ambition is safe/
    expressive. Getting this backwards (recommending straight-to-build on a
-   reimagine + award-site combo) is a bug, not a stylistic choice. If yes,
-   execute §4b before touching real code.
+   reimagine + award-site combo) is a bug, not a stylistic choice. When depth
+   is restructure/reimagine OR ambition is award-site, also offer a third
+   option: **"two divergent mockups"** — the two strongest concepts from the
+   explore pass (DESIGN.md §2) each built as a mockup, user picks. State the
+   honest cost (a second mockup is real tokens/time); it's an offer, never
+   the default. If yes to any mockup option, execute §4b before touching
+   real code.
 9. **Final remarks** — close the round with an open catch-all: "Anything else
    I should know or you'd love to see — specific effects, colors you hate,
    sections to add or kill?" Options: "no, go build" / "yes (write it in
@@ -295,6 +323,13 @@ these are the bar (fetch and study whichever is closest before designing):
   WebGL layer + disciplined type can read premium-crazy without cinematic
   darkness.
 
+These teardowns were verified July 2026 and will age — sites redesign and
+registers move on. At award-site ambition, when browser tools exist, spend ONE
+fetch on a current source (Awwwards SOTD or godly.website) to confirm the
+register you're chasing is still the frontier, and note in plan.md what you
+saw. The stack LESSONS above outlive the sites themselves; the aesthetics
+don't.
+
 Common thread: their 3D is **custom models, textures, and shaders**, not
 generated wallpapers behind text. If the environment has 3D-capable tooling and
 the user opted in, build real 3D material (geometry, materials, lighting,
@@ -308,7 +343,9 @@ Persist the approved plan to `.dreative/plan.md` (or the scratchpad if
 `.dreative/` doesn't exist): capability manifest, the **full Q&A transcript**
 (each question asked + the answer, verbatim, including free-text remarks),
 each SKIPPED question with the inference drawn from the prompt, references
-studied with the distilled borrow-list, blueprint table, stack, mobile
+studied with the distilled borrow-list, the concept exploration (DESIGN.md §2:
+the three divergent concepts, the pick, and the rejects' one-line reasons —
+same duty as media.md's set-piece exploration), blueprint table, stack, mobile
 strategy, fallbacks. Long sessions lose context; the plan file is the re-entry
 point — a resumed session re-reads it instead of re-deciding or re-asking.
 
@@ -337,6 +374,12 @@ files (single file, default export, self-contained). The rule is: what the
 user sees in the mockup is what they'd see in the shipped page; nothing in the
 mockup that the build wouldn't do, nothing in the build's look that the mockup
 hides.
+
+If the user chose **two divergent mockups** (§3.8), build the highest-impact
+page twice — once per surviving explore-pass concept (genuinely different
+palette/type/signature, not two tints of one idea) — and present both;
+the user's pick becomes the committed concept and its reject reason goes in
+the plan file.
 
 Write mockups to `.dreative/mockups/<page>.tsx` (or the scratchpad), serve or
 screenshot them for the user, and ask one approval question: approve / tweak
