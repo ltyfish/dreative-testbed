@@ -4,23 +4,20 @@ This skill is for **drastic change** — a section, a page, or the whole site be
 meaningfully redesigned or built. It is not for button tweaks or single-token
 nudges unless the user explicitly invokes it for one.
 
-**The plan gate (ask EVERY time).** At the start of ANY Mode A request in scope,
-your FIRST action is one structured question: **"Plan it first, or build
-directly?"** with "Plan first (Recommended)" as the leading option. Say plainly
-why plan wins: you'll probe capabilities, agree on treatments/media/mockups up
-front, and the result lands far closer to what they wanted on the first build.
-"Build directly" skips to DESIGN.md + doctrine defaults. Never silently skip the
-gate — even a request that looks simple gets asked; only skip when the user
-already said "no plan / just do it" this session. When plan is accepted, run the
-protocol below.
+**Plan Mode is MANDATORY.** Every Mode A request in scope runs this protocol —
+do not ask "plan or build directly?", do not offer a skip, do not silently jump
+to code. The ONLY exception is the user explicitly saying "no plan / just do
+it" this session; then note you're skipping and go straight to DESIGN.md +
+doctrine defaults.
 
 The failure this file prevents: jumping into code with half a brief, discovering
 mid-build that media/tools/structure are missing, and shipping a page that is
 60% of what the user actually wanted.
 
-Plan Mode is ONE planning pass → ONE structured question round → a written plan
-→ (optional) mockups for approval → execution in the plan's order. Never turn it
-into a long interview; the user answers once and you build.
+Plan Mode is ONE planning pass → a short sequence of single questions (§3) → a
+written plan → (optional) mockups for approval → execution in the plan's order.
+Questions come one at a time so each is easy to answer, but the interview stays
+short: only what the prompt genuinely leaves open, then build.
 
 ## 1. Capability probe (before proposing anything)
 
@@ -71,23 +68,44 @@ Plus four page-level lines: register + design read (DESIGN.md §2), signature
 element, animation stack (ONE system: GSAP+Lenis or motion/react — motion.md §0),
 and the mobile strategy per ambitious effect (DESIGN.md §13).
 
-## 3. The question round (one AskUserQuestion call, ≤4 questions)
+## 3. The questions (ONE question per call, asked in sequence)
 
-Bundle EVERYTHING the user must decide into one structured round (multi-select
-where choices stack). The pool below holds more than 4 questions — pick the
-ones the request leaves genuinely open, most-decision-changing first; skip any
-the request already answers. Structured tools always offer an "Other" free-text
-option, so every question doubles as a remarks channel — and the round's last
-question should explicitly invite extra direction.
+Ask with the structured question tool (AskUserQuestion), **one question at a
+time** — never dump the whole pool in a single round; a wall of 4 simultaneous
+questions is exactly the failure this section prevents. Each answer can change
+what you ask next (e.g. a "cinematic" treatment pick makes the media question
+matter more; "restyle" depth kills the mockup question).
+
+**Skip what the prompt already answers.** Before asking anything, walk the pool
+below against the user's prompt + attachments: a question whose answer is
+already CLEAR in the prompt is never asked (asking it anyway is a bug). But
+clear means clear — if the prompt touches a topic ambiguously ("make it
+animated" — which treatments? how far?), ask that question anyway, narrowed to
+the ambiguity ("you said animated — full scroll choreography, or calm
+micro-interactions?"). Restate what you inferred from the prompt in the plan
+file so silently-skipped questions are still auditable.
+
+Order most-decision-changing first, keep the total short (typically 3–5 asked,
+hard cap 7). Structured tools always offer an "Other" free-text option, so
+every question doubles as a remarks channel — and the last question asked
+should explicitly invite extra direction.
 
 1. **Depth** (redesigns of existing code only) — the §11 transformation-depth
    ladder: restyle / re-layout / restructure / reimagine.
-2. **Treatments** (multi-select) — the specialist skills with one-line plain
-   descriptions, obvious ones marked "(Recommended)":
-   motion · interaction · 3d · immersive · cinematic · refined · media
-   (generated images/video woven into the motion system) · ux (make every
-   control, form, and state actually work — recommended by default) · mobile
-   (first-class phone experience, calmer but equally crafted) · none.
+2. **Treatments** (multi-select — THE canonical skill-picker list; recommend
+   the ones the request obviously implies and mark them "(Recommended)"):
+   - **motion** — scroll animations, staggered entrances, parallax, kinetic type
+   - **interaction** — micro-interactions: hover states, magnetic buttons, cursor effects, tactile feedback
+   - **3d** — WebGL / three.js scenes, shader backgrounds, 3D product showcases
+   - **immersive** — award-site feel: the page becomes a spatial world, scroll-as-journey, page transitions
+   - **cinematic** — dark, shader-graded experiential look: fluid/particle surfaces, drag-to-explore, sound
+   - **refined** — premium clean business look: whitespace, photography, calm minimal motion (the professional pole)
+   - **media** — generated images/video woven into the motion system: hero video loops, distortion galleries, living thumbnails
+   - **ux** — make everything actually work: nav, mobile menu, forms, states, keyboard, nothing blocks clicks (recommend by default)
+   - **mobile** — first-class phone experience: clean, tidy, thumb-ergonomic, with animations scaled to mobile (calmer than desktop, still premium)
+   Plus "none — plain design doctrine only". Skip only when the user already
+   named the treatments or the request is trivially a restyle; read each
+   chosen `skills/<name>.md` before designing.
 3. **Media & asset types** (multi-select) — offer every asset class the probe
    found tools for, and let choices stack: `generated images` · `generated
    video loops` · `custom 3D` (real models/geometry, textures, and shaders
@@ -103,13 +121,19 @@ question should explicitly invite extra direction.
    dial 7-8 inventory) / award-site (dial 9-10, immersive/cinematic
    architecture). State the cost honestly: higher tiers mean heavier builds and
    a mandatory runtime verification pass.
-5. **References** — "Do you have a reference — a website you love, a
-   screenshot, a brand whose feel to chase?" Options like: paste a URL /
-   attach screenshots / "surprise me — invent it from the brand" / match the
-   existing brand. When a URL or image arrives, actually study it before
+5. **References (ask unless the prompt already supplied them)** — "Do you have
+   any reference — an image/screenshot, a website you love, or a video of a
+   feel/motion to chase?" Options like: attach image(s) / paste a website URL /
+   share a video (URL or file) / "surprise me — invent it from the brand" /
+   match the existing brand. When a reference arrives, actually study it before
    designing (SKILL.md's references rule: fetch the site / read the image,
    distill what specifically to borrow — palette, type feel, layout family,
-   motion cues — never guess a named site from memory).
+   motion cues — never guess a named site from memory). **Video references:**
+   if the environment has no tool that can actually watch video, say so and
+   recommend (optional, never required) installing a video-analysis MCP so you
+   can study the clip's motion/pacing for real; if the user declines, fall back
+   to their own description of the video plus any frames/screenshots they can
+   paste — never pretend to have watched it.
 6. **Vibe & audience** (when the brief is thin) — 3-4 contrasting directions
    as options, each a one-line register + palette + energy sketch ("quiet
    luxury: bone, near-black serif, almost no motion" vs "electric launch:
@@ -128,9 +152,10 @@ question should explicitly invite extra direction.
    Other)". Everything written here lands verbatim in the plan file and is
    honored like the brief.
 
-Cap at 4 per round: depth/treatments/media/mockups usually win; fold
-ambition into treatments' recommendations when crowded, and vibe/scope into
-the blueprint you present for approval. Never re-ask in later rounds;
+When trimming to stay under the cap: depth / treatments / references / media /
+mockups usually win; fold ambition into treatments' recommendations when
+crowded, and vibe/scope into the blueprint you present for approval. Never
+re-ask a question already answered (in the prompt or in an earlier answer);
 ambiguity discovered mid-build resolves by the plan's spirit + doctrine
 defaults.
 
@@ -155,10 +180,12 @@ question round — never impose it.
 ## 4. Write the plan, then execute it
 
 Persist the approved plan to `.dreative/plan.md` (or the scratchpad if
-`.dreative/` doesn't exist): capability manifest, every answer verbatim
-(including references studied — with the distilled borrow-list — and all
-free-text remarks), blueprint table, stack, mobile strategy, fallbacks. Long sessions lose context; the plan file is
-the re-entry point — re-read it instead of re-deciding.
+`.dreative/` doesn't exist): capability manifest, the **full Q&A transcript**
+(each question asked + the answer, verbatim, including free-text remarks),
+each SKIPPED question with the inference drawn from the prompt, references
+studied with the distilled borrow-list, blueprint table, stack, mobile
+strategy, fallbacks. Long sessions lose context; the plan file is the re-entry
+point — a resumed session re-reads it instead of re-deciding or re-asking.
 
 ## 4b. Mockups (when the user opted in)
 
@@ -191,9 +218,10 @@ tweak feedback into the plan file before building.
    section apply to that section).
 4. **Effects + choreography** across sections (page-level timelines, transitions,
    the signature element).
-5. **Verification** — the full runtime protocol (SKILL.md self-critique +
-   runtime gates). Any effect that fails gets its planned fallback, and the
-   final report says so: "shipped the §2 fallback for X because Y".
+5. **Verification** — the full runtime protocol (SKILL.md §V: runtime gates +
+   self-critique, mobile first, evidence written to `.dreative/verify.md`).
+   Any effect that fails gets its planned fallback, and the final report says
+   so: "shipped the §2 fallback for X because Y".
 
 Report against the plan when done: each blueprint row → shipped / fallback /
 cut (with reason), plus the motion inventory (motion.md §9) and the preservation

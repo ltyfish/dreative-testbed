@@ -11,6 +11,23 @@ choreographed, distorted, revealed, and lit, never just placed.
 
 ## 0. The doctrine
 
+- **The static-placement ban (any dial, whenever this file is loaded).** A
+  generated or supplied image dropped in as `background-image`, a full-bleed
+  `<img>` behind text, or a card thumbnail with zero behavior is a FAILURE of
+  this skill, not a baseline. Every media element ships with at least one
+  living quality — an entrance from §2/§2.5 (curtain, strip-slice, pixel/dither
+  develop, print develop, fade-sweep…), an idle (loop, drift, ken-burns), or a
+  response (hover wake, directional wipe, cursor torch, distortion). "Static on
+  purpose" is allowed only when written into the plan blueprint with a reason
+  (e.g. evidence screenshots in a refined register). At dial ≥ 8 with a canvas,
+  media belongs on media planes (§3) moving in depth — parallax layers, curved
+  sheets, velocity distortion — not pasted flat behind the DOM.
+- **Edit the asset, don't just place it.** Generation is step one; the pipeline
+  (§1) continues with real editing — grade/duotone to the palette, crop to the
+  blueprint's aspect, cut video to the loop point, extract posters and frame
+  sequences, composite masks/mattes (ffmpeg/sharp or your image tools). An
+  asset that arrives on the page exactly as the generator emitted it usually
+  reads as wallpaper.
 - **No bare media at dial ≥ 7.** Every meaningful image/video gets three
   decisions: an **entrance** (how it arrives — reveal, wipe, materialize), an
   **idle** (what it does at rest — loop, drift, ken-burns, nothing-on-purpose),
@@ -58,6 +75,15 @@ When the plan calls for generated media, produce it BEFORE section code
   A 40MB hero loop fails the plan even if it's beautiful.
 - Textures too: grain tiles, masks, mattes, displacement maps — generate them
   instead of hand-rolling SVG (which is banned, DESIGN.md §7).
+- **Asset manifest (`.dreative/assets.json`) — generation is expensive; never
+  pay twice.** Before generating anything, read the manifest; an entry whose
+  prompt/aspect/grade matches the need means REUSE the file, don't regenerate.
+  After each generation+edit, append one entry:
+  `{ "file": "assets/hero-loop.mp4", "kind": "video-loop", "prompt": "<the
+  exact generation prompt>", "aspect": "16:9", "grade": "warm tungsten, deep
+  green shadows", "poster": "assets/hero-poster.webp", "bytes": 2400000 }`.
+  A re-run, a mockup→build transition, or a resumed session regenerates only
+  what the manifest doesn't already have.
 
 ## 2. DOM-tier treatments (no WebGL — the budget vocabulary)
 
