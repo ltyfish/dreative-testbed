@@ -145,6 +145,38 @@ Plus four page-level lines: register + design read (DESIGN.md §2), signature
 element, animation stack (ONE system: GSAP+Lenis or motion/react — motion.md §0),
 and the mobile strategy per ambitious effect (DESIGN.md §13).
 
+**Signature-element plan gate.** The signature line is checked HERE, not
+discovered at build time: if the signature is a visual OBJECT, it must be a
+subject a stranger names correctly (3d.md §3's subject test). An abstract
+coded form — sphere/orb/ring/blob/torus/monolith, whatever poetic name the
+plan gives it ("atlas", "core", "eclipse") — is an INVALID signature object
+and the plan is reworked before it's presented; 3d.md §3's ban applies to the
+plan's words, not just the build's meshes. Signatures that are mechanisms
+(a strip-toss, a cursor instrument, a depth dive) rather than objects are
+exempt — the gate is for promoted decor objects. **Award prop form default:**
+when image-gen exists and no real GLB does, the required 3D prop (3d.md §0)
+is planned as a rung-2 transparent photoreal cutout billboard — field
+experience is unambiguous: cutout props read premium, coded/shader hero
+geometry reads as a demo. A plan may promote live coded geometry to signature
+ONLY with a named GLB + texture source in its cell. **Coded custom 3D is
+capability-gated at the probe (§1):** offer/plan it only when the probe
+verified an actual quality path — a real GLB in reach, image-gen for
+albedo/label textures, an HDRI/environment source. No verified texture path
+⇒ the `custom 3D` option is presented as "3D-look props (photoreal cutouts
+sold with depth)" and every 3D cell is planned as a rung-2 billboard; coded
+geometry without a texture path is never planned "to be figured out at
+build".
+
+**Previous-run divergence (reruns over the same project).** If
+`.dreative/plan.md` (or verify.md) from an earlier run already exists in this
+project and the user asked for a NEW take (rather than iterating the shipped
+one), read the old plan first and diverge on at least: signature family,
+set-piece family, hero layout family, and palette strategy. Reusing the old
+run's choices because they're in context is the same reflex the entropy draw
+exists to break — a rerun that a user would describe as "the same site again"
+is a failed rerun. Record in the new plan file which axes diverged from the
+previous run.
+
 ## 3. The questions (ONE question per call, asked in sequence)
 
 Ask with the structured question tool (AskUserQuestion), **one question at a
@@ -161,6 +193,33 @@ animated" — which treatments? how far?), ask that question anyway, narrowed to
 the ambiguity ("you said animated — full scroll choreography, or calm
 micro-interactions?"). Restate what you inferred from the prompt in the plan
 file so silently-skipped questions are still auditable.
+
+**Answers come only from the user, through the tool.** Never infer, assume,
+or self-supply an answer to a question you posed — an unanswered question
+blocks; a fabricated answer is a corrupted plan. If the user's reply to ANY
+question is itself a question, a request to re-see options, or free text that
+doesn't answer what was asked ("wait, what were the vibe options?"), that
+question is NOT answered: respond to what they asked first (re-present the
+options, clarify), then re-ask the original question as its own call. A
+question consumed by a side-exchange and never re-asked is a lost decision —
+track which pool items actually have answers, not which were merely posed.
+Free text volunteered mid-round (a new feature, a constraint) is captured in
+the plan file AND acknowledged in the next message, but doesn't substitute
+for pending questions.
+
+**Skip-honesty (the under-asking bug).** "Skip what the prompt already
+answers" has a strict test: a question may be skipped ONLY when the prompt
+LITERALLY contains its answer — and the plan file must QUOTE the prompt words
+that answer it next to the skip. "I can infer a reasonable choice" is not a
+skip license; silence in the prompt means ASK. In particular, **treatments
+(item 2), media/asset types (item 3), and references (item 5) are never
+skipped on inference at expressive/award ambition** — these are the three
+questions that most change the build, and a round that jumps from vibe →
+ambition → mockups → remarks without them delivered a design the user never
+chose. Questions that are genuinely N/A (depth on a from-scratch build, scope
+on a single page) are the only inference-skips allowed. If the asked count
+lands under 4 on a non-trivial build, re-check the pool — you almost
+certainly over-skipped.
 
 Order most-decision-changing first, keep the total short (typically 3–5 asked,
 hard cap 7). Structured tools always offer an "Other" free-text option, so

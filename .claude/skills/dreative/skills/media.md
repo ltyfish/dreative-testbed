@@ -237,6 +237,26 @@ Placement and behavior:
   `"kind": "prop-3d"` — props get reused across sections, never regenerated
   per-section.
 
+**Crop harvesting — one asset, many animatable parts.** A single generated or
+sourced image is a QUARRY, not one rectangle: crop/matte out its individual
+elements (each leaf, bean, shard, petal, tool) into separate cutouts and use
+them as the sprites of a real motion system — a scroll-scattered leaf drift,
+a cursor-repelled swarm, a pile that pours in as the section enters, a
+particle crossfade built from actual crops instead of colored points. This is
+the cheapest route to "insane animation" from limited assets: N crops × the
+§2.5 grammar = simulated animation without video-gen. Harvest at generation
+time (prompt a sheet: "12 isolated coffee beans, varied angles, transparent
+background") or matte crops from a scene asset; record each crop in the
+manifest.
+
+**Props-as-system floor (award tier).** At dial ≥ 8, static prop dressing is
+not a prop plan: at least ONE prop family on the page behaves as a SYSTEM —
+flocking/swarm, pour/emit with gravity, physics scatter-and-reform,
+scroll-driven multi-instance choreography (the §2.5 exploration-catalog
+constructions) — not just 3-6 cutouts drifting in corners. The drifting-motif
+minimum (idle + parallax + one response) is the floor below award; at award
+it's where fallbacks land, not where the plan aims.
+
 ## 2. DOM-tier treatments (no WebGL — the budget vocabulary)
 
 80% of the effect at 5% of the cost; the right tier below dial 8 or without a
@@ -399,6 +419,33 @@ Images beyond the frame:
   the reverse of disintegration.
 - **Lens/magnifier**: a draggable optic over a large image or dense contact
   sheet, refracting (WebGL) or scaling (CSS) what's beneath.
+- **Image weave**: the image sliced into interleaved ribbons (alternating
+  horizontal/vertical strips on two layers) that braid apart on scroll and
+  re-lace at rest — textile/craft/editorial registers.
+- **Contact-sheet deal**: a gallery enters as a physical stack that deals
+  itself across the grid (cards slide from the pile with rotation scatter
+  ±3°, inertia settle); reshuffles on filter change.
+- **Time-slice composite**: N stills of one subject across time/states cut
+  into vertical slivers composing ONE image; cursor X (or scroll) sweeps
+  which moment each sliver shows — time as a spatial axis. Process/
+  transformation stories (roast levels, seasons, day-to-night).
+- **Peephole/slot parallax**: the image seen through moving apertures — a
+  slit-grid layer slides over it while the image counter-slides beneath,
+  the two rates revealing more than either shows alone.
+- **Magnetic filings reveal**: a particle field (dots/dashes) that aligns
+  along the image's edge map as scroll progress rises until the subject's
+  silhouette emerges, then crossfades to the real photo — generate the
+  edge map from the asset (sharp/canvas Sobel) at build time.
+- **Gooey merge**: two images/blobs merge through an SVG gooey filter
+  (blur + contrast threshold) during a transition — liquid registers; cap
+  at one use, filters are paint-expensive.
+- **Wigglegram depth**: two/three frames of the same scene at slightly
+  shifted camera positions (generate them in one prompt world, or derive
+  via depth-map reprojection) alternated at 6-10fps on hover — fake
+  stereo depth with zero WebGL.
+- **Long-exposure echo**: a moving prop/cursor leaves a decaying trail of
+  itself on an offscreen canvas composited under the content — motion
+  paints the page; clears on section exit.
 
 Video beyond autoplay:
 
