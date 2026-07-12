@@ -85,9 +85,21 @@ presents choices about a concrete plan, not abstractions. Per section:
   texture (the actual prompt or file), or the billboard cutout it will ride
   on. "Custom 3D bean/bottle/plant geometry" with no named source is an
   invalid cell: primitives can't produce an organic subject (3d.md §3), so
-  re-plan it as rung 2 (photo billboard) or an abstract form at plan time —
+  re-plan it as rung 2 (photo billboard) or an abstract SUPPORTING form
+  (3d.md §3 rung 3 — never the promoted signature object) at plan time —
   don't let the build stage discover this. The user picking "custom 3D" in
   the media question grants the *medium*, not an exemption from the ladder.
+  Every 3D prop cell also names its BERTH (3d.md §1.5): which lane/stage of
+  the section it occupies and what the layout does to make room — a prop
+  planned "over the hero image" or with no berth is an invalid cell.
+  At award-site ambition the blueprint must contain at least one 3D prop
+  cell (3d.md §0's required prop — GLB or cutout billboard, with its berth
+  and asset source named); zero prop cells = incomplete plan.
+  At dial ≥ 8 the media column additionally marks each hero/key image's
+  treatment as quiet-class or PIXEL-class (media.md §0) and must already
+  satisfy the coverage floor on paper: at least half pixel-class (min 3,
+  set-piece included), each a different mechanism, quiet cells tied to the
+  intensity curve's rests.
 - **Travel map (mandatory when any element persists across sections).** If
   the blueprint contains a fixed canvas object, a recurring signature, or any
   scroll-morphing prop that lives through more than one section, add a travel
