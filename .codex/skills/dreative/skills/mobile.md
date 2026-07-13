@@ -1,5 +1,16 @@
 # Dreative Specialist Skill — Mobile Excellence
 
+## Contract
+
+Universal foundation: ux and baseline mobile apply to every web page.
+
+Follow `../references/SKILL_CONTRACT.md`. Dependency: `ux`. This skill is
+universal for web work. Deliver a section-by-section mobile translation, touch
+targets, responsive media/effect budgets, and approximately 390px verification.
+It is never satisfied by shrinking desktop. Done means navigation, content,
+forms, orientation/viewport behavior, performance, and reduced motion pass on a
+coarse pointer.
+
 Load this file when `plan.skills` includes `mobile`, when the brief says
 mobile-first / most users are on phones / "make the mobile version great", or
 when an app-register product is primarily used on mobile. It EXTENDS DESIGN.md
@@ -52,7 +63,7 @@ choreography.
 
 ## 2. Motion on mobile (still premium, never crazy)
 
-The motion inventory scaled to touch (extends motion.md §9):
+The motion inventory scaled to touch (extends motion.md §5):
 
 - **Keep**: one composed hero entrance (≤ 600ms total), line-mask headline
   reveals, in-view section reveals (2-3, `once: true`), press states on
@@ -74,7 +85,7 @@ The motion inventory scaled to touch (extends motion.md §9):
 
 ## 3. 3D and heavy media on mobile
 
-- Default: replace live 3D with the poster or a pre-rendered loop (3d.md §7,
+- Default: replace live 3D with the poster or a pre-rendered loop (3d.md §5,
   media.md). A generated video loop IS the mobile 3D strategy in most cases —
   visually near-identical, thermally free.
 - If live 3D ships: dpr capped at 2, sim/particle counts halved, post-FX off,
