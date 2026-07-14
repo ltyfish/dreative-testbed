@@ -136,64 +136,6 @@ build ("the hero feels generic", "too much motion"), append it to that
 build's entry as a one-line `lesson:` — and the commit pass reads lessons
 alongside choices, so the same critique never has to be given twice.
 
-**No-media builds: structure IS the media.** When a build ships zero
-imagery (no image-gen tool, product register, or the user chose
-placeholders), the ambition tier does NOT tier down — it transfers whole
-onto layout, type, and motion, and this is where no-media builds die: the
-executor, with no assets to arrange, collapses to the one layout it knows
-(a vertical list of rounded cards in a centered column) and ships slop that
-its own plan didn't describe. Hard rules for any expressive+ no-media build:
-
-1. **The compositional spine must survive to the screenshot.** Whatever
-   bespoke structure the plan named (a strip rack, a ledger, a switchboard,
-   a timetable) must be RECOGNIZABLE as that thing in the shipped page — its
-   physical vocabulary built for real: the holder edge, the notch, the rail,
-   the perforation, the column rules. If a stranger shown the screenshot and
-   the blueprint's layout-family words couldn't match them, the build
-   restyled a card list and called it the spine — that is a depth-honesty
-   failure (§11), not a detail.
-2. **≥ 2 bespoke drawn/procedural artifacts.** With no photography, the page
-   earns visual richness from things MADE for it: a live canvas (meter,
-   field, trace), custom SVG structure (rules, notches, connectors, dials —
-   drawn, not icon-font), procedural texture/grain, a data-driven ornament.
-   A no-media page whose only visuals are borders and border-radius has no
-   media plan at all.
-3. **Type does structural work.** Multi-scale composition (oversized
-   numerals/designators against small mono metadata), real hierarchy per §6
-   — not one font-size row layout repeated N times.
-4. **Motion budget spends on the structure**, not on entrance fades: the
-   spine's own physicality (things racked, tossed, slid, stamped) is the
-   choreography. Motion.md's inventory applies at full dial.
-5. **A live rendered layer is required at award tier.** No imagery does not
-   mean no rendering: the page ships at least one WebGL/canvas system doing
-   real graphic work — a particle field, procedural texture/flowfield,
-   shader-lit surface, a data-driven instrument that never stops — plus
-   dimensional motion somewhere real (CSS 3D card physicality, depth-layered
-   parallax, a lit WebGL surface). A no-media award page with zero rendered
-   pixels is a text document with transitions. Vocabulary to draw from
-   (subject-grounded, not decorative): oscilloscope/waveform traces driven by
-   real events · topographic contour lines drifting · dot-matrix/LED field
-   that spells live state · plexus line-network connecting related items ·
-   isometric grid that lights under the cursor · scan sweep across data
-   rows · ASCII/character rain in the brand's glyphs · particle flow along
-   the layout's own rails · generative engraving borders · a physical sim
-   (springs, gravity) on the UI's actual objects.
-6. **Layout creativity means spatial composition, not relocated chrome.**
-   Moving the nav to the bottom, a novel tab bar, an unusual dock — that is
-   furniture rearrangement, and if it's the build's ONLY inventive move the
-   build failed. The invention must live in how the CONTENT is composed:
-   asymmetric multi-scale grids, overlapping planes, diagonal/rotated flow,
-   sections that share edges and interlock — while staying rigorously
-   modern and clean (generous space, disciplined alignment, few colors).
-   "Clean" and "insane motion" are the same build: calm composition,
-   spectacular behavior.
-
-The slop tests above apply to the RENDERED page: "dark theme + rounded
-cards + one accent color" fails the competitor sentence for every no-media
-product tool at once — and shipped exactly that once (user verdict on
-record: "pure ai slop… I would not want something like that again"). Treat
-these rules as a shipped-failure postmortem, not theory.
-
 **Hero thesis:** open with the most characteristic thing in the subject's world —
 a headline, an image, a live demo, an interactive moment. Whatever form fits.
 

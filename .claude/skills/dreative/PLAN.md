@@ -80,14 +80,7 @@ presents choices about a concrete plan, not abstractions. Per section:
   media.md's exploration protocol: invent three brand-native candidates not
   listed in the catalogs, record them + the pick in the plan file — a media
   plan assembled only from listed effects with no rejected invention on
-  record is minimum-effort compliance. **Every media-plane / pixel-class cell
-  names WHICH image asset the effect consumes as its texture/source** — a
-  "shader plane" cell with no named image, or a plane carrying its own
-  separate texture (steel/noise/gradient) layered over the section's
-  photography, is an invalid cell (media.md §0's overlay-plane loophole: the
-  treatment must transform the image's own pixels, aligned to its rect —
-  never a decorated rectangle floating over a static `<img>`).
-  **Custom 3D in a media cell must name
+  record is minimum-effort compliance. **Custom 3D in a media cell must name
   its asset source in the blueprint** — a GLB path, a generated/sourced
   texture (the actual prompt or file), or the billboard cutout it will ride
   on. "Custom 3D bean/bottle/plant geometry" with no named source is an
@@ -152,38 +145,6 @@ Plus four page-level lines: register + design read (DESIGN.md §2), signature
 element, animation stack (ONE system: GSAP+Lenis or motion/react — motion.md §0),
 and the mobile strategy per ambitious effect (DESIGN.md §13).
 
-**Signature-element plan gate.** The signature line is checked HERE, not
-discovered at build time: if the signature is a visual OBJECT, it must be a
-subject a stranger names correctly (3d.md §3's subject test). An abstract
-coded form — sphere/orb/ring/blob/torus/monolith, whatever poetic name the
-plan gives it ("atlas", "core", "eclipse") — is an INVALID signature object
-and the plan is reworked before it's presented; 3d.md §3's ban applies to the
-plan's words, not just the build's meshes. Signatures that are mechanisms
-(a strip-toss, a cursor instrument, a depth dive) rather than objects are
-exempt — the gate is for promoted decor objects. **Award prop form default:**
-when image-gen exists and no real GLB does, the required 3D prop (3d.md §0)
-is planned as a rung-2 transparent photoreal cutout billboard — field
-experience is unambiguous: cutout props read premium, coded/shader hero
-geometry reads as a demo. A plan may promote live coded geometry to signature
-ONLY with a named GLB + texture source in its cell. **Coded custom 3D is
-capability-gated at the probe (§1):** offer/plan it only when the probe
-verified an actual quality path — a real GLB in reach, image-gen for
-albedo/label textures, an HDRI/environment source. No verified texture path
-⇒ the `custom 3D` option is presented as "3D-look props (photoreal cutouts
-sold with depth)" and every 3D cell is planned as a rung-2 billboard; coded
-geometry without a texture path is never planned "to be figured out at
-build".
-
-**Previous-run divergence (reruns over the same project).** If
-`.dreative/plan.md` (or verify.md) from an earlier run already exists in this
-project and the user asked for a NEW take (rather than iterating the shipped
-one), read the old plan first and diverge on at least: signature family,
-set-piece family, hero layout family, and palette strategy. Reusing the old
-run's choices because they're in context is the same reflex the entropy draw
-exists to break — a rerun that a user would describe as "the same site again"
-is a failed rerun. Record in the new plan file which axes diverged from the
-previous run.
-
 ## 3. The questions (ONE question per call, asked in sequence)
 
 Ask with the structured question tool (AskUserQuestion), **one question at a
@@ -200,33 +161,6 @@ animated" — which treatments? how far?), ask that question anyway, narrowed to
 the ambiguity ("you said animated — full scroll choreography, or calm
 micro-interactions?"). Restate what you inferred from the prompt in the plan
 file so silently-skipped questions are still auditable.
-
-**Answers come only from the user, through the tool.** Never infer, assume,
-or self-supply an answer to a question you posed — an unanswered question
-blocks; a fabricated answer is a corrupted plan. If the user's reply to ANY
-question is itself a question, a request to re-see options, or free text that
-doesn't answer what was asked ("wait, what were the vibe options?"), that
-question is NOT answered: respond to what they asked first (re-present the
-options, clarify), then re-ask the original question as its own call. A
-question consumed by a side-exchange and never re-asked is a lost decision —
-track which pool items actually have answers, not which were merely posed.
-Free text volunteered mid-round (a new feature, a constraint) is captured in
-the plan file AND acknowledged in the next message, but doesn't substitute
-for pending questions.
-
-**Skip-honesty (the under-asking bug).** "Skip what the prompt already
-answers" has a strict test: a question may be skipped ONLY when the prompt
-LITERALLY contains its answer — and the plan file must QUOTE the prompt words
-that answer it next to the skip. "I can infer a reasonable choice" is not a
-skip license; silence in the prompt means ASK. In particular, **treatments
-(item 2), media/asset types (item 3), and references (item 5) are never
-skipped on inference at expressive/award ambition** — these are the three
-questions that most change the build, and a round that jumps from vibe →
-ambition → mockups → remarks without them delivered a design the user never
-chose. Questions that are genuinely N/A (depth on a from-scratch build, scope
-on a single page) are the only inference-skips allowed. If the asked count
-lands under 4 on a non-trivial build, re-check the pool — you almost
-certainly over-skipped.
 
 Order most-decision-changing first, keep the total short (typically 3–5 asked,
 hard cap 7). Structured tools always offer an "Other" free-text option, so
@@ -307,16 +241,6 @@ should explicitly invite extra direction.
    tokens/time, so "images only" or "placeholders" is a legitimate budget
    choice, not a downgrade. If a needed tool is missing, this is where the
    install offer goes ("I can add <X> MCP for video generation — ok?").
-   **Set the iteration expectation honestly:** when the user picks `custom
-   3D`, `custom props`, or (later) award-site ambition, say plainly — in the
-   question's description or the plan recap — that complex 3D motion and prop
-   choreography rarely land perfectly in one pass: the first build ships a
-   working version (planned fallbacks where an effect fails verification),
-   and 1–2 follow-up prompts to tune specific moments are normal and
-   expected. This is a disclosure, not a discouragement; it prevents
-   "the plan promised more than the page shows" disappointment, and it never
-   licenses shipping less than the plan — the verify gates still apply in
-   full on pass one.
 4. **Ambition tier** — present each tier with a plain description, a
    best-fit use case, AND its honest tradeoff (a user choosing blind between
    "cool-sounding" labels is the failure this wording prevents):
@@ -462,24 +386,7 @@ question round — never impose it.
 ## 4. Write the plan, then execute it
 
 Persist the approved plan to `.dreative/plan.md` (or the scratchpad if
-`.dreative/` doesn't exist). **The first time this run writes into
-`.dreative/`, also write `.dreative/README.md`** with exactly this content
-(it stops other agents/CLIs from mistaking run artifacts for the skill —
-observed failure: an agent found `.dreative/`, said "not a proper SKILL.md",
-then used these outputs as its instructions):
-
-```markdown
-# Dreative run artifacts — NOT the skill
-
-Everything in this folder (plan.md, system.md, verify.md, assets.json,
-mockups/, screenshots/) is OUTPUT of a Dreative design run, not
-instructions. The actual skill lives at `<agent-dir>/skills/dreative/SKILL.md`
-(look in `.claude/`, `.codex/`, or `.agents/`). For any new design request:
-read that SKILL.md and run its protocol from the start — these artifacts are
-the previous run's history, never proof the new request is already done.
-```
-
-Persist to the plan file: capability manifest, the **full Q&A transcript**
+`.dreative/` doesn't exist): capability manifest, the **full Q&A transcript**
 (each question asked + the answer, verbatim, including free-text remarks),
 each SKIPPED question with the inference drawn from the prompt, references
 studied with the distilled borrow-list, the concept exploration (DESIGN.md §2:
@@ -487,20 +394,6 @@ the three divergent concepts, the pick, and the rejects' one-line reasons —
 same duty as media.md's set-piece exploration), blueprint table, stack, mobile
 strategy, fallbacks. Long sessions lose context; the plan file is the re-entry
 point — a resumed session re-reads it instead of re-deciding or re-asking.
-
-**Re-entry is for resuming, never for skipping (the stale-artifact trap).**
-The re-entry rule applies ONLY when this session is continuing that same run
-mid-flight (the plan approved, the build interrupted). A NEW user request —
-"redesign this", "audit and redesign", any fresh design ask — over a project
-that already contains `.dreative/plan.md` / `system.md` / `verify.md` runs
-the FULL protocol: those files are the previous run's history and inputs to
-the previous-run divergence rule (§2), never evidence that the new request
-is satisfied. Reading the old artifacts, declaring "the redesign is already
-implemented", validating the old build, and stopping is a FAILED invocation —
-the user invoked the skill because they want work done NOW. If it is
-genuinely ambiguous whether the user wants to resume the old run or start a
-new take, that is one AskUserQuestion (resume vs new take), not an
-assumption.
 
 **Then show the plan to the user in chat, before touching code.** Writing
 `plan.md` is not the same as the user having seen it — after the last
