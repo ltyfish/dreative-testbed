@@ -1,216 +1,159 @@
 # Dreative Specialist Skill — Media as Motion Material
 
-Load this file when `plan.skills` includes `media`, when the plan's blueprint
-contains any `generate-*` media cell, or when the brief involves imagery/video
-on a page with motion dial ≥ 6. It EXTENDS DESIGN.md §7 (sourcing priority and
-bans still apply) and STACKS with motion.md (timing), 3d.md (shader craft), and
-cinematic.md (the living surface). This file exists because agents know how to
-*embed* media but not how to *use* it: award-grade sites (unseen.co family)
-treat images and video as the raw material the motion system acts on — media is
-choreographed, distorted, revealed, and lit, never just placed.
+## Contract
 
-## 0. The doctrine
+Follow `../references/SKILL_CONTRACT.md`. Dependencies: `ux`, `mobile`; add
+`motion` for animated treatments and `3d` for media planes. Deliver an asset
+manifest, rights/source note, crop/grade/compression work, dimensions/posters,
+responsive treatment, fallback, and runtime evidence. Hard gates remain absolute.
 
-- **No bare media at dial ≥ 7.** Every meaningful image/video gets three
-  decisions: an **entrance** (how it arrives — reveal, wipe, materialize), an
-  **idle** (what it does at rest — loop, drift, ken-burns, nothing-on-purpose),
-  and a **response** (what interaction does to it — hover wake, distortion,
-  parallax). "None" is a valid answer per axis, but it must be chosen, not
-  defaulted.
-- **Media and type arrive as one beat.** Time the media entrance with the
-  section's line-mask type reveal (motion.md §4) — image and headline landing
-  together reads as choreography; landing separately reads as two plugins.
-- **One treatment vocabulary per page.** Pick 1-2 media treatments and stamp
-  them consistently (all work cards hover-wake; all section images curtain-
-  reveal). Five different reveal styles = assembled, not designed.
-- **Invent, don't pick.** §2/§3 are springboards, not a menu — the signature
-  media treatment should be COMPOSED for this brand and this prompt using the
-  grammar in §2.5 (a torn-paper archive scrolls differently than a liquid
-  fashion film). Stock-vocabulary media reads as template exactly like stock
-  layouts do; if the user's prompt describes an effect ("images tear apart on
-  scroll"), build THAT effect for real, at the tier it needs.
-- **Real assets outrank generated ones** (DESIGN.md §7). Generated media fills
-  gaps and creates atmosphere; it never replaces the client's product shots.
+Load when `plan.skills` includes `media`, the blueprint generates media, or a
+motion-led page depends on imagery/video. DESIGN.md still governs sourcing,
+semantics, layout, and preservation.
 
-## 1. Production pipeline (generate → grade → compress)
+## 0. Explore before recipes
 
-When the plan calls for generated media, produce it BEFORE section code
-(PLAN.md §4) and produce it correctly:
+Read the brief, assets, brand world, doctrine, and this file first. Generate up
+to three original overall media directions when useful before
+opening `../recipes/media-recipes.md`. Recipe access is only for feasibility,
+implementation, performance, fallback selection, or repairing a weak concept;
+record it in `recipeAccess`.
 
-- **Prompt for the world, grade for the page.** Prompt the brand's physical
-  subject (DESIGN.md §7) PLUS the page's light: temperature ("warm tungsten
-  side-light", "cool overcast daylight"), palette anchors ("deep green shadows,
-  bone highlights"), and grain/mood. Every asset on a page shares ONE lighting
-  logic — mismatched light is the #1 generated-media tell.
-- **Exact aspect ratios** from the blueprint (16:9 hero, 4:5 cards, 1:1
-  thumbnails, 21:9 banners). Never generate square and crop-hope.
-- **Video loops**: 5-10s, prompt explicitly for seamlessness ("seamless loop,
-  continuous motion, no scene change") and slow motion content (drift, steam,
-  fabric, water — fast action never loops cleanly). Generate or extract a
-  **poster frame** for every video (first frame, same grade).
-- **Image sequences** for scroll scrubs: 40-80 frames of one continuous
-  transformation (assemble/rotate/morph). Image-to-video tools can produce
-  these from a single generated still; export frames with ffmpeg
-  (`ffmpeg -i loop.mp4 -vf fps=12,scale=1280:-1 frames/f_%03d.webp`).
-- **Compress before committing**: images → WebP/AVIF at the largest displayed
-  size ×2 max; video → H.264 + AV1 sources, CRF ~28-32, no audio track, ≤ 2-4MB
-  per loop (`ffmpeg -i in.mp4 -an -c:v libx264 -crf 30 -movflags +faststart`).
-  A 40MB hero loop fails the plan even if it's beautiful.
-- Textures too: grain tiles, masks, mattes, displacement maps — generate them
-  instead of hand-rolling SVG (which is banned, DESIGN.md §7).
+Effect names are examples, not a menu. The concept begins with what the media
+means, how the visitor changes its logic, and how that behavior develops through
+the page.
 
-## 2. DOM-tier treatments (no WebGL — the budget vocabulary)
+## 1. Hard gates
 
-80% of the effect at 5% of the cost; the right tier below dial 8 or without a
-canvas already on the page. All honor the floors in §5.
+- Planned shipped assets exist, are distinct where promised, and visibly render
+  (`assets.plannedExist`). Track source/rights, aspect, grade, poster, and use.
+- Media never hides content, intercepts controls, or breaks layout. DOM media
+  remains semantic and available when enhancement fails (`content.visible`,
+  `spatial.noOcclusion`).
+- Every video/WebGL/sequence treatment has loading, reduced-motion, low-power,
+  mobile, and runtime fallbacks (`motion.reducedMotion`,
+  `effects.runtimeFallback`).
+- A real organic subject is never approximated with crude coded primitives
+  (`3d.noCodedOrganic`). Use a real GLB, photoreal cutout, sourced image, or cut
+  the claimed object.
+- Verification uses real artifacts and measurements, not textual claims
+  (`verification.realEvidence`).
 
-- **Curtain / inset reveal**: media enters behind a wipe —
-  `clip-path: inset(100% 0 0 0) → inset(0)` (or 2-4 panel slides), 900ms
-  expo-out, triggered in-view once, synced to the headline's line-mask.
-- **Hover-woken loop**: still poster crossfades to its video loop on
-  hover/focus (240ms), `video.play()` on enter, pause + reset to poster on
-  leave. The "living thumbnail" for work/product cards. Preload `metadata`
-  only; play() only after the crossfade starts.
-- **Mask-shaped video**: the loop plays inside display type
-  (`background-clip: text` on 10vw+ headlines), an arch/circle `clip-path`, or
-  the brand mark (SVG mask). Video becomes identity, not a rectangle. One per
-  page.
-- **Floating media**: 3-5 images hovering in depth — slow damped drift
-  (±6-10px, 4-8s loops, each phase-offset), parallax differential by depth
-  layer, soft tinted contact shadow. The "paper sheets in space" look, pure CSS
-  + one IntersectionObserver.
-- **Ken-burns**: slow scale 1.0→1.06 over 12-20s inside a fixed frame,
-  alternate direction per instance. The refined register's entire motion budget
-  for imagery (refined.md).
-- **Pixel/dither swap**: stepped `image-rendering: pixelated` downscale swap
-  (24px mosaic → full res in 4-6 steps) on scroll progress or hover. Digital-
-  craft registers.
-- **Inner-zoom parallax**: image at 115% height inside `overflow-hidden` frame,
-  `object-position` or translateY driven by scroll (-8%→8%). Media moves, frame
-  doesn't — never parallax the frame itself past text.
-- **Scroll-scrubbed `<canvas>` sequence**: preload frames (§1), draw the frame
-  for the current damped scroll progress; sticky wrapper ≤ 2.5 viewports
-  (motion.md §7's scrub showcase). No WebGL needed.
+## 2. Baseline media quality
 
-## 2.5 The invention grammar (compose the signature treatment)
+Every meaningful asset gets an intentional role: entrance, idle life, visitor
+response, or a documented static/rest purpose. A page of identical fade-plus-
+zoom treatments is the recurring failure this skill exists to prevent.
 
-Every media effect — including any the user describes in their own words — is
-three choices multiplied together. Compose deliberately:
+- Edit assets before placement: crop to the blueprint, grade to the palette,
+  compress, cut clean loops, create posters, and prepare masks/depth/plates.
+  For every key image, record whether it stays flat or needs a transparent
+  subject, foreground/middle/background planes, isolated objects, separate
+  shadow/glow, clean plate, SVG/CSS mask, tile/fragment map, depth/displacement
+  map, alternate crop/pose, generated keyframe, frame sequence, Canvas/WebGL
+  texture, or mobile-specific composition.
+- A treatment claiming to transform an image must consume that image's pixels
+  and align to its bounds. A separate shader/noise rectangle floating over a
+  static image is decoration, not treatment.
+- Human perception matters: before/after states must visibly change content,
+  not merely produce tiny uniform deltas a sampler can detect.
+- Quiet sections are valid and necessary when they create pacing. “Restraint”
+  is not permission for an underdesigned whole page.
 
-- **PROPERTY** (what changes): position/scale · opacity · clip/mask SHAPE
-  (inset, circle, arch, brand mark, jagged polygon) · slices/fragments (the
-  media cut into strips, tiles, or shards that move independently) · UV
-  distortion (WebGL: ripple, stretch, melt, swirl) · resolution (mosaic →
-  sharp) · color channels (RGB split, duotone → full color) · blend/exposure
-  (media develops like a photo print).
-- **DRIVER** (what pushes it): scroll progress (scrubbed) · scroll VELOCITY
-  (agitation that decays) · in-view trigger (one-shot) · hover/focus ·
-  cursor position within the element (directional!) · drag · hold · time.
-- **SHAPE OF PROGRESSION** (how it travels across the media): uniform ·
-  directional sweep (left→right, top→bottom) · radial from a point (often the
-  cursor's entry point) · per-slice stagger · noise-mask (organic, torn) ·
-  along the brand mark's silhouette.
+## 3. Evidence-backed defaults
 
-The user's prompt usually fixes one or two axes; you compose the rest from the
-brand's world. "Tearing" = slices + jagged noise-mask edges, driven by scroll.
-"Video fades from left to right on hover" = opacity/mask, hover-driven,
-directional sweep — a gradient `mask-image` whose position animates, 400ms,
-from the edge the cursor entered. Name the composed treatment in the plan
-blueprint like a signature element, and stamp it consistently (§0).
+Follow the proven default, or outperform it with a named alternative,
+measurable success criteria, and runtime evidence.
 
-**Worked exotics (copy the construction, not the skin):**
+### Participatory moment (`media.award.participatoryMoment`)
 
-- **Paper tear on scroll**: image duplicated into 2-3 layers, each clipped by
-  a jagged `clip-path` polygon sharing torn edges; scroll progress translates/
-  rotates the pieces apart (±2-6°) with a hairline of background showing
-  through; WebGL version displaces UV along a noise seam. Archive/editorial/
-  punk registers.
-- **Strip-slice reveal**: media as 5-9 vertical strips (repeated
-  `background-image` with offset `background-position`, or plane-per-strip);
-  strips slide in staggered from alternating directions, or shear on scroll
-  velocity. The classic award-site gallery entrance.
-- **Directional hover wipe**: detect the pointer's entry edge (compare
-  enter coordinates to bounds); the reveal (opacity mask, color→duotone,
-  still→video crossfade) sweeps FROM that edge. Feels alive because it
-  answers the gesture's direction.
-- **Cursor-torch reveal**: media sits dimmed/blurred/halftoned; a radial mask
-  tracking the (damped) cursor reveals it sharp and graded — the flashlight
-  over an archive. Pair with a "drag to explore" label.
-- **Melt/liquid exit**: on section leave or route change, UV y-displacement
-  grows by a noise column pattern — the image drips out of frame (WebGL), or
-  budget version: per-strip translateY with eased random offsets.
-- **Shatter/scatter**: media as an instanced tile grid (WebGL) that explodes
-  along scroll velocity and reassembles at rest — the §3 plane system with a
-  per-instance offset uniform; cap tiles ≤ 400.
-- **Print develop**: media enters as paper-white → exposure/contrast/duotone
-  ramps to full grade (CSS `filter` keyframes or a LUT shader), timed with
-  the headline reveal. Photography/portfolio registers.
+At expressive/award ambition, the proven default is one memorable point where
+the visitor moves from observing media to affecting, entering, transforming, or
+controlling its visual logic. For image-led concepts with depth-capable assets,
+a depth dive is one strong candidate—not an automatic default.
 
-Discipline stays the law: the composed treatment must still clear §5's floors,
-DESIGN.md §6's "one sentence of communication value", and one-signature-
-per-page — an inventive effect stamped on every image is as loud as a marquee
-on every section.
+Valid registered alternatives include decomposition/reassembly, temporal
+scrubbing, physical drag/inertia, refractive exploration, scene-responsive
+media, or a brand-specific transformation of equal perceptual impact. A curtain,
+fade, plain parallax, or rectangle movement alone is not equivalent.
 
-## 3. WebGL tier — the media plane (the unseen.co mechanic)
+### Key-asset treatment (`media.keyAssetTreatment`)
 
-When dial ≥ 8 or cinematic/immersive is active, media renders THROUGH the
-canvas so shaders can touch it. The core pattern, in order:
+The proven expressive/award default is a deliberate preparation and motion role
+for every key image, with transformation concentrated where it shapes the story
+and quiet-class rests elsewhere. This exists because dogfood builds treated one
+hero while the remaining imagery stayed inert or repeated fade-and-zoom.
 
-1. **Sync planes to DOM rects.** Real `<img>`/`<video>` elements stay in the
-   document (a11y, SEO, layout, fallback) but render invisible
-   (`opacity: 0`, NOT `display:none` — layout must persist). For each, a
-   textured plane in an orthographic/fitted scene copies its
-   `getBoundingClientRect()` every scroll/resize (rAF-batched; lerp the
-   position for the floaty feel). Texture from `TextureLoader` or
-   `new THREE.VideoTexture(videoEl)` (video must be `muted playsinline` and
-   playing; `texture.colorSpace = SRGBColorSpace`).
-2. **Distortion in the fragment/vertex shader**, uniforms driven by input:
-   - *Hover ripple/lens*: damped `uMouse` + `uHoverStrength` 0→1 spring; UV
-     displacement by radial falloff or noise.
-   - *Velocity stretch / RGB split*: scroll or drag velocity (from Lenis /
-     `useScroll`) → vertex bend + per-channel UV offset, hard-clamped, damped
-     decay to zero (cinematic.md §2). Peak effect at a fast flick stays legible.
-   - *Transition dissolve*: two textures + noise mask `mix()` for gallery/
-     route image swaps (3d.md §4).
-3. **Curved/warped planes**: subtle vertex bend (unseen's floating paper
-   sheets) — displace z by a small curve of UV.x + scroll velocity.
+There is no target percentage, minimum image count, or required effect family.
+One coherent media system may visibly develop through different roles—for
+example archive sheets becoming a draggable surface, then a tunnel, then a
+final mark—or distinct images may receive different concept-led treatments.
+Evidence must make the important state changes obvious.
 
-Rules: ONE media-plane system per page owning all planes (one scene, one rAF —
-never a canvas per image); planes pause syncing when off-screen; the DOM
-element remains the interaction target (click/focus/hover listeners on the DOM,
-effects on the plane); reduced-motion and WebGL-failure both fall back to
-simply un-hiding the DOM media (set `opacity: 1`) — this fallback must be
-wired, not theoretical, and it's the first thing runtime verification checks.
+### Perceivability
 
-## 4. Choosing the treatment (the reasoning frame)
+Pixel-class behavior changes the image content: displacement, decomposition,
+reassembly, scrubbed time, refractive feedback, or another brand-native logic.
+Tune it until screenshot/trace pairs are unmistakably different. Zoom, pan,
+opacity, or moving the rectangle are quiet-class behaviors, not pixel-class.
 
-Per media element, walk this in one line each — it's the media ledger the plan
-blueprint (PLAN.md §2) captures:
+## 4. Production and props
 
-1. **Role**: hero atmosphere / product evidence / work-card / texture / story
-   beat? Evidence media (screenshots, product photos) gets QUIET treatments —
-   curtain reveal, ken-burns; atmosphere media can take the loud/invented ones.
-2. **Tier**: does the page already pay for WebGL? If yes, media planes (§3);
-   if no, a DOM treatment (§2) or the DOM construction of a §2.5 invention —
-   never add a canvas only to distort one image.
-3. **Entrance / idle / response** per §0, matched to register and dial.
-4. **Failure path**: poster/static version named (reduced-motion, load
-   failure, mobile tier).
+Prefer, in order: supplied/client assets; generated assets suited to the exact
+section; verified sourced media; clearly labeled placeholders. Generation is
+the start of production, not the finished asset.
 
-## 5. Floors (every treatment, non-negotiable)
+When video or separated source material is absent, first attempt the strongest
+feasible stylized treatment: depth separation, camera movement through layers,
+related generated keyframes, a bounded frame sequence, masks between crops or
+states, tiles/fragments, Canvas pixels/particles, shader displacement, blending,
+or use as a texture in a larger composition. Do not imply this is real video.
+Ask for missing source material only when the requested result cannot be
+approximated convincingly; never leave a placeholder for future advanced motion.
 
-- `prefers-reduced-motion`: poster frame / static image, no autoplaying loops,
-  no scrub (static end-state). Test by toggling it.
-- Videos: `muted autoplay loop playsinline preload="metadata"` + `poster`;
-  pause when off-screen (IntersectionObserver) and on `document.hidden`; no
-  audio tracks ever on ambient loops.
-- Loading: explicit `width/height` or `aspect-ratio` on every media box (zero
-  CLS); LCP image/poster preloaded, everything below the fold lazy; a media box
-  is never blank — poster, dominant-color fill, or blur-up while loading.
-- Hover treatments have focus equivalents; touch gets the tap/visible-default
-  story (DESIGN.md §13); media planes and canvases are `pointer-events-none`
-  unless they ARE the control.
-- Budgets: one video loop playing per view, ≤ 2-4MB per loop, sequences ≤
-  ~6MB total, `dpr` capped on media-plane canvases (3d.md §7).
-- Alt text carries voice on images; videos that convey content (not
-  atmosphere) get a text alternative nearby.
+For isolated props:
+
+- reserve a compositional berth that never covers text or controls;
+- use real transparency and verify the matte;
+- grade light direction and contact shadow into the page system;
+- sell dimension with restrained parallax/rotation/scale and readable fallback;
+- reuse the same asset for the same need, never one seed for distinct subjects.
+
+For video: muted/autoplay/loop/playsinline when appropriate, real poster, no
+layout shift, pause off-screen/hidden, reduced motion uses the poster.
+
+## 5. Media planes
+
+Use one scene for multiple DOM-synced media planes. Keep the real DOM image/video
+for semantics and fallback; synchronize its bounding rect and use the same asset
+as the plane texture. Cap DPR, pause off-screen, handle context loss, and reveal
+the DOM source when WebGL fails. A canvas per image and misaligned overlay planes
+are invalid implementations.
+
+## 6. Planning and verification
+
+For the chosen set-piece, record one compact `signatureMedia` contract: package
+type, conceptual purpose, named sources and derivatives, implementation file,
+runtime references, independently controlled regions/states, mobile and reduced-
+motion fallbacks, risk-appropriate safeguards, and final evidence IDs. Compare
+only plausible mechanisms. Inspect AI state consistency before coding.
+
+When a sequence wins, add the source/generation method, key and total frames,
+production/interpolation, scroll mapping, preload/decode/render strategy,
+desktop dimensions, authored mobile path, compression/transfer budget, dropped-
+frame handling, fallback, and reduced-motion still. Offline rendering is valid
+when it delivers the visible outcome more reliably than live computation.
+
+Prototype only when the resolved prototype policy and mechanism risk require it.
+Decoration over an unchanged source fails.
+
+Verification records:
+
+- asset existence and rendered identity;
+- viewport-aligned effect/image rects;
+- before/after artifacts for perceptual change;
+- sampled shader/particle/frame/drag state where applicable;
+- tested URL, console count, mobile viewport, reduced-motion result;
+- frame time/FPS and transferred asset weight only for heavy or risky treatments.
+
+Recipe reference: `../recipes/media-recipes.md`, after concept exploration only.
