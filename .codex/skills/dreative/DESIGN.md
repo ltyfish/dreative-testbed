@@ -4,7 +4,7 @@ You MUST read this file before servicing any `propose-skeletons`, `propose-varia
 `design-page`, or `edit-element` request, and run §12 before every respond. It exists
 because LLM-designed UIs converge on one templated look. Every rule corrects a known
 model default, but its category determines how it governs. Requests may carry a `plan` (Dreative's
-pre-computed decision: dials, per-section layout families, budgets, lints) — execute
+pre-computed constraints: dials, depth, source strategy, structural/mobile/expression contracts, budgets, and lints) — execute
 the plan, apply this doctrine to everything the plan doesn't specify. When
 `plan.skills` names specialist skills (`motion`, `3d`, `interaction`, `immersive`,
 `cinematic`, `refined`, `media`, `ux`, `mobile`), the matching
@@ -156,7 +156,7 @@ its own plan didn't describe. Hard rules for any expressive+ no-media build:
    the blueprint's layout-family words couldn't match them, the build
    restyled a card list and called it the spine — that is a depth-honesty
    failure (§11), not a detail.
-2. **≥ 2 bespoke drawn/procedural artifacts.** With no photography, the page
+2. **Bespoke drawn/procedural artifacts carry the missing media role.** With no photography, the page
    earns visual richness from things MADE for it: a live canvas (meter,
    field, trace), custom SVG structure (rules, notches, connectors, dials —
    drawn, not icon-font), procedural texture/grain, a data-driven ornament.
@@ -167,14 +167,12 @@ its own plan didn't describe. Hard rules for any expressive+ no-media build:
    — not one font-size row layout repeated N times.
 4. **Motion budget spends on the structure**, not on entrance fades: the
    spine's own physicality (things racked, tossed, slid, stamped) is the
-   choreography. Motion.md's inventory applies at full dial.
-5. **A live rendered layer is required at award tier.** No imagery does not
-   mean no rendering: the page ships at least one WebGL/canvas system doing
-   real graphic work — a particle field, procedural texture/flowfield,
-   shader-lit surface, a data-driven instrument that never stops — plus
-   dimensional motion somewhere real (CSS 3D card physicality, depth-layered
-   parallax, a lit WebGL surface). A no-media award page with zero rendered
-   pixels is a text document with transitions. Vocabulary to draw from
+   choreography. Motion.md's treatment and verification rules apply.
+5. **Choose a rendering layer only when it earns its cost.** No imagery can
+   justify Canvas/WebGL when a live procedural or data-driven surface is the
+   concept, but award ambition does not require one. Spatial typography,
+   layered DOM/SVG composition, masks, or other subject-grounded systems may be
+   stronger. Vocabulary to draw from when rendering is warranted
    (subject-grounded, not decorative): oscilloscope/waveform traces driven by
    real events · topographic contour lines drifting · dot-matrix/LED field
    that spells live state · plexus line-network connecting related items ·
@@ -366,6 +364,13 @@ sites win on composition, not decoration; this is where that happens.
 Every animation answers "what does this communicate?" — hierarchy, storytelling,
 feedback, or state change. "It looked cool" = delete it.
 
+Motion has three roles. **Decorative motion** reveals, responds, or adds ambient
+life. **Structural motion** controls hierarchy, pacing, pinning, and composition
+handoffs. **Transformational motion** changes imagery/type/objects into a new
+form or the next scene. Expressive/award pages evaluate key moments for the last
+two roles; opacity, translate, scale, and slight parallax are not automatically
+enough merely because they animate.
+
 **The 100/300/500 rule:** 100-150ms instant feedback (press, toggle) · 200-300ms
 state changes (menu, tooltip, hover) · 300-500ms layout changes (accordion, modal)
 · 500-800ms entrances (hero reveal, brand only). Exits run ~75% of enter duration.
@@ -381,9 +386,12 @@ micro-interactions; the uniform fade-and-rise on every scrolled section is the
 saturated AI tell. Some brands skip entrance motion entirely — restraint as voice.
 Product = 150-250ms, state-conveying only, zero page-load choreography.
 
-**Mechanics:** animate transform/opacity by default; blur/backdrop-filter/clip-path/
-masks/shadow allowed when they materially improve the effect, bounded to small areas,
-verified smooth. Never casually animate width/height/top/left/margins (use FLIP or
+**Mechanics:** use transform/opacity for ordinary local state when they fit, but
+do not make them the unexamined expressive default. Select CSS, GSAP timelines,
+ScrollTrigger, SVG, masks, `clip-path`, DOM fragments, Canvas, WebGL/shaders,
+sequences, video, Lottie, or 3D by visual result, cost, responsiveness, and
+available assets. Use the simplest mechanism capable of making the intended
+transformation convincing. Never casually animate width/height/top/left/margins (use FLIP or
 grid-template-rows). Sibling stagger `calc(var(--i) * 50ms)` capped at ~500ms total.
 IntersectionObserver (unobserve after firing), CSS scroll-driven animations, or
 Motion/GSAP scroll tools — `window.addEventListener("scroll")` is a hard ban. Reveals
@@ -541,8 +549,11 @@ route slugs, nav labels, form field names, logo, legal copy; extract brand token
 before applying §4 (a purple brand stays purple); apply modernisation levers in
 order — typography → spacing/rhythm → color recalibration → motion layer → hero
 recomposition → full replacement only when unsalvageable. Honor existing
-accessibility wins and analytics hooks. Preserve prior element-level edits when
-`previousFile` is set.
+accessibility wins and analytics hooks. `previousFile` is a composition source
+only for `restyle`. For `relayout`, old code is a content/behavior inventory. For
+`restructure` and `reimagine`, it is a wiring reference only: draft the new
+blueprint independently, then reconcile routes, handlers, data, fields, states,
+accessibility, analytics, required copy, and public APIs.
 
 ### The preservation contract (mandatory for ANY redesign of existing code)
 
@@ -637,9 +648,10 @@ coat of CSS on the old skeleton.
 **The drastic-change floor (rungs 3–4).** The chronic failure at these rungs is
 timidity: the agent rebuilds the components but reproduces the old page's shape,
 so a before/after glance reads as a re-theme. That is a failed restructure. At
-rung 3–4 the new page must be **unmistakably a different design at one glance**
-— someone shown both screenshots should assume different products. Concretely,
-change at least TWO structural paradigms, not just their styling:
+rung 3–4 the structural-delta contract must name material changes to page
+architecture, component boundaries, navigation, workflow, or interaction model.
+Tokens, cards, decoration, and entrance motion cannot satisfy it. Relevant
+paradigms can include:
 
 - **Navigation model** — top bar → side rail / command palette / dock / sticky
   chapter nav / full-screen overlay menu.
@@ -651,12 +663,12 @@ change at least TWO structural paradigms, not just their styling:
 - **Hero concept** — a new signature idea (typographic monument, media plane,
   3D object, kinetic composition), not the old hero with new colors.
 
-Creativity is bounded by usability: every drastic move must still be MORE
+These are diagnostic possibilities, not quotas. Creativity is bounded by usability: every drastic move must still be MORE
 user-friendly than what it replaces — clearer hierarchy, fewer steps to the key
 action, honest affordances, mobile ergonomics intact (§13, skills/ux.md). A
 restructure that confuses users is as failed as one that changed nothing. The
-self-critique pass at these rungs must answer: "name the two-plus structural
-paradigms that changed, and why each is easier to use than before." If mid-work you discover the chosen rung cannot
+self-critique pass must explain why the implemented delta honestly satisfies the
+chosen depth and how it improves use. If mid-work you discover the chosen rung cannot
 honestly deliver the requested outcome (the reference look demands structure the
 current markup can't express), say so and ask to move up one rung rather than
 shipping an imitation. Rungs 3–4 on an extracted app still honor §11 preservation
@@ -736,9 +748,9 @@ DOM/listeners there.
 
 **Pinned/scrubbed sections**: pinning is fragile on mobile (URL-bar resize
 fires viewport changes mid-pin; iOS momentum scroll skips scrub frames).
-Strategies in preference order: (1) keep the pin but shorten it (≤ 1.5
-viewports) and drive it with `position: sticky`, never JS pinning; (2) unpin —
-the same content as stacked sections with simple in-view reveals;
+Strategies in preference order: (1) keep the pin but shorten it and drive it
+with `position: sticky` when reliable; (2) redesign the same idea as a shorter
+mask, layered-parallax, or state handoff sequence rather than merely disabling it;
 (3) `ScrollTrigger.matchMedia()` / a `matchMedia` branch that swaps the whole
 choreography. Never let a desktop pin length ride on a phone.
 
@@ -765,10 +777,10 @@ clamps DOWN gracefully (hero ≥ 2rem, body stays ≥ 16px — iOS zooms inputs
 under 16px); sticky navs shrink rather than stack; test the three widths 320 /
 768 / 1280 mentally before responding.
 
-**Motion budget on mobile**: entrance choreography total ≤ 600ms (vs 900ms
-desktop), at most 1 scroll-driven sequence per page, marquees pause when
-off-screen. Battery is a design constraint: continuous rAF loops must idle
-when nothing animates.
+**Motion budget on mobile**: shorten travel and timelines according to content,
+viewport, and measured device cost. Preserve one defining idea when feasible;
+marquees pause off-screen and continuous rAF loops idle when nothing animates.
+Battery is a design constraint, not a reason to erase the concept.
 
 ## 14. Typography sourcing (escape the first reflex)
 
