@@ -13,8 +13,8 @@ semantics, layout, and preservation.
 
 ## 0. Explore before recipes
 
-Read the brief, assets, brand world, doctrine, and this file first. Generate up
-to three original overall media directions when useful before
+Read the brief, assets, brand world, doctrine, and this file first. Generate and
+record three original brand-native media concepts in `conceptExploration` before
 opening `../recipes/media-recipes.md`. Recipe access is only for feasibility,
 implementation, performance, fallback selection, or repairing a weak concept;
 record it in `recipeAccess`.
@@ -132,20 +132,10 @@ are invalid implementations.
 
 ## 6. Planning and verification
 
-For the chosen set-piece, record one compact `signatureMedia` contract: package
-type, conceptual purpose, named sources and derivatives, implementation file,
-runtime references, independently controlled regions/states, mobile and reduced-
-motion fallbacks, risk-appropriate safeguards, and final evidence IDs. Compare
-only plausible mechanisms. Inspect AI state consistency before coding.
-
-When a sequence wins, add the source/generation method, key and total frames,
-production/interpolation, scroll mapping, preload/decode/render strategy,
-desktop dimensions, authored mobile path, compression/transfer budget, dropped-
-frame handling, fallback, and reduced-motion still. Offline rendering is valid
-when it delivers the visible outcome more reliably than live computation.
-
-Prototype only when the resolved prototype policy and mechanism risk require it.
-Decoration over an unchanged source fails.
+The blueprint records asset path/source, importance, preparation decision and
+derivatives, purpose, treatment class, driver, mobile behavior, fallback, and
+success criteria. At expressive/award, record the page's `creativeStrategy` and
+contextual `motionComplexityBudget`.
 
 Verification records:
 
@@ -154,6 +144,6 @@ Verification records:
 - before/after artifacts for perceptual change;
 - sampled shader/particle/frame/drag state where applicable;
 - tested URL, console count, mobile viewport, reduced-motion result;
-- frame time/FPS and transferred asset weight only for heavy or risky treatments.
+- frame time/FPS and transferred asset weight for heavy treatments.
 
 Recipe reference: `../recipes/media-recipes.md`, after concept exploration only.
