@@ -64,9 +64,10 @@ Then run three tests on your intended output; restart if any fails:
 Never design by accretion, and never commit to the first concept. Three passes:
 
 1. **Explore** — sketch THREE genuinely divergent concepts, one line each:
-   palette strategy + type voice + signature element + hero thesis. Different
-   families of idea, not three shades of one (if two concepts share a palette
-   strategy or signature type, they are one concept — replace one). The slop
+   composition + focal hierarchy + material system + interaction model + type
+   voice + signature element + hero thesis. Palette or font changes alone do
+   not create a second concept. Different families of idea, not three shades
+   of one. The slop
    tests below are filters: they reject bad ideas but never generate better
    ones; this pass is where a better idea gets a chance to exist. Pick one,
    and record the two rejects with a one-line reason in the plan file
@@ -77,7 +78,7 @@ Never design by accretion, and never commit to the first concept. Three passes:
    after run. So the variance comes from OUTSIDE your head: roll a real random
    number (`node -e "console.log(1+require('crypto').randomInt(20))"`, or
    `$RANDOM % 20 + 1`, or read digits off `date +%N`) and record the literal
-   command AND its output in plan.md. The roll picks one **provocation** from
+   command AND its output in canonical plan data. The roll picks one **provocation** from
    the table below; at least ONE of the three explore concepts must take it
    literally. If that concept wins, the provocation becomes a candidate;
    experimental delivery selects only the strongest two or three peaks instead
@@ -242,12 +243,12 @@ product, preserves its density metrics and translated layout, and changing it
 would damage brand continuity." Invalid reason: "Inter looks clean and modern."
 The goal is to stop reflex selection, not to declare common fonts inherently bad.
 
-**Serif discipline:** "creative/premium brief = serif" is the most-tested AI tell.
-Default is sans display. Serif only when the brief is genuinely editorial/luxury/
-publication AND you can articulate why this serif fits this brand. Emphasis inside a
-headline = italic/bold of the SAME family, never a serif word dropped into a sans
-headline. Italic display words with descenders (y g j p q) need `leading-[1.1]`+ and
-bottom padding reserve.
+**Typeface discipline:** neither serif nor sans is the default. Evaluate brand and
+content fit, visual character, language support, hierarchy, optical quality,
+continuity with valuable existing typography, and performance. A familiar face
+needs rationale; an uncommon face is not automatically better. Mixed-family
+emphasis is allowed when the hierarchy and brand concept earn it. Italic display
+words with descenders (y g j p q) need `leading-[1.1]`+ and bottom padding reserve.
 
 **Scale — pick by register:**
 - Brand: fluid `clamp()` headings, ratio ≥1.25 between steps, clamp max ≤ 6rem and
@@ -400,6 +401,11 @@ class (hidden tabs and headless renderers ship blank sections). Max one marquee 
 page. `prefers-reduced-motion: reduce` alternative for everything. Optimistic UI for
 low-stakes actions; never for payments or destructive ops.
 
+**Execution gate:** important motion is a typed before/during/after contract,
+not prose. Expressive/award needs observable composition development, continuous
+input, continuity/handoff, authored mobile behavior, and temporal evidence from
+the real runtime. A page that becomes static when entrances are removed fails.
+
 ## 7. Imagery
 
 When the brief implies imagery (restaurant, hotel, product, travel, fashion,
@@ -551,9 +557,12 @@ order — typography → spacing/rhythm → color recalibration → motion layer
 recomposition → full replacement only when unsalvageable. Honor existing
 accessibility wins and analytics hooks. `previousFile` is a composition source
 only for `restyle`. For `relayout`, old code is a content/behavior inventory. For
-`restructure` and `reimagine`, it is a wiring reference only: draft the new
-blueprint independently, then reconcile routes, handlers, data, fields, states,
-accessibility, analytics, required copy, and public APIs.
+`restructure` and `reimagine`, its DOM tree is not a composition template. The
+rendered interface remains a behavioral/content reference, quality baseline,
+and source of design equity. Draft a from-scratch counterfactual first, then
+reconcile routes, handlers, data, fields, states, accessibility, analytics,
+required copy, public APIs, and every valuable quality marked preserve,
+transform, or surpass.
 
 ### The preservation contract (mandatory for ANY redesign of existing code)
 
@@ -617,6 +626,11 @@ and appear in the self-critique screenshots. "The design system implies motion"
 does not count; entrance choreography, scroll behavior, and micro-interactions
 must be literally present. If zero animations survive to the final code, the
 request was not fulfilled — go back and add them before reporting done.
+
+Motion-selected work prototypes the uncertain mechanism only when the resolved
+prototype policy requires it. Record interaction-appropriate evidence, mobile,
+reduced motion, and implementation mappings. Static
+screenshots, a tested URL, prose, or a clean console cannot prove choreography.
 
 ### The transformation-depth ladder (offer it, then execute it)
 
@@ -717,7 +731,8 @@ the output is not done.
     code; preservation ledger reported. If motion skills were chosen, the
     implemented animations are named and present in the code.
 17. Spatial integrity (§15): every positioned/fixed element has an anchor and
-    reserved space; no interactive element overlaps another at 320/768/1280;
+    reserved space; no interactive element overlaps another at representative
+    desktop/mobile widths or a risk-triggered narrow width;
     one occupant per overlay corner; overflow-capable rows wrap or scroll
     inside their container (nothing clips at a viewport edge); animation
     end-states and parallax extremes collide with nothing; decoration layers
@@ -772,10 +787,10 @@ effects" toggle when the brief allows.
 
 **Layout & ergonomics floor** (extends checklist §12.12): tap targets ≥ 44px
 with ≥ 8px gaps; primary actions in thumb reach (bottom half) on app-register
-mobile; `100dvh` not `100vh`; no horizontal body scroll at 320px; type scale
+mobile; `100dvh` not `100vh`; no horizontal body scroll at the narrowest tested width; type scale
 clamps DOWN gracefully (hero ≥ 2rem, body stays ≥ 16px — iOS zooms inputs
-under 16px); sticky navs shrink rather than stack; test the three widths 320 /
-768 / 1280 mentally before responding.
+under 16px); sticky navs shrink rather than stack; test representative desktop
+and mobile widths, adding 320px when the composition is at risk.
 
 **Motion budget on mobile**: shorten travel and timelines according to content,
 viewport, and measured device cost. Preserve one defining idea when feasible;
@@ -908,7 +923,8 @@ counts, localized labels: size the container for the longest realistic value.
 Fixed bars get matching `padding` on the scroll container (or `scroll-margin`)
 so content can't hide beneath them — anchored headings included.
 
-**Verification is spatial, not stylistic.** At 320 / 768 / 1280, walk the page
+**Verification is spatial, not stylistic.** At representative desktop/mobile
+widths and any risk-triggered narrow width, walk the page
 top to bottom and ask of every element: what is under it, what is above it, and
 was that intentional? Any unintentional occlusion, clipped edge, or double-booked
 corner gets fixed before the respond — this is checklist §12 item 17.
