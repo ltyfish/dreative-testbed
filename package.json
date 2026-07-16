@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/saira": "^5.2.11",
+    "@fontsource-variable/work-sans": "^5.2.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
