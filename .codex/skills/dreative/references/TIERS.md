@@ -1,42 +1,34 @@
-# Ambition tiers
+# Ambition
 
-Choose the lowest tier that honestly satisfies the request. Higher tiers inherit
-all lower-tier requirements.
+Ambition has one canonical source: `contract.workflow.ambition`.
 
-## Solid (`solid`)
+## Standard
 
-- Complete, accessible, responsive interface.
-- Existing behavior and preservation manifest pass.
-- Clear hierarchy, coherent type/color/spacing, designed states.
-- Desktop, keyboard, reduced-motion, and approximately 390px mobile verified.
-- Heavy media or bespoke motion is not required.
+Strong professional design with complete functionality, accessibility,
+responsive behavior, preservation and restrained originality.
 
-## Premium (`premium`)
+## Expressive
 
-- Everything in Solid.
-- A named register, design concept, and visible signature detail.
-- Intentional photography/media treatment and a dedicated craft pass.
-- Layout composition varies by content; no repeated default-card solution.
-- Motion is restrained and purposeful unless the brief asks for more.
+Standard foundations plus visibly authored composition, purposeful motion or
+interaction, a complete experience arc, mobile translation and reduced motion.
 
-## Expressive (`expressive`)
+## Award
 
-- Everything in Premium.
-- A recorded diversity-or-development path: several distinct mechanisms/drivers,
-  or one signature mechanism developing through three states with quiet support.
-- At least one input-driven treatment; entrances alone do not satisfy the tier.
-- Mobile translations and reduced-motion fallbacks are implemented, not noted.
-- Frame behavior and heavy asset cost are measured.
+Expressive foundations plus structural or transformational development, a scene
+handoff, meaningful user control, a persistent system across at least three
+sections, intentional peaks/rests and perceptual browser evidence.
 
-## Award (`award`)
+## Experimental
 
-- Everything in Expressive.
-- A distinctive persistent spatial, media, or material system shapes the journey.
-- One unmistakable dimensional or spatial signature is subject-honest, staged,
-  and resilient. A real GLB/cutout is the proven default, not the only medium.
-- Runtime evidence covers effects, transferred weight, frame time, occlusion,
-  context loss/loading, and fallbacks.
-- The page has three memorable moments without sacrificing function.
+Award foundations plus two or three purposeful unconventional provocations and
+higher creative variance without sacrificing clarity or usability.
 
-Do not force Award requirements on product dashboards, checkout, forms, or users
-who asked for calm professional work. Ambition is a product decision, not a score.
+Transformation depth is independent. Full Audit controls evidence, not
+Ambition. Refined controls finish, not a reduction in separately selected
+motion, immersive, cinematic or experimental delivery.
+
+Legacy migration only:
+
+- `solid` becomes Standard.
+- `premium` becomes Standard unless legacy motion/variance evidence clearly
+  supports Expressive.

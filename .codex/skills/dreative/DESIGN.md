@@ -1,10 +1,18 @@
 # Dreative Design Doctrine
 
+Runtime truth outranks descriptive sophistication. A section is not Award
+because its JSON uses cinematic language: mounted selectors, dependencies,
+assets, temporal states, input response, mobile translation, and current-build
+evidence must agree. Award requires a developing first viewport, at least two
+structural or transformational moments, genuine input response, a persistent
+system spanning two compositions, and a final resolution. Entrances, tiny
+parallax, infinite rings, hover lift, and unused canvases do not fill those roles.
+
 You MUST read this file before servicing any `propose-skeletons`, `propose-variants`,
 `design-page`, or `edit-element` request, and run §12 before every respond. It exists
 because LLM-designed UIs converge on one templated look. Every rule corrects a known
 model default, but its category determines how it governs. Requests may carry a `plan` (Dreative's
-pre-computed decision: dials, per-section layout families, budgets, lints) — execute
+pre-computed constraints: dials, depth, source strategy, structural/mobile/expression contracts, budgets, and lints) — execute
 the plan, apply this doctrine to everything the plan doesn't specify. When
 `plan.skills` names specialist skills (`motion`, `3d`, `interaction`, `immersive`,
 `cinematic`, `refined`, `media`, `ux`, `mobile`), the matching
@@ -18,6 +26,20 @@ real verification—and cannot be waived. **Evidence-backed defaults** are prove
 remedies for repeated dogfood failures; follow them or declare a planning-time
 alternative with measurable criteria and runtime evidence. **Creative
 provocations** force divergent exploration but do not become shipment checklists.
+
+For Award and Experimental routes, distribute authorship. Every chapter receives
+a role: Peak, Transformation, Preparation, Echo, Rest, Resolution or Functional
+Utility. Rest remains calm, but Immersive/Cinematic rests inherit or prepare
+environmental state. The hero may be one peak and may not be the only one.
+
+Asset priority is supplied, rights-safe sourced, advantageously generated, then
+procedural. Record sourcing attempts, rights, generation rationale, derivatives,
+shipping use and production survival. One hero image reused through unrelated
+chapters is a defect unless the repetition is conceptually authored.
+
+When 3D authoring is unavailable, use a supplied model, sourced model, spatial
+cutout/billboard, pre-rendered angles, WebGL media plane/depth scene, then static
+fallback. Never rename a spatial cutout as a generated model.
 When attention is scarce, hard gates outrank defaults, and defaults outrank
 stylistic preference—but a page that only clears gates and shows no point of
 view is still a failure of this file.
@@ -64,9 +86,10 @@ Then run three tests on your intended output; restart if any fails:
 Never design by accretion, and never commit to the first concept. Three passes:
 
 1. **Explore** — sketch THREE genuinely divergent concepts, one line each:
-   palette strategy + type voice + signature element + hero thesis. Different
-   families of idea, not three shades of one (if two concepts share a palette
-   strategy or signature type, they are one concept — replace one). The slop
+   composition + focal hierarchy + material system + interaction model + type
+   voice + signature element + hero thesis. Palette or font changes alone do
+   not create a second concept. Different families of idea, not three shades
+   of one. The slop
    tests below are filters: they reject bad ideas but never generate better
    ones; this pass is where a better idea gets a chance to exist. Pick one,
    and record the two rejects with a one-line reason in the plan file
@@ -77,7 +100,7 @@ Never design by accretion, and never commit to the first concept. Three passes:
    after run. So the variance comes from OUTSIDE your head: roll a real random
    number (`node -e "console.log(1+require('crypto').randomInt(20))"`, or
    `$RANDOM % 20 + 1`, or read digits off `date +%N`) and record the literal
-   command AND its output in plan.md. The roll picks one **provocation** from
+   command AND its output in canonical plan data. The roll picks one **provocation** from
    the table below; at least ONE of the three explore concepts must take it
    literally. If that concept wins, the provocation becomes a candidate;
    experimental delivery selects only the strongest two or three peaks instead
@@ -142,7 +165,7 @@ alongside choices, so the same critique never has to be given twice.
 
 **No-media builds: structure IS the media.** When a build ships zero
 imagery (no image-gen tool, product register, or the user chose
-placeholders), the ambition tier does NOT tier down — it transfers whole
+placeholders), Ambition does not drop — it transfers whole
 onto layout, type, and motion, and this is where no-media builds die: the
 executor, with no assets to arrange, collapses to the one layout it knows
 (a vertical list of rounded cards in a centered column) and ships slop that
@@ -156,7 +179,7 @@ its own plan didn't describe. Hard rules for any expressive+ no-media build:
    the blueprint's layout-family words couldn't match them, the build
    restyled a card list and called it the spine — that is a depth-honesty
    failure (§11), not a detail.
-2. **≥ 2 bespoke drawn/procedural artifacts.** With no photography, the page
+2. **Bespoke drawn/procedural artifacts carry the missing media role.** With no photography, the page
    earns visual richness from things MADE for it: a live canvas (meter,
    field, trace), custom SVG structure (rules, notches, connectors, dials —
    drawn, not icon-font), procedural texture/grain, a data-driven ornament.
@@ -167,14 +190,12 @@ its own plan didn't describe. Hard rules for any expressive+ no-media build:
    — not one font-size row layout repeated N times.
 4. **Motion budget spends on the structure**, not on entrance fades: the
    spine's own physicality (things racked, tossed, slid, stamped) is the
-   choreography. Motion.md's inventory applies at full dial.
-5. **A live rendered layer is required at award tier.** No imagery does not
-   mean no rendering: the page ships at least one WebGL/canvas system doing
-   real graphic work — a particle field, procedural texture/flowfield,
-   shader-lit surface, a data-driven instrument that never stops — plus
-   dimensional motion somewhere real (CSS 3D card physicality, depth-layered
-   parallax, a lit WebGL surface). A no-media award page with zero rendered
-   pixels is a text document with transitions. Vocabulary to draw from
+   choreography. Motion.md's treatment and verification rules apply.
+5. **Choose a rendering layer only when it earns its cost.** No imagery can
+   justify Canvas/WebGL when a live procedural or data-driven surface is the
+   concept, but award ambition does not require one. Spatial typography,
+   layered DOM/SVG composition, masks, or other subject-grounded systems may be
+   stronger. Vocabulary to draw from when rendering is warranted
    (subject-grounded, not decorative): oscilloscope/waveform traces driven by
    real events · topographic contour lines drifting · dot-matrix/LED field
    that spells live state · plexus line-network connecting related items ·
@@ -213,7 +234,7 @@ a headline, an image, a live demo, an interactive moment. Whatever form fits.
 - `dark-tech` — off-black surfaces, restrained neon, terminal cues used sparingly.
 - `trust` — public-sector/regulated: symmetric, motion ≤2, maximum legibility.
 
-### The three dials (1-10, resolved in `plan.dials`)
+### Optional design inputs (1-10, resolved before writing the v7 contract)
 
 - `variance` — 1 symmetry → 10 masonry/offsets/20vw empty zones. >4 forbids the
   centered-hero default. Any asymmetry collapses to clean single-column < 768px.
@@ -244,12 +265,12 @@ product, preserves its density metrics and translated layout, and changing it
 would damage brand continuity." Invalid reason: "Inter looks clean and modern."
 The goal is to stop reflex selection, not to declare common fonts inherently bad.
 
-**Serif discipline:** "creative/premium brief = serif" is the most-tested AI tell.
-Default is sans display. Serif only when the brief is genuinely editorial/luxury/
-publication AND you can articulate why this serif fits this brand. Emphasis inside a
-headline = italic/bold of the SAME family, never a serif word dropped into a sans
-headline. Italic display words with descenders (y g j p q) need `leading-[1.1]`+ and
-bottom padding reserve.
+**Typeface discipline:** neither serif nor sans is the default. Evaluate brand and
+content fit, visual character, language support, hierarchy, optical quality,
+continuity with valuable existing typography, and performance. A familiar face
+needs rationale; an uncommon face is not automatically better. Mixed-family
+emphasis is allowed when the hierarchy and brand concept earn it. Italic display
+words with descenders (y g j p q) need `leading-[1.1]`+ and bottom padding reserve.
 
 **Scale — pick by register:**
 - Brand: fluid `clamp()` headings, ratio ≥1.25 between steps, clamp max ≤ 6rem and
@@ -366,6 +387,13 @@ sites win on composition, not decoration; this is where that happens.
 Every animation answers "what does this communicate?" — hierarchy, storytelling,
 feedback, or state change. "It looked cool" = delete it.
 
+Motion has three roles. **Decorative motion** reveals, responds, or adds ambient
+life. **Structural motion** controls hierarchy, pacing, pinning, and composition
+handoffs. **Transformational motion** changes imagery/type/objects into a new
+form or the next scene. Expressive/award pages evaluate key moments for the last
+two roles; opacity, translate, scale, and slight parallax are not automatically
+enough merely because they animate.
+
 **The 100/300/500 rule:** 100-150ms instant feedback (press, toggle) · 200-300ms
 state changes (menu, tooltip, hover) · 300-500ms layout changes (accordion, modal)
 · 500-800ms entrances (hero reveal, brand only). Exits run ~75% of enter duration.
@@ -381,9 +409,12 @@ micro-interactions; the uniform fade-and-rise on every scrolled section is the
 saturated AI tell. Some brands skip entrance motion entirely — restraint as voice.
 Product = 150-250ms, state-conveying only, zero page-load choreography.
 
-**Mechanics:** animate transform/opacity by default; blur/backdrop-filter/clip-path/
-masks/shadow allowed when they materially improve the effect, bounded to small areas,
-verified smooth. Never casually animate width/height/top/left/margins (use FLIP or
+**Mechanics:** use transform/opacity for ordinary local state when they fit, but
+do not make them the unexamined expressive default. Select CSS, GSAP timelines,
+ScrollTrigger, SVG, masks, `clip-path`, DOM fragments, Canvas, WebGL/shaders,
+sequences, video, Lottie, or 3D by visual result, cost, responsiveness, and
+available assets. Use the simplest mechanism capable of making the intended
+transformation convincing. Never casually animate width/height/top/left/margins (use FLIP or
 grid-template-rows). Sibling stagger `calc(var(--i) * 50ms)` capped at ~500ms total.
 IntersectionObserver (unobserve after firing), CSS scroll-driven animations, or
 Motion/GSAP scroll tools — `window.addEventListener("scroll")` is a hard ban. Reveals
@@ -391,6 +422,11 @@ enhance an already-visible default; never gate content visibility on a JS-trigge
 class (hidden tabs and headless renderers ship blank sections). Max one marquee per
 page. `prefers-reduced-motion: reduce` alternative for everything. Optimistic UI for
 low-stakes actions; never for payments or destructive ops.
+
+**Execution gate:** important motion is a typed before/during/after contract,
+not prose. Expressive/award needs observable composition development, continuous
+input, continuity/handoff, authored mobile behavior, and temporal evidence from
+the real runtime. A page that becomes static when entrances are removed fails.
 
 ## 7. Imagery
 
@@ -541,8 +577,14 @@ route slugs, nav labels, form field names, logo, legal copy; extract brand token
 before applying §4 (a purple brand stays purple); apply modernisation levers in
 order — typography → spacing/rhythm → color recalibration → motion layer → hero
 recomposition → full replacement only when unsalvageable. Honor existing
-accessibility wins and analytics hooks. Preserve prior element-level edits when
-`previousFile` is set.
+accessibility wins and analytics hooks. `previousFile` is a composition source
+only for `restyle`. For `relayout`, old code is a content/behavior inventory. For
+`restructure` and `reimagine`, its DOM tree is not a composition template. The
+rendered interface remains a behavioral/content reference, quality baseline,
+and source of design equity. Draft a from-scratch counterfactual first, then
+reconcile routes, handlers, data, fields, states, accessibility, analytics,
+required copy, public APIs, and every valuable quality marked preserve,
+transform, or surpass.
 
 ### The preservation contract (mandatory for ANY redesign of existing code)
 
@@ -607,6 +649,11 @@ does not count; entrance choreography, scroll behavior, and micro-interactions
 must be literally present. If zero animations survive to the final code, the
 request was not fulfilled — go back and add them before reporting done.
 
+Motion-selected work prototypes the uncertain mechanism only when the resolved
+prototype policy requires it. Record interaction-appropriate evidence, mobile,
+reduced motion, and implementation mappings. Static
+screenshots, a tested URL, prose, or a clean console cannot prove choreography.
+
 ### The transformation-depth ladder (offer it, then execute it)
 
 A redesign request has a depth, and styling is only the shallowest rung. When the
@@ -637,9 +684,10 @@ coat of CSS on the old skeleton.
 **The drastic-change floor (rungs 3–4).** The chronic failure at these rungs is
 timidity: the agent rebuilds the components but reproduces the old page's shape,
 so a before/after glance reads as a re-theme. That is a failed restructure. At
-rung 3–4 the new page must be **unmistakably a different design at one glance**
-— someone shown both screenshots should assume different products. Concretely,
-change at least TWO structural paradigms, not just their styling:
+rung 3–4 the structural-delta contract must name material changes to page
+architecture, component boundaries, navigation, workflow, or interaction model.
+Tokens, cards, decoration, and entrance motion cannot satisfy it. Relevant
+paradigms can include:
 
 - **Navigation model** — top bar → side rail / command palette / dock / sticky
   chapter nav / full-screen overlay menu.
@@ -651,12 +699,12 @@ change at least TWO structural paradigms, not just their styling:
 - **Hero concept** — a new signature idea (typographic monument, media plane,
   3D object, kinetic composition), not the old hero with new colors.
 
-Creativity is bounded by usability: every drastic move must still be MORE
+These are diagnostic possibilities, not quotas. Creativity is bounded by usability: every drastic move must still be MORE
 user-friendly than what it replaces — clearer hierarchy, fewer steps to the key
 action, honest affordances, mobile ergonomics intact (§13, skills/ux.md). A
 restructure that confuses users is as failed as one that changed nothing. The
-self-critique pass at these rungs must answer: "name the two-plus structural
-paradigms that changed, and why each is easier to use than before." If mid-work you discover the chosen rung cannot
+self-critique pass must explain why the implemented delta honestly satisfies the
+chosen depth and how it improves use. If mid-work you discover the chosen rung cannot
 honestly deliver the requested outcome (the reference look demands structure the
 current markup can't express), say so and ask to move up one rung rather than
 shipping an imitation. Rungs 3–4 on an extracted app still honor §11 preservation
@@ -705,7 +753,8 @@ the output is not done.
     code; preservation ledger reported. If motion skills were chosen, the
     implemented animations are named and present in the code.
 17. Spatial integrity (§15): every positioned/fixed element has an anchor and
-    reserved space; no interactive element overlaps another at 320/768/1280;
+    reserved space; no interactive element overlaps another at representative
+    desktop/mobile widths or a risk-triggered narrow width;
     one occupant per overlay corner; overflow-capable rows wrap or scroll
     inside their container (nothing clips at a viewport edge); animation
     end-states and parallax extremes collide with nothing; decoration layers
@@ -736,9 +785,9 @@ DOM/listeners there.
 
 **Pinned/scrubbed sections**: pinning is fragile on mobile (URL-bar resize
 fires viewport changes mid-pin; iOS momentum scroll skips scrub frames).
-Strategies in preference order: (1) keep the pin but shorten it (≤ 1.5
-viewports) and drive it with `position: sticky`, never JS pinning; (2) unpin —
-the same content as stacked sections with simple in-view reveals;
+Strategies in preference order: (1) keep the pin but shorten it and drive it
+with `position: sticky` when reliable; (2) redesign the same idea as a shorter
+mask, layered-parallax, or state handoff sequence rather than merely disabling it;
 (3) `ScrollTrigger.matchMedia()` / a `matchMedia` branch that swaps the whole
 choreography. Never let a desktop pin length ride on a phone.
 
@@ -760,15 +809,15 @@ effects" toggle when the brief allows.
 
 **Layout & ergonomics floor** (extends checklist §12.12): tap targets ≥ 44px
 with ≥ 8px gaps; primary actions in thumb reach (bottom half) on app-register
-mobile; `100dvh` not `100vh`; no horizontal body scroll at 320px; type scale
+mobile; `100dvh` not `100vh`; no horizontal body scroll at the narrowest tested width; type scale
 clamps DOWN gracefully (hero ≥ 2rem, body stays ≥ 16px — iOS zooms inputs
-under 16px); sticky navs shrink rather than stack; test the three widths 320 /
-768 / 1280 mentally before responding.
+under 16px); sticky navs shrink rather than stack; test representative desktop
+and mobile widths, adding 320px when the composition is at risk.
 
-**Motion budget on mobile**: entrance choreography total ≤ 600ms (vs 900ms
-desktop), at most 1 scroll-driven sequence per page, marquees pause when
-off-screen. Battery is a design constraint: continuous rAF loops must idle
-when nothing animates.
+**Motion budget on mobile**: shorten travel and timelines according to content,
+viewport, and measured device cost. Preserve one defining idea when feasible;
+marquees pause off-screen and continuous rAF loops idle when nothing animates.
+Battery is a design constraint, not a reason to erase the concept.
 
 ## 14. Typography sourcing (escape the first reflex)
 
@@ -896,7 +945,8 @@ counts, localized labels: size the container for the longest realistic value.
 Fixed bars get matching `padding` on the scroll container (or `scroll-margin`)
 so content can't hide beneath them — anchored headings included.
 
-**Verification is spatial, not stylistic.** At 320 / 768 / 1280, walk the page
+**Verification is spatial, not stylistic.** At representative desktop/mobile
+widths and any risk-triggered narrow width, walk the page
 top to bottom and ask of every element: what is under it, what is above it, and
 was that intentional? Any unintentional occlusion, clipped edge, or double-booked
 corner gets fixed before the respond — this is checklist §12 item 17.
