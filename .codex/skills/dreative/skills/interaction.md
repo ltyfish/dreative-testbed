@@ -1,5 +1,7 @@
 # Dreative Specialist Skill — Micro-interactions & Effect Craft
 
+Selected interaction proves pointer/touch/keyboard input, observable state response, and release/settling or repeat/reverse behavior where planned; hover styling is not a drag.
+
 ## Contract
 
 Follow `../references/SKILL_CONTRACT.md`. Dependencies: `ux`, `mobile`; add
@@ -128,6 +130,10 @@ the static design, not a broken half-effect. All of these are decoration — cap
   (1.4s linear infinite), same radius system as the content it becomes.
 
 ## 6. Guardrails
+
+Map every important gesture to its `motionMomentId` and prove input, intermediate,
+settled, reverse, mobile/touch, keyboard, and reduced-motion states with temporal
+evidence. Hover screenshots alone do not prove interaction response.
 
 - Decorative pointer effects: max 1-2 distinct kinds per page, desktop-only,
   `prefers-reduced-motion` disables tracking (element stays styled, static).

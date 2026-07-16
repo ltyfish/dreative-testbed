@@ -1,5 +1,7 @@
 # Dreative Specialist Skill — Experimental / Creative-Mindset Dial
 
+Selected experimental treatment owns one purposeful non-generic provocation with an implementation binding and evidence; an unusual label is not coverage.
+
 ## Contract
 
 Follow `../references/SKILL_CONTRACT.md`. Dependencies: `motion`, `interaction`,
@@ -109,3 +111,5 @@ When the user has opted into `experimental`:
 - Every ambitious idea still needs 3d.md §5 / motion.md §5 performance
   budgets and a concrete fallback (PLAN.md §2) — experimental means bolder
   ideas, not exemption from the runtime verification gate.
+- A selected provocation maps to typed motion/media-transformation contracts and
+  must survive the static-feeling rejection test with controlled temporal proof.
