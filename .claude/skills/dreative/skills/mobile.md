@@ -1,5 +1,19 @@
 # Dreative Specialist Skill — Mobile Excellence
 
+Selected mobile coverage requires authored phone composition and touch interaction with exact viewport evidence, not desktop stacking or disabled motion.
+
+## Contract
+
+Universal foundation: ux and baseline mobile apply to every web page.
+
+Follow `../references/SKILL_CONTRACT.md`. Dependency: `ux`. This skill is
+universal for web work. Deliver a section-by-section mobile translation, touch
+targets, responsive media/effect budgets, a page-level mobile blueprint, and
+representative 390×844 verification. Add 320px only when narrow-width risk exists.
+It is never satisfied by shrinking desktop. Done means navigation, content,
+forms, orientation/viewport behavior, performance, and reduced motion pass on a
+coarse pointer.
+
 Load this file when `plan.skills` includes `mobile`, when the brief says
 mobile-first / most users are on phones / "make the mobile version great", or
 when an app-register product is primarily used on mobile. It EXTENDS DESIGN.md
@@ -23,6 +37,10 @@ choreography.
   screenful like one (hero = one headline + one visual + one CTA, nothing
   else). If a desktop section held three things, the mobile version stacks
   them as three clean beats or cuts to the strongest one.
+- **Task pages are task-first.** The first viewport exposes what the user needs
+  to act, the current state, and the primary action. Supporting explanation
+  follows; promotional or decorative panels never block the task without a
+  page-specific reason recorded in the blueprint.
 - **Tidy is the aesthetic.** Consistent gutters (20-24px), one column
   discipline, generous vertical rhythm (56-80px between sections), no element
   closer than 8px to another. Clutter reads twice as loud at 390px.
@@ -50,33 +68,34 @@ choreography.
   rows), contact/socials in the footer of the overlay. Wired per ux.md §1
   (focus trap, scroll lock, Esc/back closes).
 
-## 2. Motion on mobile (still premium, never crazy)
+## 2. Motion on mobile (shorter, lighter, still authored)
 
-The motion inventory scaled to touch (extends motion.md §9):
+The motion inventory scaled to touch (extends motion.md §5):
 
-- **Keep**: one composed hero entrance (≤ 600ms total), line-mask headline
-  reveals, in-view section reveals (2-3, `once: true`), press states on
+- **Keep**: the experience's defining transformation in a shorter form when it
+  remains readable, plus line-mask headline reveals, selected in-view moments,
+  and press states on
   EVERYTHING tappable (`active:scale-[0.98]` — on mobile this is the main
   interaction feedback, since hover doesn't exist), marquees (pause
   off-screen), counters, accordion springs.
 - **Translate**: parallax halves or dies (§13); pinned sequences → short
-  sticky sections (≤ 1.5 viewports) or plain stacked beats; hover-woken media
+  measured sticky sections, clip-path/layer handoffs, or plain stacked beats; hover-woken media
   → in-view-woken (loop plays while ≥ 60% visible, pauses off-screen) or
   tap-to-play; magnetic/cursor effects → gone entirely, replaced by press
   feedback; drag-to-explore → swipe carousel or index list as PRIMARY
   (DESIGN.md §13).
-- **Ban on mobile**: smooth-scroll libraries at full strength (Lenis: disable
-  or `syncTouch` carefully — fighting native momentum feels broken), more than
-  one scrubbed sequence, simultaneous animation of > 4 elements, any effect
-  that drops the scroll below 60fps on a mid-range phone.
+- **Avoid on mobile**: smooth-scroll libraries at full strength (Lenis: disable
+  or `syncTouch` carefully — fighting native momentum feels broken), competing
+  scrubbed sequences, dense simultaneous animation, and any effect that misses
+  the measured frame-time target on a mid-range phone.
 - Scroll reveals trigger earlier (`margin: "-10% 0px"` not -20%) — mobile
   viewports are short and users scroll fast; late reveals = users see blank.
 
 ## 3. 3D and heavy media on mobile
 
-- Default: replace live 3D with the poster or a pre-rendered loop (3d.md §7,
-  media.md). A generated video loop IS the mobile 3D strategy in most cases —
-  visually near-identical, thermally free.
+- Choose from a simplified live scene, a pre-rendered loop, layered DOM/SVG, or
+  an intentional poster composition according to concept and measured device
+  cost (3d.md §5, media.md). Do not simply erase the defining moment.
 - If live 3D ships: dpr capped at 2, sim/particle counts halved, post-FX off,
   `frameloop="demand"` where possible, pause on scroll-out and
   `document.hidden`. Test the thermal story: 30s of idling must not heat the
@@ -103,7 +122,8 @@ The motion inventory scaled to touch (extends motion.md §9):
 
 ## 5. Mobile verification (part of the runtime pass)
 
-At 390×844 (plus one small check at 320px):
+At 390×844 (plus 320px when text, controls, dense composition, layered media, a
+critic finding, Full Audit, or Dogfood identifies narrow-width risk):
 
 1. Walk every section: no horizontal body scroll, no clipped text/controls,
    no element under fixed bars (DESIGN.md §15 at mobile widths).
@@ -111,7 +131,7 @@ At 390×844 (plus one small check at 320px):
 3. Scroll the full page fast: reveals keep up, nothing janks, sticky elements
    behave through the URL-bar resize.
 4. Confirm the motion translation shipped (§2): press states everywhere, hero
-   ≤ 600ms, heavy effects swapped for their mobile strategy — name what runs
+   timing stays readable and responsive, heavy effects use their mobile strategy — name what runs
    on mobile vs desktop in the final report.
 5. If media/3D shipped: posters load, loops play inline (not fullscreen),
    pause off-screen.

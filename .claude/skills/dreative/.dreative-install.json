@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "packageVersion": "0.6.1",
-  "target": "codex",
-  "installedAt": "2026-07-16T09:36:43.270Z",
+  "target": "claude",
+  "installedAt": "2026-07-16T09:37:41.901Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -53,5 +53,5 @@
     "skills/refined.md": "58f6e312f3fb8eb5fa7c43c7fdb96dc6a5c9c2816358ec50c6864fb86616cf8a",
     "skills/ux.md": "fd77675a6b27fa4b2e26fb88585bcf36fbe8a1a0e95ba76f70843048b1ad0eeb"
   },
-  "manifestHash": "8f0356036205877f0e878efa1be183c814fba5c233f213e246162ee755360f10"
+  "manifestHash": "a5981426e779c00a368ecba300b892ac6d0397b67bbe9f07b4831799aa218e11"
 }

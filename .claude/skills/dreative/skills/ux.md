@@ -1,5 +1,18 @@
 # Dreative Specialist Skill — Functional UX (everything works)
 
+Selected UX coverage owns working functionality, semantics, keyboard access, focus, accessibility and application states with runtime evidence.
+
+## Contract
+
+Universal foundation: ux and baseline mobile apply to every web page.
+
+Follow `../references/SKILL_CONTRACT.md`. This universal foundation has no
+specialist dependency; pair it with `mobile` for all web delivery. Deliver the
+preservation manifest, state inventory, semantic/keyboard behavior, feedback,
+and functional audit evidence. It may never be deselected to fund visual work.
+Done means routes, controls, forms, states, focus, hit areas, and failure paths
+work without visual effects.
+
 Load this file when `plan.skills` includes `ux`, for ANY product-register page,
 and whenever a redesign touches navigation, forms, or stateful views. It EXTENDS
 DESIGN.md §9 (the product floor) into a full working-page contract. Its premise:
@@ -40,7 +53,7 @@ Every page you ship satisfies, verifiably:
 - **Anchors under fixed headers**: every in-page anchor target gets
   `scroll-margin-top` ≥ header height; smooth-scroll respects reduced-motion.
 - **Logo → home. Back button works** — spatial/SPA transitions must not break
-  history (immersive.md §1); modals and drawers close on back where users
+  history (immersive.md §2); modals and drawers close on back where users
   expect it (mobile especially).
 - **Custom scroll (Lenis)** must not break anchors, keyboard scrolling
   (space/PgDn/arrows), or focus-into-view; wire `lenis.scrollTo` for anchor
@@ -83,7 +96,7 @@ confirmation and, ideally, undo instead of a scary modal.
   escapable (no traps outside intentional modal traps).
 - Whatever hover reveals, focus reveals (cards' secondary actions, hover-woken
   media, dropdown menus). Custom gestures (drag, click-and-hold) always have a
-  plain keyboard/click equivalent (cinematic.md §2).
+  plain keyboard/click equivalent (cinematic.md §3).
 - **The pointer-events audit** (the #1 cause of "cool but broken"): walk every
   overlay in the stacking order — canvases, gradient/grain layers, custom
   cursor layers, transition curtains, closed menus, preloaders — and verify
