@@ -1,0 +1,37 @@
+{
+  "licenseReviewedAt": "2026-07-16",
+  "license": {
+    "name": "Pexels License",
+    "url": "https://www.pexels.com/license/"
+  },
+  "assets": [
+    {
+      "file": "northwind-bag.webp",
+      "type": "generated-image",
+      "generator": "OpenAI image generation",
+      "usage": ["hero spatial cutout", "subscription resolution"],
+      "description": "Original gusseted kraft coffee bag with Northwind label, copper roast seal and transparent background."
+    },
+    {
+      "file": "roaster.webp",
+      "type": "sourced-image",
+      "creator": "HAROLD PRODUCTIONS",
+      "source": "https://www.pexels.com/photo/coffee-roasting-machine-15312659/",
+      "usage": ["hero documentary plate"]
+    },
+    {
+      "file": "beans-roasting.webp",
+      "type": "sourced-image",
+      "creator": "Denys Gromov",
+      "source": "https://www.pexels.com/photo/close-up-of-coffee-beans-in-a-coffee-roasting-machine-4765838/",
+      "usage": ["reviews documentary rest"]
+    },
+    {
+      "file": "pour-over.webp",
+      "type": "sourced-image",
+      "creator": "Aakash Goel",
+      "source": "https://www.pexels.com/photo/v60-pour-over-coffee-brewing-process-29261561/",
+      "usage": ["brew-guide transformation"]
+    }
+  ]
+}
