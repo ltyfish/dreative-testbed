@@ -3,7 +3,7 @@
   "packageVersion": "0.9.0",
   "canonicalPlanVersion": 9,
   "target": "codex",
-  "installedAt": "2026-07-18T07:02:13.746Z",
+  "installedAt": "2026-07-18T07:14:29.535Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -25,7 +25,7 @@
     "frameworks/sveltekit.md": "684e49573f3c6b128358a2c02cb3b49dfefb494dd4f583f0c49888c5a224d78d",
     "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "c1272e2bb1a4ab0183642b290b1f19010feb8e3b442b1f395fd6893b93f21b1d",
-    "PLAN.md": "241076137cbbdb8d93fa9b6f47887b448656ec2b41c8ba0fd132ce023dccf3a0",
+    "PLAN.md": "50005abdd9c6e713e4a5260043dda2af52321e386a1a22ee5d3e9b76ff4e20eb",
     "recipes/3d-recipes.md": "aae5cec2fd74433aa55bf93e95690eaa481b525619077084fdfc80fee1119433",
     "recipes/atmosphere-recipes.md": "9c2e2c3b3ff0fb41c210fe6e3c65e6c1bd2a6e8d8ddd478bc1b2e9d9ca96e893",
     "recipes/cinematic-recipes.md": "ec0281066a12240cc87ddefc346af4d05d77f04431ff9a9915faaa2887384e2e",
@@ -57,7 +57,7 @@
     "schemas/trusted-verification.schema.json": "32f89d6a5653f26dbfa57d1750dc73b914ce71d52ad4682175c616f1cb4fbdd3",
     "schemas/verify.schema.json": "45d590f29c45635ddb8314f2d1430db4bd5ceea7af1b3dd7979f66b3ca64547f",
     "schemas/visual-critic.schema.json": "5f8371735a57bbccb212828df62afec0da127a5c70320a6da8948440d4705a70",
-    "SKILL.md": "90a378a29977f9c8c8fce414af32bcec6ca53740e63c083e5ac26504d41bcc89",
+    "SKILL.md": "24fb7d754c015e4355523c47c9eacb245c2e91184652a2cea85870c04619326d",
     "skills/3d.md": "c042dad9c72b28f9eed20085772d295d4463b7afcb1ac2709127ba01cdb45264",
     "skills/cinematic.md": "7a25ea1232849198fb921c959b5966b86fdd7fd49ccfed6146611750dd6e0789",
     "skills/experimental.md": "2f1ba9feb270736c1c851244b901fd00475bf750547f69755241ce23ae9bbb9e",
@@ -69,5 +69,5 @@
     "skills/refined.md": "bd4c5f8dd32bff7bb8b804a95cf0b02b6fab653a4622dc2d4212f2312db4af80",
     "skills/ux.md": "fd77675a6b27fa4b2e26fb88585bcf36fbe8a1a0e95ba76f70843048b1ad0eeb"
   },
-  "manifestHash": "0030ccae03103ca205881f6fc386b300629bd7de16960943b101c6eff48fd6ab"
+  "manifestHash": "24c57a2c0032358daab7ca5e1ee29c3007913673f0f84d52202c8b4973eb17b7"
 }
