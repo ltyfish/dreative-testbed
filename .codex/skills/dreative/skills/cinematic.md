@@ -1,56 +1,14 @@
-# Dreative Specialist Skill — Cinematic WebGL & Experiential Interfaces
+# Cinematic
 
-## Contract
+Use when pacing, framing, and scene change communicate a real story.
 
-Follow `../references/SKILL_CONTRACT.md`. Dependencies: `motion`, `interaction`,
-`media`, `ux`, `mobile`; add `3d` only for real spatial rendering. Deliver a
-coherent living-surface system, gesture/keyboard parity, consent-aware audio,
-budgets, calm fallback, and runtime evidence.
+Create setup, escalation, peak, rest, and resolution. Keep user control:
+navigation, focus, reduced motion, and escape from long sequences. Let media,
+type, and composition hand off together.
 
-Load for a film-like experiential register—not merely a dark palette.
+Avoid treating a looping hero video as cinematic design. Reject long pinned
+scenes, forced waiting, constant motion, and transitions that obscure product
+access.
 
-## 0. Explore before recipes
-
-Record three original concepts based on brand material, subject, assets, and
-visitor role before opening `../recipes/cinematic-recipes.md`. Decide what the
-surface represents and how it develops; never begin with “add particles.”
-
-## 1. Hard gates
-
-- The experience communicates and works without WebGL, sound, fine pointer, or
-  full motion.
-- Audio is user-initiated, visible, controllable, and never required.
-- Gesture interactions have keyboard/touch/conventional equivalents.
-- Content stays readable; effect layers never intercept or occlude controls.
-- Runtime fallbacks, reduced motion, mobile, loading, frame time, and asset
-  budgets are tested with structured proof.
-
-## 2. Cinematic composition
-
-Use a limited visual cast: one living surface/material system, a disciplined type
-system, one graded palette/light direction, and a small gesture vocabulary.
-Transitions belong to that same material logic. Film grain, refraction, velocity,
-or particles are means—not the concept.
-
-At expressive/award use diversity or development. Cinematic coherence often
-chooses development: the living surface becomes atmosphere, media boundary, and
-navigation instrument across different chapters, supported by quieter type and
-input feedback.
-
-## 3. Interaction and sound
-
-Choose only gestures that expose meaning: drag to explore, click/hold to focus,
-cursor as an instrument, velocity response, or chapter scrub. Label unfamiliar
-gestures and provide boring equivalents. Sound supports interaction/state with
-restrained gain and respects mute/visibility/route lifecycle.
-
-## 4. Planning and verification
-
-Plan surface meaning, states, drivers, media identity, transition logic, gestures,
-audio consent, mobile/reduced-motion form, loading/failure fallback, and budgets.
-
-Verify live surface change, media identity/alignment, gesture alternatives,
-sound consent/mute, full journey and reverse, mobile, reduced motion, console,
-frame-time/FPS, asset weight, hidden-tab pause, and context-loss fallback.
-
-Recipe reference: `../recipes/cinematic-recipes.md`, after exploration only.
+Read `../references/CREATIVE_EXECUTION.md` and
+`../recipes/cinematic-recipes.md` after selecting the narrative mechanism.
