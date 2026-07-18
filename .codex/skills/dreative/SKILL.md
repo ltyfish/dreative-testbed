@@ -1,230 +1,152 @@
 ---
 name: dreative
-description: Frontend design skill for substantial UI work, with an optional visual round-trip editor. Use for pages, sections, redesigns, motion, media, interaction, 3D, and visual editing. Direct design is the default.
+description: Plan, implement and fail-closed verify authored frontend design in the real application.
 ---
 
 # Dreative
 
-Dreative makes the coding agent responsible for design judgment, implementation,
-preservation, and proof. It has no AI runtime of its own.
-
-## 1. Choose the mode
-
-- **Direct design (default):** plan, edit the real application, and verify it.
-  No server, extraction, replica, or wireframe is involved.
-- **Visual round-trip:** use only when the user explicitly asks to open Dreative
-  or edit visually. Follow §8.
-
-For a tiny isolated change, make the change directly and run the smallest useful
-check. For substantial design work, follow every Direct Design step below.
-
-## 2. Read progressively
-
-Read this file first, then only the references selected by the plan:
-
-1. `PLAN.md` — planning and the section blueprint.
-2. `DESIGN.md` — visual doctrine and redesign/preservation rules.
-3. `references/TIERS.md` — ambition-tier deliverables.
-4. `references/ARTIFACTS.md` — machine-readable plan, preservation, ledger,
-   and verification files.
-5. `references/RULES.json` and `references/REFLEX_FONTS.json` — rule categories,
-   failure history, bounded substitutions, and reflex font choices.
-6. `frameworks/<name>.md` — the adapter matching the repository.
-7. Each selected `skills/<name>.md`, once.
-8. Only after three original concepts are recorded, load the relevant
-   `recipes/<name>-recipes.md` for feasibility, implementation, performance,
-   fallback selection, or repair of a weak concept.
-
-Detailed doctrine belongs in those references, not in this orchestration file.
-
-## 3. Direct Design protocol
-
-### 3.1 Discover
-
-- Inspect the minimum repository context needed to understand the relevant page,
-  framework, styling system, routes, and available media/tooling.
-- For an existing interface, create `.dreative/preservation.json` before edits.
-  Include links, handlers, forms, visible copy, states, routes, analytics hooks,
-  and accessibility contracts. Every item needs a stable `file` + `needle` that
-  `dreative audit` can check mechanically.
-- Read `.dreative/ledger.json` when it exists. Treat it as preference and failure
-  history, never as proof that a new request is complete.
-
-### 3.2 Plan
-
-- Run `PLAN.md` and resolve the transformation depth: restyle, relayout,
-  restructure, or reimagine.
-- Resolve one ambition tier: solid, premium, expressive, or award.
-- Explore three genuinely different concepts, commit to one, and record why the
-  others were rejected.
-- Classify important rules through `references/RULES.json`: hard gates are
-  absolute; evidence-backed defaults remain the proven remedy; creative
-  provocations influence exploration rather than becoming shipment quotas.
-- Follow the proven default, or outperform it with a named alternative,
-  measurable success criteria, and runtime evidence. Any substitution is
-  declared before `implementationStartedAt` in `ruleExceptions`; hard gates
-  cannot be substituted.
-- Run one short decision phase containing several sequential single-question
-  calls. Use the environment's structured question tool when available;
-  otherwise ask in chat. Do not ask about implementation details the agent can
-  infer safely.
-- Write `.dreative/plan.json` using `references/ARTIFACTS.md`. For multi-page
-  work, show a page × skill matrix: the user can assign treatments to specific
-  pages, and approve routing for selected skills left unassigned. Every section
-  names its layout family, skills, assets, interactions, mobile translation,
-  fallback, and verification criteria.
-- Render a concise `.dreative/plan.md` for the user and for session re-entry.
-
-The approved plan is a delivery contract. A section ends as `shipped`,
-`fallback`, or `cut` with a reason—never silently omitted.
-
-At `expressive` and `award`, choose one coherent quality path: `diversity`
-(several mechanisms across several drivers) or `development` (one signature
-mechanism evolving through at least three materially different roles, supported
-by two quieter mechanisms). Experimental work explores one non-obvious candidate
-per major section, then selects only the strongest two or three to ship.
-
-### 3.3 Select skills
-
 Universal foundation: ux and baseline mobile apply to every web page.
-Add treatments from this complete picker:
 
-| Skill | Use it for |
-| --- | --- |
-| `refined` | Premium clean business, commerce, photography, and restrained motion |
-| `motion` | Scroll choreography, entrances, parallax, kinetic type, and transitions |
-| `interaction` | Hover craft, magnetic controls, cursor effects, and tactile feedback |
-| `media` | Generated/sourced image and video production, grading, and media treatments |
-| `3d` | WebGL, three.js/R3F, shaders, models, particles, and fallbacks |
-| `immersive` | Persistent scenes, spatial transitions, preloaders, and scroll-as-journey |
-| `cinematic` | Living surfaces, shader grading, gesture exploration, and sound |
-| `experimental` | High-variance composition, material shifts, and unusual provocations |
-| `ux` | Working navigation, forms, states, accessibility, and interaction audits |
-| `mobile` | Mobile-native composition, touch ergonomics, and phone verification |
+Use this workflow for substantial interactive design and redesign.
 
-Skill dependencies are additive:
+1. Inspect the repository, current behavior, routes, assets, package state and
+   existing design equity before editing.
+2. Resolve Ambition, Execution, Prototype and Purpose explicitly. A user-facing task is interactive; ask in plain text if needed and never silently default a
+   missing control. Full Audit controls evidence, not visual ambition.
+3. Complete the missing-information intake in `PLAN.md`. Do not ask again for
+   facts already provided or reliably detected. Explicitly resolve references,
+   generated images/video, externally sourced images/video, supplied assets,
+   missing assets, and 3D props/assets.
+4. Explain candidate treatments using `references/SKILL_CONTRACT.md`. User
+   selection is authoritative. Regex routing is suggestion-only.
+5. Write the single editable contract to `.dreative/plan.yaml` v9. It must
+   include project definition, creative direction, per-section state contracts,
+   a source-owned continuity contract, treatment and mechanism obligations,
+   requirement traceability, asset/package strategy and the verification plan.
+   Run `dreative plan summary`; do not make the user review raw YAML.
+6. Record approval with host-neutral provenance and an explicit assurance
+   level. TTY plus a CLI flag records only `user-origin-unverified`; it is not
+   human attestation. Prompt preauthorization must predate planning and may use
+   a host-event ID/content hash, signed record or optional prompt file.
+   Wait for approval before material application-source implementation.
+7. Hash only `contract`. Machine updates belong in `execution`. Any material
+   contract edit needs a change request and reapproval.
+8. When required, prototype the uncertain mechanism in an isolated prototype
+   route/location, verify it through the integrity-linked runner, and record a prototype
+   decision before integration. A completed application is not its prototype.
+   Use `dreative verify --prototype-id <id> --prototype-location <path>`,
+   `dreative plan prototype-decision --id <id> --decision <decision>`, then
+   `dreative plan implementation-start` before material source edits.
+9. Implement the approved concept in the real application. Install runtime
+   packages transactionally, one mechanism group at a time. Keep one explicit
+   ticker/scroll owner and never silently downgrade.
+10. Run `dreative verify --browser-command "<production preview command>"`.
+    Final workflows build and verify the exact production artifact. The runner
+    derives requirement outcomes from actions and assertions; screenshots do
+    not create passes.
+11. Run the critic through a declared provider with
+    `dreative critic-run --provider-class <class> --provider-id <id>`.
+    Project-local scripts are advisory only. Its closed input must
+    contain the approved contract, requirement matrix, desktop/mobile/reduced
+    motion captures, temporal evidence and functional/performance summaries.
+12. Run `dreative audit`, correct blockers and major issues, then
+    `dreative finalize`. Dogfood failure prevents `DREATIVE_FINALIZED`.
 
-- All skills depend on `ux` and `mobile`.
-- `immersive` depends on `motion`, `interaction`, and `media`.
-- `cinematic` depends on `motion`, `interaction`, and `media`.
-- `experimental` depends on `motion`, `interaction`, and `media`.
+Canonical Ambition values are `standard`, `expressive`, `award` and
+`experimental`. Legacy `solid` and `premium` are migration inputs only.
 
-The user's selected skills are authoritative. Routing recommends placement; it
-never silently activates an unselected optional skill. Explicit page assignments
-always win. The planner resolves dependencies and places selected-but-unassigned
-skills across suitable pages for approval. If the user selects all, every skill
-must appear somewhere in the overall plan, but not on every page.
+Specialists:
 
-### 3.4 Build
+- `ux`: functional and accessible truth.
+- `mobile`: mobile-native composition and touch behavior.
+- `refined`: typography, spacing, hierarchy and material finish.
+- `motion`: structural temporal change and choreography.
+- `interaction`: meaningful input-driven state.
+- `media`: real image/video production and transformation.
+- `3d`: visible spatial/WebGL contribution and fallback.
+- `immersive`: continuity across sections.
+- `cinematic`: pacing, framing and scene handoffs.
+- `experimental`: two or three purposeful unconventional peaks.
 
-- Prepare planned media before section implementation. Record each asset and its
-  delivery status in the plan.
-- Follow the chosen framework adapter and the repository's established patterns.
-- Preserve the manifest unless the user explicitly approved a change; record
-  approved divergence with a reason.
-- Implement blueprint sections in order. Keep the machine plan status current.
-- Do not open recipe catalogs before `conceptExploration` records three
-  brand-native concepts. Record every recipe file and load time in `recipeAccess`.
-- A restructure or reimagine rebuilds markup/component boundaries when necessary;
-  it is not a stylesheet-only restyle.
-- Every heavy effect ships with its planned reduced-motion, mobile, loading, and
-  runtime fallback.
+## Canonical v9 lifecycle rules
 
-### 3.5 Craft
+- Disclose all ten treatments before writing a substantial contract. Recommendations remain recommendations. The user must explicitly select or decline the optional treatments; only then add UX and Mobile as mandatory foundations. `all` requires an explicit confirmation.
+- Keep stable intent in `contract`: treatment decisions and allocation, mechanism primary/fallback policy, prototype uncertainty and acceptance, and asset requirements/policies.
+- Keep observations in `execution`: pending/progress/final mechanism status, trigger evidence, prototype attempts/results, sourcing attempts, generated files, asset survival, browser results, critic findings and spread evidence. Never pre-claim a final outcome in the approved contract.
+- Permission is not capability. A connected authoring or sourcing tool must be explicitly detected or declared. Canvas, WebGL, video playback and other browser APIs begin as expected but unverified and become available only through current browser evidence.
+- Award, Experimental and explicit all-treatment delivery is machine-grounded in typed controlled-progress runtime observations. Free-form evidence strings cannot satisfy static-feeling, Media, 3D, Cinematic, Immersive or Experimental gates.
+- Full Audit and Dogfood require a genuinely fresh, host-isolated critic agent. Degraded, best-effort or same-agent review is insufficient, and context isolation is not described as external independence.
+- Evidence records declare `local`, `host-attested` or
+  `externally-attested`. Local files are integrity-linked, not independently
+  trusted or tamper-proof. Production Certification requires host or external
+  attestation; Project Delivery and Dogfood may report an honest local
+  limitation.
+- Requirement actions and assertions are machine executed. Runtime gates own
+  observable state and artifact identity; the critic owns semantic resemblance,
+  authorship, composition, concept fidelity and perceptual ambition.
+- Corrections after failed verification, criticism or audit are allowed.
+  Incompatible evidence becomes stale and fresh compatible runs can certify the
+  corrected state.
+- Requirement rows are blocking contracts, not documentation. A missing
+  browser test, missing evidence id, failed status, material substitution,
+  unapproved fallback, missing exact viewport, or mobile deletion blocks
+  finalization.
+- Asset order is supplied, rights-safe external sourcing, advantageously generated, then procedural. When a confirmed sourcing tool exists and suitable media could exist, record a search attempt or a concrete asset-specific generation-first exemption.
+- Direct YAML authoring follows the same rules: all ten treatment decision records are mandatory and mutable outcomes in `contract` are invalid.
 
-Run one dedicated finish pass with no new features:
+Before concept approval, show every selected treatment's summary, substantive
+threshold, insufficiency examples, dependencies, tensions, cost, mobile/
+performance/accessibility risk, proposed sections, role and acceptance
+condition. Selecting all requires one confirmation, one continuity owner and
+concrete allocation; no selected treatment may be silently pruned.
 
-- typography, wrapping, optical alignment, selection, and scrollbar;
-- coherent surfaces, light direction, shadows, and material cues;
-- hover, focus-visible, active, disabled, loading, empty, and error states;
-- media crop, grading, dimensions, posters, and alt text;
-- motion easing, choreography, intent, and reduced-motion behavior;
-- responsive spacing, touch targets, overflow, and spatial integrity.
+Run creative capability preflight before promising media, video or 3D.
+Permission, package installation, runtime rendering, sourcing and authoring are
+separate. Three.js is not model generation; GSAP is not cinematic authorship;
+FFmpeg is not original video generation; browser tools verify.
 
-### 3.6 Verify
+Assign every major section Peak, Transformation, Preparation, Echo, Rest,
+Resolution or Functional Utility. The hero cannot be the only meaningful event
+for Expressive, Award or Experimental work. Apply the hero-removed test.
 
-Verification is evidence, not prose asserting that something was checked.
+Record every primary mechanism, acceptance conditions, fallback, trigger,
+trigger evidence, reapproval policy and final status. Convenience is not a
+trigger. Prefer supplied, rights-safe sourced, advantageously generated, then
+procedural assets, and reconcile manifest, disk and shipped use.
 
-1. Run the repository's targeted tests, typecheck, and build.
-2. Run the page and perform the `ux` functional audit.
-3. Verify desktop and approximately 390px mobile.
-4. Check the console, links, forms, keyboard path, states, reduced motion,
-   responsive overflow, and pointer hit areas.
-5. For motion/WebGL/video, record runtime evidence and performance numbers.
-6. Reconcile every plan section and asset against what visibly shipped.
-7. Write `.dreative/verify.json` and run `dreative audit`.
-8. Fix every error. Warnings require either a fix or a recorded justification.
+Classify spatial contributions honestly as model, spatial cutout, layered
+billboard, pre-rendered angles, frame sequence, WebGL media plane or static
+image. Store evidence under `.dreative/runs/<run-id>/` and reject stale source
+hashes or cross-run artifacts. Run Adaptive Spread Validation; recordings,
+reverse scroll and montage are conditional.
 
-Every evidence-backed substitution references passing evidence IDs whose proof
-meets its declared success criteria. Vague reasons such as "it did not fit",
-"restraint", "felt better", or "3D was unnecessary" fail audit.
+Read the selected `skills/<name>.md` summaries first. Read a
+`recipes/<name>-recipes.md` file only after its mechanism is approved.
 
-The task is complete only when the plan has no `planned` sections, preservation
-passes, verification contains no failing evidence, and `dreative audit` passes.
+## Executable creative catalogue
 
-### 3.7 Learn
+During concept planning, search `llms.txt` through
+`dreative catalogue --query "<natural visual phrase>" --json`. Compare the
+typed outcome, ambitions/treatments, content and continuity roles, package
+profiles, primitive, recipe, risks, fallback and evidence contract. Use the
+smallest coherent mechanism set; do not start from a component menu.
 
-Append one entry to `.dreative/ledger.json` after delivery:
+Read `references/CREATIVE_EXECUTION.md` before installing an advanced runtime.
+It defines native-scroll defaulting, GSAP/Lenis clock ownership, scoped React
+cleanup, WebGL disposal, truthful Remotion/media capability gating, external
+reference scouting, React Bits adaptation without redistribution, performance
+budgets and temporal verification. Original primitive contracts are in
+`recipes/primitives.md`; tested technical patterns are in
+`recipes/positive-exemplars.md`. Family recipes are linked by catalogue entries.
 
-- chosen and rejected concepts;
-- user preferences;
-- treatments already used;
-- runtime failures and the fallback they earned.
+Award and Experimental plans must distribute substantive behavior after the
+hero, connect transformations to real project content and adjacent chapters,
+and include peaks, rests and resolution. Reject fade/translate/scale-only
+delivery, unused advanced dependencies, generic WebGL backgrounds, isolated
+model viewers, untreated video rectangles, component soup and mobile deletion.
+For all-treatment work, allocate one or two dominant treatments per section,
+choose continuity/motion/material/spatial owners, and resolve tensions with
+section hierarchy, budgets and fallbacks rather than pruning selections.
 
-Use this history to avoid repetitive signatures and known-bad approaches on the
-next run. Never store secrets or unrelated user information.
-
-## 4. Ambition tiers
-
-- **Solid (`solid`):** complete, accessible, responsive product-quality UI.
-- **Premium (`premium`):** strong design read, deliberate media, signature detail, craft pass.
-- **Expressive (`expressive`):** coordinated motion/interaction system with measured fallbacks.
-- **Award (`award`):** distinctive spatial/media system with performance, occlusion, and
-  fallback evidence.
-
-Higher tiers inherit lower-tier requirements. Do not impose `award`-tier cost on a
-solid or premium request. See `references/TIERS.md` for exact deliverables.
-
-## 5. Preservation rules
-
-- Preserve behavior, not necessarily placement or markup shape.
-- Stable IDs, routes, handlers, form fields, visible strings, conditional states,
-  analytics hooks, and accessibility labels are contractual unless approved.
-- `dreative audit` checks each manifest needle after implementation.
-- Intentional changes require `intentionallyChanged: true` and `changeReason`.
-- A visually successful redesign that loses behavior fails.
-
-## 6. Framework adapters
-
-Load exactly one primary adapter from `frameworks/` plus `styling.md` when useful.
-Adapters provide technical implementation guidance only; they do not override the
-plan, design doctrine, preservation contract, or verification gates.
-
-## 7. Completion report
-
-Report:
-
-- chosen concept, tier, depth, and skills;
-- each section as shipped/fallback/cut;
-- preservation result;
-- tests and runtime evidence;
-- known limitations and next step.
-
-Never claim a check ran unless it actually ran.
-
-## 8. Optional visual round-trip
-
-Use only when explicitly requested:
-
-1. Extract the relevant pages into `.dreative/project.json` and replica files.
-2. Run `dreative baseline`.
-3. Start the editor and service `dreative wait` events.
-4. Supported requests are `propose-skeletons`, `propose-variants`, `edit-block`,
-   `design-page`, and `edit-element`. Read `DESIGN.md` and request-selected skills
-   before responding.
-5. On the `finish` event, apply the compact diff to the real source using its
-   source pointers, then run the same preservation and verification gates as
-   Direct Design.
-
-The editor is an optional input surface. It never weakens the Direct Design
-quality, preservation, or verification contract.
+Never weaken preservation, accessibility, responsive, reduced-motion,
+source-identity, critic independence or fail-closed guarantees.

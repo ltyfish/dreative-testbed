@@ -1,5 +1,9 @@
 # Dreative Specialist Skill — Micro-interactions & Effect Craft
 
+Search the executable catalogue and load `../recipes/interaction-recipes.md` for drag, gesture, proximity, material or physics mechanisms. Every selected interaction needs meaningful state change, cancellation, cleanup, pointer/touch/keyboard equivalence and mobile/reduced-motion translation.
+
+Selected interaction proves pointer/touch/keyboard input, observable state response, and release/settling or repeat/reverse behavior where planned; hover styling is not a drag.
+
 ## Contract
 
 Follow `../references/SKILL_CONTRACT.md`. Dependencies: `ux`, `mobile`; add
@@ -129,6 +133,10 @@ the static design, not a broken half-effect. All of these are decoration — cap
 
 ## 6. Guardrails
 
+Map every important gesture to its `motionMomentId` and prove input, intermediate,
+settled, reverse, mobile/touch, keyboard, and reduced-motion states with temporal
+evidence. Hover screenshots alone do not prove interaction response.
+
 - Decorative pointer effects: max 1-2 distinct kinds per page, desktop-only,
   `prefers-reduced-motion` disables tracking (element stays styled, static).
 - Nothing in this file may cause layout shift, block scrolling, steal focus, or
@@ -140,3 +148,6 @@ the static design, not a broken half-effect. All of these are decoration — cap
 - Effects use palette tokens (accent/neutral), never introduce new hues.
 - If an effect can't be justified in one sentence of communication value
   (affordance, state, hierarchy, brand voice), it's noise — cut it (DESIGN.md §6).
+Canonical v9 requires input to affect media, layout, viewpoint, navigation model
+or meaningful state. Ordinary tabs, buttons or a basic carousel cannot replace
+a planned sequence or spatial selector without an approved material change.

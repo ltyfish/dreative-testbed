@@ -1,5 +1,15 @@
 # Dreative Specialist Skill — Experimental / Creative-Mindset Dial
 
+Search `dreative catalogue --query ...` for two or three purposeful peaks, then load only their linked recipes and primitives. Apply `../references/CREATIVE_EXECUTION.md`; recognizable demo styling, React Bits redistribution, component soup and novelty without a section/continuity role fail.
+
+Selected experimental treatment owns one purposeful non-generic provocation with an implementation binding and evidence; an unusual label is not coverage.
+
+Canonical v9 requires two or three selected provocations distributed across
+multiple chapters. Consider one non-obvious mechanism for each major chapter,
+then choose only the strongest peaks. Use the structured experimental mechanism
+catalog and bind each peak to states, assets, prototype risk, fallback and
+current-run evidence.
+
 ## Contract
 
 Follow `../references/SKILL_CONTRACT.md`. Dependencies: `motion`, `interaction`,
@@ -109,3 +119,11 @@ When the user has opted into `experimental`:
 - Every ambitious idea still needs 3d.md §5 / motion.md §5 performance
   budgets and a concrete fallback (PLAN.md §2) — experimental means bolder
   ideas, not exemption from the runtime verification gate.
+- A selected provocation maps to typed motion/media-transformation contracts and
+  must survive the static-feeling rejection test with controlled temporal proof.
+
+Each selected peak must pass both tests: its behavior is non-obvious, and it
+would remain special under neutral styling. Record a start/active/resolved
+sequence, runtime properties and a representative recording. Ordinary
+selectors, carousels, sticky image/text splits, rotating badges, micro-parallax
+and static canvas planes are never Experimental peaks.
