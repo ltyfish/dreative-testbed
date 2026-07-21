@@ -1,0 +1,470 @@
+{
+  "version": 4,
+  "generatedAt": "2026-07-18T09:03:21.263Z",
+  "runId": "verify-1784365331680-13ccd152",
+  "buildIdentity": {
+    "algorithm": "dreative-source-v1-sha256",
+    "runId": "verify-1784365331680-13ccd152",
+    "dreativeVersion": "0.9.0",
+    "schemaVersion": 5,
+    "framework": "vite",
+    "packageManager": "npm",
+    "buildCommand": "npm run build",
+    "serverCommand": "npm run preview",
+    "testedOrigin": "http://127.0.0.1:4173",
+    "testedUrl": "http://127.0.0.1:4173/",
+    "serverStartedAt": "2026-07-18T09:02:11.680Z",
+    "verificationStartedAt": "2026-07-18T09:02:11.688Z",
+    "verificationFinishedAt": "2026-07-18T09:03:21.263Z",
+    "gitHead": "feae839df4e9121562f9e77ba484fed78642d49e",
+    "dirty": true,
+    "sourceTreeHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7",
+    "packageJsonHash": "7ace435fd2a5bbf701d4c201141573bc514ebbc3474cf687332c89953879881d",
+    "lockfile": "package-lock.json",
+    "lockfileHash": "cf0b8f23863e377659a7deafc0bd6c59f172c3a58d54babcdbf347771872b6c2",
+    "publicAssetHash": "5a27e5311473b5931ccf8bc833b0603dc8c5da69d8878e1de07373bc8a7fc8a9",
+    "productionBuildDirectory": "dist",
+    "productionBuildHash": "fa46ec3f1277605c497c8b0c5d82d5887ead806a2b722b7b3e254c343cf1234e"
+  },
+  "evidence": [
+    {
+      "id": "evidence-content",
+      "criterionId": "req-content",
+      "criterion": "Preserve all visible Northwind content.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"text-contains\",\"selector\":\".hero\",\"expected\":\"Freshness is not a slogan\"},\"pass\":true,\"observed\":\"Bergen · Batch record 024—07Small-batchcoffee, roastedthe morning it ships.We roast single-origin beans in 12kg batches on a 1962 Probat in Bergen, Norway, and ship them within hours. Freshness is not a slogan here; it is a timestamp on the bag.Shop the beans ↓Learn to brew ↘Roasted18·07Bergen\"},{\"assertion\":{\"type\":\"visible\",\"selector\":\".brew-step-4\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-content.png",
+        "artifactHash": "a8b2d739af080c187ec7c692a8eadf40f492d7c035746ef7010455b429077a65",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "text-contains:.hero",
+            "expected": "Freshness is not a slogan",
+            "observed": "\"Bergen · Batch record 024—07Small-batchcoffee, roastedthe morning it ships.We roast single-origin beans in 12kg batches on a 1962 Probat in Bergen, Norway, and ship them within hours. Freshness is not a slogan here; it is a timestamp on the bag.Shop the beans ↓Learn to brew ↘Roasted18·07Bergen\""
+          },
+          {
+            "property": "visible:.brew-step-4",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "home route",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-navigation",
+      "criterionId": "req-navigation",
+      "criterion": "Five nav links and logo navigation work on desktop and mobile.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".beans\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-navigation.png",
+        "artifactHash": "1d5ba935697a371ec0620193fb897b45be1d339de3444efd10eb5fe6c47d0a67",
+        "testedUrl": "http://127.0.0.1:4173/#beans",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.beans",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "AppShell",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-cart",
+      "criterionId": "req-cart",
+      "criterion": "All six cart actions remain operational.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"text-contains\",\"selector\":\".cart-status\",\"expected\":\"Kenya AA Nyeri\"},\"pass\":true,\"observed\":\"Kenya AA Nyeri, 250g, added to the batch tray.\"}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-cart.png",
+        "artifactHash": "4771eb12ddd44a38b3e4ad5d86a2d6147d3f973333f8066109817eef7cdff531",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "text-contains:.cart-status",
+            "expected": "Kenya AA Nyeri",
+            "observed": "\"Kenya AA Nyeri, 250g, added to the batch tray.\""
+          }
+        ]
+      },
+      "pageId": "beans section",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-contact",
+      "criterionId": "req-contact",
+      "criterion": "Contact fields and success state remain functional.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".form-success\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-contact.png",
+        "artifactHash": "d61c6f9083cabf28af31ca02a469cc0992f50f4e39f972b82fc3a14ece9e55c8",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.form-success",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "contact form",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-policies",
+      "criterionId": "req-policies",
+      "criterion": "Create concise shipping, returns and privacy pages.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"text-contains\",\"selector\":\".policy-title\",\"expected\":\"Privacy\"},\"pass\":true,\"observed\":\"Privacy\"},{\"assertion\":{\"type\":\"visible\",\"selector\":\".policy-home\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-policies.png",
+        "artifactHash": "1b59df6e0232b90696330bd111c8f2205eb883c210c2dc5a0f4e00c0872e1bf5",
+        "testedUrl": "http://127.0.0.1:4173/privacy",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "text-contains:.policy-title",
+            "expected": "Privacy",
+            "observed": "\"Privacy\""
+          },
+          {
+            "property": "visible:.policy-home",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "policy routes",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-continuity",
+      "criterionId": "req-continuity",
+      "criterion": "Prove one persistent cross-section continuity system.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".stage-canvas\",\"mechanismId\":\"roast-stage\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-continuity.png",
+        "artifactHash": "e9c8181592159fd6b4a86b278ac348fa8e4ce06c88f40bddd95646cb3e610983",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.stage-canvas",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "RoastStage",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-scroll",
+      "criterionId": "req-scroll",
+      "criterion": "Prove one structural scroll transformation.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"mechanism-state\",\"selector\":\".batch-journey\",\"mechanismId\":\"batch-journey\",\"expected\":\"resolved\"},\"pass\":true,\"observed\":{\"className\":\"site-shell batch-journey\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"resolved\"}}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-scroll.png",
+        "artifactHash": "0eefa56fb1f0302dce5fcf79bd59cce73ea4ad874baf763dd3627d6bba2758d3",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "mechanism-state:.batch-journey",
+            "expected": "resolved",
+            "observed": "{\"className\":\"site-shell batch-journey\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"resolved\"}"
+          }
+        ]
+      },
+      "pageId": "BatchJourney",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-spatial",
+      "criterionId": "req-spatial",
+      "criterion": "Prove a substantive spatial or 3D media treatment.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".stage-canvas\",\"mechanismId\":\"roast-stage\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-spatial.png",
+        "artifactHash": "0d967f0c49753f221ecd30747ee84465306939ab7890022a6be8dddf7f41df53",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.stage-canvas",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "RoastStage",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-cinematic",
+      "criterionId": "req-cinematic",
+      "criterion": "Prove setup, escalation, rest and resolution.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"mechanism-state\",\"selector\":\".batch-journey\",\"mechanismId\":\"brew-score\",\"expected\":\"resolved\"},\"pass\":true,\"observed\":{\"className\":\"site-shell batch-journey\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"resolved\"}}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-cinematic.png",
+        "artifactHash": "765c274a554b6dfd6f2536390b84dd3013d49c8b7c04a2690f16b83be3c0541f",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "mechanism-state:.batch-journey",
+            "expected": "resolved",
+            "observed": "{\"className\":\"site-shell batch-journey\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"resolved\"}"
+          }
+        ]
+      },
+      "pageId": "home arc",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-experimental",
+      "criterionId": "req-experimental",
+      "criterion": "Prove an unconventional content-specific interaction peak.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"mechanism-state\",\"selector\":\".origin-ring\",\"mechanismId\":\"origin-ring\",\"expected\":\"settled\"},\"pass\":true,\"observed\":{\"className\":\"origin-ring\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"settled\"}},{\"assertion\":{\"type\":\"mechanism-state\",\"selector\":\".brew-score\",\"mechanismId\":\"brew-score\",\"expected\":\"resolved\"},\"pass\":true,\"observed\":{\"className\":\"brew-score\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"resolved\"}}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-experimental.png",
+        "artifactHash": "28de44d964e7f4fa2afb9b53060e6249f964e06e9dc72a09456ab5555b8be27a",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "mechanism-state:.origin-ring",
+            "expected": "settled",
+            "observed": "{\"className\":\"origin-ring\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"settled\"}"
+          },
+          {
+            "property": "mechanism-state:.brew-score",
+            "expected": "resolved",
+            "observed": "{\"className\":\"brew-score\",\"transform\":\"none\",\"opacity\":\"1\",\"state\":\"resolved\"}"
+          }
+        ]
+      },
+      "pageId": "beans and brew",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-responsive",
+      "criterionId": "req-responsive",
+      "criterion": "Author desktop, 390px, reduced motion, keyboard and touch parity.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".brew-step-4\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-responsive.png",
+        "artifactHash": "d48e13b6ed56a2c1d5e2d1134e5a670bd50fd8f579640a1969bd896d8e03783f",
+        "testedUrl": "http://127.0.0.1:4173/?motion=reduce",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.brew-step-4",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "all mechanisms",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-performance",
+      "criterionId": "req-performance",
+      "criterion": "Meet runtime budgets and browser verification.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".stage-canvas\",\"mechanismId\":\"roast-stage\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-performance.png",
+        "artifactHash": "5001daea4b137b74ea5d3b76ec64e42192b9e83b7bd9896ea1b3a126415d6b6c",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.stage-canvas",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "production build",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    },
+    {
+      "id": "evidence-finalize",
+      "criterionId": "req-finalize",
+      "criterion": "Independently check every treatment before DREATIVE_FINALIZED.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".site-nav\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784365331680-13ccd152",
+      "proof": {
+        "timestamp": "2026-07-18T09:03:21.263Z",
+        "artifactPath": ".dreative/runs/verify-1784365331680-13ccd152/requirement-req-finalize.png",
+        "artifactHash": "b70c9dbfa9fd7eb9caeaf4613841859e900ffbf8bebe6c15420c33d59710fa99",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.site-nav",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "Dreative pipeline",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "4f4ec00c41a758fb3609445f43c2b89d34de03fecaa5a523fca79c4c2d63fba7"
+    }
+  ],
+  "reconciliation": {
+    "planned": [
+      "roast-stage",
+      "batch-journey",
+      "ledger-media-reveal",
+      "origin-ring",
+      "brew-score",
+      "ux-shell"
+    ],
+    "observed": [
+      "roast-stage",
+      "batch-journey",
+      "ledger-media-reveal",
+      "ux-shell",
+      "origin-ring",
+      "brew-score"
+    ],
+    "missing": [],
+    "substituted": [],
+    "extra": []
+  }
+}

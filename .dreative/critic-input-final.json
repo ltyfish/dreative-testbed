@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-18T09:34:00.000Z",
+  "originalBrief": "Redesign the whole Northwind Coffee Roasters website as an award-level spatial, cinematic and interactive Roast Ledger while preserving content, commerce, contact, navigation, accessibility and legal routes.",
+  "userConstraints": [
+    "Experimental ambition, Full Audit, required prototype and Dreative Dogfood.",
+    "Treatments: UX, Mobile, Refined, Motion, Interaction, Media, 3D, Immersive, Cinematic and Experimental.",
+    "Prove persistent continuity, structural scroll, spatial media, cinematic pacing and two content-specific interaction peaks.",
+    "Author desktop, 390px mobile, reduced motion, keyboard and touch equivalents within runtime budgets."
+  ],
+  "approvedConcept": "Roast Ledger: The Living Batch Record turns Northwind's morning roast into a persistent industrial chronometer and batch ledger that crosses provenance, origin calibration, brew transmutation and subscription resolution.",
+  "visualBlueprints": [
+    {
+      "pageId": "home",
+      "sectionId": "hero-story",
+      "blueprint": "A persistent multi-part brass and steel chronometer opens the batch record, then hands its aperture and ledger line into the Probat provenance chapter."
+    },
+    {
+      "pageId": "home",
+      "sectionId": "origin",
+      "blueprint": "Six preserved coffees occupy a spatial calibration ring while real source pixels reconstruct into the selected origin dossier and commerce target."
+    },
+    {
+      "pageId": "home",
+      "sectionId": "brew-subscribe",
+      "blueprint": "The selected batch becomes a four-phase water score, resolves as a subscription seal, and rests into functional contact and policy routes."
+    }
+  ],
+  "intendedSignature": "One living industrial batch instrument persists across the route and changes semantic role without becoming a generic decorative canvas.",
+  "baselineAvailable": false,
+  "ambition": "experimental",
+  "selectedTreatments": [
+    "ux",
+    "mobile",
+    "refined",
+    "motion",
+    "interaction",
+    "media",
+    "3d",
+    "immersive",
+    "cinematic",
+    "experimental"
+  ],
+  "plannedMechanisms": [
+    {
+      "id": "roast-stage",
+      "primary": "Persistent procedural industrial chronometer and chapter bus.",
+      "fallback": "Authored resolved poster and ledger states."
+    },
+    {
+      "id": "batch-journey",
+      "primary": "Structural GSAP chapter timeline with cross-section handoffs.",
+      "fallback": "Direct semantic chapter states."
+    },
+    {
+      "id": "ledger-media-reveal",
+      "primary": "Nine-slice source-pixel reconstruction into selected origin media.",
+      "fallback": "Static generated origin posters."
+    },
+    {
+      "id": "origin-calibration",
+      "primary": "Spatial origin ring with pointer, touch, keyboard and direct controls.",
+      "fallback": "Semantic product selector."
+    },
+    {
+      "id": "brew-transmutation",
+      "primary": "Selected batch transforms through a controlled four-phase water score.",
+      "fallback": "Semantic ordered brew guide."
+    }
+  ],
+  "plannedPeaks": [
+    {
+      "id": "origin-calibration",
+      "description": "Content-specific spatial product calibration changes media, dossier, price, cart target and stage response."
+    },
+    {
+      "id": "brew-transmutation",
+      "description": "The selected origin becomes a temporal water score with setup, active phases and resolution."
+    }
+  ],
+  "contextPolicy": {
+    "firstPass": "objective-only",
+    "excluded": [
+      "builder-self-review",
+      "implementation-rationale",
+      "quality-claims",
+      "difficulty-excuses",
+      "builder-score"
+    ]
+  },
+  "independentCriticRequired": true,
+  "motionRequired": true,
+  "motionMomentIds": [
+    "desktop-journey",
+    "mobile-journey"
+  ],
+  "verificationRunId": "verify-1784369816595-cf71dbbe",
+  "buildIdentityHash": "e50ad12ba523e4c6a9cb34f3008640b2873a8beb436cd026f5ccd26422c7c64c",
+  "evidence": [
+    {
+      "id": "desktop-opening",
+      "kind": "final-screenshot",
+      "description": "Desktop opening composition with persistent chronometer.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop---initial.png",
+      "viewport": { "width": 1440, "height": 1000 }
+    },
+    {
+      "id": "desktop-origin",
+      "kind": "final-screenshot",
+      "description": "Desktop origin calibration active state.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop---origin-touch.png",
+      "viewport": { "width": 1440, "height": 1000 }
+    },
+    {
+      "id": "desktop-brew",
+      "kind": "final-screenshot",
+      "description": "Desktop brew transmutation state.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop---brew.png",
+      "viewport": { "width": 1440, "height": 1000 }
+    },
+    {
+      "id": "mobile-opening",
+      "kind": "final-screenshot",
+      "description": "Authored 390px opening composition.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-390---initial.png",
+      "viewport": { "width": 390, "height": 844 }
+    },
+    {
+      "id": "mobile-origin",
+      "kind": "final-screenshot",
+      "description": "Authored 390px touch origin state.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-390---origin-touch.png",
+      "viewport": { "width": 390, "height": 844 }
+    },
+    {
+      "id": "mobile-narrow",
+      "kind": "final-screenshot",
+      "description": "Authored 320px narrow-mobile composition.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-320---initial.png",
+      "viewport": { "width": 320, "height": 700 }
+    },
+    {
+      "id": "desktop-journey-recording",
+      "kind": "motion-recording",
+      "description": "Continuous desktop setup, origin, rest, brew and subscription journey.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop-journey.webm",
+      "motionMomentId": "desktop-journey",
+      "temporal": {
+        "startTimestamp": "2026-07-18T10:19:12.801Z",
+        "endTimestamp": "2026-07-18T10:19:22.722Z"
+      }
+    },
+    {
+      "id": "mobile-journey-recording",
+      "kind": "interaction-recording",
+      "description": "Continuous 390px touch-equivalent origin and brew journey.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-journey.webm",
+      "motionMomentId": "mobile-journey",
+      "temporal": {
+        "startTimestamp": "2026-07-18T10:19:22.792Z",
+        "endTimestamp": "2026-07-18T10:19:32.276Z"
+      }
+    },
+    {
+      "id": "runtime-trace",
+      "kind": "browser-trace",
+      "description": "Integrity-linked desktop Playwright runtime trace.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop-trace.zip",
+      "temporal": {
+        "startTimestamp": "2026-07-18T10:16:56.603Z",
+        "endTimestamp": "2026-07-18T10:18:19.757Z"
+      }
+    },
+    {
+      "id": "reduced-motion",
+      "kind": "reduced-motion-capture",
+      "description": "390px authored reduced-motion resolved composition.",
+      "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/reduced-motion.png",
+      "viewport": { "width": 390, "height": 844 }
+    }
+  ]
+}

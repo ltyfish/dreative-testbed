@@ -1,0 +1,41 @@
+{
+  "runId": "checkpoint-2026-07-16T13-58-49-007Z",
+  "url": "http://127.0.0.1:4173",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "desktop": {
+    "title": "Northwind Coffee Roasters",
+    "bodyOverflow": -15,
+    "canvas": {
+      "width": 741,
+      "height": 756
+    },
+    "webgl": true,
+    "renderer": "WebKit WebGL",
+    "heroVisible": true,
+    "currentLength": 1696.3934326171875
+  },
+  "mobile": {
+    "bodyOverflow": 0,
+    "menuOpen": false,
+    "activeBean": "Kenya AA Nyeri",
+    "minTapHeight": 16.1875
+  },
+  "reducedMotion": {
+    "preference": true,
+    "currentDashOffset": "0px",
+    "currentOrbDisplay": "none",
+    "spectrumProgress": "1"
+  },
+  "interactions": {
+    "desktop": {
+      "selectedBefore": "true",
+      "selectedName": "Kenya AA Nyeri",
+      "cartStatus": "Kenya AA Nyeri added to your cart."
+    },
+    "mobile": {
+      "menuExpanded": "true"
+    }
+  }
+}

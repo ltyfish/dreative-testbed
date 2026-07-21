@@ -1,0 +1,180 @@
+{
+  "capabilities": [
+    {
+      "id": "image-generation",
+      "state": "available-through-confirmed-tool",
+      "provider": "codex-built-in-image-generation",
+      "verified": true,
+      "evidence": ["Built-in image generation and editing tool is available in this session."],
+      "limitation": "Generated assets still require inspection, project-local persistence and production derivatives.",
+      "substitutes": ["rights-safe sourced image", "procedural graphic"]
+    },
+    {
+      "id": "image-editing",
+      "state": "available-through-confirmed-tool",
+      "provider": "codex-built-in-image-generation",
+      "verified": true,
+      "evidence": ["Built-in image editing is available in this session."],
+      "limitation": "Local files must be inspected and final project assets persisted inside the workspace.",
+      "substitutes": ["CSS or WebGL treatment"]
+    },
+    {
+      "id": "image-search",
+      "state": "available-through-confirmed-tool",
+      "provider": "web-image-search",
+      "verified": true,
+      "evidence": ["Web and image search are callable in this session."],
+      "limitation": "Each chosen asset requires direct source and rights review.",
+      "substitutes": ["generated image"]
+    },
+    {
+      "id": "video-search",
+      "state": "available-through-confirmed-tool",
+      "provider": "web-search",
+      "verified": true,
+      "evidence": ["Web search is callable for candidate video sources."],
+      "limitation": "Candidates require license, codec, weight and playback verification.",
+      "substitutes": ["poster image", "frame sequence"]
+    },
+    {
+      "id": "3d-asset-search",
+      "state": "available-through-confirmed-tool",
+      "provider": "web-search",
+      "verified": true,
+      "evidence": ["Web search is callable for candidate licensed 3D assets."],
+      "limitation": "Candidates require license, recognizable identity, textures and weight verification.",
+      "substitutes": ["spatial cutout", "layered billboard"]
+    },
+    {
+      "id": "video-generation",
+      "state": "permitted-but-tool-unverified",
+      "verified": false,
+      "evidence": ["User permission is granted, but no video-generation authoring tool is callable in this session."],
+      "limitation": "Generated video cannot be a primary dependency unless capability changes.",
+      "substitutes": ["sourced web-ready video", "generated still states"]
+    },
+    {
+      "id": "3d-model-generation",
+      "state": "permitted-but-tool-unverified",
+      "verified": false,
+      "evidence": ["User permission is granted, but no model-generation tool is currently detected."],
+      "limitation": "No native generated model may be promised without a later capability change.",
+      "substitutes": ["licensed sourced GLB", "generated spatial cutout"]
+    },
+    {
+      "id": "3d-model-editing",
+      "state": "permitted-but-tool-unverified",
+      "verified": false,
+      "evidence": ["No Blender or comparable model-editing tool is currently detected."],
+      "limitation": "Model edits cannot be primary until a tool is confirmed.",
+      "substitutes": ["pre-rendered angles", "spatial cutout"]
+    },
+    {
+      "id": "ffmpeg-processing",
+      "state": "unavailable",
+      "verified": true,
+      "evidence": ["No ffmpeg executable is currently available."],
+      "limitation": "Video cannot depend on local transcoding.",
+      "substitutes": ["already web-ready licensed video", "poster image"]
+    },
+    {
+      "id": "threejs-runtime",
+      "state": "available-after-package-install",
+      "package": "three",
+      "verified": false,
+      "evidence": ["The npm registry resolved the Three.js package."],
+      "limitation": "Runtime rendering does not generate or author models.",
+      "substitutes": ["layered DOM media", "static poster"]
+    },
+    {
+      "id": "gsap-runtime",
+      "state": "available-after-package-install",
+      "package": "gsap",
+      "verified": false,
+      "evidence": ["The npm registry resolved GSAP."],
+      "limitation": "GSAP coordinates but does not author choreography.",
+      "substitutes": ["CSS animation", "IntersectionObserver"]
+    },
+    {
+      "id": "scrolltrigger-runtime",
+      "state": "available-after-package-install",
+      "package": "gsap",
+      "verified": false,
+      "evidence": ["ScrollTrigger is distributed with GSAP."],
+      "limitation": "Only one normalized page scroll owner may ship.",
+      "substitutes": ["CSS scroll-driven animation"]
+    },
+    {
+      "id": "sharp-processing",
+      "state": "available-after-package-install",
+      "package": "sharp",
+      "verified": false,
+      "evidence": ["The npm registry resolved Sharp."],
+      "limitation": "Sharp processes existing pixels; it does not author imagery.",
+      "substitutes": ["browser-native responsive images"]
+    },
+    {
+      "id": "browser-automation",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": ["Package installation is authorized and the browser verification workflow is available."],
+      "limitation": "No current-build runtime evidence exists yet.",
+      "substitutes": []
+    },
+    {
+      "id": "screenshot-capture",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": [],
+      "limitation": "Must be verified after browser installation.",
+      "substitutes": []
+    },
+    {
+      "id": "video-recording",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": [],
+      "limitation": "Temporal evidence must be captured from the current build.",
+      "substitutes": []
+    },
+    {
+      "id": "console-inspection",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": [],
+      "limitation": "Console health must be observed in the current build.",
+      "substitutes": []
+    },
+    {
+      "id": "performance-collection",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": [],
+      "limitation": "Heavy mechanisms require measured runtime evidence.",
+      "substitutes": []
+    },
+    {
+      "id": "mobile-viewport-verification",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": [],
+      "limitation": "390x844 and 320px must be observed.",
+      "substitutes": []
+    },
+    {
+      "id": "reduced-motion-verification",
+      "state": "available-after-package-install",
+      "package": "playwright",
+      "verified": false,
+      "evidence": [],
+      "limitation": "Reduced-motion behavior must be observed.",
+      "substitutes": []
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "runId": "critic-1784370219772-f0697013",
+  "nonce": "a7feb1bb4599723b11d5b02749de4f137dd26574d29c10c3",
+  "runnerIdentity": "6872cf2c4bcf4ba46b7ff77dac93a1cc023be7a1c2648830f4c9bfba1a4f7fda",
+  "processId": null,
+  "providerId": "codex-collaboration-subagent",
+  "providerClass": "host-isolated",
+  "assuranceLevel": "local",
+  "startedAt": "2026-07-18T18:03:00+08:00",
+  "finishedAt": "2026-07-18T18:21:53.7020616+08:00",
+  "approvedPlanHash": "2af0e5d360e71d2a8366d03e9d2b0d9d67a275d5a13dc6010719545b0fc3e9d1",
+  "sourceHash": "e50ad12ba523e4c6a9cb34f3008640b2873a8beb436cd026f5ccd26422c7c64c",
+  "buildHash": "fd4e8a50fe90f832f4ac8ad3c4a14cee70e61574c9dbb2b8046379a791a1beb7",
+  "verificationRunId": "verify-1784369816595-cf71dbbe",
+  "inputArtifactHashes": {
+    "criticInput": "163769d944483141234e8abdce7f558e0f2ea1006727fffc0f2a8349e7ea17f1",
+    "desktop-opening": "53c32a21e0bb2f39291375f868ad80a77cc686258966c2f18239746e15a43468",
+    "desktop-origin": "7e6a3bb2867b9db65ec62dc130fe0bf86dd119dec1aa2993f5fe4571d90eb9e1",
+    "desktop-brew": "197c9cf48d3c6f27943dc1624895ad2c0024339ae60c5fae23e680607aec759c",
+    "mobile-opening": "7544719b62dcce0a7c08776e95899689a1f52b151feabbba905d89a716b662a0",
+    "mobile-origin": "95034028db25df2a1724f067a60b62c1ffa17259f41aab903c4d54891726512b",
+    "mobile-narrow": "23e4ae24911538b0a7228954cc9db32acb2d511121be8dccdb506beb3330ff8a",
+    "desktop-journey-recording": "09f73f7fdbc1fc9eb59917adc0e3f5412b0eb9e92d71a98583a2b83289fb4ed3",
+    "mobile-journey-recording": "12dcfc9bd01a8ac029e8b470c8f5184d6105e0ee2a04bb1acdf260b5f85c16b1",
+    "runtime-trace": "ea92d7861bfb685c900e5d74772f3e86f9d890cbc123751d0950a45d05b1d916",
+    "reduced-motion": "2dba276aa79a8a3371ac9815d99ed8b9b6b02710b8008448d65edec9ea44add9"
+  },
+  "reportHash": "048368d29f92019ea6c5535db1614aa3027870995b7ce2c57646acf202603068",
+  "artifact": {
+    "id": "critic-report",
+    "type": "critic-report",
+    "path": ".dreative/runs/critic-1784370219772-f0697013/critic-report.json",
+    "sha256": "1738a2bc15a15e116d57addd9d15cdf31835c5f5ac84e25206e917f4dc37b6f9",
+    "bytes": 13703
+  },
+  "computedResult": {
+    "pass": false,
+    "criticVerdictAdvisoryOnly": false,
+    "blockers": 0,
+    "majorFindings": 2,
+    "scoreFailures": []
+  }
+}

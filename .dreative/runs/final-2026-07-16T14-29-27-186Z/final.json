@@ -1,0 +1,62 @@
+{
+  "runId": "final-2026-07-16T14-29-27-186Z",
+  "url": "http://127.0.0.1:4173",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "desktop": {
+    "title": "Northwind Coffee Roasters",
+    "bodyOverflow": -15,
+    "bodyTextLength": 2626,
+    "webgl": true,
+    "images": [
+      {
+        "file": "pour-over.webp",
+        "complete": true,
+        "naturalWidth": 1600,
+        "naturalHeight": 2400
+      },
+      {
+        "file": "beans-roasting.webp",
+        "complete": true,
+        "naturalWidth": 1600,
+        "naturalHeight": 1067
+      },
+      {
+        "file": "northwind-bag.webp",
+        "complete": true,
+        "naturalWidth": 1024,
+        "naturalHeight": 1536
+      }
+    ],
+    "sectionCount": 7,
+    "currentSections": [
+      "hero",
+      "story",
+      "beans",
+      "brew-guide",
+      "reviews",
+      "subscribe",
+      "contact"
+    ]
+  },
+  "mobile": {
+    "bodyOverflow": 0,
+    "minTapHeight": 44,
+    "menuOpen": false,
+    "narrow320Overflow": 0
+  },
+  "reducedMotion": {
+    "preference": true,
+    "orbDisplay": "none",
+    "currentResolved": "0px",
+    "brewStreamResolved": "1px"
+  },
+  "interactions": {
+    "brewReadout": "00:30",
+    "reviewChanged": true,
+    "cartStatus": "Kenya AA Nyeri added to your cart.",
+    "loadingState": "Sending… ↗",
+    "successState": "Thanks—we read everything and reply within a day."
+  }
+}

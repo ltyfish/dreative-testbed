@@ -1,0 +1,407 @@
+﻿# Dreative Executable Plan Review
+Approval applies to this complete contract revision, not the earlier creative decision brief.
+
+## Project and executable requirements
+Concept: Roast Ledger: The Living Batch Record
+Journey: Enter through the roast chronometer, understand freshness and sourcing, explore six coffees, learn the method, review proof, subscribe or contact the roastery, and reach working policies.
+Sections: /:nav -> /:hero -> /:story -> /:beans -> /:reviews -> /:brew-guide -> /:subscribe -> /:contact -> /:footer -> /shipping,/returns,/privacy:policy-shell
+Continuity: RoastStage (hybrid) owned by src/experience/RoastStage.jsx
+Selected treatments: ux, mobile, refined, motion, interaction, media, 3d, immersive, cinematic, experimental
+Declined treatments: none
+Mechanisms: roast-stage [scroll-progress] at home hero through subscribe; batch-journey [scroll-progress] at home hero through subscribe; ledger-media-reveal [scroll-progress] at home hero and story; origin-ring [drag] at home beans; brew-score [scroll-progress] at home beans through subscribe; ux-shell [click] at all routes
+Creative peaks: origin-calibration at beans; brew-transmutation at brew-guide
+Assets/packages: 5 assets; gsap@3.15.0 for structural timelines and ScrollTrigger., @gsap/react@2.1.2 for scoped React cleanup., three@0.185.1 for the WebGL scene and materials., @react-three/fiber@8.18.0 for React 18 scene lifecycle., lenis@1.3.25 for prototype comparison only; production requires measured benefit., sharp@0.35.3 for development-only image derivatives.
+Subjects: roast-chronometer (continuity-object) — Changes from roast promise to evidence carrier, selector, brew score and subscription seal.; roaster-plate (primary-subject) — Ground the opening promise in real craft.; origin-plates (primary-subject) — Differentiate every coffee and provide pixels for selection transformation.; ledger-line (component) — DOM continuity and progress aid.; brass-material (material) — Warm calibrated instrument surface.; steel-material (material) — Mechanical counterpoint to parchment and brass.; brew-water-lines (component) — Turn brew copy into content-specific temporal geometry.
+Mobile: At 390px the chronometer renders fewer parts at DPR 1.5 on demand; long pins become short beats; origin calibration becomes a snap rail with explicit controls. At 320px posters, labels, dossiers and actions remain visible. Reduced motion uses authored resolved states.
+Reduced motion: nav: Menu appears directly and anchors are instant.; hero: Resolved open-instrument composition with no pin.; story: Static open-ledger composition.; beans: Direct indexed cuts remove inertia.; reviews: Resolved composition is unchanged.; brew-guide: Four authored panels appear together.; subscribe: Stamp is present immediately.; contact: No shake; direct state change.; footer: Static behavior.; policy-shell: Static by design.
+Fallbacks: roast-stage: Responsive pre-rendered chronometer states over semantic DOM.; batch-journey: Native flow with direct chapter states.; ledger-media-reveal: Two responsive DOM picture states with an editorial mask handoff.; origin-ring: Semantic six-product selector with posters.; brew-score: Semantic guide with four still panels and matching stamp.; ux-shell: Native anchors, validation and semantic products.
+Requirements: 13/6 traced
+Prototype risks: roast-stage-vertical-slice: Whether one scoped timeline and one persistent stage can deliver cross-section identity, media transformation, spatial selection, cinematic pacing and complete input parity within budgets.
+Verification: 1440x1000, 1024x768, 768x1024, 390x844, 320x568; 10 interactions
+Purpose: Turn Northwind into a memorable but usable direct-to-consumer coffee experience and complete Dogfood certification.
+Audience: Quality-conscious home brewers and gift subscribers who value freshness, provenance and craft.
+Routes: /, /shipping, /returns, /privacy
+Required functionality:
+- In-page anchors and mobile menu.
+- Six add-to-cart actions.
+- Contact validation and success.
+- Subscription CTA and working legal routes.
+- Back and direct-URL behavior.
+Preservation:
+- All existing navigation, brand, story, product, brew, review, subscription and contact copy.
+- Six add-to-cart actions and contact form states.
+- Four footer links, with missing policies created.
+- req-content: Preserve all visible Northwind content.
+  Build: Recompose every original content group and fix mojibake.
+  Test: Count six coffees, four steps, three reviews and four statistics.
+  Actions: goto
+  Assertions: text-contains .hero, visible .brew-step-4
+  Evidence: evidence-content
+- req-navigation: Five nav links and logo navigation work on desktop and mobile.
+  Build: Semantic sticky navigation and focus-trapped menu.
+  Test: Click every link; test Escape, navigation and focus return.
+  Actions: click .nav-beans
+  Assertions: visible .beans
+  Evidence: evidence-navigation
+- req-cart: All six cart actions remain operational.
+  Build: Six buttons update a live batch tray.
+  Test: Select each coffee and assert live feedback.
+  Actions: click .product-index article[data-bean="kenya"] button -> wait
+  Assertions: text-contains .cart-status
+  Evidence: evidence-cart
+- req-contact: Contact fields and success state remain functional.
+  Build: Accessible form with submit-first validation and visible success.
+  Test: Submit invalid then valid values.
+  Actions: fill .email-input -> click .contact-submit -> fill .email-input -> click .contact-submit
+  Assertions: visible .form-success
+  Evidence: evidence-contact
+- req-policies: Create concise shipping, returns and privacy pages.
+  Build: Direct-load policy shell with three articles.
+  Test: Cold-load each policy and assert title and home link.
+  Actions: goto
+  Assertions: text-contains .policy-title, visible .policy-home
+  Evidence: evidence-policies
+- req-continuity: Prove one persistent cross-section continuity system.
+  Build: One RoastStage and chapter bus preserve chronometer, origin and line.
+  Test: Record hero, story, beans, brew and subscribe using the same canvas.
+  Actions: scroll -> wait
+  Assertions: visible .stage-canvas
+  Evidence: evidence-continuity
+- req-scroll: Prove one structural scroll transformation.
+  Build: Scoped GSAP timeline opens and transforms the instrument.
+  Test: Capture start, midpoint, end, reverse, rapid, resize and release.
+  Actions: scroll -> wait -> reverse-scroll -> wait -> scroll -> wait
+  Assertions: mechanism-state .batch-journey
+  Evidence: evidence-scroll
+- req-spatial: Prove a substantive spatial or 3D media treatment.
+  Build: Multi-part procedural industrial chronometer with materials and camera travel.
+  Test: Assert WebGL change, input response and fallback poster.
+  Actions: scroll -> wait
+  Assertions: visible .stage-canvas
+  Evidence: evidence-spatial
+- req-cinematic: Prove setup, escalation, rest and resolution.
+  Build: Journey escalates into selection, rests in reviews and resolves through brewing.
+  Test: Record the full journey and controlled samples.
+  Actions: scroll -> scroll -> wait
+  Assertions: mechanism-state .batch-journey
+  Evidence: evidence-cinematic
+- req-experimental: Prove an unconventional content-specific interaction peak.
+  Build: Origin calibration and brew transmutation alter media, viewpoint and application state.
+  Test: Exercise keys, buttons and scroll then inspect both peak states.
+  Actions: click .origin-kenya -> wait -> click .brew-step-4 -> wait
+  Assertions: mechanism-state .origin-ring, mechanism-state .brew-score
+  Evidence: evidence-experimental
+- req-responsive: Author desktop, 390px, reduced motion, keyboard and touch parity.
+  Build: Responsive stage paths, snap rail, explicit controls and authored still states.
+  Test: Repeat the primary journey at all exact viewports and reduced motion.
+  Actions: goto
+  Assertions: visible .brew-step-4
+  Evidence: evidence-responsive
+- req-performance: Meet runtime budgets and browser verification.
+  Build: Lazy demand rendering, bounded media, one ticker and hidden pause.
+  Test: Collect transfer, FPS, frame, CLS, overflow, console and network evidence.
+  Actions: goto -> scroll -> wait
+  Assertions: visible .stage-canvas
+  Evidence: evidence-performance
+- req-finalize: Independently check every treatment before DREATIVE_FINALIZED.
+  Build: Current-artifact verification, fresh host-isolated critic, audit, correction and finalize.
+  Test: Bind captures, traces, assertions and critic to the production artifact.
+  Actions: goto
+  Assertions: visible .site-nav
+  Evidence: evidence-finalize
+
+## Treatment decisions and allocations
+- ux: foundational; explicitly decided=true; Mandatory foundation after the explicit optional-treatment decision.
+  Locations=all routes; mechanisms=ux-shell; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed ux delivery fails.
+- mobile: foundational; explicitly decided=true; Mandatory foundation after the explicit optional-treatment decision.
+  Locations=all routes; mechanisms=ux-shell, roast-stage, origin-ring; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed mobile delivery fails.
+- refined: selected; explicitly decided=true; Explicitly selected.
+  Locations=all routes; mechanisms=roast-stage, batch-journey; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed refined delivery fails.
+- motion: selected; explicitly decided=true; Explicitly selected.
+  Locations=hero, beans, brew-guide, subscribe; mechanisms=batch-journey, brew-score; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed motion delivery fails.
+- interaction: selected; explicitly decided=true; Explicitly selected.
+  Locations=hero, beans, brew-guide, subscribe; mechanisms=origin-ring, ux-shell; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed interaction delivery fails.
+- media: selected; explicitly decided=true; Explicitly selected.
+  Locations=hero, beans, brew-guide, subscribe; mechanisms=ledger-media-reveal, origin-ring; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed media delivery fails.
+- 3d: selected; explicitly decided=true; Explicitly selected.
+  Locations=hero, beans, brew-guide, subscribe; mechanisms=roast-stage, origin-ring; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed 3d delivery fails.
+- immersive: selected; explicitly decided=true; Explicitly selected.
+  Locations=hero, beans, brew-guide, subscribe; mechanisms=roast-stage, batch-journey; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed immersive delivery fails.
+- cinematic: selected; explicitly decided=true; Explicitly selected.
+  Locations=hero, beans, brew-guide, subscribe; mechanisms=batch-journey, brew-score; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed cinematic delivery fails.
+- experimental: selected; explicitly decided=true; Explicitly selected.
+  Locations=beans, brew-guide; mechanisms=origin-ring, brew-score; mobile=Preserve the defining meaning and action at 390px and 320px without hover dependence or silent deletion.; reduced motion=Preserve authored resolved composition, hierarchy, content and controls without nonessential travel.; failure=Generic, hero-only, inaccessible, unverified or silently removed experimental delivery fails.
+
+## Section contracts
+### / — nav
+Purpose/action: Keep orientation and direct task access throughout the route.; Open chapter links or mobile menu.
+Composition/media/mechanism: Thin batch index above the stage.; Current-origin swatch and progress mark.; Active tracking and focus-trapped menu.
+States: entry=Brand and links are immediately visible.; active=Current chapter receives aria-current.; resolved=Navigation lands below the header and closes.
+Handoff: Requested chapter publishes to RoastStage.
+Mobile: Fullscreen menu with 48px rows and focus return.
+Reduced motion: Menu appears directly and anchors are instant.
+Fallback: Plain semantic anchors remain.
+Verification and insufficiency boundary: Click all links and test mobile Escape, navigation and focus return.
+### / — hero
+Purpose/action: Introduce freshness as a timestamp and awaken the batch record.; Choose beans or brew guide.
+Composition/media/mechanism: Opening spatial peak.; Roaster plate transforms inside the aperture.; Scroll unlocks the instrument while CTAs remain conventional.
+States: entry=Copy, CTAs and poster are visible.; active=Chronometer opens and media regions separate.; resolved=Instrument aligns to story evidence.
+Handoff: Same stage moves into story.
+Mobile: One headline, instrument and CTAs with a short beat.
+Reduced motion: Resolved open-instrument composition with no pin.
+Fallback: Poster and semantic hero render.
+Verification and insufficiency boundary: Capture controlled progress, CTA clicks, mobile and reduced motion.
+### / — story
+Purpose/action: Turn history and sourcing claims into evidence.; Read story and four statistics.
+Composition/media/mechanism: Instrument opens into a contract ledger.; Farm and roaster plates reveal through apertures.; Scroll changes aperture, data and material.
+States: entry=Hero instrument arrives around the first proof.; active=Rings expose four statistics in sequence.; resolved=Origin coordinates populate the selector.
+Handoff: Proof ticks become origin berths.
+Mobile: Four sequential beats beside simplified geometry.
+Reduced motion: Static open-ledger composition.
+Fallback: Story and statistics remain complete.
+Verification and insufficiency boundary: Assert copy, statistics, canvas identity and camera change.
+### / — beans
+Purpose/action: Make six coffees genuinely explorable and purchasable.; Select an origin and add it to cart.
+Composition/media/mechanism: Main post-hero spatial peak.; Six distinct plates reconstruct into the selected aperture.; Drag, swipe, keys and buttons change viewpoint, dossier and cart state.
+States: entry=One origin is centered and all six are semantic.; active=Ring rotates and media reconstructs.; resolved=Named coffee, notes, roast and price settle.
+Handoff: Selected identity persists into brewing.
+Mobile: Snap rail and explicit controls drive simplified stage.
+Reduced motion: Direct indexed cuts remove inertia.
+Fallback: Six product articles and buttons remain.
+Verification and insufficiency boundary: Exercise all input modes, six cart actions and selected-state parity.
+### / — reviews
+Purpose/action: Provide a quiet credibility rest.; Read three subscriber reviews.
+Composition/media/mechanism: Wide editorial quotations.; Selected origin rests as a still crop.; Reading and focus take priority.
+States: entry=Origin ring retreats to the margin.; active=Quotations sequence without card-grid treatment.; resolved=Ledger annotations point toward brewing.
+Handoff: Origin swatch leads to the score.
+Mobile: Single-column quotations.
+Reduced motion: Resolved composition is unchanged.
+Fallback: Semantic blockquotes remain.
+Verification and insufficiency boundary: Assert all quotes, names, roles and no occlusion.
+### / — brew-guide
+Purpose/action: Translate the selected batch into four pour-over phases.; Scroll or choose a numbered step.
+Composition/media/mechanism: Second experimental transformation.; Selected plate and water lines transform across phases.; Scroll and step controls advance one ordered state.
+States: entry=Selected ring enters with identity intact.; active=Four apertures unfold with camera, type, light and depth.; resolved=The guide resolves into a subscription seal.
+Handoff: Three-minute mark becomes the stamp.
+Mobile: Four short sticky beats and direct controls.
+Reduced motion: Four authored panels appear together.
+Fallback: Original ordered list remains.
+Verification and insufficiency boundary: Capture each phase, reverse, mobile and reduced motion.
+### / — subscribe
+Purpose/action: Resolve the journey into a clear recurring proposition.; Start a subscription.
+Composition/media/mechanism: Spatial resolution.; Resolved chronometer stamp.; CTA receives tactile feedback.
+States: entry=Brew score completes.; active=Apertures close and imprint origin data.; resolved=Price, cadence and CTA are stable.
+Handoff: Seal stays beside contact.
+Mobile: CTA remains in thumb reach.
+Reduced motion: Stamp is present immediately.
+Fallback: Semantic copy and contact link remain.
+Verification and insufficiency boundary: Assert copy, CTA and resolved stage state.
+### / — contact
+Purpose/action: Provide a calm direct channel.; Submit email and optional message.
+Composition/media/mechanism: Functional utility.; No active heavy media.; Validate and show error or success.
+States: entry=Fields are labeled and enabled.; active=Invalid and valid submissions expose explicit states.; resolved=Success confirms reply timing.
+Handoff: Focus continues to footer.
+Mobile: Single column and keyboard-safe spacing.
+Reduced motion: No shake; direct state change.
+Fallback: Native validation remains usable.
+Verification and insufficiency boundary: Submit invalid then valid and assert focus, error and success.
+### / — footer
+Purpose/action: End the record and expose real policies.; Return to top or open a policy.
+Composition/media/mechanism: Ledger-line resolution.; No active media.; Four conventional links.
+States: entry=Resolved seal remains quietly present.; active=Links show consistent focus.; resolved=Destinations resolve and back works.
+Handoff: Policies reuse the ledger material.
+Mobile: Stacked 44px links.
+Reduced motion: Static behavior.
+Fallback: Plain valid links remain.
+Verification and insufficiency boundary: Click all links and assert routes and back.
+### /shipping,/returns,/privacy — policy-shell
+Purpose/action: Replace broken links with trustworthy policy information.; Read a policy and return home.
+Composition/media/mechanism: Quiet utility route.; Static chronometer seal only.; Direct URL, home link and back work.
+States: entry=Correct title appears on cold load.; active=Readable sections explain the policy.; resolved=Home and sibling policies remain available.
+Handoff: No cinematic transition is required.
+Mobile: Single readable column.
+Reduced motion: Static by design.
+Fallback: Semantic article renders.
+Verification and insufficiency boundary: Cold-load every policy at all viewports and assert no 404.
+
+## Mechanism and fallback contracts
+### roast-stage — home hero through subscribe
+Treatments/subjects: 3d, immersive, cinematic, motion, refined; roast-chronometer, brass-material, steel-material
+Driver/owner/dependency: scroll-progress; RoastStage; three@0.185.1 and @react-three/fiber@8.18.0
+States: Sealed chronometer in the hero berth. -> Camera, rings, aperture, light and material change by chapter. -> Instrument closes into the subscription seal.; reverse=Reverse restores the previous chapter without remount.
+Rapid input/refresh: Clamp progress and settle to the latest semantic chapter.; Recalculate berths while preserving chapter and origin.
+Mobile/reduced motion: Short five-state spatial path.; Authored still camera states.
+Success: Recognizable multi-part instrument.; One stage across five chapters.; Camera, light, depth and material change.
+Failure: Generic primitive.; Hero-only viewer.; Rigid plane.; Occlusion.; Second renderer.
+Fallback: Responsive pre-rendered chronometer states over semantic DOM.; trigger=WebGL loss, mobile FPS below 40 or frame-time budget breach.; performance=Lazy chunk below 900 KB; desktop 55 FPS and mobile 45 FPS.
+### batch-journey — home hero through subscribe
+Treatments/subjects: motion, immersive, cinematic; roast-chronometer, ledger-line
+Driver/owner/dependency: scroll-progress; BatchJourney; gsap@3.15.0 and @gsap/react@2.1.2
+States: Progress zero publishes the sealed hero. -> One owner publishes chapter, progress, direction and velocity. -> Subscription resolution releases all pins.; reverse=Every chapter reverses cleanly.
+Rapid input/refresh: Fast scrolling settles skipped chapters.; Refresh after assets preserves the active chapter.
+Mobile/reduced motion: Short chapter timelines.; Direct semantic states.
+Success: Setup, escalation, rest and resolution.; Two post-hero transformations.; One clock.
+Failure: Entrance-only motion.; Competing ticker.; Unreleased pin.
+Fallback: Native flow with direct chapter states.; trigger=Unresolved anchor, keyboard, resize or pin-release failure.; performance=One ticker, no per-frame layout and no duplicated triggers.
+### ledger-media-reveal — home hero and story
+Treatments/subjects: media, motion, cinematic; roaster-plate, origin-plates
+Driver/owner/dependency: scroll-progress; RoastStage; three@0.185.1 and sharp@0.35.3 derivatives
+States: Documentary plate is registered in the aperture. -> Image regions separate along roast ticks and recompose. -> Provenance plate aligns to the story ledger.; reverse=Regions restore the original crop.
+Rapid input/refresh: Jump to a valid resolved crop.; Rebind plane bounds and preserve mask state.
+Mobile/reduced motion: Bounded lower-resolution reconstruction.; Authored crop cut.
+Success: Source pixels visibly change topology.; DOM fallback stays aligned.
+Failure: Pan, zoom, opacity or detached overlay only.
+Fallback: Two responsive DOM picture states with an editorial mask handoff.; trigger=Decode failure, alignment error above 2px or frame-budget failure.; performance=Each texture below 250 KB with at most 24 regions.
+### origin-ring — home beans
+Treatments/subjects: interaction, media, 3d, experimental, ux, mobile; origin-plates, roast-chronometer
+Driver/owner/dependency: drag; OriginRingController; R3F stage and custom pointer events.
+States: One dossier is centered and five origins occupy peripheral berths. -> Input changes ring, camera, material, media slices and pending dossier. -> Nearest origin locks with matching dossier and cart target.; reverse=Opposite input selects the previous origin.
+Rapid input/refresh: Clamp velocity, cancel intermediate requests and settle final index.; Recalculate bounds while preserving selection.
+Mobile/reduced motion: Touch snap rail and simplified spatial state.; Direct indexed plate changes.
+Success: All inputs agree.; Selection changes viewpoint, media and app state.; Special under neutral styling.
+Failure: Ordinary carousel.; Hover tilt.; Cursor gimmick.; Pointer-only behavior.; Copied demo.
+Fallback: Semantic six-product selector with posters.; trigger=Input parity, gesture, alignment or frame-budget failure.; performance=Input below 80ms, settle below 700ms and one animation owner.
+### brew-score — home beans through subscribe
+Treatments/subjects: motion, immersive, cinematic, experimental, refined; roast-chronometer, ledger-line, brew-water-lines
+Driver/owner/dependency: scroll-progress; BatchJourney; BatchJourney, RoastStage and pre-rendered fallback states.
+States: Origin ring leaves beans with identity intact. -> Ring flattens and four apertures unfold with type, light, depth and layout. -> Score closes into the subscription seal.; reverse=Reverse reassembles the selected origin ring.
+Rapid input/refresh: Settle on the nearest complete readable phase.; Recalculate handoff bounds while preserving step and origin.
+Mobile/reduced motion: Four short controlled beats.; Four static authored panels.
+Success: Object and origin survive handoff.; Five visual channels change.; Full cinematic arc remains legible.
+Failure: Sticky split.; Entrance sequence.; Video rectangle.; Rotating seal.
+Fallback: Semantic guide with four still panels and matching stamp.; trigger=Lost identity, blank frame, occlusion, unstable mobile or budget failure.; performance=One renderer and coordinated channels within route budget.
+### ux-shell — all routes
+Treatments/subjects: ux, mobile, refined, interaction; ledger-line
+Driver/owner/dependency: click; AppShell; React 18 semantic controls.
+States: Controls are visible before enhancement. -> Menu, cart and form publish accessible states. -> Routes resolve, feedback announces and form completes.; reverse=Escape and back close or restore focus.
+Rapid input/refresh: Prevent duplicate submit and keep cart feedback deterministic.; Focus and route state survive refresh.
+Mobile/reduced motion: Touch-native semantic controls.; Instant functional state changes.
+Success: Every function is preserved.; All routes are valid.; Input parity passes.
+Failure: Blocking alert.; Dead link.; Swallowed click.; Broken form.
+Fallback: Native anchors, validation and semantic products.; trigger=Any enhancement blocks the functional path.; performance=Input below 100ms and zero runtime errors.
+- Fallback roast-stage-fallback: Catalogue shared-3d-object-across-sections transformed into a Northwind roast chronometer. using the declared primary dependency. -> Responsive pre-rendered chronometer states over semantic DOM.; trigger=WebGL loss, mobile FPS below 40 or frame-time budget breach.; evidence=Runtime trace., Controlled browser captures., Current-build performance or failure evidence.; reapproval=false
+- Fallback batch-journey-fallback: Catalogue persistent-object and reversible timeline using scoped GSAP and ScrollTrigger. using the declared primary dependency. -> Native flow with direct chapter states.; trigger=Unresolved anchor, keyboard, resize or pin-release failure.; evidence=Runtime trace., Controlled browser captures., Current-build performance or failure evidence.; reapproval=false
+- Fallback ledger-media-reveal-fallback: Catalogue shader reveal and editorial crop choreography consuming real source pixels. using the declared primary dependency. -> Two responsive DOM picture states with an editorial mask handoff.; trigger=Decode failure, alignment error above 2px or frame-budget failure.; evidence=Runtime trace., Controlled browser captures., Current-build performance or failure evidence.; reapproval=false
+- Fallback origin-ring-fallback: Catalogue object constellation transformed into an original calibrated coffee selector. using the declared primary dependency. -> Semantic six-product selector with posters.; trigger=Input parity, gesture, alignment or frame-budget failure.; evidence=Runtime trace., Controlled browser captures., Current-build performance or failure evidence.; reapproval=true
+- Fallback brew-score-fallback: Catalogue object handoff plus cinematic five-beat pattern using selected-origin identity. using the declared primary dependency. -> Semantic guide with four still panels and matching stamp.; trigger=Lost identity, blank frame, occlusion, unstable mobile or budget failure.; evidence=Runtime trace., Controlled browser captures., Current-build performance or failure evidence.; reapproval=true
+- Fallback ux-shell-fallback: Custom semantic shell preserving navigation, cart, form, routes and focus. using the declared primary dependency. -> Native anchors, validation and semantic products.; trigger=Any enhancement blocks the functional path.; evidence=Runtime trace., Controlled browser captures., Current-build performance or failure evidence.; reapproval=false
+
+## Package and prototype contracts
+Package installation allowed: true
+Exact mechanism packages:
+- gsap@3.15.0 for structural timelines and ScrollTrigger.
+- @gsap/react@2.1.2 for scoped React cleanup.
+- three@0.185.1 for the WebGL scene and materials.
+- @react-three/fiber@8.18.0 for React 18 scene lifecycle.
+- lenis@1.3.25 for prototype comparison only; production requires measured benefit.
+- sharp@0.35.3 for development-only image derivatives.
+Preflight:
+- Chrome and Dreative browser runner are available.
+- WebGL and Canvas remain unverified until the prototype browser run.
+- Video generation is unavailable, so generated video is not promised.
+- Image generation and search are available.
+- No 3D authoring tool is confirmed; original procedural inorganic geometry is approved.
+- FFmpeg is missing and unnecessary for the selected pre-rendered image-state route.
+Install rule: only packages required by approved mechanisms; one scroll/ticker owner.
+- Prototype roast-stage-vertical-slice: required=true; mechanism=roast-stage; risk=Combined scroll orchestration, WebGL media, interaction and responsive continuity.
+  Uncertainty/scope: Whether one scoped timeline and one persistent stage can deliver cross-section identity, media transformation, spatial selection, cinematic pacing and complete input parity within budgets.; .dreative/prototypes/roast-stage-vertical-slice with actual hero, one post-hero peak, 390px and reduced-motion paths.
+  Acceptance: One mounted stage persists through actual hero, story, beans, brew and subscription states.; Structural transformation has start, midpoint, end, reverse, rapid-scroll, refresh and release evidence.; Chronometer has recognizable industrial form, material depth, camera travel and fallback.; A recording shows setup, escalation, peak, rest, handoff and resolution.; Origin calibration changes camera, media, dossier and cart by pointer, touch, keyboard and buttons.; Desktop and 390px are authored without overflow or occlusion.; Reduced motion retains purposeful resolved compositions.; Desktop averages at least 55 FPS and mobile at least 45 FPS.; Dreative browser verification completes with controlled evidence.
+  Failure consequence: Iterate once; if still failing, use only the matching approved fallback with observed trigger or request a material plan change.
+
+## Subject, prop, asset and reference contracts
+- roast-chronometer [continuity-object]: An industrial cross-section roast chronometer combining drum, cooling tray, origin ring and batch timer.; role=Changes from roast promise to evidence carrier, selector, brew score and subscription seal.; sections=hero, story, beans, brew-guide, subscribe; source=procedural; assets=chronometer-geometry, chronometer-poster, chronometer-angles; mobile=Simplified demand-rendered model or pre-rendered angles.; reduced motion=Stable three-quarter plates.; fallback=pre-rendered-angles; rights=Original project geometry and materials.
+- roaster-plate [primary-subject]: Documentary drum roaster and working roasting environment.; role=Ground the opening promise in real craft.; sections=hero, story; source=external-sourced; assets=roaster-desktop, roaster-mobile, roaster-mask; mobile=Tight vertical crop.; reduced motion=Resolved editorial crop.; fallback=static-image; rights=Commercial reuse license.; Source URL and author record.
+- origin-plates [primary-subject]: Six distinct coffee-origin landscapes or processing scenes.; role=Differentiate every coffee and provide pixels for selection transformation.; sections=beans, brew-guide; source=external-sourced; assets=origin-ethiopia, origin-colombia, origin-sumatra, origin-kenya, origin-guatemala, origin-decaf; mobile=Six vertical AVIF crops.; reduced motion=Six resolved posters.; fallback=static-image; rights=Commercial reuse or generated provenance.; Unique source per origin.
+- ledger-line [component]: Burnt-orange measured timestamp and section spine.; role=DOM continuity and progress aid.; sections=nav, hero, story, beans, reviews, brew-guide, subscribe, footer; source=procedural; assets=ledger-svg; mobile=Short vertical progress rule.; reduced motion=Static chapter index.; fallback=static-image; rights=Original SVG.
+- brass-material [material]: Oxidized satin brass with ember edge highlights.; role=Warm calibrated instrument surface.; sections=hero, beans, brew-guide; source=procedural; assets=brass-noise; mobile=Low-frequency PBR material.; reduced motion=Baked poster material.; fallback=static-image; rights=Original procedural texture.
+- steel-material [material]: Blackened steel with cold Bergen rim light.; role=Mechanical counterpoint to parchment and brass.; sections=hero, story, subscribe; source=procedural; assets=steel-noise; mobile=Simple PBR material.; reduced motion=Baked poster material.; fallback=static-image; rights=Original procedural texture.
+- brew-water-lines [component]: Four pour arcs keyed to 18g, 300ml, 30 seconds and three minutes.; role=Turn brew copy into content-specific temporal geometry.; sections=brew-guide, subscribe; source=procedural; assets=brew-score-svg; mobile=Four direct step arcs.; reduced motion=Static score.; fallback=static-image; rights=Original SVG.
+- Asset roaster-documentary: Industrial drum roaster with copy-safe negative space and a crop-safe aperture subject.; role=Hero and story source-pixel transformation.; source=external-sourced/external-first; formats=Desktop AVIF., Mobile AVIF., WebP fallback., Mask PNG.; locations=hero, story; reuse=One source may recur only as transformed crops.; budget=450000 bytes; rights=Commercial web reuse.; Author, URL and derivative permission.
+- Asset six-origin-plates: Six differentiated landscapes or processing scenes with a coherent grade and crop-safe subject.; role=Distinct identities for all six coffees.; source=external-sourced/external-first; formats=Six desktop AVIF., Six mobile AVIF., WebP fallbacks., Slice masks.; locations=beans, brew-guide; reuse=Every origin uses a unique source.; budget=1800000 bytes; rights=Commercial reuse or generated provenance.; Per-asset record.
+- Asset chronometer-assets: Original multi-part industrial chronometer with no coded organic geometry.; role=Persistent spatial signature and fallback.; source=procedural/procedural; formats=Live procedural geometry., Desktop poster., 390 poster., Pre-rendered angles.; locations=hero, story, beans, brew-guide, subscribe; reuse=The same identity recurs across all chapters.; budget=700000 bytes; rights=Original project source.
+- Asset chronometer-prerendered-motion: Twelve to twenty-four authored states of the same chronometer from setup through resolution.; role=Mobile, low-power and runtime fallback.; source=procedural/procedural; formats=Desktop AVIF states., 390 AVIF states., Hero and resolution posters.; locations=hero, brew-guide, subscribe; reuse=Fallback and mobile only if the live budget triggers.; budget=1200000 bytes; rights=Original project render.
+- Asset font-family: Bodoni Moda, Inter and IBM Plex Mono self-hosted and subset.; role=Display, editorial utility and metadata hierarchy.; source=external-sourced/external-first; formats=WOFF2 Latin subsets., License texts.; locations=all routes; reuse=Shared across routes.; budget=320000 bytes; rights=SIL Open Font License retained.
+References: provided; URLs=https://gsap.com/docs/v3/Plugins/ScrollTrigger/, https://github.com/darkroomengineering/lenis, https://github.com/DavidHDev/react-bits, https://github.com/tengbao/vanta; adoption/licence notes=Adapt licensed principles only; never copy another site or unchanged demo.; GSAP supplies scoped timeline patterns; Lenis is conditional; React Bits requires substantial transformation; Vanta is shader-atmosphere reference only.; anti-references=Generic Vanta preset background.; Unchanged React Bits component.; Hero-only award effect.; Scroll-jacking, generic particles, or generic primitives.
+Source policies: generated images=allowed; sourced images=allowed; generated video=allowed; sourced video=allowed; 3D=generation-and-sourcing-allowed
+Missing/needed assets: Roaster and coffee-origin plates., Six distinct coffee package or origin plates., Chronometer material maps and fallback poster., Mobile and reduced-motion media variants., Shipping, returns and privacy content.
+
+## Verification and completion contract
+Viewports: desktop=1440x1000, tablet-landscape=1024x768, tablet-portrait=768x1024, mobile-390=390x844, mobile-320=320x568
+- Interaction roast-stage-progress: scroll on / .roast-stage; mechanism=roast-stage
+- Interaction batch-journey-progress: scroll on / .batch-journey; mechanism=batch-journey
+- Interaction media-reveal-progress: scroll on / .ledger-media-reveal; mechanism=ledger-media-reveal
+- Interaction navigation: click on / .text-link[href="#origin"]; mechanism=ux-shell
+- Interaction origin-pointer: click on / .origin-option:nth-of-type(2); mechanism=origin-ring
+- Interaction origin-keyboard: press on / .origin-ring; mechanism=origin-ring
+- Interaction origin-touch: click on / .origin-option:nth-of-type(4); mechanism=origin-ring
+- Interaction brew: click on / .brew-step:nth-of-type(4); mechanism=brew-score
+- Interaction contact: fill on / .contact-form input; mechanism=ux-shell
+- Interaction policies: click on /shipping footer a[href$="shipping"]; mechanism=ux-shell
+Mechanism states:
+- Roast stage at 0, 25, 50, 75 and 100 plus context loss.
+- Batch journey entry, midpoint, exit, reverse, rapid, refresh and release.
+- Media source, separation, reconstruction, mobile, reduced and error.
+- Origin initial, drag, settled, reverse, rapid, keyboard, touch and reduced.
+- Brew handoff, four phases, resolution, reverse, mobile and reduced.
+Mobile tests:
+- 390 authored route and touch flow.
+- 320 no overflow.
+- DPR cap.
+- URL-bar resize.
+- 44px targets.
+- No hover-only information.
+Reduced-motion tests:
+- No long pin, scrub, inertia or autoplay.
+- Resolved stage plates.
+- Direct origin selection.
+- Static brew score.
+- Complete functions.
+Accessibility:
+- Semantic landmarks and heading order.
+- Visible focus and logical tabs.
+- Menu trap and focus return.
+- Form labels and error wiring.
+- No overlay interception.
+- Contrast and semantic text.
+- Anchor and keyboard scroll with Lenis on and off.
+Performance/budgets:
+- Initial compressed route below 2.8 MB excluding cached fonts.
+- Lazy Three and R3F chunk below 900 KB compressed.
+- Total media below 4 MB and each responsive image below 250 KB.
+- Desktop average at least 55 FPS and worst controlled frame below 40 ms.
+- 390px average at least 45 FPS and worst controlled frame below 55 ms.
+- No long task above 200 ms during selection.
+- Input feedback below 100 ms and origin settle below 700 ms.
+- CLS below 0.1 and no overflow at 320, 390, 768 or 1440.
+- Exactly one GSAP ticker and one WebGL renderer.
+- Pause hidden rendering and cap DPR at 1.5 mobile and 2 desktop.
+- Build and artifact identity.
+- Transfer and chunk bytes.
+- FPS, worst frame, long tasks and CLS.
+- One ticker and renderer.
+- Hidden pause.
+- Context fallback.
+- No overflow.
+Media/network/provenance:
+- Every planned file exists and renders.
+- Manifest matches disk and app references.
+- No failed requests.
+- Responsive formats decode.
+- Canvas and media change.
+- Rights and generation records exist.
+Finalization blockers:
+- Failed assertion.
+- Missing treatment evidence.
+- Missing viewport or reduced-motion evidence.
+- Broken route, form, cart or anchor.
+- Unapproved fallback.
+- Rights gap.
+- Performance breach.
+- Generic or demo-derived result.
+- Non-independent critic or major issue.
+- Audit failure or missing DREATIVE_FINALIZED.
+
+## Unresolved decisions and blockers
+- none
+
+Approval authorizes this exact contract revision. Material changes require a change request and reapproval.

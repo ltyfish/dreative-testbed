@@ -1,0 +1,425 @@
+{
+  "version": 4,
+  "generatedAt": "2026-07-18T08:52:00.847Z",
+  "runId": "verify-1784364672004-b4a54105",
+  "buildIdentity": {
+    "algorithm": "dreative-source-v1-sha256",
+    "runId": "verify-1784364672004-b4a54105",
+    "dreativeVersion": "0.9.0",
+    "schemaVersion": 5,
+    "framework": "vite",
+    "packageManager": "npm",
+    "buildCommand": "npm run build",
+    "serverCommand": "npm run preview",
+    "testedOrigin": "http://127.0.0.1:4173",
+    "testedUrl": "http://127.0.0.1:4173/",
+    "serverStartedAt": "2026-07-18T08:51:12.004Z",
+    "verificationStartedAt": "2026-07-18T08:51:12.013Z",
+    "verificationFinishedAt": "2026-07-18T08:52:00.847Z",
+    "gitHead": "feae839df4e9121562f9e77ba484fed78642d49e",
+    "dirty": true,
+    "sourceTreeHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053",
+    "packageJsonHash": "7ace435fd2a5bbf701d4c201141573bc514ebbc3474cf687332c89953879881d",
+    "lockfile": "package-lock.json",
+    "lockfileHash": "cf0b8f23863e377659a7deafc0bd6c59f172c3a58d54babcdbf347771872b6c2",
+    "publicAssetHash": "5a27e5311473b5931ccf8bc833b0603dc8c5da69d8878e1de07373bc8a7fc8a9",
+    "productionBuildDirectory": "dist",
+    "productionBuildHash": "95ace8a89849a6e932deb65bdaf49c63c0570a3cf7e20aa8b5133da2e61b1381"
+  },
+  "evidence": [
+    {
+      "id": "evidence-content",
+      "criterionId": "req-content",
+      "criterion": "Preserve all visible Northwind content.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/\", waiting until \"networkidle\"\u001b[22m\n",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-content.png",
+        "artifactHash": "73f22d373fb0aaaeb320650a128c2aa4b32d636960f4fe9a45e4f5cf20b81565",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": []
+      },
+      "pageId": "home route",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-navigation",
+      "criterionId": "req-navigation",
+      "criterion": "Five nav links and logo navigation work on desktop and mobile.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.menu-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"menu-trigger\" aria-expanded=\"false\" aria-controls=\"primary-navigation\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-navigation.png",
+        "artifactHash": "68c14c51988a42edb8ee1281b13f6ee00b7a5c4e4e452d8d4cae4602b403bdeb",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": []
+      },
+      "pageId": "AppShell",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-cart",
+      "criterionId": "req-cart",
+      "criterion": "All six cart actions remain operational.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "[{\"assertion\":{\"type\":\"text-contains\",\"selector\":\".cart-status\",\"expected\":\"Kenya AA Nyeri\"},\"pass\":false,\"observed\":\"Ethiopia Yirgacheffe, 250g, added to the batch tray.\"}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-cart.png",
+        "artifactHash": "b2d341616a692fe2ddcf7dcc046adedfc413f1808d52cf382df1a7cedc55ecc9",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "text-contains:.cart-status",
+            "expected": "Kenya AA Nyeri",
+            "observed": "\"Ethiopia Yirgacheffe, 250g, added to the batch tray.\""
+          }
+        ]
+      },
+      "pageId": "beans section",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-contact",
+      "criterionId": "req-contact",
+      "criterion": "Contact fields and success state remain functional.",
+      "kind": "interaction",
+      "status": "pass",
+      "evidence": "[{\"assertion\":{\"type\":\"visible\",\"selector\":\".form-success\"},\"pass\":true,\"observed\":true}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-contact.png",
+        "artifactHash": "fbf5b5ce4922e5215d84e28e7acca67086406590218d12a1267b845df815167c",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "visible:.form-success",
+            "expected": "true",
+            "observed": "true"
+          }
+        ]
+      },
+      "pageId": "contact form",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-policies",
+      "criterionId": "req-policies",
+      "criterion": "Create concise shipping, returns and privacy pages.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/privacy\", waiting until \"networkidle\"\u001b[22m\n",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-policies.png",
+        "artifactHash": "3c3b1a9e3919d57cf93d9b41a6f9d5a0aa78b5bd30b58a2b13cf357ef2909933",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": []
+      },
+      "pageId": "policy routes",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-continuity",
+      "criterionId": "req-continuity",
+      "criterion": "Prove one persistent cross-section continuity system.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "[{\"assertion\":{\"type\":\"canvas-changed\",\"selector\":\".stage-canvas\",\"mechanismId\":\"roast-stage\"},\"pass\":false,\"observed\":{\"initialHash\":\"929b4f6f9f333ecf541883a0131a092bffb6212d5ef48e6f4e153de6aa2c1230\",\"finalHash\":\"da3c01050b1f352b33853bf17e408ba64e0b14423d4f7137a20906ed2e58e679\"}}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-continuity.png",
+        "artifactHash": "3fe4f6c6e4b4326822735559e10cf9eaa8c652c0725598f8233ca9fdcbea6ecb",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "canvas-changed:.stage-canvas",
+            "expected": "true",
+            "observed": "{\"initialHash\":\"929b4f6f9f333ecf541883a0131a092bffb6212d5ef48e6f4e153de6aa2c1230\",\"finalHash\":\"da3c01050b1f352b33853bf17e408ba64e0b14423d4f7137a20906ed2e58e679\"}"
+          }
+        ]
+      },
+      "pageId": "RoastStage",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-scroll",
+      "criterionId": "req-scroll",
+      "criterion": "Prove one structural scroll transformation.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "[{\"assertion\":{\"type\":\"mechanism-state\",\"mechanismId\":\"batch-journey\",\"expected\":\"resolved\"},\"pass\":false,\"observed\":null}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-scroll.png",
+        "artifactHash": "a2171088dda80a9a346db21e0b1061319603dec79caee2e659471e00767cd804",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "mechanism-state:0",
+            "expected": "resolved",
+            "observed": "null"
+          }
+        ]
+      },
+      "pageId": "BatchJourney",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-spatial",
+      "criterionId": "req-spatial",
+      "criterion": "Prove a substantive spatial or 3D media treatment.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "[{\"assertion\":{\"type\":\"canvas-changed\",\"selector\":\".stage-canvas\",\"mechanismId\":\"roast-stage\"},\"pass\":false,\"observed\":{\"initialHash\":\"929b4f6f9f333ecf541883a0131a092bffb6212d5ef48e6f4e153de6aa2c1230\",\"finalHash\":\"da3c01050b1f352b33853bf17e408ba64e0b14423d4f7137a20906ed2e58e679\"}}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-spatial.png",
+        "artifactHash": "68bc771a0206b375dd6cdedf53012853f8a4ff52a88f4931c4fc32ea6a99d59c",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "canvas-changed:.stage-canvas",
+            "expected": "true",
+            "observed": "{\"initialHash\":\"929b4f6f9f333ecf541883a0131a092bffb6212d5ef48e6f4e153de6aa2c1230\",\"finalHash\":\"da3c01050b1f352b33853bf17e408ba64e0b14423d4f7137a20906ed2e58e679\"}"
+          }
+        ]
+      },
+      "pageId": "RoastStage",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-cinematic",
+      "criterionId": "req-cinematic",
+      "criterion": "Prove setup, escalation, rest and resolution.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "[{\"assertion\":{\"type\":\"mechanism-state\",\"mechanismId\":\"brew-score\",\"expected\":\"resolved\"},\"pass\":false,\"observed\":null}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-cinematic.png",
+        "artifactHash": "6e6531daeff8a3d9e4b5cf454b52518a55af039462ef96da36187c0483c718a1",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "mechanism-state:0",
+            "expected": "resolved",
+            "observed": "null"
+          }
+        ]
+      },
+      "pageId": "home arc",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-experimental",
+      "criterionId": "req-experimental",
+      "criterion": "Prove an unconventional content-specific interaction peak.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "[{\"assertion\":{\"type\":\"mechanism-state\",\"mechanismId\":\"origin-ring\",\"expected\":\"settled\"},\"pass\":false,\"observed\":null},{\"assertion\":{\"type\":\"mechanism-state\",\"mechanismId\":\"brew-score\",\"expected\":\"resolved\"},\"pass\":false,\"observed\":null}]",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-experimental.png",
+        "artifactHash": "74750f0eabce76aa6c708c6555ce2134b500735d2a25f05a6c87569370dff1ef",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": [
+          {
+            "property": "mechanism-state:0",
+            "expected": "settled",
+            "observed": "null"
+          },
+          {
+            "property": "mechanism-state:1",
+            "expected": "resolved",
+            "observed": "null"
+          }
+        ]
+      },
+      "pageId": "beans and brew",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-responsive",
+      "criterionId": "req-responsive",
+      "criterion": "Author desktop, 390px, reduced motion, keyboard and touch parity.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/\", waiting until \"networkidle\"\u001b[22m\n",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-responsive.png",
+        "artifactHash": "2a52404907b2acfc837eb428252710096f6725a36bbdc4933fdb283a634437e3",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": []
+      },
+      "pageId": "all mechanisms",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-performance",
+      "criterionId": "req-performance",
+      "criterion": "Meet runtime budgets and browser verification.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/\", waiting until \"networkidle\"\u001b[22m\n",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-performance.png",
+        "artifactHash": "a229d9bfeeeedbbf4cfbe398cff750843eb8988419c0b78520628ccbfbb87e68",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": []
+      },
+      "pageId": "production build",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    },
+    {
+      "id": "evidence-finalize",
+      "criterionId": "req-finalize",
+      "criterion": "Independently check every treatment before DREATIVE_FINALIZED.",
+      "kind": "interaction",
+      "status": "fail",
+      "evidence": "Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n\u001b[2m  - navigating to \"/\", waiting until \"networkidle\"\u001b[22m\n",
+      "verificationRunId": "verify-1784364672004-b4a54105",
+      "proof": {
+        "timestamp": "2026-07-18T08:52:00.847Z",
+        "artifactPath": ".dreative/runs/verify-1784364672004-b4a54105/requirement-req-finalize.png",
+        "artifactHash": "b501bfee12c9a9e2c96a1b1572d017bf566513a84ecefa52ce3d0483b4d2d79c",
+        "testedUrl": "http://127.0.0.1:4173/",
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "dpr": 1
+        },
+        "captureSource": "playwright",
+        "observedProperties": []
+      },
+      "pageId": "Dreative pipeline",
+      "viewportClass": "desktop",
+      "buildIdentityHash": "780603fc2a6a596b1768daf2ac95016aa07ae0314201356d8ec5a58aede10053"
+    }
+  ],
+  "reconciliation": {
+    "planned": [
+      "roast-stage",
+      "batch-journey",
+      "ledger-media-reveal",
+      "origin-ring",
+      "brew-score",
+      "ux-shell"
+    ],
+    "observed": [
+      "ux-shell",
+      "origin-ring",
+      "brew-score"
+    ],
+    "missing": [
+      "roast-stage",
+      "batch-journey",
+      "ledger-media-reveal"
+    ],
+    "substituted": [],
+    "extra": []
+  }
+}

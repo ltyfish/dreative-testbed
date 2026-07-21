@@ -1,0 +1,771 @@
+{
+  "verificationSchemaVersion": 5,
+  "runId": "verify-1784369595636-5914f16b",
+  "nonce": "11a00df74b0f11e9c97d88c6889c9ab5159f68e6955da00a",
+  "dreativeVersion": "0.9.0",
+  "browserRunner": "dreative-playwright-core",
+  "browserRunnerVersion": "1.61.1",
+  "browserName": "chromium",
+  "browserVersion": "150.0.7871.125",
+  "startedAt": "2026-07-18T10:13:15.644Z",
+  "finishedAt": "2026-07-18T10:14:39.684Z",
+  "testedUrl": "http://127.0.0.1:4173/",
+  "approvedPlanHash": "bf32c5bbe14ffedd5e01efc415a232f100d35366e9d65e062542b709e0dbff33",
+  "sourceHash": "b8195365c27fad6fbe155cb454884541d2c7b1d9f19d5e6c2c30d42d3a8ee7ce",
+  "buildHash": "59a7df9bb0254866950d50c7ef5008cc2706eb4b15c8d778c9cbb820da261106",
+  "lockfileHash": "cf0b8f23863e377659a7deafc0bd6c59f172c3a58d54babcdbf347771872b6c2",
+  "assuranceLevel": "local",
+  "assuranceProvider": "dreative-local-integrity",
+  "verificationMode": "production",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "name": "desktop"
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "name": "tablet-landscape"
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "name": "tablet-portrait"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "name": "mobile-390"
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "name": "mobile-320"
+    }
+  ],
+  "interactionSequence": [
+    {
+      "id": "roast-stage-progress",
+      "route": "/",
+      "action": "scroll",
+      "value": "800",
+      "selector": ".roast-stage",
+      "mechanismId": "roast-stage"
+    },
+    {
+      "id": "batch-journey-progress",
+      "route": "/",
+      "action": "scroll",
+      "value": "1800",
+      "selector": ".batch-journey",
+      "mechanismId": "batch-journey"
+    },
+    {
+      "id": "media-reveal-progress",
+      "route": "/",
+      "action": "scroll",
+      "value": "2600",
+      "selector": ".ledger-media-reveal",
+      "mechanismId": "ledger-media-reveal"
+    },
+    {
+      "id": "navigation",
+      "route": "/",
+      "action": "click",
+      "selector": ".text-link[href=\"#origin\"]",
+      "mechanismId": "ux-shell"
+    },
+    {
+      "id": "origin-pointer",
+      "route": "/",
+      "action": "click",
+      "selector": ".origin-option:nth-of-type(2)",
+      "mechanismId": "origin-ring"
+    },
+    {
+      "id": "origin-keyboard",
+      "route": "/",
+      "action": "press",
+      "selector": ".origin-ring",
+      "value": "ArrowRight",
+      "mechanismId": "origin-ring"
+    },
+    {
+      "id": "origin-touch",
+      "route": "/",
+      "action": "click",
+      "selector": ".origin-option:nth-of-type(4)",
+      "mechanismId": "origin-ring"
+    },
+    {
+      "id": "brew",
+      "route": "/",
+      "action": "click",
+      "selector": ".brew-step:nth-of-type(4)",
+      "mechanismId": "brew-score"
+    },
+    {
+      "id": "contact",
+      "route": "/",
+      "action": "fill",
+      "selector": ".contact-form input",
+      "value": "ledger@example.com",
+      "mechanismId": "ux-shell"
+    },
+    {
+      "id": "policies",
+      "route": "/shipping",
+      "action": "click",
+      "selector": "footer a[href$=\"shipping\"]",
+      "mechanismId": "ux-shell"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "desktop---initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---initial.png",
+      "sha256": "4b0bc61e062afee98fced1738b304e692240e966e26f57a4e118420a894450db",
+      "bytes": 2604240
+    },
+    {
+      "id": "desktop---roast-stage-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---roast-stage-progress.png",
+      "sha256": "7d65c113bf45706c8a440b41e1844e52839b54a40a24d0b9433d76eed46ad516",
+      "bytes": 2548773
+    },
+    {
+      "id": "desktop---batch-journey-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---batch-journey-progress.png",
+      "sha256": "1d8004bf7b9f268e361c3e3f0a041f3cd9f5b6a1d8ecf4a8583fd4d47ec50c61",
+      "bytes": 2810336
+    },
+    {
+      "id": "desktop---media-reveal-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---media-reveal-progress.png",
+      "sha256": "a472cba0c18df11ac6aa25f8543678d18bd3ed57db477d5e857142b05dec6ca9",
+      "bytes": 3044656
+    },
+    {
+      "id": "desktop---navigation",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---navigation.png",
+      "sha256": "a399841ea5a93b6dbd6e69acc29d0682d562531dbee91f86c50e6fcdf5ddb69c",
+      "bytes": 2539325
+    },
+    {
+      "id": "desktop---origin-pointer",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---origin-pointer.png",
+      "sha256": "d33d912042745d07ff0be5e91669ff9a7344c9e73039a949642a5d989b747cff",
+      "bytes": 3026209
+    },
+    {
+      "id": "desktop---origin-keyboard",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---origin-keyboard.png",
+      "sha256": "2372ed3d2fed3eb9dc75af76f3ce14cfce1bb9059b66cd7a1ff136ee17eef952",
+      "bytes": 3046228
+    },
+    {
+      "id": "desktop---origin-touch",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---origin-touch.png",
+      "sha256": "e35a4d3161466d3b6c45217a5b1e006ad173452f23b3fa250ab7100431561316",
+      "bytes": 3136463
+    },
+    {
+      "id": "desktop---brew",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---brew.png",
+      "sha256": "a945437f194fb74669a721b07a38731f477f65fcaa8262abb42bacfb221f26b2",
+      "bytes": 2729389
+    },
+    {
+      "id": "desktop---contact",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop---contact.png",
+      "sha256": "c9964f597f6a9c4c77216120019a96b142d3ab60ddc2fbd4d5b022188ce8fcfa",
+      "bytes": 2849947
+    },
+    {
+      "id": "desktop--shipping-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop--shipping-initial.png",
+      "sha256": "2099f12ac36728ecdb9218533e3f37398a9ed598953445d85366ea19bc4c73bd",
+      "bytes": 87861
+    },
+    {
+      "id": "desktop--shipping-policies",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop--shipping-policies.png",
+      "sha256": "2099f12ac36728ecdb9218533e3f37398a9ed598953445d85366ea19bc4c73bd",
+      "bytes": 87861
+    },
+    {
+      "id": "desktop--returns-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop--returns-initial.png",
+      "sha256": "5cc9d2dd9f941338c08e03493e840d9f87ec70a7b05fc9225e7cdc3d927c081e",
+      "bytes": 79878
+    },
+    {
+      "id": "desktop--privacy-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop--privacy-initial.png",
+      "sha256": "9f1fb98106d16a01057ef6c2fc1cbe88aa14440d469af401aaf42da17c254509",
+      "bytes": 83415
+    },
+    {
+      "id": "desktop-trace",
+      "type": "trace",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop-trace.zip",
+      "sha256": "3e9408361d5882f1d9e05869d987cf8a5a9b72490df508684b45bfe29374f080",
+      "bytes": 26920802
+    },
+    {
+      "id": "tablet-landscape---initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---initial.png",
+      "sha256": "b815df0b6238e3874568ae2adea278d7bc74fb3b420556611aa119af99d1f221",
+      "bytes": 1694429
+    },
+    {
+      "id": "tablet-landscape---roast-stage-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---roast-stage-progress.png",
+      "sha256": "6abc174025f62dd05220a33371f85a82e28636f2105332234f30eef4c0c2eb0c",
+      "bytes": 1673037
+    },
+    {
+      "id": "tablet-landscape---batch-journey-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---batch-journey-progress.png",
+      "sha256": "d0b75af29bd6fe9cfd3e20e46ad6d9b1a5004dc80d47693d61781941209d3bdf",
+      "bytes": 1955493
+    },
+    {
+      "id": "tablet-landscape---media-reveal-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---media-reveal-progress.png",
+      "sha256": "99c7b691adaf71a719c0509d2bba06175ff19f4206cd943a372a47a35a26779c",
+      "bytes": 1968945
+    },
+    {
+      "id": "tablet-landscape---navigation",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---navigation.png",
+      "sha256": "3aea8c1d384e254dd11325dfc2e95f34bf3c28cc435cde9745ac13490e2f21e4",
+      "bytes": 1700098
+    },
+    {
+      "id": "tablet-landscape---origin-pointer",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---origin-pointer.png",
+      "sha256": "b3983fe628877b2dab7733c3c6f2be1168a52fadc834e5babbb3e4ac8aa954d9",
+      "bytes": 1955988
+    },
+    {
+      "id": "tablet-landscape---origin-keyboard",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---origin-keyboard.png",
+      "sha256": "f32b42033bb9d7317f3b0dbde8311b816025662ae686216963a71de5e01d7651",
+      "bytes": 1962334
+    },
+    {
+      "id": "tablet-landscape---origin-touch",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---origin-touch.png",
+      "sha256": "1c773c6967e34f7456ddb7ded0ef5e20b7c8d3b8b6884991c9d187712d3e7b5b",
+      "bytes": 2012223
+    },
+    {
+      "id": "tablet-landscape---brew",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---brew.png",
+      "sha256": "57d7ee18ff80935151b3c80781219a6667e9bb0f6df5f590e4a4648a7f53192f",
+      "bytes": 1812010
+    },
+    {
+      "id": "tablet-landscape---contact",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape---contact.png",
+      "sha256": "0d0365c6caa433578a33d603ffbdd5e434db861a5b06b5d7c98f6e9210e5dac9",
+      "bytes": 1900793
+    },
+    {
+      "id": "tablet-landscape--shipping-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape--shipping-initial.png",
+      "sha256": "8478ee2062799e4251a57c4b6f6ae7b1e748bf7c4c033ccdd2fcc4b423588519",
+      "bytes": 75089
+    },
+    {
+      "id": "tablet-landscape--shipping-policies",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape--shipping-policies.png",
+      "sha256": "8478ee2062799e4251a57c4b6f6ae7b1e748bf7c4c033ccdd2fcc4b423588519",
+      "bytes": 75089
+    },
+    {
+      "id": "tablet-landscape--returns-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape--returns-initial.png",
+      "sha256": "112ef42f1baa47beb97fd57f2884790c476459f847f60b041d72fbfae9969a84",
+      "bytes": 71440
+    },
+    {
+      "id": "tablet-landscape--privacy-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape--privacy-initial.png",
+      "sha256": "3c1abf9219d51410536107431a692aa55b4b2902bbdb525e22020d206ee813e8",
+      "bytes": 74208
+    },
+    {
+      "id": "tablet-landscape-trace",
+      "type": "trace",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-landscape-trace.zip",
+      "sha256": "6ce7820f1aeea4a7fcee8bf70b03f2b3e0358dd161d1bcc2fc26987301be4354",
+      "bytes": 32394409
+    },
+    {
+      "id": "tablet-portrait---initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---initial.png",
+      "sha256": "0f892bd55bdd6c4ec5ee3f344f022324ccabaa6f8a89bc1ff80c8750ec89afb8",
+      "bytes": 1830470
+    },
+    {
+      "id": "tablet-portrait---roast-stage-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---roast-stage-progress.png",
+      "sha256": "e12bc84763f696d78363bdd52437fd7a5b77b396f1ec8a1ab13f99a530100305",
+      "bytes": 1261537
+    },
+    {
+      "id": "tablet-portrait---batch-journey-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---batch-journey-progress.png",
+      "sha256": "e6b0bf2b30ef7dae11bace1fc8c52fd675f5f22121a034b94cb8d4aa78a8815f",
+      "bytes": 1679286
+    },
+    {
+      "id": "tablet-portrait---media-reveal-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---media-reveal-progress.png",
+      "sha256": "5f2613cfcb0ff143dbab95eea22956776796211400c1047180cbb55f008f4ae0",
+      "bytes": 1996357
+    },
+    {
+      "id": "tablet-portrait---navigation",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---navigation.png",
+      "sha256": "ce71ae6a1c7d046aa2ba6e0ba134c024a0419693eccb915ce4cdeb98d0b6142a",
+      "bytes": 1097175
+    },
+    {
+      "id": "tablet-portrait---origin-pointer",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---origin-pointer.png",
+      "sha256": "64c5c15d9a84c39032ba7690eb88928263e22cad82d79c4b32942a349ed1f215",
+      "bytes": 1930111
+    },
+    {
+      "id": "tablet-portrait---origin-keyboard",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---origin-keyboard.png",
+      "sha256": "43ecf84a032c9b6b4d1ca2e6ad5a73b0d844e87edcbe78e51921f2b266fdb35d",
+      "bytes": 1949934
+    },
+    {
+      "id": "tablet-portrait---origin-touch",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---origin-touch.png",
+      "sha256": "2ee840d23e4fe76e1b299dfc60861e65ad6ae0ceaa174b2a89a1bcc6022e8d2d",
+      "bytes": 1770902
+    },
+    {
+      "id": "tablet-portrait---brew",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---brew.png",
+      "sha256": "f605219f7b3c8f8b2ae6ad2a3a8e298b4e4bb4b3817da7be4db0ad4b2fcdd11b",
+      "bytes": 1938422
+    },
+    {
+      "id": "tablet-portrait---contact",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait---contact.png",
+      "sha256": "efed849258c33b2d58fd10fb411eda98c254fa1feacc704a65c6688bc492cfaa",
+      "bytes": 2027948
+    },
+    {
+      "id": "tablet-portrait--shipping-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait--shipping-initial.png",
+      "sha256": "6d4d8b0cc35c30375995a43b17b603e46fafe60e906c1338babdeb8931a10cbe",
+      "bytes": 73765
+    },
+    {
+      "id": "tablet-portrait--shipping-policies",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait--shipping-policies.png",
+      "sha256": "6d4d8b0cc35c30375995a43b17b603e46fafe60e906c1338babdeb8931a10cbe",
+      "bytes": 73765
+    },
+    {
+      "id": "tablet-portrait--returns-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait--returns-initial.png",
+      "sha256": "b029f10e3c453625d258c9b507bc213759794e23b6428676820b483bdc6da2f1",
+      "bytes": 73027
+    },
+    {
+      "id": "tablet-portrait--privacy-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait--privacy-initial.png",
+      "sha256": "14675349accc109e88327e8fe01c2a34ce1d834c0153e1bd9b1816bec8424711",
+      "bytes": 71713
+    },
+    {
+      "id": "tablet-portrait-trace",
+      "type": "trace",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/tablet-portrait-trace.zip",
+      "sha256": "66b1576b265ecbc9d661e7d4be0efac5ddc32cc9d738fad5e6a4def09bc9c9d8",
+      "bytes": 23981360
+    },
+    {
+      "id": "mobile-390---initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---initial.png",
+      "sha256": "168c5be23e76290bd0f2d143f469895be97764a9ecf7f60d890e6635dd1b60e5",
+      "bytes": 1065017
+    },
+    {
+      "id": "mobile-390---roast-stage-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---roast-stage-progress.png",
+      "sha256": "de1296cd382285458f6387a69987dc01ea97f4d2b951db04f0c3fc50b6973366",
+      "bytes": 736820
+    },
+    {
+      "id": "mobile-390---batch-journey-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---batch-journey-progress.png",
+      "sha256": "6b505300433f19fb9a96a390d6d172369bfc2074a653aa03474046eb084d0a4b",
+      "bytes": 1114352
+    },
+    {
+      "id": "mobile-390---media-reveal-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---media-reveal-progress.png",
+      "sha256": "53f2fc32eaecd7aa3f710629e8e15c420a2e6d10c73f728368e028c1b8381e96",
+      "bytes": 1080132
+    },
+    {
+      "id": "mobile-390---navigation",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---navigation.png",
+      "sha256": "423a8d2747c14752f6820987fdd47d3398253a3b317a8e4b894fa62c49e73b49",
+      "bytes": 716810
+    },
+    {
+      "id": "mobile-390---origin-pointer",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---origin-pointer.png",
+      "sha256": "053e13e2266a1d6e03d60047cebfb488fa3146736a3be62f6b66026d5bd2f440",
+      "bytes": 1083900
+    },
+    {
+      "id": "mobile-390---origin-keyboard",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---origin-keyboard.png",
+      "sha256": "b770cc39e89b29a781d1ffada9ccf90378ab0365465037e9f10d849b6f3e8bb5",
+      "bytes": 1086304
+    },
+    {
+      "id": "mobile-390---origin-touch",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---origin-touch.png",
+      "sha256": "ea19a90cdea91da7146102130e2f05860495ec1b93e121b217149ea8fa3a47a8",
+      "bytes": 1100322
+    },
+    {
+      "id": "mobile-390---brew",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---brew.png",
+      "sha256": "a0bde2cc66254ab9e5296090fe887850a87ea7d05ac783b7c8af0e72886c36ff",
+      "bytes": 1118361
+    },
+    {
+      "id": "mobile-390---contact",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390---contact.png",
+      "sha256": "f188a8d98c977ce347632b8ddc43d195bc5299a35988ac1b12362b9b1359382a",
+      "bytes": 1186553
+    },
+    {
+      "id": "mobile-390--shipping-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390--shipping-initial.png",
+      "sha256": "306bbb3735d6524f555f5f295752567fc3304d81b86a8f1b4dd3341495e942ac",
+      "bytes": 69268
+    },
+    {
+      "id": "mobile-390--shipping-policies",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390--shipping-policies.png",
+      "sha256": "306bbb3735d6524f555f5f295752567fc3304d81b86a8f1b4dd3341495e942ac",
+      "bytes": 69268
+    },
+    {
+      "id": "mobile-390--returns-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390--returns-initial.png",
+      "sha256": "8c6ca4e50b9f0f3d154fe19845a11239848248215c3fa3932545b51f26df4c52",
+      "bytes": 67683
+    },
+    {
+      "id": "mobile-390--privacy-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390--privacy-initial.png",
+      "sha256": "375e7eb3498c4b49ec1be4e389b04688e61674a47e7d224d30e57fcd3bfc939f",
+      "bytes": 68191
+    },
+    {
+      "id": "mobile-390-trace",
+      "type": "trace",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-390-trace.zip",
+      "sha256": "81e7e83e5528ba4b97ccecb0dc207447429def1e5f5099f24498aa89fb0c154e",
+      "bytes": 18708061
+    },
+    {
+      "id": "mobile-320---initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---initial.png",
+      "sha256": "f807fc839b198a56ad86a6d7c903b4428a835086810ad976273ce1c30822f0a4",
+      "bytes": 727080
+    },
+    {
+      "id": "mobile-320---roast-stage-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---roast-stage-progress.png",
+      "sha256": "f556007ddfb2eb712abfe9281d2694bf22fefc6bdf166f989242d2b854556990",
+      "bytes": 624901
+    },
+    {
+      "id": "mobile-320---batch-journey-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---batch-journey-progress.png",
+      "sha256": "3ef59a2431543ebf96cc60a402d2b6a22ad53a6e900b8cd5b4232d0af24c2832",
+      "bytes": 729081
+    },
+    {
+      "id": "mobile-320---media-reveal-progress",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---media-reveal-progress.png",
+      "sha256": "05ded14f117ce0668533db36425e4d298b1d9d2a5408bd0ba994476835a6a686",
+      "bytes": 887895
+    },
+    {
+      "id": "mobile-320---navigation",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---navigation.png",
+      "sha256": "edfa95152e4cd582c9887342af01bcf4f10f6c1513621c2119b6c1fa39cdbdbd",
+      "bytes": 616689
+    },
+    {
+      "id": "mobile-320---origin-pointer",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---origin-pointer.png",
+      "sha256": "a146af3073a5c775c1beba4c6bb29ec6627eb02d3483200aa4b3be3fab3c6a22",
+      "bytes": 723389
+    },
+    {
+      "id": "mobile-320---origin-keyboard",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---origin-keyboard.png",
+      "sha256": "04fa7ff615dff9eed2f06a2e65064f29fbd073422aa432b90c7d8e91b0f16667",
+      "bytes": 727331
+    },
+    {
+      "id": "mobile-320---origin-touch",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---origin-touch.png",
+      "sha256": "09316114de700a13750eaa335f90b566fb7d6c92874aa80f4861768c342f8927",
+      "bytes": 732291
+    },
+    {
+      "id": "mobile-320---brew",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---brew.png",
+      "sha256": "7a4016a0ad4a2cd3338b762299ada8b966b8f1820837ac45744d6a42faab4567",
+      "bytes": 785149
+    },
+    {
+      "id": "mobile-320---contact",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320---contact.png",
+      "sha256": "f31410a2159461ce9d34eac205dd438c575402e52288df33bb10c29fffa41dac",
+      "bytes": 845878
+    },
+    {
+      "id": "mobile-320--shipping-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320--shipping-initial.png",
+      "sha256": "227873eee1779d417e6865598ad604da202018ca1dfb18da35c654bb0ee0a2f8",
+      "bytes": 67363
+    },
+    {
+      "id": "mobile-320--shipping-policies",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320--shipping-policies.png",
+      "sha256": "227873eee1779d417e6865598ad604da202018ca1dfb18da35c654bb0ee0a2f8",
+      "bytes": 67363
+    },
+    {
+      "id": "mobile-320--returns-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320--returns-initial.png",
+      "sha256": "25488ff118971040b6e15d79714e60dc0b0c15d5dbc22e0353a09071f985cff3",
+      "bytes": 66410
+    },
+    {
+      "id": "mobile-320--privacy-initial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320--privacy-initial.png",
+      "sha256": "f5b52f2af5e8390f63d005b36e30fc1fd388896aa4980054779ae727bdbed2c7",
+      "bytes": 65705
+    },
+    {
+      "id": "mobile-320-trace",
+      "type": "trace",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-320-trace.zip",
+      "sha256": "304d40fb071808bb5258893213811d040043bc1addef6eceec3700552eeb5f6d",
+      "bytes": 11339051
+    },
+    {
+      "id": "reduced-motion",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/reduced-motion.png",
+      "sha256": "2dba276aa79a8a3371ac9815d99ed8b9b6b02710b8008448d65edec9ea44add9",
+      "bytes": 1136215
+    },
+    {
+      "id": "capture-manifest",
+      "type": "capture-manifest",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/capture-manifest.json",
+      "sha256": "45b461010c7a05ea8a09f701c35028a0ed8691a9001c54d06892963353b730a8",
+      "bytes": 374165
+    },
+    {
+      "id": "desktop-journey-recording",
+      "type": "recording",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/desktop-journey.webm",
+      "sha256": "4aa106e3338dc65c79ee4404d2efe700fe0e418f1ab25a4f6e9fcca608348b83",
+      "bytes": 1108444
+    },
+    {
+      "id": "mobile-journey-recording",
+      "type": "recording",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/mobile-journey.webm",
+      "sha256": "107bfddf5fa513c065b12f24f347e02d6c2cd72f527c10518cf9db9c82a2339b",
+      "bytes": 702593
+    },
+    {
+      "id": "evidence-content",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-content.png",
+      "sha256": "39be06409187f36b2cba95b6d4d9fe278f0e90f6b41f99eb19e755156d33df5a",
+      "bytes": 2604286
+    },
+    {
+      "id": "evidence-navigation",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-navigation.png",
+      "sha256": "c8ffc917ac9216d0b76566485ac81d7c8970f4bc8cfbb81c261843efe3970f3c",
+      "bytes": 2586733
+    },
+    {
+      "id": "evidence-cart",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-cart.png",
+      "sha256": "3adc0929a5b0a7a6ef50106d208484a62f7da99fab2f4bf756acb38294a8cd98",
+      "bytes": 2938293
+    },
+    {
+      "id": "evidence-contact",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-contact.png",
+      "sha256": "d013a46e0589cc89b4ad536a78ec33c4c88ba2d54490dc0e1d77497686377e53",
+      "bytes": 2675757
+    },
+    {
+      "id": "evidence-policies",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-policies.png",
+      "sha256": "3fd323de5b758a6f75d705760cc0d2d88f3e134aeb1e290469f5cdfff5dc1483",
+      "bytes": 83414
+    },
+    {
+      "id": "evidence-continuity",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-continuity.png",
+      "sha256": "80b27a425d863f8af0ba43cb33f7a675ebf5ff07688369dde385a3a9c7fb802d",
+      "bytes": 2660768
+    },
+    {
+      "id": "evidence-scroll",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-scroll.png",
+      "sha256": "e902cd18529268d0bda3a5f0727a803886f1dd6710c4dfd066ec26abbbc37e96",
+      "bytes": 2660646
+    },
+    {
+      "id": "evidence-spatial",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-spatial.png",
+      "sha256": "e42333d8eee236476f3e55e4abb9e7dcd6e75e6ff5d4779d88c6f64dfefc725c",
+      "bytes": 3044741
+    },
+    {
+      "id": "evidence-cinematic",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-cinematic.png",
+      "sha256": "5e7122b8504c6fdd26b5228eba3d8c13976f0059518cd98077dfaaded3f38cc3",
+      "bytes": 2660710
+    },
+    {
+      "id": "evidence-experimental",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-experimental.png",
+      "sha256": "8d66336f88d95e724bfe86ce56fb144b95e667ce68bffc68d57ebb1248a20226",
+      "bytes": 2732342
+    },
+    {
+      "id": "evidence-responsive",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-responsive.png",
+      "sha256": "190e20593e7307a00445c37c4125f86ed5a22535eb97266000ef693a84724ddf",
+      "bytes": 2755584
+    },
+    {
+      "id": "evidence-performance",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-performance.png",
+      "sha256": "e245c5a9dc6eecd43f57ac4fc870f236a118ffcb4d6028449f086303ea0e9b72",
+      "bytes": 2660715
+    },
+    {
+      "id": "evidence-finalize",
+      "type": "screenshot",
+      "path": ".dreative/runs/verify-1784369595636-5914f16b/requirement-req-finalize.png",
+      "sha256": "38ed8d3f616a250b58420990ab91953f9de84d3cc45ec5cd29b5489108bc53ad",
+      "bytes": 2604153
+    }
+  ],
+  "captureManifest": ".dreative/runs/verify-1784369595636-5914f16b/capture-manifest.json"
+}

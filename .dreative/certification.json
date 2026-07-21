@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 2,
+  "generatedBy": "dreative-finalize",
+  "generatedAt": "2026-07-18T10:24:39.215Z",
+  "completionStatus": "complete",
+  "contractHash": "2af0e5d360e71d2a8366d03e9d2b0d9d67a275d5a13dc6010719545b0fc3e9d1",
+  "sourceHash": "e50ad12ba523e4c6a9cb34f3008640b2873a8beb436cd026f5ccd26422c7c64c",
+  "lockfileHash": "cf0b8f23863e377659a7deafc0bd6c59f172c3a58d54babcdbf347771872b6c2",
+  "productionBuildHash": "fd4e8a50fe90f832f4ac8ad3c4a14cee70e61574c9dbb2b8046379a791a1beb7",
+  "verificationRunId": "verify-1784369816595-cf71dbbe",
+  "criticRunId": "critic-1784370266114-7773756f",
+  "assuranceLevel": "local",
+  "assuranceLimitation": "Evidence is integrity-linked locally but remains under the builder's filesystem and execution authority.",
+  "commands": [
+    {
+      "command": "npm run build",
+      "exitCode": 0
+    }
+  ],
+  "workflowTraceHash": "400f6bc98e64aa041706bec7fd320171d24504cc1bda7d238fa07d0b14818e5f"
+}

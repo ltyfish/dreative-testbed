@@ -1,0 +1,25 @@
+{
+  "runId": "verify-1784369816595-cf71dbbe",
+  "recordings": [
+    {
+      "id": "desktop-journey-recording",
+      "path": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop-journey.webm",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "startedAt": "2026-07-18T10:19:12.801Z",
+      "endedAt": "2026-07-18T10:19:22.722Z"
+    },
+    {
+      "id": "mobile-journey-recording",
+      "path": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-journey.webm",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "startedAt": "2026-07-18T10:19:22.792Z",
+      "endedAt": "2026-07-18T10:19:32.276Z"
+    }
+  ]
+}

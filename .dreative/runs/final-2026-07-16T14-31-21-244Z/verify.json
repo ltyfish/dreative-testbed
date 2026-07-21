@@ -1,0 +1,216 @@
+{
+  "version": 3,
+  "generatedAt": "2026-07-16T14:32:10.000Z",
+  "evidence": [
+    {
+      "id": "final-desktop-route",
+      "criterion": "The complete authored route renders at desktop width.",
+      "criterionId": "full-route-desktop",
+      "pageId": "home",
+      "kind": "visual",
+      "viewportClass": "desktop",
+      "status": "pass",
+      "evidence": "Full-page capture contains all seven route chapters with the Roast Current carried beyond the hero.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:40.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-full.png",
+        "testedUrl": "http://127.0.0.1:4173",
+        "consoleErrorCount": 0
+      }
+    },
+    {
+      "id": "hero-start",
+      "criterion": "Hero opening state shows the recognizable spatial coffee bag and documentary plate.",
+      "criterionId": "hero-viewpoint-start",
+      "pageId": "home",
+      "sectionId": "hero",
+      "kind": "structural-depth",
+      "viewportClass": "desktop",
+      "timelineState": "initial",
+      "status": "pass",
+      "evidence": "The generated bag is visibly isolated over the roaster plate with WebGL depth and product lighting.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:25.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-hero.png",
+        "controlledProgress": 0
+      }
+    },
+    {
+      "id": "hero-active",
+      "criterion": "Pointer input visibly changes the spatial hero viewpoint.",
+      "criterionId": "hero-viewpoint-active",
+      "pageId": "home",
+      "sectionId": "hero",
+      "kind": "interaction",
+      "viewportClass": "desktop",
+      "timelineState": "mid-transition",
+      "status": "pass",
+      "evidence": "Pointer movement changes the bounded bag angle and lighting while the hero remains readable.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:27.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-hero-active.png",
+        "controlledProgress": 0.5
+      }
+    },
+    {
+      "id": "hero-resolved",
+      "criterion": "The hero current resolves into the downstream traceability ledger.",
+      "criterionId": "hero-viewpoint-resolved",
+      "pageId": "home",
+      "sectionId": "story",
+      "kind": "motion",
+      "viewportClass": "desktop",
+      "timelineState": "handoff",
+      "status": "pass",
+      "evidence": "The opening wind line flattens into the story ledger and preserved sourcing facts.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:30.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-story.png",
+        "controlledProgress": 1
+      }
+    },
+    {
+      "id": "spectrum-active",
+      "criterion": "The six-product spectrum exposes a meaningful selected product state.",
+      "criterionId": "roast-spectrum",
+      "pageId": "home",
+      "sectionId": "beans",
+      "kind": "interaction",
+      "viewportClass": "desktop",
+      "timelineState": "mid-transition",
+      "status": "pass",
+      "evidence": "Selection reorganizes packet prominence, product dossier, price and add-to-cart feedback.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:32.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-beans.png",
+        "testedUrl": "http://127.0.0.1:4173"
+      }
+    },
+    {
+      "id": "pour-stream-active",
+      "criterion": "The brew chapter advances through governed pour states.",
+      "criterionId": "pour-stream",
+      "pageId": "home",
+      "sectionId": "brew-guide",
+      "kind": "media-transformation",
+      "viewportClass": "desktop",
+      "timelineState": "pinned-midpoint",
+      "status": "pass",
+      "evidence": "The documentary pour plate, illuminated region, measured readout and SVG stream change with the active brew step.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:34.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-brew.png",
+        "controlledProgress": 0.5
+      }
+    },
+    {
+      "id": "seal-resolved",
+      "criterion": "The moving current resolves into the subscription seal.",
+      "criterionId": "subscription-resolution",
+      "pageId": "home",
+      "sectionId": "subscribe",
+      "kind": "concept-fidelity",
+      "viewportClass": "desktop",
+      "timelineState": "final",
+      "status": "pass",
+      "evidence": "The route closes with the circular two-bag seal, preserved offer and the same Northwind bag subject.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:37.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/desktop-subscribe.png"
+      }
+    },
+    {
+      "id": "continuity-recording",
+      "criterion": "One continuous recording demonstrates route pacing and scene handoffs.",
+      "criterionId": "continuous-route",
+      "pageId": "home",
+      "kind": "motion",
+      "viewportClass": "desktop",
+      "status": "pass",
+      "evidence": "Recorded browser traversal covers hero input, chapter transitions, state controls, cart and contact flow.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:22.000Z",
+        "viewport": { "width": 1440, "height": 900 },
+        "recordingPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/video/page@0f5007a0631bffdc4a03214ce36c16a2.webm",
+        "startTimestamp": "2026-07-16T14:31:22.000Z",
+        "endTimestamp": "2026-07-16T14:31:45.000Z"
+      }
+    },
+    {
+      "id": "final-mobile-route",
+      "criterion": "The defining composition and workflows translate to a touch-native mobile route.",
+      "criterionId": "mobile-390",
+      "pageId": "home",
+      "kind": "responsive",
+      "viewportClass": "mobile",
+      "mobileChecks": ["no-horizontal-overflow", "44px-touch-targets", "menu-close-paths", "mobile-composition"],
+      "timelineState": "mobile",
+      "status": "pass",
+      "evidence": "The 390px route has zero overflow, 44px minimum controls, a recognizable hero bag and stacked authored chapters.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:49.000Z",
+        "viewport": { "width": 390, "height": 844 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/mobile-full.png",
+        "testedUrl": "http://127.0.0.1:4173",
+        "consoleErrorCount": 0
+      }
+    },
+    {
+      "id": "narrow-mobile-route",
+      "criterion": "The route remains usable at the 320px narrow-mobile floor.",
+      "criterionId": "mobile-320",
+      "pageId": "home",
+      "kind": "responsive",
+      "viewportClass": "narrow-mobile",
+      "mobileChecks": ["no-horizontal-overflow", "readable-copy", "reachable-controls"],
+      "status": "pass",
+      "evidence": "Full 320px capture reports zero horizontal body overflow and preserves all sections.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:54.000Z",
+        "viewport": { "width": 320, "height": 700 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/narrow-320-full.png"
+      }
+    },
+    {
+      "id": "reduced-motion-route",
+      "criterion": "Reduced motion preserves intentional final states.",
+      "criterionId": "reduced-motion",
+      "pageId": "home",
+      "kind": "motion",
+      "viewportClass": "mobile",
+      "mobileChecks": ["no-travelling-orb", "resolved-svg-paths", "readable-static-state"],
+      "timelineState": "reduced-motion",
+      "status": "pass",
+      "evidence": "The travelling orb is removed and both the current and brew stream resolve to readable static paths.",
+      "proof": {
+        "timestamp": "2026-07-16T14:31:57.000Z",
+        "viewport": { "width": 390, "height": 844 },
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/mobile-reduced-motion.png"
+      }
+    },
+    {
+      "id": "runtime-workflows",
+      "criterion": "Core workflows and runtime resources remain truthful and error-free.",
+      "criterionId": "functional-runtime",
+      "pageId": "home",
+      "kind": "preservation",
+      "viewportClass": "non-visual",
+      "status": "pass",
+      "evidence": "Playwright observed WebGL, all production images, product selection, cart feedback, review state, brew state, validation, loading and success with no failed requests or runtime errors.",
+      "proof": {
+        "timestamp": "2026-07-16T14:32:00.000Z",
+        "command": "node .dreative/verify-final.mjs",
+        "exitCode": 0,
+        "artifactPath": ".dreative/runs/final-2026-07-16T14-31-21-244Z/final.json",
+        "consoleErrorCount": 0
+      }
+    }
+  ]
+}

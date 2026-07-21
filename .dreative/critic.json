@@ -1,0 +1,550 @@
+{
+  "version": 1,
+  "input": {
+    "version": 1,
+    "generatedAt": "2026-07-18T09:34:00.000Z",
+    "originalBrief": "Redesign the whole Northwind Coffee Roasters website as an award-level spatial, cinematic and interactive Roast Ledger while preserving content, commerce, contact, navigation, accessibility and legal routes.",
+    "userConstraints": [
+      "Experimental ambition, Full Audit, required prototype and Dreative Dogfood.",
+      "Treatments: UX, Mobile, Refined, Motion, Interaction, Media, 3D, Immersive, Cinematic and Experimental.",
+      "Prove persistent continuity, structural scroll, spatial media, cinematic pacing and two content-specific interaction peaks.",
+      "Author desktop, 390px mobile, reduced motion, keyboard and touch equivalents within runtime budgets."
+    ],
+    "approvedConcept": "Roast Ledger: The Living Batch Record turns Northwind's morning roast into a persistent industrial chronometer and batch ledger that crosses provenance, origin calibration, brew transmutation and subscription resolution.",
+    "visualBlueprints": [
+      {
+        "pageId": "home",
+        "sectionId": "hero-story",
+        "blueprint": "A persistent multi-part brass and steel chronometer opens the batch record, then hands its aperture and ledger line into the Probat provenance chapter."
+      },
+      {
+        "pageId": "home",
+        "sectionId": "origin",
+        "blueprint": "Six preserved coffees occupy a spatial calibration ring while real source pixels reconstruct into the selected origin dossier and commerce target."
+      },
+      {
+        "pageId": "home",
+        "sectionId": "brew-subscribe",
+        "blueprint": "The selected batch becomes a four-phase water score, resolves as a subscription seal, and rests into functional contact and policy routes."
+      }
+    ],
+    "intendedSignature": "One living industrial batch instrument persists across the route and changes semantic role without becoming a generic decorative canvas.",
+    "baselineAvailable": false,
+    "ambition": "experimental",
+    "selectedTreatments": [
+      "ux",
+      "mobile",
+      "refined",
+      "motion",
+      "interaction",
+      "media",
+      "3d",
+      "immersive",
+      "cinematic",
+      "experimental"
+    ],
+    "plannedMechanisms": [
+      {
+        "id": "roast-stage",
+        "primary": "Persistent procedural industrial chronometer and chapter bus.",
+        "fallback": "Authored resolved poster and ledger states."
+      },
+      {
+        "id": "batch-journey",
+        "primary": "Structural GSAP chapter timeline with cross-section handoffs.",
+        "fallback": "Direct semantic chapter states."
+      },
+      {
+        "id": "ledger-media-reveal",
+        "primary": "Nine-slice source-pixel reconstruction into selected origin media.",
+        "fallback": "Static generated origin posters."
+      },
+      {
+        "id": "origin-calibration",
+        "primary": "Spatial origin ring with pointer, touch, keyboard and direct controls.",
+        "fallback": "Semantic product selector."
+      },
+      {
+        "id": "brew-transmutation",
+        "primary": "Selected batch transforms through a controlled four-phase water score.",
+        "fallback": "Semantic ordered brew guide."
+      }
+    ],
+    "plannedPeaks": [
+      {
+        "id": "origin-calibration",
+        "description": "Content-specific spatial product calibration changes media, dossier, price, cart target and stage response."
+      },
+      {
+        "id": "brew-transmutation",
+        "description": "The selected origin becomes a temporal water score with setup, active phases and resolution."
+      }
+    ],
+    "contextPolicy": {
+      "firstPass": "objective-only",
+      "excluded": [
+        "builder-self-review",
+        "implementation-rationale",
+        "quality-claims",
+        "difficulty-excuses",
+        "builder-score"
+      ]
+    },
+    "independentCriticRequired": true,
+    "motionRequired": true,
+    "motionMomentIds": [
+      "desktop-journey",
+      "mobile-journey"
+    ],
+    "verificationRunId": "verify-1784369816595-cf71dbbe",
+    "buildIdentityHash": "e50ad12ba523e4c6a9cb34f3008640b2873a8beb436cd026f5ccd26422c7c64c",
+    "evidence": [
+      {
+        "id": "desktop-opening",
+        "kind": "final-screenshot",
+        "description": "Desktop opening composition with persistent chronometer.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop---initial.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "id": "desktop-origin",
+        "kind": "final-screenshot",
+        "description": "Desktop origin calibration active state.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop---origin-touch.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "id": "desktop-brew",
+        "kind": "final-screenshot",
+        "description": "Desktop brew transmutation state.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop---brew.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "id": "mobile-opening",
+        "kind": "final-screenshot",
+        "description": "Authored 390px opening composition.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-390---initial.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      },
+      {
+        "id": "mobile-origin",
+        "kind": "final-screenshot",
+        "description": "Authored 390px touch origin state.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-390---origin-touch.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      },
+      {
+        "id": "mobile-narrow",
+        "kind": "final-screenshot",
+        "description": "Authored 320px narrow-mobile composition.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-320---initial.png",
+        "viewport": {
+          "width": 320,
+          "height": 700
+        }
+      },
+      {
+        "id": "desktop-journey-recording",
+        "kind": "motion-recording",
+        "description": "Continuous desktop setup, origin, rest, brew and subscription journey.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop-journey.webm",
+        "motionMomentId": "desktop-journey",
+        "temporal": {
+          "startTimestamp": "2026-07-18T10:19:12.801Z",
+          "endTimestamp": "2026-07-18T10:19:22.722Z"
+        }
+      },
+      {
+        "id": "mobile-journey-recording",
+        "kind": "interaction-recording",
+        "description": "Continuous 390px touch-equivalent origin and brew journey.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/mobile-journey.webm",
+        "motionMomentId": "mobile-journey",
+        "temporal": {
+          "startTimestamp": "2026-07-18T10:19:22.792Z",
+          "endTimestamp": "2026-07-18T10:19:32.276Z"
+        }
+      },
+      {
+        "id": "runtime-trace",
+        "kind": "browser-trace",
+        "description": "Integrity-linked desktop Playwright runtime trace.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/desktop-trace.zip",
+        "temporal": {
+          "startTimestamp": "2026-07-18T10:16:56.603Z",
+          "endTimestamp": "2026-07-18T10:18:19.757Z"
+        }
+      },
+      {
+        "id": "reduced-motion",
+        "kind": "reduced-motion-capture",
+        "description": "390px authored reduced-motion resolved composition.",
+        "artifactPath": ".dreative/runs/verify-1784369816595-cf71dbbe/reduced-motion.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ]
+  },
+  "report": {
+    "version": 1,
+    "reviewedAt": "2026-07-18T18:21:53.7020616+08:00",
+    "inputArtifact": ".dreative/critic-input-final.json",
+    "contextIsolation": {
+      "mode": "fresh-subagent",
+      "independentReadingRecordedAt": "2026-07-18T18:03:00+08:00",
+      "limitation": "Final regression within the same single revision iteration against corrected verification verify-1784369816595-cf71dbbe. Direct live runtime inspection was performed at exact 1440x1000 and 390x844 viewports, including pointer, touch, keyboard, reduced-motion and focused full-route visual checks."
+    },
+    "reviewContext": {
+      "availableInputs": [
+        "current approved concept and visual blueprints",
+        "corrected live runtime at http://127.0.0.1:4173/",
+        "current desktop, mobile, motion, interaction, trace and reduced-motion evidence"
+      ],
+      "missingInputs": [
+        "pre-redesign visual baseline"
+      ],
+      "viewportsInspected": [
+        "1440x1000 desktop",
+        "390x844 touch mobile",
+        "390x844 reduced motion"
+      ],
+      "pagesOrFlowsInspected": [
+        "hero, story, origin, reviews, brew, subscribe, contact and footer",
+        "desktop origin click, mobile origin tap and keyboard parity",
+        "brew phase selection and active state",
+        "mobile Index menu and Escape dismissal",
+        "reduced motion, overflow and FPS telemetry"
+      ],
+      "motionInspected": true,
+      "limitations": [
+        "No visual baseline was supplied.",
+        "Headless desktop telemetry varied from 20 to 33 fps at sampled downstream chapters; this remains a non-blocking performance caveat rather than a visual or functional regression."
+      ]
+    },
+    "independentReading": {
+      "perceivedConcept": "A documentary Nordic roast ledger carried by one brass-and-black chronometer from roaster provenance through origin calibration, reviews, brew and subscription.",
+      "perceivedSignature": "The corrected build makes the persistent circular instrument unmistakable in every major chapter, paired with orange notation, ledger rules and source photography.",
+      "perceivedBrandCharacter": "Northwind remains exacting, small-batch, tactile and editorially restrained rather than interchangeable lifestyle coffee branding.",
+      "perceivedMotionRole": "Scroll now visibly changes the persistent instrument's material crop, chapter label and role; interaction changes origin and brew states immediately, while reduced motion preserves resolved semantic states."
+    },
+    "initialVerdict": "MAJOR REVISION REQUIRED",
+    "verdict": "PASS AFTER REVISION",
+    "strongestQualities": [
+      {
+        "location": "Origin calibration interaction",
+        "quality": "Desktop click changes Ethiopia to Colombia, mobile tap does the same, and keyboard ArrowRight advances to Sumatra, with a clear selected-state mutation.",
+        "evidenceIds": [
+          "desktop-origin",
+          "mobile-origin",
+          "runtime-trace"
+        ]
+      },
+      {
+        "location": "Brew phase control",
+        "quality": "Selecting Bloom changes the pressed step from Weigh to Bloom and applies a conspicuous orange active ledger row, making phase causality immediate.",
+        "evidenceIds": [
+          "desktop-brew",
+          "mobile-journey-recording"
+        ]
+      },
+      {
+        "location": "Mobile and reduced-motion routes",
+        "quality": "The authored mobile composition has no horizontal overflow, and reduced motion retains complete resolved content with no running document animations.",
+        "evidenceIds": [
+          "mobile-opening",
+          "mobile-origin",
+          "mobile-narrow",
+          "reduced-motion"
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "id": "major-direct-input-equivalence",
+        "severity": "MAJOR",
+        "category": "usability",
+        "location": "Origin calibration ring at desktop and 390px mobile",
+        "observedIssue": "The initial live pass found that visible origin targets did not change selection by direct pointer or touch-equivalent input while keyboard input worked.",
+        "whyItMatters": "The peak requires equivalent pointer, touch and keyboard control over the product, media, dossier and stage state.",
+        "correctionDirection": "Retain the corrected explicit hit targets and parity tests across desktop click, mobile tap and keyboard selection.",
+        "evidenceIds": [
+          "desktop-origin",
+          "mobile-origin",
+          "runtime-trace"
+        ],
+        "blocksCompletion": false
+      },
+      {
+        "id": "major-spatial-lineage",
+        "severity": "MAJOR",
+        "category": "concept-fidelity",
+        "location": "Story, reviews, brew and subscription handoffs",
+        "observedIssue": "The intermediate correction made the instrument unmistakably persistent but overlaid provenance text, the third review and the brew vessel before the dedicated rail regression fix.",
+        "whyItMatters": "The continuity owner should create legible spatial lineage without sacrificing the primary content and second experimental peak it is meant to connect.",
+        "correctionDirection": "Retain the final dedicated right rail and contact hide behavior so the identity token remains visible without covering prose, testimonials, origin labels or the brew vessel.",
+        "evidenceIds": [
+          "desktop-opening",
+          "desktop-origin",
+          "desktop-brew",
+          "desktop-journey-recording"
+        ],
+        "blocksCompletion": false
+      },
+      {
+        "id": "minor-brew-causality",
+        "severity": "MINOR",
+        "category": "motion-interaction",
+        "location": "Four-movement brew guide",
+        "observedIssue": "The initial pass found brew phase selection too visually quiet to establish immediate material causality.",
+        "whyItMatters": "The brew guide is the second experimental peak and needs an unmistakable active phase.",
+        "correctionDirection": "Retain the corrected pressed-state mutation and orange active row while preserving vessel visibility.",
+        "evidenceIds": [
+          "desktop-brew",
+          "mobile-journey-recording"
+        ],
+        "blocksCompletion": false
+      },
+      {
+        "id": "minor-runtime-smoothness",
+        "severity": "MINOR",
+        "category": "motion-interaction",
+        "location": "Desktop and mobile continuous journey",
+        "observedIssue": "The initial pass displayed 1 fps; the final regression no longer shows that failure, although headless desktop downstream samples remain variable at 20 to 33 fps.",
+        "whyItMatters": "Improved telemetry removes the former catastrophic reading, but variable desktop cadence can still weaken cinematic physicality.",
+        "correctionDirection": "Continue profiling the desktop WebGL and scroll clock as a non-blocking performance refinement.",
+        "evidenceIds": [
+          "desktop-journey-recording",
+          "mobile-journey-recording",
+          "runtime-trace"
+        ],
+        "blocksCompletion": false
+      }
+    ],
+    "baselineRegressions": [],
+    "conceptFidelityFindings": [
+      "The instrument now has visible physical lineage through story, origin, reviews, brew and subscribe.",
+      "The dedicated desktop right rail preserves that lineage without obscuring story copy, testimonials or the brew vessel.",
+      "Origin and brew both read as purposeful, content-specific experimental peaks after the interaction corrections."
+    ],
+    "mobileFindings": [
+      "The 390px route remains deliberately authored and has zero horizontal overflow.",
+      "Mobile tap and keyboard origin selection now match desktop behavior.",
+      "The Index menu opens and Escape closes it.",
+      "No material mobile content deletion was observed."
+    ],
+    "motionFindings": [
+      "Structural scene and instrument changes develop beyond entrances across the full route.",
+      "Reduced-motion emulation reports the preference, zero running document animations and a resolved brew state without content loss.",
+      "FPS telemetry is materially improved from the initial 1 fps result but remains a non-blocking variable desktop performance caveat."
+    ],
+    "temporalAssessment": {
+      "firstViewportResponsive": "yes",
+      "developsBeyondEntrances": "yes",
+      "crossSectionHandoffs": "yes",
+      "signatureDevelops": "yes",
+      "interactionPhysical": "yes",
+      "primarilyStaticStack": false,
+      "symbolicDowngrades": [],
+      "evidenceIds": [
+        "desktop-opening",
+        "desktop-origin",
+        "desktop-brew",
+        "mobile-opening",
+        "mobile-origin",
+        "desktop-journey-recording",
+        "mobile-journey-recording",
+        "reduced-motion",
+        "runtime-trace"
+      ],
+      "scores": {
+        "ambitionFidelity": 8.3,
+        "conceptFidelity": 8.6,
+        "authorship": 8.9,
+        "temporalDevelopment": 8.1,
+        "treatmentPerceptibility": 8.4,
+        "mobileComposition": 8.8,
+        "interactionPurpose": 8.6,
+        "mediaIntegrity": 8.6,
+        "staticFeeling": 2
+      }
+    },
+    "scores": {
+      "ambitionFidelity": 8.3,
+      "conceptFidelity": 8.6,
+      "authorship": 8.9,
+      "temporalDevelopment": 8.1,
+      "treatmentPerceptibility": 8.4,
+      "mobileComposition": 8.8,
+      "interactionPurpose": 8.6,
+      "mediaIntegrity": 8.6,
+      "staticFeeling": 2
+    },
+    "routeAssessment": {
+      "heroRemovedStillSatisfies": true,
+      "fullRouteAuthored": true,
+      "mediaDiverse": true,
+      "ordinaryControlsSubstituteForExperience": false,
+      "selectedTreatmentVerdicts": [
+        {
+          "treatment": "ux",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "mobile",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "refined",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "motion",
+          "verdict": "pass-with-cadence-caveat"
+        },
+        {
+          "treatment": "interaction",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "media",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "3d",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "immersive",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "cinematic",
+          "verdict": "pass"
+        },
+        {
+          "treatment": "experimental",
+          "verdict": "pass"
+        }
+      ],
+      "peakVerdicts": [
+        {
+          "peakId": "origin-calibration",
+          "verdict": "pass"
+        },
+        {
+          "peakId": "brew-transmutation",
+          "verdict": "pass"
+        }
+      ],
+      "mechanismVerdicts": [
+        {
+          "mechanismId": "roast-stage",
+          "verdict": "pass"
+        },
+        {
+          "mechanismId": "batch-journey",
+          "verdict": "pass"
+        },
+        {
+          "mechanismId": "ledger-media-reveal",
+          "verdict": "pass"
+        },
+        {
+          "mechanismId": "origin-calibration",
+          "verdict": "pass"
+        },
+        {
+          "mechanismId": "brew-transmutation",
+          "verdict": "pass"
+        }
+      ],
+      "assetIntegrity": "All roaster, origin and procedural instrument media loaded correctly with no broken assets.",
+      "performanceRisk": "The former 1 fps failure is absent, but headless desktop downstream samples remain variable at 20-33 fps and merit continued non-blocking profiling.",
+      "reducedMotionTranslation": "Pass: reduced preference true, zero running document animations, resolved semantic state, complete content and no horizontal overflow."
+    },
+    "requiredRevisionSet": [
+      "Reserve non-overlapping desktop space for the persistent instrument in story, reviews and brew while retaining its corrected visible lineage.",
+      "Stabilize desktop scroll and WebGL cadence above the observed 17-31 fps range without weakening reduced motion."
+    ],
+    "revision": {
+      "iteration": 1,
+      "status": "complete",
+      "followUpReviewedAt": "2026-07-18T18:21:53.7020616+08:00",
+      "resolutions": [
+        {
+          "findingId": "major-direct-input-equivalence",
+          "status": "resolved",
+          "evidenceIds": [
+            "desktop-origin",
+            "mobile-origin",
+            "runtime-trace"
+          ],
+          "reason": "Current desktop click selects Colombia, current 390px tap selects Colombia, and keyboard ArrowRight advances to Sumatra with matching selected state."
+        },
+        {
+          "findingId": "major-spatial-lineage",
+          "status": "resolved",
+          "evidenceIds": [
+            "desktop-opening",
+            "desktop-origin",
+            "desktop-brew",
+            "desktop-journey-recording"
+          ],
+          "reason": "The dedicated right rail keeps the instrument unmistakably visible through story, reviews, brew and subscribe without covering provenance text, any testimonial or the brew vessel; contact hides it cleanly."
+        },
+        {
+          "findingId": "minor-brew-causality",
+          "status": "resolved",
+          "evidenceIds": [
+            "desktop-brew",
+            "mobile-journey-recording"
+          ],
+          "reason": "Selecting Bloom changes aria-pressed from Weigh to Bloom and produces a strong orange active row."
+        },
+        {
+          "findingId": "minor-runtime-smoothness",
+          "status": "partially-resolved",
+          "evidenceIds": [
+            "desktop-journey-recording",
+            "mobile-journey-recording",
+            "runtime-trace"
+          ],
+          "reason": "The initial 1 fps failure is gone; remaining 20-33 fps headless desktop variation is retained as a non-blocking performance caveat."
+        }
+      ],
+      "recapturedEvidenceIds": [
+        "desktop-opening",
+        "desktop-origin",
+        "desktop-brew",
+        "mobile-opening",
+        "mobile-origin",
+        "desktop-journey-recording",
+        "mobile-journey-recording",
+        "runtime-trace",
+        "reduced-motion"
+      ]
+    },
+    "nonBlockingExperiments": [
+      "Use the instrument caption rail as the reserved desktop continuity zone instead of placing the aperture over prose.",
+      "Let the subscription state close into a legible seal label rather than retaining the Brew caption."
+    ]
+  }
+}
