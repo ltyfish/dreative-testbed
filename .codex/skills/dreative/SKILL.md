@@ -1,230 +1,184 @@
 ---
 name: dreative
-description: Frontend design skill for substantial UI work, with an optional visual round-trip editor. Use for pages, sections, redesigns, motion, media, interaction, 3D, and visual editing. Direct design is the default.
+description: Plan, build, and refine distinctive production frontends in existing or new web projects. Use for frontend design, redesigns, landing pages, portfolios, product experiences, and ambitious interactive work using references, media, GSAP, Lenis, Canvas, Three.js, OGL, shaders, or other specialist resources.
 ---
 
 # Dreative
 
-Dreative makes the coding agent responsible for design judgment, implementation,
-preservation, and proof. It has no AI runtime of its own.
+Dreative is a frontend design-builder skill. Act as the project's lead creative
+director and frontend implementation owner. Take responsibility for the quality
+of the entire rendered experience, not merely code that builds. Improve the
+user's real product. The deliverable is the working frontend, not a Dreative
+artifact or a performance of following instructions.
 
-## 1. Choose the mode
+## Workflow
 
-- **Direct design (default):** plan, edit the real application, and verify it.
-  No server, extraction, replica, or wireframe is involved.
-- **Visual round-trip:** use only when the user explicitly asks to open Dreative
-  or edit visually. Follow §8.
+1. Inspect the real repository: framework, routes, content, behavior, assets,
+   dependencies, audience, visual equity, and defects. If
+   `.dreative/context.json` exists, validate and read it as fallible working
+   memory; reconcile stale statements against the current product.
+2. For an open redesign, read `references/CREATIVE_DIRECTION.md`, privately
+   synthesize divergent project-native concepts, then use `PLAN.md` to show
+   Recommended, Efficient, and Showcase. If the user already chose or delegated
+   the decision, choose and continue.
+3. Resolve the compact review, reference, source, package, and prototype
+   choices. Treat the user's direction, settings, named treatments, and later
+   corrections as binding; direction defaults fill only unspecified decisions. Never
+   silently downgrade them for convenience, time, tokens, or implementation
+   preference. Ask one focused question when uncertainty would materially alter
+   a page's intensity, a selected treatment, the signature behavior, or scope.
+4. After direction and configuration are resolved, privately complete the full
+   project-specific Creative Decision Brief defined in `PLAN.md`. Always create
+   and use this working blueprint even when the user does not ask to see it;
+   update it when repository or prototype evidence changes. State only a short
+   build brief by default: concept, product reason, visual system, signature
+   behavior, preserved behavior, chosen resources, and a compact execution map
+   containing the experience arc, section ownership, post-hero visual peak,
+   continuity owner, and mobile transformation. Reveal the full brief only on
+   request. Do not wait for its reveal or approval; proceed to build.
+   If the project already contains `.dreative/evaluation/README.md`, treat that
+   as an explicit opt-in review contract: read it and update its designated
+   current-run decision record with the prompt, selected direction, concise
+   rationale, implementation promise, and later material decision changes.
+   Record inspectable conclusions, never hidden chain-of-thought, private
+   exploration, raw transcripts, or discarded scratch work.
+5. Read `references/CREATIVE_EXECUTION.md` before adding an advanced runtime.
+   Load only the relevant specialty and zero or one relevant native foundation initially. Zero is valid;
+   add another only when a separate named mechanism genuinely requires it. Prototype only a
+   central, uncertain mechanism whose result could change the build.
+6. Finish the real route, including post-hero sections and mobile composition.
+   Implement every selected treatment in its named section or state and make
+   its contribution perceptible. Preserve required behavior and fix scoped
+   defects. Before materially changing the brief, ask the user unless they
+   explicitly delegated the decision; technical fallbacks must preserve the
+   chosen concept and delivery direction.
+7. Read `references/VISUAL_REFINEMENT.md`. Inspect screenshots of the rendered
+   full page at desktop and 390px, exercise the primary journey and motion
+   states, correct visible failures, and recapture the affected and full-page
+   views. DOM or accessibility snapshots do not replace pixel inspection. Run production
+   build plus existing test/typecheck/lint scripts. Substantial work requires
+   `dreative finalize --codex` to print `DREATIVE_FINALIZED`. Compare the final
+   product against the current brief and user choices. Claim completion only
+   when every promised route, section, treatment, behavior, and review pass is
+   implemented and verified; otherwise continue or report the exact blockers.
+   Update `.dreative/context.json` only with durable decisions, real tested
+   states, and unresolved issues; it is memory, never completion evidence.
+   For an opted-in `.dreative/evaluation/` package, also update its designated
+   review record with what actually shipped, observable verification results,
+   corrections, limitations, and current screenshot paths. Follow the local
+   package's size and naming rules. Never create or accumulate evaluation files
+   in projects that did not opt in, and never route prototypes, bundles, caches,
+   traces, browser profiles, or raw evidence into the review package.
 
-For a tiny isolated change, make the change directly and run the smallest useful
-check. For substantial design work, follow every Direct Design step below.
+For Showcase, the delivered route must be visibly and structurally distinct
+from Recommended. A conventional long page with one isolated spectacle does
+not fulfill the highest-ceiling promise. In the final response state
+`Showcase ceiling delivered:` followed by the concrete mechanisms, media, and
+distributed experience that actually shipped. Also state `Not pursued:` for
+any materially considered or promised advanced treatment that was rejected,
+downgraded, or replaced, with the product or prototype reason. Do not list
+irrelevant technologies merely to prove they were omitted.
 
-## 2. Read progressively
+Before relying on the rendered correction loop, distinguish Playwright package
+presence, browser executable detection, and a verified browser workflow. When
+the project CLI is available, serve the real preview and run
+`dreative preflight --probe-browser <preview-url>`. Only successful browser
+launch plus preview navigation proves screenshot, console, performance,
+viewport, or reduced-motion verification is available. If the probe fails,
+repair the environment or report rendered review as blocked; never promote
+package or executable detection into browser evidence.
 
-Read this file first, then only the references selected by the plan:
+## Creative decisions
 
-1. `PLAN.md` — planning and the section blueprint.
-2. `DESIGN.md` — visual doctrine and redesign/preservation rules.
-3. `references/TIERS.md` — ambition-tier deliverables.
-4. `references/ARTIFACTS.md` — machine-readable plan, preservation, ledger,
-   and verification files.
-5. `references/RULES.json` and `references/REFLEX_FONTS.json` — rule categories,
-   failure history, bounded substitutions, and reflex font choices.
-6. `frameworks/<name>.md` — the adapter matching the repository.
-7. Each selected `skills/<name>.md`, once.
-8. Only after three original concepts are recorded, load the relevant
-   `recipes/<name>-recipes.md` for feasibility, implementation, performance,
-   fallback selection, or repair of a weak concept.
+Begin with product truth: subject verbs, materials, data, history, audience,
+language, assets, behavior, and content shape. Include at least three decisions
+that could only have come from this product. A fashionable layout with the logo
+swapped is failure.
 
-Detailed doctrine belongs in those references, not in this orchestration file.
+Treat references as ingredients. Extract individual principles—rhythm,
+hierarchy, material, transition logic, interaction—not a complete house style.
+Prefer two to four cross-domain sources. Never lift one source's combined type,
+palette, composition, and signature motion. Never design “X-like.” GSAP and
+Lenis are capabilities, not aesthetics.
 
-## 3. Direct Design protocol
+Commit to one concept fingerprint:
 
-### 3.1 Discover
+- product-native premise;
+- composition rule and type voice;
+- material/color and media role;
+- motion/interaction grammar;
+- continuity device beyond the hero.
 
-- Inspect the minimum repository context needed to understand the relevant page,
-  framework, styling system, routes, and available media/tooling.
-- For an existing interface, create `.dreative/preservation.json` before edits.
-  Include links, handlers, forms, visible copy, states, routes, analytics hooks,
-  and accessibility contracts. Every item needs a stable `file` + `needle` that
-  `dreative audit` can check mechanically.
-- Read `.dreative/ledger.json` when it exists. Treat it as preference and failure
-  history, never as proof that a new request is complete.
+Repeat the logic, not the same component. Each section must advance the
+experience through a new role, state, scale, or density. Without the hero, the
+remaining route must still express the concept.
 
-### 3.2 Plan
+Choose mechanisms after the concept:
 
-- Run `PLAN.md` and resolve the transformation depth: restyle, relayout,
-  restructure, or reimagine.
-- Resolve one ambition tier: solid, premium, expressive, or award.
-- Explore three genuinely different concepts, commit to one, and record why the
-  others were rejected.
-- Classify important rules through `references/RULES.json`: hard gates are
-  absolute; evidence-backed defaults remain the proven remedy; creative
-  provocations influence exploration rather than becoming shipment quotas.
-- Follow the proven default, or outperform it with a named alternative,
-  measurable success criteria, and runtime evidence. Any substitution is
-  declared before `implementationStartedAt` in `ruleExceptions`; hard gates
-  cannot be substituted.
-- Run one short decision phase containing several sequential single-question
-  calls. Use the environment's structured question tool when available;
-  otherwise ask in chat. Do not ask about implementation details the agent can
-  infer safely.
-- Write `.dreative/plan.json` using `references/ARTIFACTS.md`. For multi-page
-  work, show a page × skill matrix: the user can assign treatments to specific
-  pages, and approve routing for selected skills left unassigned. Every section
-  names its layout family, skills, assets, interactions, mobile translation,
-  fallback, and verification criteria.
-- Render a concise `.dreative/plan.md` for the user and for session re-entry.
+- GSAP for sequencing, scrubbing, pinning, reversibility, and coordinated
+  DOM/SVG/WebGL choreography.
+- Lenis when interpolated scroll or velocity is part of the interaction.
+- Three.js/OGL/R3F when spatial behavior explains or embodies the subject.
+- Canvas/shaders for bounded procedural behavior the DOM cannot deliver.
+- Sourced/generated media when it materially strengthens art direction.
 
-The approved plan is a delivery contract. A section ends as `shipped`,
-`fallback`, or `cut` with a reason—never silently omitted.
+Treat Native Foundations as baseline implementation skeletons, not preferred
+substitutes for mature specialist runtimes. Use one only when it fully
+satisfies the selected mechanism's visual, interaction, performance, and
+coordination requirements. Do not select a foundation merely because it is
+already available, familiar, cheaper, or easier. For advanced choreography,
+rendering, state orchestration, or smooth-scroll coordination, choose the
+appropriate established runtime when it better serves the required result.
 
-At `expressive` and `award`, choose one coherent quality path: `diversity`
-(several mechanisms across several drivers) or `development` (one signature
-mechanism evolving through at least three materially different roles, supported
-by two quieter mechanisms). Experimental work explores one non-obvious candidate
-per major section, then selects only the strongest two or three to ship.
+Use specialist systems confidently when they create real value, but make each
+one own a meaningful state change, mobile form, fallback, and cleanup path.
+Showcase has access to every treatment but selects only those that strengthen
+the premise. Creative ambition is not measured by treatment count.
 
-### 3.3 Select skills
+Reject generic machinery: arbitrary particles, floating spheres, default
+smooth scroll, shader wallpaper, permanent cursor followers, telemetry
+overlays, endless fade-ups, and 3D that behaves like a flat image.
 
-Universal foundation: ux and baseline mobile apply to every web page.
-Add treatments from this complete picker:
+## Quality floor
 
-| Skill | Use it for |
-| --- | --- |
-| `refined` | Premium clean business, commerce, photography, and restrained motion |
-| `motion` | Scroll choreography, entrances, parallax, kinetic type, and transitions |
-| `interaction` | Hover craft, magnetic controls, cursor effects, and tactile feedback |
-| `media` | Generated/sourced image and video production, grading, and media treatments |
-| `3d` | WebGL, three.js/R3F, shaders, models, particles, and fallbacks |
-| `immersive` | Persistent scenes, spatial transitions, preloaders, and scroll-as-journey |
-| `cinematic` | Living surfaces, shader grading, gesture exploration, and sound |
-| `experimental` | High-variance composition, material shifts, and unusual provocations |
-| `ux` | Working navigation, forms, states, accessibility, and interaction audits |
-| `mobile` | Mobile-native composition, touch ergonomics, and phone verification |
+Every section needs a job, readable hierarchy, intentional spacing, and an
+authored handoff. Alternate intensity and rest. A rest may be still, but must
+retain a concept-bearing relationship through continuity, an evolving visual
+variable, meaningful tactile state, media treatment, or authored handoff;
+default layout is not authored rest. Keep the primary task obvious.
 
-Skill dependencies are additive:
+Reject polished-hero/weak-body delivery, generic card repetition, illegible
+microtype, empty viewport gaps, content-covering canvases, clipped controls,
+broken sticky releases, accidental overflow, repeated/placeholder assets,
+fabricated claims, broken glyphs, and desktop merely stacked on mobile.
 
-- All skills depend on `ux` and `mobile`.
-- `immersive` depends on `motion`, `interaction`, and `media`.
-- `cinematic` depends on `motion`, `interaction`, and `media`.
-- `experimental` depends on `motion`, `interaction`, and `media`.
+At 390px reconsider order, crop, density, type scale, controls, sticky behavior,
+and motion. Check 320px when density risk exists. Preserve keyboard, touch,
+reduced-motion, loading, and failure behavior.
 
-The user's selected skills are authoritative. Routing recommends placement; it
-never silently activates an unselected optional skill. Explicit page assignments
-always win. The planner resolves dependencies and places selected-but-unassigned
-skills across suitable pages for approval. If the user selects all, every skill
-must appear somewhere in the overall plan, but not on every page.
+## Guards that matter
 
-### 3.4 Build
+Verify what changes the outcome: build/tests, full-page desktop/mobile,
+interactions and direct routes, console/network/asset/text failures, reduced
+motion, heavy-runtime performance, and a visible correction pass.
 
-- Prepare planned media before section implementation. Record each asset and its
-  delivery status in the plan.
-- Follow the chosen framework adapter and the repository's established patterns.
-- Preserve the manifest unless the user explicitly approved a change; record
-  approved divergence with a reason.
-- Implement blueprint sections in order. Keep the machine plan status current.
-- Do not open recipe catalogs before `conceptExploration` records three
-  brand-native concepts. Record every recipe file and load time in `recipeAccess`.
-- A restructure or reimagine rebuilds markup/component boundaries when necessary;
-  it is not a stylesheet-only restyle.
-- Every heavy effect ships with its planned reduced-motion, mobile, loading, and
-  runtime fallback.
+Completion means the selected direction is visibly and functionally realized
+across the entire experience, with preserved behavior genuinely working; it
+does not mean that code was written or the build passed.
 
-### 3.5 Craft
+Do not create plan YAML, approval hashes, attestations, provenance, evidence
+ledgers, certification artifacts, or mandatory critic loops. Do not narrate
+checklist compliance as a substitute for editing code or correcting the
+rendered interface. `DREATIVE_FINALIZED` certifies commands only, not taste.
 
-Run one dedicated finish pass with no new features:
+## Resource routing
 
-- typography, wrapping, optical alignment, selection, and scrollbar;
-- coherent surfaces, light direction, shadows, and material cues;
-- hover, focus-visible, active, disabled, loading, empty, and error states;
-- media crop, grading, dimensions, posters, and alt text;
-- motion easing, choreography, intent, and reduced-motion behavior;
-- responsive spacing, touch targets, overflow, and spatial integrity.
+- Open redesign or external reference: `references/CREATIVE_DIRECTION.md`
+- Advanced runtime: `references/CREATIVE_EXECUTION.md`
+- Relevant craft only: `skills/<name>.md`
+- Rendered correction loop: `references/VISUAL_REFINEMENT.md`
+- Opted-in evaluator handoff: project-local `.dreative/evaluation/README.md`
+- Chosen mechanism only: zero or one matching native foundation initially
+- Focused mechanism lookup only: `llms.txt` or `dreative catalogue`
 
-### 3.6 Verify
-
-Verification is evidence, not prose asserting that something was checked.
-
-1. Run the repository's targeted tests, typecheck, and build.
-2. Run the page and perform the `ux` functional audit.
-3. Verify desktop and approximately 390px mobile.
-4. Check the console, links, forms, keyboard path, states, reduced motion,
-   responsive overflow, and pointer hit areas.
-5. For motion/WebGL/video, record runtime evidence and performance numbers.
-6. Reconcile every plan section and asset against what visibly shipped.
-7. Write `.dreative/verify.json` and run `dreative audit`.
-8. Fix every error. Warnings require either a fix or a recorded justification.
-
-Every evidence-backed substitution references passing evidence IDs whose proof
-meets its declared success criteria. Vague reasons such as "it did not fit",
-"restraint", "felt better", or "3D was unnecessary" fail audit.
-
-The task is complete only when the plan has no `planned` sections, preservation
-passes, verification contains no failing evidence, and `dreative audit` passes.
-
-### 3.7 Learn
-
-Append one entry to `.dreative/ledger.json` after delivery:
-
-- chosen and rejected concepts;
-- user preferences;
-- treatments already used;
-- runtime failures and the fallback they earned.
-
-Use this history to avoid repetitive signatures and known-bad approaches on the
-next run. Never store secrets or unrelated user information.
-
-## 4. Ambition tiers
-
-- **Solid (`solid`):** complete, accessible, responsive product-quality UI.
-- **Premium (`premium`):** strong design read, deliberate media, signature detail, craft pass.
-- **Expressive (`expressive`):** coordinated motion/interaction system with measured fallbacks.
-- **Award (`award`):** distinctive spatial/media system with performance, occlusion, and
-  fallback evidence.
-
-Higher tiers inherit lower-tier requirements. Do not impose `award`-tier cost on a
-solid or premium request. See `references/TIERS.md` for exact deliverables.
-
-## 5. Preservation rules
-
-- Preserve behavior, not necessarily placement or markup shape.
-- Stable IDs, routes, handlers, form fields, visible strings, conditional states,
-  analytics hooks, and accessibility labels are contractual unless approved.
-- `dreative audit` checks each manifest needle after implementation.
-- Intentional changes require `intentionallyChanged: true` and `changeReason`.
-- A visually successful redesign that loses behavior fails.
-
-## 6. Framework adapters
-
-Load exactly one primary adapter from `frameworks/` plus `styling.md` when useful.
-Adapters provide technical implementation guidance only; they do not override the
-plan, design doctrine, preservation contract, or verification gates.
-
-## 7. Completion report
-
-Report:
-
-- chosen concept, tier, depth, and skills;
-- each section as shipped/fallback/cut;
-- preservation result;
-- tests and runtime evidence;
-- known limitations and next step.
-
-Never claim a check ran unless it actually ran.
-
-## 8. Optional visual round-trip
-
-Use only when explicitly requested:
-
-1. Extract the relevant pages into `.dreative/project.json` and replica files.
-2. Run `dreative baseline`.
-3. Start the editor and service `dreative wait` events.
-4. Supported requests are `propose-skeletons`, `propose-variants`, `edit-block`,
-   `design-page`, and `edit-element`. Read `DESIGN.md` and request-selected skills
-   before responding.
-5. On the `finish` event, apply the compact diff to the real source using its
-   source pointers, then run the same preservation and verification gates as
-   Direct Design.
-
-The editor is an optional input surface. It never weakens the Direct Design
-quality, preservation, or verification contract.
+Never browse the catalogue to invent the concept.

@@ -1,3 +1,8 @@
 node_modules
 dist
-.dreative
+
+# Dreative creates working files and prototypes here. Keep them local by
+# default, but version the small reviewer-facing package below.
+.dreative/*
+!.dreative/evaluation/
+!.dreative/evaluation/**

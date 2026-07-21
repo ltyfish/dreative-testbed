@@ -1,0 +1,18 @@
+# Dreative executable native foundations
+
+Search the small machine-readable system set after selecting an advanced need:
+
+    dreative catalogue --query "persistent product" --json
+
+The catalogue deliberately contains twelve systems rather than a vocabulary of
+effects. Each record links executable source, a functional visual fixture,
+appropriate and bad uses, mobile/reduced-motion behavior, cleanup, a performance
+budget, and browser checks.
+
+The compiled registry is `dist/shared/creativeCatalog.js`. Source and examples
+are in `systems/runtime.js`, `systems/NATIVE_FOUNDATIONS.md`, and
+`systems/demo.html`. Advanced runtime selection is in
+`references/CREATIVE_EXECUTION.md`; build-time media work is in
+`references/ASSET_PIPELINES.md`. The system set is an implementation lookup
+after a project-native concept has been chosen. It must never supply the concept
+or a named site's house style.

@@ -27,3 +27,11 @@ judge it, note findings in the Dreative vault, and reset.
 - Preservation: 5 nav links, 6 add-to-cart buttons, contact form fields + success state,
   4 footer links, all visible copy.
 - Drastic-change floor at restructure/reimagine rungs.
+
+## Committed evaluation evidence
+
+The small reviewer-facing package lives in `.dreative/evaluation/`. It contains
+the baseline contract, repeatable test process, observation rubric, and a
+current-run review template. Other `.dreative` working output remains ignored so
+compiled prototypes, traces, caches, and old runs do not bloat the repository or
+confuse reviewers.

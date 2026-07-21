@@ -1,135 +1,14 @@
-# Dreative Specialist Skill — Media as Motion Material
+# Media
 
-## Contract
+Use media as product evidence, atmosphere, or narrative—not filler.
 
-Follow `../references/SKILL_CONTRACT.md`. Dependencies: `ux`, `mobile`; add
-`motion` for animated treatments and `3d` for media planes. Deliver an asset
-manifest, rights/source note, crop/grade/compression work, dimensions/posters,
-responsive treatment, fallback, and runtime evidence. Hard gates remain absolute.
+Prefer supplied assets, then suitable rights-safe sources, then generated
+assets when generation creates a real advantage. Keep subjects distinct,
+choose deliberate crops, and produce responsive derivatives. Preserve source
+or generation notes in a simple project file when new assets are introduced.
 
-Load when `plan.skills` includes `media`, the blueprint generates media, or a
-motion-led page depends on imagery/video. DESIGN.md still governs sourcing,
-semantics, layout, and preservation.
+Optimize format, dimensions, loading priority, and below-fold laziness. Do not
+repeat one hero image through unrelated sections.
 
-## 0. Explore before recipes
-
-Read the brief, assets, brand world, doctrine, and this file first. Generate and
-record three original brand-native media concepts in `conceptExploration` before
-opening `../recipes/media-recipes.md`. Recipe access is only for feasibility,
-implementation, performance, fallback selection, or repairing a weak concept;
-record it in `recipeAccess`.
-
-Effect names are examples, not a menu. The concept begins with what the media
-means, how the visitor changes its logic, and how that behavior develops through
-the page.
-
-## 1. Hard gates
-
-- Planned shipped assets exist, are distinct where promised, and visibly render
-  (`assets.plannedExist`). Track source/rights, aspect, grade, poster, and use.
-- Media never hides content, intercepts controls, or breaks layout. DOM media
-  remains semantic and available when enhancement fails (`content.visible`,
-  `spatial.noOcclusion`).
-- Every video/WebGL/sequence treatment has loading, reduced-motion, low-power,
-  mobile, and runtime fallbacks (`motion.reducedMotion`,
-  `effects.runtimeFallback`).
-- A real organic subject is never approximated with crude coded primitives
-  (`3d.noCodedOrganic`). Use a real GLB, photoreal cutout, sourced image, or cut
-  the claimed object.
-- Verification uses real artifacts and measurements, not textual claims
-  (`verification.realEvidence`).
-
-## 2. Baseline media quality
-
-Every meaningful asset gets an intentional role: entrance, idle life, visitor
-response, or a documented static/rest purpose. A page of identical fade-plus-
-zoom treatments is the recurring failure this skill exists to prevent.
-
-- Edit assets before placement: crop to the blueprint, grade to the palette,
-  compress, cut clean loops, create posters, and prepare masks/depth/plates.
-- A treatment claiming to transform an image must consume that image's pixels
-  and align to its bounds. A separate shader/noise rectangle floating over a
-  static image is decoration, not treatment.
-- Human perception matters: before/after states must visibly change content,
-  not merely produce tiny uniform deltas a sampler can detect.
-- Quiet sections are valid and necessary when they create pacing. “Restraint”
-  is not permission for an underdesigned whole page.
-
-## 3. Evidence-backed defaults
-
-Follow the proven default, or outperform it with a named alternative,
-measurable success criteria, and runtime evidence.
-
-### Participatory moment (`media.award.participatoryMoment`)
-
-At expressive/award ambition, the proven default is one memorable point where
-the visitor moves from observing media to affecting, entering, transforming, or
-controlling its visual logic. For image-led award concepts with depth-capable
-assets, a depth dive is the default because it repeatedly produced a legible
-immersive peak.
-
-Valid registered alternatives include decomposition/reassembly, temporal
-scrubbing, physical drag/inertia, refractive exploration, scene-responsive
-media, or a brand-specific transformation of equal perceptual impact. A curtain,
-fade, plain parallax, or rectangle movement alone is not equivalent.
-
-### Pixel coverage (`media.award.pixelCoverage`)
-
-The proven award default is pixel-class treatment on at least half of hero/key
-images, minimum three, using distinct mechanisms with quiet-class rests. This
-exists because dogfood builds shipped one strong hero while the remaining page
-stayed static.
-
-A registered substitution is valid when one coherent media system visibly
-develops through at least three materially different roles or states—for
-example archive sheets becoming a draggable surface, then a tunnel, then a
-final mark. Evidence must make each state obvious.
-
-### Perceivability
-
-Pixel-class behavior changes the image content: displacement, decomposition,
-reassembly, scrubbed time, refractive feedback, or another brand-native logic.
-Tune it until screenshot/trace pairs are unmistakably different. Zoom, pan,
-opacity, or moving the rectangle are quiet-class behaviors, not pixel-class.
-
-## 4. Production and props
-
-Prefer, in order: supplied/client assets; generated assets suited to the exact
-section; verified sourced media; clearly labeled placeholders. Generation is
-the start of production, not the finished asset.
-
-For isolated props:
-
-- reserve a compositional berth that never covers text or controls;
-- use real transparency and verify the matte;
-- grade light direction and contact shadow into the page system;
-- sell dimension with restrained parallax/rotation/scale and readable fallback;
-- reuse the same asset for the same need, never one seed for distinct subjects.
-
-For video: muted/autoplay/loop/playsinline when appropriate, real poster, no
-layout shift, pause off-screen/hidden, reduced motion uses the poster.
-
-## 5. Media planes
-
-Use one scene for multiple DOM-synced media planes. Keep the real DOM image/video
-for semantics and fallback; synchronize its bounding rect and use the same asset
-as the plane texture. Cap DPR, pause off-screen, handle context loss, and reveal
-the DOM source when WebGL fails. A canvas per image and misaligned overlay planes
-are invalid implementations.
-
-## 6. Planning and verification
-
-The blueprint records asset path/source, purpose, treatment class, driver,
-mobile behavior, fallback, and success criteria. At expressive/award, record the
-page's `creativeStrategy` as diversity or development.
-
-Verification records:
-
-- asset existence and rendered identity;
-- viewport-aligned effect/image rects;
-- before/after artifacts for perceptual change;
-- sampled shader/particle/frame/drag state where applicable;
-- tested URL, console count, mobile viewport, reduced-motion result;
-- frame time/FPS and transferred asset weight for heavy treatments.
-
-Recipe reference: `../recipes/media-recipes.md`, after concept exploration only.
+Reject generic stock, untreated rectangles, fake product photography,
+placeholder media, and imagery whose crop or contrast fails on mobile.
