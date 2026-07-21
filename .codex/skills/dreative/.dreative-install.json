@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.1.0",
   "target": "codex",
-  "installedAt": "2026-07-21T13:43:29.659Z",
+  "installedAt": "2026-07-21T13:54:20.336Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -29,10 +29,10 @@
     "references/CREATIVE_DIRECTION.md": "2108d774d66b8a2f7cc4c8385d31215692d2f0afd5fd4e20821bfe8e14bdefad",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
     "references/SKILL_CONTRACT.md": "3ab7acb5232c98e443cbc71b7c719f186ea38b885490c44e86c4f4b0aa3f10a3",
-    "references/VISUAL_REFINEMENT.md": "389ed4982653341bd9683476c5dc8026a364f034abcb2d5585932443b4789440",
+    "references/VISUAL_REFINEMENT.md": "63b838437324c08bf9d2478dd87609d73cba76612f4dd1d9032d967ec92d877f",
     "schemas/creative-catalog.schema.json": "7ef6c662e6ef70767af2a4c843db33c3b1b0a5cbb1c69c46b253995d33569af7",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
-    "SKILL.md": "2533bb98739e0d131e3e0dbb631026c437deaff91ecfc4bb133cb9e3141fe54b",
+    "SKILL.md": "ebacb0ba9c29543e5bc303e7a6dd3fe70691c3191dba2d905a16935328816f75",
     "skills/3d.md": "cfd7b71b617192de9069fedeed5345a037b463dd3ba358655a1110411005c09a",
     "skills/cinematic.md": "34ecca4f4371b1bdc875d039e7a90023a2e85d8d23645be5ba84520dd5687f88",
     "skills/experimental.md": "e38246491a28ec26567a95f41dfc7f5be34522dfe9d6d43183fcf27fe58783e4",
@@ -49,5 +49,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "aba95eb1a703fa637f67a9df35b2a6f01e3a4d0f285c2ad395a0226899b23969"
+  "manifestHash": "fe710694db3e24296cb6d06af6691ce42736fed18f1f6de37c1773e2f2d6c7f8"
 }
