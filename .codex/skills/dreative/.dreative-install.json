@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.1.0",
   "target": "codex",
-  "installedAt": "2026-07-21T11:06:21.414Z",
+  "installedAt": "2026-07-21T11:34:32.626Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -43,11 +43,11 @@
     "skills/motion.md": "4d14ffd6a610fe8b4f6fbd0096390c5ba5d6a7ab24dc058e45a6e5e95b3c6567",
     "skills/refined.md": "7d148a655dbf52e24618a8cd9991d6ba4fe9ec8b812a96ef3af9a7618e757918",
     "skills/ux.md": "2c7c2d46e622b1bf883aab716ac789435b03d11ebcb0325d4a32fc29521b976e",
-    "systems/browser.spec.ts": "09d010e4b3d60cd6ace56e5b3e8f145e1cc09a392feb8a81fdccdca39416908e",
+    "systems/browser.spec.ts": "7baf95299515d6e201ea7337474629dd0f798cbfbd54b5ceb62cad9de81dcdae",
     "systems/browser.spec.ts-snapshots/native-foundations-header-win32.jpeg": "f11c164a41186bdb4341a2844ad2c4f46d7fbd036b4b0a230abece64aaa080bb",
     "systems/demo.html": "11df93d09271fd53a0eac5e8b6846e253c9d11c3293c6518760d3ad9e331b566",
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
-    "systems/runtime.js": "18c1d9776fe28eded0371cc5d4c6d66a5e3be7f44577f8674c7e24f09caaf90e"
+    "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "c510d70f700b9b7e6318e22f08dd24c56b7d88b4a040b75a91b66f5d887673d6"
+  "manifestHash": "f9e15fd7f8c35c9bcad58e4f1077219be59a8478f4eeed390d2af25a3d539700"
 }
