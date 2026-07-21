@@ -1,11 +1,24 @@
 # Creative execution
 
-Read this only when the concept needs an advanced runtime.
+Read this only after a project-native concept needs an advanced runtime.
+
+For every advanced mechanism, identify its semantic purpose, section owner,
+meaningful state change, mobile form, reduced-motion form, loading/failure
+fallback, and cleanup cost. A library name is never a design rationale.
 
 ## Choose by outcome
 
+Choose between a Native Foundation and a specialist runtime from the required
+visual and technical result, never from implementation convenience. A
+foundation is sufficient only when it fully delivers the selected mechanism;
+availability is not a selection reason. Prefer the mature runtime when advanced
+choreography, rendering, state orchestration, or scroll coordination requires
+its capabilities.
+
 - Native scroll + CSS/SVG: ordinary layout, hover/focus states, reveals, and
   simple transitions.
+- Motion: component-state layout, enter/exit, hover, press, drag, and shared
+  state changes in product interfaces.
 - GSAP: coordinated timelines, reversible sequences, pinning, scrubbing,
   shared-element movement, and DOM/SVG/WebGL choreography.
 - Lenis: intentional interpolated scrolling, velocity-driven behavior, or a
@@ -14,7 +27,11 @@ Read this only when the concept needs an advanced runtime.
   or embodies the subject.
 - Canvas: dense procedural drawing or continuous simulation that DOM/SVG cannot
   deliver cleanly.
-- Sharp/FFmpeg: build-time asset processing, never proof of creative authorship.
+- PixiJS: high-density interactive 2D sprites, filters, shaders, text, or image
+  fields that do not need a 3D scene.
+- Rive: an authored `.riv` state machine for a branded diagram, mascot, icon, or
+  input-responsive component. A runtime without the asset is not capability.
+- Sharp/FFmpeg: build-time asset processing, not creative direction.
 
 ## Runtime ownership
 
@@ -31,7 +48,8 @@ reduced-motion, or failed contexts.
 ## Quality threshold
 
 Prototype only when one signature mechanism is both central and technically
-uncertain. Use real content in the probe and discard it after the decision.
+uncertain. Define the decision the probe will answer, use real content, and
+discard the probe after the decision.
 
 Reject:
 
@@ -42,5 +60,6 @@ Reject:
 - effects that cover controls, reduce readability, or vanish on mobile;
 - a prototype that consumes more effort than the final product.
 
-After integration, inspect the mechanism at desktop, 390px, reduced motion, and
-its loading/failure state. Judge the actual composition, not numeric telemetry.
+After integration, run `VISUAL_REFINEMENT.md`: inspect screenshots at desktop,
+390px, reduced motion, and the loading/failure state, fix visible findings, and
+recapture. Judge the actual composition, not numeric telemetry.

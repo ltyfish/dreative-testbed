@@ -1,131 +1,159 @@
 ---
 name: dreative
-description: Design and ship a distinctive, usable frontend through concise planning, real implementation, and full-page browser refinement.
+description: Plan, build, and refine distinctive production frontends in existing or new web projects. Use for frontend design, redesigns, landing pages, portfolios, product experiences, and ambitious interactive work using references, media, GSAP, Lenis, Canvas, Three.js, OGL, shaders, or other specialist resources.
 ---
 
 # Dreative
 
-Dreative is a frontend design skill. Its job is to improve the user's product,
-not to operate Dreative itself.
+Dreative is a frontend design-builder skill. Act as the project's lead creative
+director and frontend implementation owner. Take responsibility for the quality
+of the entire rendered experience, not merely code that builds. Improve the
+user's real product. The deliverable is the working frontend, not a Dreative
+artifact or a performance of following instructions.
 
-## Hard boundary
+## Workflow
 
-Never open, navigate to, or inspect the optional Dreative editor at
-`http://localhost:4820` during frontend work. Never run `dreative start` or
-`dreative start-editor` unless the user explicitly asks for the editor.
-`dreative` without a command prints a planning brief and does not start a
-server.
+1. Inspect the real repository: framework, routes, content, behavior, assets,
+   dependencies, audience, visual equity, and defects. If
+   `.dreative/context.json` exists, validate and read it as fallible working
+   memory; reconcile stale statements against the current product.
+2. For an open redesign, read `references/CREATIVE_DIRECTION.md`, privately
+   synthesize divergent project-native concepts, then use `PLAN.md` to show
+   Recommended, Efficient, and Showcase. If the user already chose or delegated
+   the decision, choose and continue.
+3. Resolve the compact review, reference, source, package, and prototype
+   choices. Treat the user's direction, settings, named treatments, and later
+   corrections as binding; direction defaults fill only unspecified decisions. Never
+   silently downgrade them for convenience, time, tokens, or implementation
+   preference. Ask one focused question when uncertainty would materially alter
+   a page's intensity, a selected treatment, the signature behavior, or scope.
+4. After direction and configuration are resolved, privately complete the full
+   project-specific Creative Decision Brief defined in `PLAN.md`. Always create
+   and use this working blueprint even when the user does not ask to see it;
+   update it when repository or prototype evidence changes. State only a short
+   build brief by default: concept, product reason, visual system, signature
+   behavior, preserved behavior, chosen resources, and a compact execution map
+   containing the experience arc, section ownership, post-hero visual peak,
+   continuity owner, and mobile transformation. Reveal the full brief only on
+   request. Do not wait for its reveal or approval; proceed to build.
+5. Read `references/CREATIVE_EXECUTION.md` before adding an advanced runtime.
+   Load only the relevant specialty and zero or one relevant native foundation initially. Zero is valid;
+   add another only when a separate named mechanism genuinely requires it. Prototype only a
+   central, uncertain mechanism whose result could change the build.
+6. Finish the real route, including post-hero sections and mobile composition.
+   Implement every selected treatment in its named section or state and make
+   its contribution perceptible. Preserve required behavior and fix scoped
+   defects. Before materially changing the brief, ask the user unless they
+   explicitly delegated the decision; technical fallbacks must preserve the
+   chosen concept and delivery direction.
+7. Read `references/VISUAL_REFINEMENT.md`. Inspect screenshots of the rendered
+   full page at desktop and 390px, exercise the primary journey and motion
+   states, correct visible failures, and recapture the affected and full-page
+   views. DOM or accessibility snapshots do not replace pixel inspection. Run production
+   build plus existing test/typecheck/lint scripts. Substantial work requires
+   `dreative finalize --codex` to print `DREATIVE_FINALIZED`. Compare the final
+   product against the current brief and user choices. Claim completion only
+   when every promised route, section, treatment, behavior, and review pass is
+   implemented and verified; otherwise continue or report the exact blockers.
+   Update `.dreative/context.json` only with durable decisions, real tested
+   states, and unresolved issues; it is memory, never completion evidence.
 
-## Default workflow
+Before relying on the rendered correction loop, distinguish Playwright package
+presence, browser executable detection, and a verified browser workflow. When
+the project CLI is available, serve the real preview and run
+`dreative preflight --probe-browser <preview-url>`. Only successful browser
+launch plus preview navigation proves screenshot, console, performance,
+viewport, or reduced-motion verification is available. If the probe fails,
+repair the environment or report rendered review as blocked; never promote
+package or executable detection into browser evidence.
 
-1. Inspect the real repository before proposing a direction: framework, routes,
-   content, working behavior, assets, dependencies, current visual equity, and
-   obvious defects.
-2. Read `PLAN.md`. If the user already chose an approach or clearly asked the
-   agent to use its judgment, select the matching approach and proceed. For an
-   open-ended redesign, show the three concise approaches and wait for one
-   choice. Do not expose internal treatment matrices, audit modes, source
-   policies, schemas, or prototype controls.
-3. State the selected concept in a compact implementation note: one named
-   direction, why it fits, the main visual idea, and the most important
-   preserved behavior. This is the only approval boundary.
-4. Build in the real application. Preserve content and functions unless the
-   user asked to change them. Fix existing defects encountered in the scoped
-   experience, including broken routes and mojibake/encoding errors.
-5. Inspect the entire page in the browser at desktop (normally 1440px) and
-   mobile (normally 390px), not only the hero. Exercise the primary journey and
-   important interactions. Inspect 320px when the product targets narrow phones
-   or when the 390px pass shows density risk.
-6. Critique the rendered product, correct visible failures, and repeat a
-   focused browser pass. Stop adding mechanisms once the concept is complete.
-7. Run the production build plus available type, test, and lint scripts. For
-   Expressive, Award, Experimental, Full Audit, or Dogfood work, run
-   `dreative finalize --codex`; completion requires `DREATIVE_FINALIZED`.
+## Creative decisions
 
-## Planning behavior
+Begin with product truth: subject verbs, materials, data, history, audience,
+language, assets, behavior, and content shape. Include at least three decisions
+that could only have come from this product. A fashionable layout with the logo
+swapped is failure.
 
-- The public plan contains exactly three approaches: Recommended, Efficient,
-  and Showcase.
-- Recommend one based on the inspected product. Recommended is the default,
-  not a euphemism for maximum complexity.
-- Offer `show detailed plan` for users who want section, asset, motion,
-  package, and verification detail.
-- Ask only about a missing decision that would materially change the product.
-  Detect everything else from the repository.
-- Do not require `.dreative/plan.yaml`, treatment-by-treatment approval,
-  approval hashes, attestations, independent critics, provenance theater, or
-  repeated reapproval.
+Treat references as ingredients. Extract individual principles—rhythm,
+hierarchy, material, transition logic, interaction—not a complete house style.
+Prefer two to four cross-domain sources. Never lift one source's combined type,
+palette, composition, and signature motion. Never design “X-like.” GSAP and
+Lenis are capabilities, not aesthetics.
 
-## Product-quality rules
+Commit to one concept fingerprint:
 
-### One coherent idea
+- product-native premise;
+- composition rule and type voice;
+- material/color and media role;
+- motion/interaction grammar;
+- continuity device beyond the hero.
 
-Choose a content-specific concept that can be recognized after the hero is
-removed. Carry it through typography, composition, color/material, imagery,
-interaction, and section rhythm. A repeated badge, grid line, canvas, or
-background color is not continuity by itself.
+Repeat the logic, not the same component. Each section must advance the
+experience through a new role, state, scale, or density. Without the hero, the
+remaining route must still express the concept.
 
-### Restraint before machinery
+Choose mechanisms after the concept:
 
-Use the smallest technical system that produces the intended experience.
-CSS and native scrolling are preferred for ordinary layout and transitions.
-Use GSAP for choreography that needs sequencing, scrubbing, pinning, or
-reversibility. Use Lenis only when interpolated scroll behavior is part of the
-concept. Use Three.js/OGL only when spatial behavior materially improves
-meaning or product understanding. Vanta-like atmosphere is a principle, not a
-reason to add a generic shader background.
+- GSAP for sequencing, scrubbing, pinning, reversibility, and coordinated
+  DOM/SVG/WebGL choreography.
+- Lenis when interpolated scroll or velocity is part of the interaction.
+- Three.js/OGL/R3F when spatial behavior explains or embodies the subject.
+- Canvas/shaders for bounded procedural behavior the DOM cannot deliver.
+- Sourced/generated media when it materially strengthens art direction.
 
-Recommended work usually has one signature mechanism. Showcase work may have
-two complementary signatures. Never stack GSAP, Lenis, WebGL, telemetry, and
-custom interaction merely to signal ambition.
+Treat Native Foundations as baseline implementation skeletons, not preferred
+substitutes for mature specialist runtimes. Use one only when it fully
+satisfies the selected mechanism's visual, interaction, performance, and
+coordination requirements. Do not select a foundation merely because it is
+already available, familiar, cheaper, or easier. For advanced choreography,
+rendering, state orchestration, or smooth-scroll coordination, choose the
+appropriate established runtime when it better serves the required result.
 
-### Full-page quality
+Use specialist systems confidently when they create real value, but make each
+one own a meaningful state change, mobile form, fallback, and cleanup path.
+Showcase has access to every treatment but selects only those that strengthen
+the premise. Creative ambition is not measured by treatment count.
 
-The hero must not consume all design effort. Every major section needs a clear
-job, readable hierarchy, intentional spacing, and an authored transition from
-the previous section. Alternate density and rest. Keep the primary task easy to
-find.
+Reject generic machinery: arbitrary particles, floating spheres, default
+smooth scroll, shader wallpaper, permanent cursor followers, telemetry
+overlays, endless fade-ups, and 3D that behaves like a flat image.
 
-Reject:
+## Quality floor
 
-- tiny decorative text used where users need readable content;
-- empty viewport-sized gaps without narrative or functional purpose;
-- persistent overlays, canvases, telemetry, or labels covering content;
-- clipped controls, awkward sticky releases, and mobile desktop-shrinkage;
-- repeated generic cards or fade-up sections presented as a system;
-- advanced effects that are more visible than the product;
-- placeholder assets, repeated imagery, broken glyphs, or fabricated claims.
+Every section needs a job, readable hierarchy, intentional spacing, and an
+authored handoff. Alternate intensity and rest. Keep the primary task obvious.
 
-### Mobile is a composition
+Reject polished-hero/weak-body delivery, generic card repetition, illegible
+microtype, empty viewport gaps, content-covering canvases, clipped controls,
+broken sticky releases, accidental overflow, repeated/placeholder assets,
+fabricated claims, broken glyphs, and desktop merely stacked on mobile.
 
-At 390px, reconsider order, crop, density, type scale, controls, sticky
-behavior, and motion. Do not merely stack desktop columns. Persistent desktop
-ornament should usually become inline, bounded, or absent when it competes
-with content. Touch targets, keyboard behavior, reduced motion, and readable
-text remain required.
+At 390px reconsider order, crop, density, type scale, controls, sticky behavior,
+and motion. Check 320px when density risk exists. Preserve keyboard, touch,
+reduced-motion, loading, and failure behavior.
 
-### Visual review
+## Guards that matter
 
-Review screenshots and live behavior section by section. Ask:
+Verify what changes the outcome: build/tests, full-page desktop/mobile,
+interactions and direct routes, console/network/asset/text failures, reduced
+motion, heavy-runtime performance, and a visible correction pass.
 
-1. Is the concept visible without an explanation?
-2. Does every section remain legible and composed at its actual viewport?
-3. Do motion and interaction clarify state rather than decorate it?
-4. Are there collisions, clipping, overflow, dead space, or weak handoffs?
-5. Does mobile feel intentionally designed?
-6. Are text, prices, routes, forms, and visible claims correct?
+Completion means the selected direction is visibly and functionally realized
+across the entire experience, with preserved behavior genuinely working; it
+does not mean that code was written or the build passed.
 
-A successful build is not a visual pass. A checklist file is not evidence of
-quality. Fix what is visible.
+Do not create plan YAML, approval hashes, attestations, provenance, evidence
+ledgers, certification artifacts, or mandatory critic loops. Do not narrate
+checklist compliance as a substitute for editing code or correcting the
+rendered interface. `DREATIVE_FINALIZED` certifies commands only, not taste.
 
-## Progressive references
+## Resource routing
 
-- Read `references/CREATIVE_EXECUTION.md` before adding an advanced runtime.
-- Read the relevant `skills/<name>.md` only when that specialty materially
-  serves the chosen concept.
-- Read one matching recipe only after choosing the mechanism.
-- Use `llms.txt` or `dreative catalogue` as a focused lookup, never as a
-  component menu.
+- Open redesign or external reference: `references/CREATIVE_DIRECTION.md`
+- Advanced runtime: `references/CREATIVE_EXECUTION.md`
+- Relevant craft only: `skills/<name>.md`
+- Rendered correction loop: `references/VISUAL_REFINEMENT.md`
+- Chosen mechanism only: zero or one matching native foundation initially
+- Focused mechanism lookup only: `llms.txt` or `dreative catalogue`
 
-Specialties: `ux`, `mobile`, `refined`, `motion`, `interaction`, `media`, `3d`,
-`immersive`, `cinematic`, `experimental`.
+Never browse the catalogue to invent the concept.
