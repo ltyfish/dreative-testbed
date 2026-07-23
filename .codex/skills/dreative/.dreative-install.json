@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.2.1",
   "target": "codex",
-  "installedAt": "2026-07-22T11:42:52.061Z",
+  "installedAt": "2026-07-23T07:02:00.783Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -24,7 +24,7 @@
     "frameworks/sveltekit.md": "684e49573f3c6b128358a2c02cb3b49dfefb494dd4f583f0c49888c5a224d78d",
     "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "9c4177fa77de995e91d32532244f2ebfc9fade0636ef8ec66de17035e4b0767a",
-    "PLAN.md": "452c0706f09fe18b68592138733f34ed9e6bf0e6536c39e26c83320aec518f20",
+    "PLAN.md": "78a3068cc8125720feebf87e47abca03824d5d2cc293dba3f8cfe3652304b22d",
     "references/ASSET_PIPELINES.md": "f3a71f3e433924d42cb8163f3186edb693f144bc3ac1cd6a001310bf407d234b",
     "references/CREATIVE_DIRECTION.md": "2108d774d66b8a2f7cc4c8385d31215692d2f0afd5fd4e20821bfe8e14bdefad",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
@@ -32,8 +32,8 @@
     "references/VISUAL_REFINEMENT.md": "63b838437324c08bf9d2478dd87609d73cba76612f4dd1d9032d967ec92d877f",
     "schemas/creative-catalog.schema.json": "7ef6c662e6ef70767af2a4c843db33c3b1b0a5cbb1c69c46b253995d33569af7",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
-    "schemas/showcase-mechanism.schema.json": "b7e3cdbbf9912509b4a8591bfb3475fc3ea381b74c9e9a09bf71b3a7eac26ede",
-    "SKILL.md": "bbcaee4e13138d064b7b705f3c6efaee098c0d60061eff27db176b02f1af9bdd",
+    "schemas/showcase-mechanism.schema.json": "dbe213a25f46e2d3b04304882c3a879749fb0a3cac7d6eb55244bde100f74ce8",
+    "SKILL.md": "3cb93764a81670470e791350cfa705799242c1610b1b5e132b52cb0ecf0a0731",
     "skills/3d.md": "cfd7b71b617192de9069fedeed5345a037b463dd3ba358655a1110411005c09a",
     "skills/cinematic.md": "34ecca4f4371b1bdc875d039e7a90023a2e85d8d23645be5ba84520dd5687f88",
     "skills/experimental.md": "e38246491a28ec26567a95f41dfc7f5be34522dfe9d6d43183fcf27fe58783e4",
@@ -50,5 +50,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "784ebc4fdc722aced1900cac83a9cd31167e8464674432f815e357f905dd4994"
+  "manifestHash": "78c01a03ee4ab6fd531fba7770efb2602e1c0100e074727298da109d4f70f106"
 }
