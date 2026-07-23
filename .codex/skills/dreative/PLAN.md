@@ -1,9 +1,10 @@
 # Planning protocol
 
-Planning has two required user-facing stages—direction and compact
+Planning has two required, blocking user-facing stages—direction and compact
 configuration—plus an optional reveal of the detailed Creative Decision Brief.
 The reveal is optional; creating and using the complete private brief is not.
-Keep private exploration private.
+Keep private exploration private. Do not edit implementation files until both
+stages have an explicit user response. Never silently apply recommended settings.
 
 ## Stage 1: direction
 
@@ -41,6 +42,10 @@ End with:
 > **show detailed plan**.
 
 If the user asks for detail before choosing, expand Recommended by default.
+This expands information only; it does not select Recommended. Wait for the
+user's explicit direction choice. A general instruction such as "go ahead,"
+"redesign it," or "use your judgment" is not a direction choice unless it
+explicitly authorizes choosing among the three options.
 
 ## Stage 2: compact configuration
 
@@ -49,6 +54,12 @@ recommendations. End with:
 
 > Reply **use recommended settings** or list any changes. Say **show detailed
 > plan** for the full project-specific Creative Decision Brief.
+
+Wait for the reply. Do not treat the displayed recommendations as accepted
+until the user says `use recommended settings` or explicitly supplies their
+choices. The prototype choice must always appear and be confirmed; for
+Showcase, clearly state that `Required` means prototyping the riskiest signature
+mechanism before integrating the route.
 
 ### Review depth
 
@@ -117,6 +128,11 @@ the alternatives considered at a summary level, selection reasons, promises,
 and material later changes with their triggers. Do not expose chain-of-thought,
 private exploration, raw conversation, or scratch notes. This handoff reports
 decisions; it does not replace the private brief or become an approval gate.
+Record the exact branch and commit, updating `uncommitted` after the final
+commit. Only paths named by the local evaluation README belong to the handoff;
+remove stale untracked legacy critic, verification, certification, trace, and
+evidence artifacts rather than allowing an evaluator to confuse them with the
+current build.
 
 Do not require the user to read or approve it. By default, show only the short
 build brief required by `SKILL.md`, including this compact execution map:
@@ -180,10 +196,30 @@ For each relevant treatment, state the project-specific use, selected/declined
 decision, cost, risk, and insufficient version. Then map the selected treatments
 to route sections, including a meaningful post-hero peak and the continuity
 owner. User-selected treatment names or counts override direction defaults. UX and
-Mobile always apply. Showcase may use any treatment but has no minimum treatment
-count. Selection is a delivery promise, not checkbox coverage: every
+Mobile always apply. Showcase may use any treatment but has no minimum technology
+count. It does require a meaningful pre-peak mechanism, central signature mechanism,
+and post-peak mechanism or transformation; each must visibly change composition,
+media, state, or interaction. Static grids with thematic labels do not count.
+Selection is a delivery promise, not checkbox coverage: every
 selected treatment needs a named owner and perceptible contribution, although
 one coherent mechanism may serve several treatments.
+
+For Showcase, write the compact JSON contract defined by
+`schemas/showcase-mechanism.schema.json`. Bind the Recommended baseline, at
+least two perceptible Showcase-only differences, two concrete product-native
+media opportunities and their use/reject reasons, and an observed comparison
+between one bounded prototype and one higher-ceiling media/spatial approach.
+Then define exactly the real `before`, `peak`, and `after` selectors and their
+triggers, experience roles, ceiling contributions, media modes, continuity
+connections, mobile transformations, and differences from Recommended. The
+contract also names each mechanism's observable state count and its meaningful
+product, composition, media, or decision outcome. At least two mechanisms must
+expose three meaningful states or direct manipulation; hover cannot own a
+journey's peak or post-peak transformation. The mechanisms must span at least two perceptibly different media modes. If the
+concept is a journey, process, or transformation, at least one mechanism must
+be scroll-authored and visibly transform content across stages; smooth scroll
+alone does not qualify. It is executable input and an accountability contract,
+not proof that the visual result is good.
 
 ### 6. Build architecture
 
@@ -218,6 +254,7 @@ Not pursued: <material advanced treatment rejected or replaced, and why>
 Omit the second line only when no material treatment was considered, promised,
 rejected, downgraded, or replaced. Do not turn these lines into a ledger.
 
-After the reply, implement. Do not generate a second approval or contract gate.
+After the explicit configuration reply, implement. Do not generate a second approval
+or contract gate.
 For an opted-in evaluation package, reconcile the decision record and final
 review with the delivered source and rendered result before completion.

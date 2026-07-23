@@ -17,17 +17,25 @@ artifact or a performance of following instructions.
    dependencies, audience, visual equity, and defects. If
    `.dreative/context.json` exists, validate and read it as fallible working
    memory; reconcile stale statements against the current product.
-2. For an open redesign, read `references/CREATIVE_DIRECTION.md`, privately
-   synthesize divergent project-native concepts, then use `PLAN.md` to show
-   Recommended, Efficient, and Showcase. If the user already chose or delegated
-   the decision, choose and continue.
-3. Resolve the compact review, reference, source, package, and prototype
-   choices. Treat the user's direction, settings, named treatments, and later
+2. For every open design or redesign, run the planning protocol in `PLAN.md`
+   before implementation: read `references/CREATIVE_DIRECTION.md`, privately
+   synthesize divergent project-native concepts, then show Recommended,
+   Efficient, and Showcase. Explicitly ask the user to choose. Do not infer a
+   choice from tone, prior defaults, schedule pressure, or a request to proceed;
+   do not auto-select Recommended. Only skip the direction question when the
+   user's current request explicitly names Efficient, Recommended, or Showcase.
+3. After direction selection, show the compact review, reference, source,
+   package, and prototype choices and explicitly ask the user to confirm the
+   recommended settings or list changes. This is a blocking gate before code
+   edits. In particular, never mark Prototype as Auto, Required, completed, or
+   skipped without showing that choice to the user first. Treat the user's
+   direction, settings, named treatments, and later
    corrections as binding; direction defaults fill only unspecified decisions. Never
    silently downgrade them for convenience, time, tokens, or implementation
    preference. Ask one focused question when uncertainty would materially alter
    a page's intensity, a selected treatment, the signature behavior, or scope.
-4. After direction and configuration are resolved, privately complete the full
+4. Only after the user has explicitly resolved both direction and configuration,
+   privately complete the full
    project-specific Creative Decision Brief defined in `PLAN.md`. Always create
    and use this working blueprint even when the user does not ask to see it;
    update it when repository or prototype evidence changes. State only a short
@@ -40,6 +48,12 @@ artifact or a performance of following instructions.
    as an explicit opt-in review contract: read it and update its designated
    current-run decision record with the prompt, selected direction, concise
    rationale, implementation promise, and later material decision changes.
+   Identify the exact current branch and commit (or explicitly say `uncommitted`
+   until one exists), and update them after the final commit. Treat only files
+   designated by that README as evaluator input. Legacy `.dreative` critic,
+   verify, certification, trace, or evidence files are not current evidence;
+   remove stale untracked copies before handoff so they cannot be mistaken for
+   the submitted build.
    Record inspectable conclusions, never hidden chain-of-thought, private
    exploration, raw transcripts, or discarded scratch work.
 5. Read `references/CREATIVE_EXECUTION.md` before adding an advanced runtime.
@@ -57,7 +71,10 @@ artifact or a performance of following instructions.
    states, correct visible failures, and recapture the affected and full-page
    views. DOM or accessibility snapshots do not replace pixel inspection. Run production
    build plus existing test/typecheck/lint scripts. Substantial work requires
-   `dreative finalize --codex` to print `DREATIVE_FINALIZED`. Compare the final
+   `dreative finalize --codex --profile <direction> --visual-smoke-url <preview-url>`
+   to print `DREATIVE_CHECKS_PASSED`. Visual smoke is mandatory for every
+   substantial delivery and Showcase additionally requires an executable
+   three-entry mechanism contract. Compare the final
    product against the current brief and user choices. Claim completion only
    when every promised route, section, treatment, behavior, and review pass is
    implemented and verified; otherwise continue or report the exact blockers.
@@ -69,6 +86,8 @@ artifact or a performance of following instructions.
    package's size and naming rules. Never create or accumulate evaluation files
    in projects that did not opt in, and never route prototypes, bundles, caches,
    traces, browser profiles, or raw evidence into the review package.
+   Report builder-observed facts and limitations only; never award the build a
+   reviewer verdict or self-authored Pass.
 
 For Showcase, the delivered route must be visibly and structurally distinct
 from Recommended. A conventional long page with one isolated spectacle does
@@ -78,6 +97,35 @@ distributed experience that actually shipped. Also state `Not pursued:` for
 any materially considered or promised advanced treatment that was rejected,
 downgraded, or replaced, with the product or prototype reason. Do not list
 irrelevant technologies merely to prove they were omitted.
+
+Showcase must include one meaningful mechanism before the central peak, the
+central signature mechanism, and one meaningful mechanism or transformation
+after it. Each must visibly change composition, media, state, or interaction;
+static grids with thematic labels do not count. If a required prototype would
+lower the selected ceiling or abandon promised choreography or media, pause
+and obtain the user's consent before changing the brief.
+Before implementation, bind the difference from Recommended: state the
+Recommended baseline, at least two perceptible Showcase-only qualities, two
+product-native media opportunities with use/reject reasons, and the observed
+result of comparing a bounded prototype with a higher-ceiling alternative.
+"It works" is not proof that the bounded version reaches the stronger ceiling.
+
+Record the executable contract using `schemas/showcase-mechanism.schema.json`.
+Its `before`, `peak`, and `after` entries each need one real selector, a
+`scroll`, `click`, `hover`, or `drag` trigger, experience role, ceiling
+contribution, media mode, continuity connection, mobile transformation, and
+specific difference from Recommended. Each also declares an observable state
+count and the product meaning, composition, media, or decision outcome that
+changes. The three entries must span at least two
+perceptibly different media modes; three isolated local-state widgets do not
+define Showcase. At least two mechanisms must expose three meaningful states
+or use direct manipulation. Hover is a supporting state: it cannot own the peak
+or the post-peak mechanism in a journey. When the premise is a journey, process, or transformation,
+declare it as `journey` and include a substantial scroll-authored mechanism.
+Smooth scrolling alone does not qualify. Interface-style products may declare
+`interface` and use a different continuous interaction structure. Final visual
+smoke exercises each trigger and observes a visible geometry, style, media,
+content, or state change.
 
 Before relying on the rendered correction loop, distinguish Playwright package
 presence, browser executable detection, and a verified browser workflow. When
@@ -147,6 +195,17 @@ retain a concept-bearing relationship through continuity, an evolving visual
 variable, meaningful tactile state, media treatment, or authored handoff;
 default layout is not authored rest. Keep the primary task obvious.
 
+Every prominent decorative line, grid, overlay, shape, persistent element, or
+visual motif must have a perceptible role in product meaning, hierarchy,
+interaction, or continuity. If its role cannot be explained in one concrete
+sentence from the rendered experience, remove or redesign it.
+
+Do not reuse the same hero-grade image, wallpaper, render, or visual
+composition across major sections unless the repetition expresses intentional
+continuity or transformation. Reused media must visibly evolve in crop, state,
+material, meaning, or interaction; otherwise use a distinct asset or
+composition.
+
 Reject polished-hero/weak-body delivery, generic card repetition, illegible
 microtype, empty viewport gaps, content-covering canvases, clipped controls,
 broken sticky releases, accidental overflow, repeated/placeholder assets,
@@ -169,7 +228,7 @@ does not mean that code was written or the build passed.
 Do not create plan YAML, approval hashes, attestations, provenance, evidence
 ledgers, certification artifacts, or mandatory critic loops. Do not narrate
 checklist compliance as a substitute for editing code or correcting the
-rendered interface. `DREATIVE_FINALIZED` certifies commands only, not taste.
+rendered interface. `DREATIVE_CHECKS_PASSED` certifies commands only, not taste.
 
 ## Resource routing
 
