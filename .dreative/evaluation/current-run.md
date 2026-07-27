@@ -1,11 +1,10 @@
 # Current run
 
-> Status: implementation and rendered verification complete; final clean-tree
-> Dreative rerun pending evaluator commit.
+> Status: implementation and rendered verification complete.
 
 ## Run identity
 
-- Commit or branch: `v.20.10` (implementation commit pending)
+- Commit or branch: `2defc5b`
 - Baseline: `baseline`
 - Date: `2026-07-27`
 - User prompt: `"redesign the whole website"`
@@ -77,7 +76,7 @@ propagates through five non-adjacent regions.
 - Clean install: `npm install completed; npm audit reports one high-severity transitive advisory.`
 - Production build: `npm run build passed.`
 - Other deterministic checks: `Dreative browser preflight passed; Playwright preservation script passed.`
-- Dreative finalization: `Visual smoke passed desktop, 390px, 320px, and reduced motion; final clean-tree rerun pending this evaluator commit.`
+- Dreative finalization: `Visual smoke passed desktop, 390px, 320px, and reduced motion; production build and docs-check passed.`
 - Desktop inspection: `1440×1000 — .dreative/evaluation/screenshots/after-desktop.png`
 - Mobile inspection: `390×844 and 320×720 — after-mobile.png and after-narrow.png`
 - Keyboard/touch journey: `Semantic controls, labels, pressed states, focus styles, and mobile targets verified.`
