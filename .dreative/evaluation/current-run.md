@@ -4,7 +4,7 @@
 
 ## Run identity
 
-- Commit or branch: `v.20.9-newest-V2` (`uncommitted` until the submission commit below is created)
+- Commit or branch: implementation commit `98dfc52` on `v.20.9-newest-V2`; the review-record-only follow-up is the submitted `HEAD`.
 - Baseline: `baseline`
 - Date: `2026-07-27`
 - User prompt: `redesign this whole website`
