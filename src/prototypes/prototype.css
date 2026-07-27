@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600&family=Newsreader:opsz,wght@6..72,300;6..72,600&display=swap');
+
+.prototype { --ink:#f3ecdb; min-height:100vh; overflow:hidden; color:var(--ink); background:radial-gradient(circle at 75% 50%, color-mix(in srgb, var(--heat) 35%, transparent), transparent 36%), #0a1110; display:grid; grid-template-columns:minmax(300px, .8fr) minmax(520px, 1.2fr); grid-template-rows:auto 1fr auto; padding:22px 34px 18px; transition:background .8s ease; font-family:Manrope, sans-serif; }
+.proto-nav,.proto-footer { grid-column:1/-1; display:flex; justify-content:space-between; font:500 10px/1.2 'DM Mono',monospace; letter-spacing:.13em; text-transform:uppercase; z-index:3; }
+.proto-nav { padding-bottom:18px; border-bottom:1px solid #ffffff2b; }
+.proto-mark { color:#e9b86f; }
+.proto-copy { align-self:center; z-index:2; padding:5vh 1vw 5vh 2vw; }
+.eyebrow { font:500 10px 'DM Mono'; letter-spacing:.16em; color:#e9b86f; margin-bottom:22px; }
+.proto-copy h1 { font:300 clamp(58px,7vw,118px)/.78 Newsreader,serif; letter-spacing:-.06em; margin:0; }
+.intro { max-width:430px; margin:34px 0 0 8vw; color:#c4c2b9; font-size:14px; line-height:1.65; }
+.roast-stage { position:relative; min-height:620px; display:grid; place-items:center; }
+.three-host,.svg-stage { width:100%; height:100%; min-height:560px; }
+.svg-stage { position:relative; display:grid; place-items:center; transform:perspective(900px) rotateY(-6deg); }
+.svg-stage svg { width:min(92%,720px); filter:drop-shadow(0 35px 35px #000); animation:drumFloat 5s ease-in-out infinite; }
+.heat-orbit { position:absolute; width:58%; aspect-ratio:1; border:1px solid color-mix(in srgb,var(--heat) 70%,white); border-radius:50%; box-shadow:0 0 50px var(--heat),inset 0 0 30px var(--heat); opacity:.25; animation:orbitPulse 2.6s ease-in-out infinite; }
+.stage-readout { position:absolute; z-index:2; left:3%; top:12%; display:grid; font:10px 'DM Mono'; letter-spacing:.12em; }
+.stage-readout strong { font:300 clamp(48px,6vw,88px) Newsreader; letter-spacing:-.05em; }
+.stage-readout small { color:#a9aaa4; }
+.profile-note { position:absolute; z-index:2; right:2%; bottom:13%; width:190px; border-top:1px solid #ffffff55; padding-top:12px; display:grid; gap:6px; text-align:right; }
+.profile-note span { font:10px 'DM Mono'; text-transform:uppercase; }
+.profile-note strong { font:300 22px/1.2 Newsreader; }
+.roast-controls { position:absolute; z-index:4; left:4vw; bottom:78px; display:flex; gap:7px; }
+.roast-controls button { width:112px; padding:13px 14px; color:#eee8da; background:#111a18cc; border:1px solid #ffffff2f; text-align:left; text-transform:uppercase; letter-spacing:.08em; cursor:pointer; transition:.25s ease; }
+.roast-controls button span { display:block; margin-bottom:17px; color:#7f8782; font:9px 'DM Mono'; }
+.roast-controls button.active { border-color:var(--heat); background:color-mix(in srgb,var(--heat) 24%,#101716); transform:translateY(-6px); }
+.proto-footer { align-self:end; padding-top:16px; border-top:1px solid #ffffff2b; }
+@keyframes drumFloat { 50%{transform:translateY(-16px) rotate(-1deg)} }
+@keyframes orbitPulse { 50%{transform:scale(1.1);opacity:.45} }
+@media (prefers-reduced-motion:reduce){.svg-stage svg,.heat-orbit{animation:none}.roast-controls button{transition:none}}
+@media (max-width:700px){
+  .prototype{min-height:100svh;display:block;padding:16px 16px 12px;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--heat) 32%,transparent),transparent 38%),#0a1110}
+  .proto-nav span:last-child{display:none}.proto-copy{padding:8vh 0 0}.proto-copy h1{font-size:64px}.intro{font-size:12px;margin:18px 20px 0 22vw}
+  .roast-stage{min-height:45vh;margin-top:-15px}.three-host,.svg-stage{min-height:45vh;height:45vh}.stage-readout{top:5%;left:0}.stage-readout strong{font-size:44px}
+  .profile-note{right:0;bottom:8%;width:140px}.profile-note strong{font-size:17px}.roast-controls{position:relative;left:auto;bottom:auto;width:100%;gap:5px}
+  .roast-controls button{flex:1;width:auto;padding:10px;font-size:10px}.roast-controls button span{margin-bottom:9px}.proto-footer{margin-top:18px}.proto-footer span:last-child{display:none}
+}

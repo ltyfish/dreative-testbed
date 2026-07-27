@@ -1,102 +1,107 @@
 # Current run
 
-> Status: not started. This record must describe the commit being submitted.
-> Replace placeholders with checkable facts; never paste private reasoning or
-> raw transcripts here.
+> Status: implementation and rendered verification complete; final clean-tree
+> Dreative rerun pending evaluator commit.
 
 ## Run identity
 
-- Commit or branch: `[fill in]`
+- Commit or branch: `v.20.10` (implementation commit pending)
 - Baseline: `baseline`
-- Date: `[YYYY-MM-DD]`
-- User prompt: `[exact prompt, concise quote, or committed prompt path]`
-- Dreative/skill version: `[fill in]`
-- Selected direction and configuration: `[fill in]`
+- Date: `2026-07-27`
+- User prompt: `"redesign the whole website"`
+- Dreative/skill version: workspace Dreative skill snapshot
+- Selected direction and configuration: `Showcase — From Green Bean to First Pour; Full Audit; sourced/generated media and focused packages allowed; required prototype; every section explicitly increased to intensity 5/5.`
 
 ## Product observations
 
-Record the baseline facts that materially shaped the design, including at least
-three Northwind-specific observations and the behavior that must be preserved.
-
-`[fill in]`
+Northwind is a small-batch Bergen roaster whose strongest product facts are the
+1962 Probat, 12 kg batches, roast-to-shipment under 24 hours, and direct farm
+relationships. The page is a catalogue, process explanation, trust argument,
+and subscription funnel. Five navigation destinations, two hero journeys, all
+six products and purchase actions, the complete brew guide, three reviews,
+subscription offer, contact behavior, and footer links were protected.
 
 ## Decision summary
 
 ### Alternatives considered
 
-Summarize Recommended, Efficient, and Showcase at the concept level. State what
-would materially differ; do not reproduce private exploration.
-
-`[fill in]`
+Recommended proposed a tactile Roast Ledger around timestamps and provenance.
+Efficient proposed a Bergen Roastery Journal retaining the baseline structure.
+Showcase proposed a connected spatial journey in which roast profile propagates
+through roasting, product selection, brewing, proof, subscription, and contact.
 
 ### Selection and rationale
 
-Explain why the selected direction fits this product, audience, content, and
-implementation reality. This is a concise conclusion that a reviewer can test
-against the result, not a transcript of internal reasoning.
-
-`[fill in]`
+Showcase was explicitly selected. It exposes Northwind's product tension:
+industrial heat and precision produce a fleeting fresh product. Distinct
+spatial, tactile, typographic, and timed mechanisms carry the requested 5/5
+intensity without hiding commerce or copy.
 
 ### Creative promise
 
-- Product-native concept: `[fill in]`
-- Composition and type voice: `[fill in]`
-- Material, color, and media role: `[fill in]`
-- Experience arc and section ownership: `[fill in]`
-- Signature behavior and post-hero peak: `[fill in]`
-- Continuity beyond the hero: `[fill in]`
-- Mobile transformation: `[fill in]`
-- Protected behavior/content: `[fill in]`
+- Product-native concept: `From Green Bean to First Pour`
+- Composition and type voice: `process-led spatial chapters; industrial labels with expressive editorial display type`
+- Material, color, and media role: `charred iron, hot copper, parchment, and live geometry explaining temperature and transformation`
+- Experience arc: `live batch → spatial roast → reactive catalogue → timed brew → subscriber proof → recurring cycle → contact`
+- Signature behavior: `roast choice drives a Three.js drum and continues into catalogue emphasis, subscription atmosphere, and the final readout`
+- Continuity beyond hero: `one shared roast profile, batch timestamp, heat curve, and drum geometry`
+- Mobile transformation: `thumb controls, bounded spatial viewport, two-column product field, vertical brew choreography, and reduced camera travel`
+- Protected behavior/content: `all baseline claims, products, actions, navigation, form behavior, and footer destinations`
 
 ## Material decision changes
 
-Record only changes that alter the promise, allocation, runtime, fallback, or
-scope. For each, state the prior decision, new decision, observable trigger, and
-product impact. Write `None` if the promise remained stable.
-
-`[fill in]`
+The user changed the initial varied-intensity map to 5/5 throughout. A required
+prototype compared bounded DOM/SVG depth with real-time 3D; the user selected
+the spatial version. The mobile roast chapter was later compressed from 3.2 to
+2.4 viewports because rendered verification showed the longer dwell added no
+useful state.
 
 ## What shipped
 
-Summarize the implemented experience in concrete terms. Name the sections and
-behaviors that can be seen or exercised in the application.
-
-`[fill in]`
+The route now presents a live batch hero, origin-led story, three-stage spatial
+roast transformation, six-origin reactive catalogue, interactive four-step brew
+sequence, dimensional subscriber field notes, roast-colored subscription cycle,
+working contact channel, and selected-roast footer. Light, medium, or dark state
+propagates through five non-adjacent regions.
 
 ## Preservation results
 
-- Navigation and hero journeys: `[pass/fail + notes]`
-- Six product actions: `[pass/fail + notes]`
-- Story, products, guide, reviews, and subscription content: `[pass/fail + notes]`
-- Contact validation and success state: `[pass/fail + notes]`
-- Footer identity and links: `[pass/fail + notes]`
+- Navigation and hero journeys: `Pass — five destinations and both hero CTAs are reachable.`
+- Six product actions: `Pass — every Add to batch control produces confirmation.`
+- Story, products, guide, reviews, subscription: `Pass — baseline copy and data preserved.`
+- Contact validation and success state: `Pass — required email, message, submission, and success verified.`
+- Footer identity and links: `Pass — identity, Top, Shipping, Returns, and Privacy preserved.`
 
 ## Verification performed
 
-- Clean install: `[command + result]`
-- Production build: `[command + result]`
-- Other deterministic checks: `[commands + results, or none available]`
-- Dreative finalization: `[command + result, when required]`
-- Desktop full-page inspection: `[viewport + screenshot path + result]`
-- Mobile full-page inspection: `[viewport + screenshot path + result]`
-- Keyboard/touch journey: `[result]`
-- Reduced motion: `[result or not applicable]`
-- Console/network/assets/text integrity: `[result]`
+- Clean install: `npm install completed; npm audit reports one high-severity transitive advisory.`
+- Production build: `npm run build passed.`
+- Other deterministic checks: `Dreative browser preflight passed; Playwright preservation script passed.`
+- Dreative finalization: `Visual smoke passed desktop, 390px, 320px, and reduced motion; final clean-tree rerun pending this evaluator commit.`
+- Desktop inspection: `1440×1000 — .dreative/evaluation/screenshots/after-desktop.png`
+- Mobile inspection: `390×844 and 320×720 — after-mobile.png and after-narrow.png`
+- Keyboard/touch journey: `Semantic controls, labels, pressed states, focus styles, and mobile targets verified.`
+- Reduced motion: `390×844 media query and static fallback verified — reduced-mobile.png`
+- Console/network/assets/text: `No application console errors or horizontal overflow; protected direct links return 200.`
 
 ## Visual correction pass
 
-List visible problems found during rendered review and the corresponding fixes.
-
-`[fill in]`
+The first capture showed scroll-reveal content missing from stitched screenshots;
+removing opacity ownership made all content visible before animation. The 3D
+prototype initially overwhelmed copy; camera depth and scale were corrected.
+Smoke review raised micro-label sizes, found a clipped sticky ancestor, and
+exposed canvas resize lag. Labels were enlarged, sticky geometry was unclipped,
+and ResizeObserver now synchronizes WebGL dimensions with scroll geometry. The
+mobile catalogue became a two-column spatial field to remove an inert long run.
 
 ## Known limitations and not pursued
 
-Document anything promised but not delivered, blocked verification, and any
-material treatment rejected or replaced, including why.
-
-`[fill in]`
+Three.js produces a Vite chunk-size warning (about 794 kB uncompressed); DPR is
+capped and runtime resources are cleaned up. Generic stock coffee photography
+was rejected because it weakened the machine, timestamp, and batch premise. The
+bounded SVG prototype remains comparison evidence only.
 
 ## Reviewer verdict
 
-- Result: `[pass / pass with limitations / incomplete]`
-- Rationale: `[fill in after comparing source and rendered result to test-plan.md]`
+- Result: `Awaiting independent human review`
+- Rationale: `Builder-observed checks are recorded above; no independent taste verdict has been authored.`
