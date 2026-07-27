@@ -50,5 +50,9 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
+<<<<<<< HEAD
   "manifestHash": "92a085df0797f12304e1beda979100579737d4223fb5c29f319af69dc22217b4"
+=======
+  "manifestHash": "01478e491a33e9300cc5dbbfd5d62d0d895100f5c96d23b39c1631c2796424fd"
+>>>>>>> cc820f47899c5fc2c22b271801dbea0455eaa4dc
 }
