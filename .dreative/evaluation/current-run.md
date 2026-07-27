@@ -1,6 +1,6 @@
 # Current run
 
-> Status: implemented and browser-verified; deterministic finalization will run against the committed source.
+> Status: implemented, browser-verified, and deterministically finalized against the recorded implementation revision.
 
 ## Run identity
 
@@ -57,7 +57,7 @@ The single page now carries a selectable light/medium/dark roast profile through
 - Clean install: not repeated; dependencies were installed with `npm install` and audited.
 - Production build: `npm run build` passed; 33 modules transformed.
 - Other deterministic checks: `npm audit --omit=dev` found 0 production vulnerabilities; `git diff --check` found no whitespace errors.
-- Dreative finalization: pending exact committed source; standalone Showcase visual smoke passed desktop, 390px, 320px, and reduced-motion passes.
+- Dreative finalization: `dreative finalize --codex --profile showcase --visual-smoke-url http://127.0.0.1:4173 --mechanism-contract .dreative/mechanism-contract.json` printed `DREATIVE_CHECKS_PASSED`; this certifies command success, not visual quality.
 - Desktop full-page inspection: 1440×900; `.dreative/evaluation/screenshots/desktop-full.webp`; inspected with a separate mechanism view because sticky scenes distort stitched full-page captures.
 - Mobile full-page inspection: 390×844; `.dreative/evaluation/screenshots/mobile-390-full.webp`; no horizontal overflow.
 - Keyboard/touch journey: native anchors, buttons, fields, labels, focus path, and mobile actions retained; add targets measured approximately 60×44px.
@@ -74,5 +74,5 @@ Generic farm-stock photography and decorative 3D coffee beans were rejected: nei
 
 ## Reviewer verdict
 
-- Result: `incomplete`
-- Rationale: Source and browser verification pass, but the repository requires finalization against a committed source state before this can be updated.
+- Result: `awaiting independent visual review`
+- Rationale: The preservation, browser, build, and deterministic checks passed. Per the Showcase contract, the builder does not assign the visual-quality verdict.
