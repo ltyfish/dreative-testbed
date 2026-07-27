@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
-  "packageVersion": "1.1.0",
+  "packageVersion": "1.3.0",
   "target": "codex",
-  "installedAt": "2026-07-21T13:43:29.659Z",
+  "installedAt": "2026-07-27T11:50:34.947Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -24,15 +24,17 @@
     "frameworks/sveltekit.md": "684e49573f3c6b128358a2c02cb3b49dfefb494dd4f583f0c49888c5a224d78d",
     "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "9c4177fa77de995e91d32532244f2ebfc9fade0636ef8ec66de17035e4b0767a",
-    "PLAN.md": "ab93115e8c57b7c9d92b9c9cb8d465410a73e778090c9af8b37d7903ba6a7762",
+    "PLAN.md": "c0149b665d8c234da5d234338974aa937ab17831b7b84b7a8c1a24e1037da5ab",
     "references/ASSET_PIPELINES.md": "f3a71f3e433924d42cb8163f3186edb693f144bc3ac1cd6a001310bf407d234b",
     "references/CREATIVE_DIRECTION.md": "2108d774d66b8a2f7cc4c8385d31215692d2f0afd5fd4e20821bfe8e14bdefad",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
     "references/SKILL_CONTRACT.md": "3ab7acb5232c98e443cbc71b7c719f186ea38b885490c44e86c4f4b0aa3f10a3",
-    "references/VISUAL_REFINEMENT.md": "389ed4982653341bd9683476c5dc8026a364f034abcb2d5585932443b4789440",
+    "references/VISUAL_REFINEMENT.md": "a39d72e67f9827a31a2747c8835f913c903bea2b9682df3e2575e32b0cd9e268",
     "schemas/creative-catalog.schema.json": "7ef6c662e6ef70767af2a4c843db33c3b1b0a5cbb1c69c46b253995d33569af7",
+    "schemas/experience-map.schema.json": "813a4ec5fbee9360bf37b626c1dffebbbe5fb1d19e8a81e18f8958f9ed33140b",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
-    "SKILL.md": "2533bb98739e0d131e3e0dbb631026c437deaff91ecfc4bb133cb9e3141fe54b",
+    "schemas/showcase-mechanism.schema.json": "d92793aa7267e1a323b3964020400aa28e8647267f88cbe5482cf533bbecebd1",
+    "SKILL.md": "531680c525e568f4c757839d43cf51c06eb5c9e998e7f49dda0cf7e7fc34dcaa",
     "skills/3d.md": "cfd7b71b617192de9069fedeed5345a037b463dd3ba358655a1110411005c09a",
     "skills/cinematic.md": "34ecca4f4371b1bdc875d039e7a90023a2e85d8d23645be5ba84520dd5687f88",
     "skills/experimental.md": "e38246491a28ec26567a95f41dfc7f5be34522dfe9d6d43183fcf27fe58783e4",
@@ -49,5 +51,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "aba95eb1a703fa637f67a9df35b2a6f01e3a4d0f285c2ad395a0226899b23969"
+  "manifestHash": "b5da53f676596c7d505dc24479920c451b7cb1f31585cc235969bc8fb76263df"
 }
