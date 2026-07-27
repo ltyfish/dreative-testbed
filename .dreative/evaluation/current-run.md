@@ -4,7 +4,7 @@
 
 ## Run identity
 
-- Commit or branch: `v.20.9-newest` at `8d878b2` plus uncommitted changes
+- Commit or branch: `v.20.9-newest` implementation commit `5d242ca`; this handoff update follows without implementation changes
 - Baseline: `baseline`
 - Date: `2026-07-27`
 - User prompt: `redesign the whole websaite`
