@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Northwind bounded roast curve</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#171512;color:#eee7d9;font:12px monospace}
+    main{min-height:100vh;padding:5vw;display:grid;grid-template-columns:220px 1fr;gap:5vw}
+    h1{font:normal clamp(64px,9vw,130px)/.85 Georgia,serif;margin:0}em{color:#d8ef62}
+    aside{border-right:1px solid #ffffff2b;padding-right:24px}button{width:100%;padding:16px 0;text-align:left;background:none;color:#ffffff70;border:0;border-bottom:1px solid #ffffff20}
+    button:first-of-type{color:#d8ef62}.chart{align-self:center}.chart svg{width:100%}.grid{stroke:#ffffff1d}.curve{fill:none;stroke:#f0642b;stroke-width:4}.dot{fill:#d8ef62}
+    dl{display:grid;grid-template-columns:repeat(3,1fr)}dt{color:#ffffff66}dd{font:32px Georgia;margin:6px 0}
+    @media(max-width:700px){main{grid-template-columns:1fr;padding:24px}aside{border:0;display:flex;overflow:auto}button{min-width:130px}h1{font-size:64px}}
+  </style>
+</head>
+<body><main><aside><p>SELECT ORIGIN</p><button>Ethiopia / Jasmine</button><button>Colombia / Caramel</button><button>Sumatra / Cedar</button></aside><section class="chart"><p>PROTOTYPE A / BOUNDED INSTRUMENT</p><h1>Follow the <em>curve.</em></h1><svg viewBox="0 0 800 300" role="img" aria-label="Roast temperature curve"><path class="grid" d="M20 50H780M20 120H780M20 190H780M20 260H780M20 20V280M210 20V280M400 20V280M590 20V280M780 20V280"/><path class="curve" d="M20 260C170 260 190 210 280 198S420 120 535 95 680 48 780 25"/><circle class="dot" cx="20" cy="260" r="9"/></svg><dl><div><dt>TIME</dt><dd>00:00</dd></div><div><dt>TEMP.</dt><dd>95°</dd></div><div><dt>MASS LOSS</dt><dd>0%</dd></div></dl></section></main></body>
+</html>
