@@ -1,0 +1,139 @@
+{
+  "version": 2,
+  "experienceType": "journey",
+  "classification": {
+    "implementation": "attempted"
+  },
+  "recommendedBaseline": "A tactile editorial roast ledger organized around timestamps, provenance, and batch records with restrained spatial transitions.",
+  "showcaseDelta": [
+    "A live rendered Probat-inspired chamber transforms individually animated coffee beans through five materially distinct roast stages.",
+    "The visitor's roast-profile choice changes the hero chamber, catalogue emphasis, central roast state, subscription packaging, and route temperature color."
+  ],
+  "mediaOpportunities": [
+    {
+      "opportunity": "Procedural rendered coffee beans and drum machinery based on Northwind's 1962 Probat",
+      "decision": "use",
+      "rationale": "Live geometry makes heat, tumbling, first-crack expansion, development, and drop physically legible without relying on unrelated stock footage."
+    },
+    {
+      "opportunity": "Sourced cinematic roasting video",
+      "decision": "reject",
+      "rationale": "No Northwind-specific licensed footage was available, and generic footage would weaken the product-specific machine and roast-profile continuity."
+    }
+  ],
+  "prototypeEvidence": {
+    "boundedApproach": "Layered DOM/CSS drum with a finite bean field and staged heat colors",
+    "higherCeilingApproach": "Live Three.js drum, cast-metal lighting, textured creased beans, independent tumbling, camera depth, and stage-specific motion",
+    "selectedApproach": "Refined rendered spatial chamber",
+    "selectedBy": "user",
+    "boundedArtifact": "/prototype-bounded",
+    "higherCeilingArtifact": "/prototype-spatial",
+    "boundedCaptures": {
+      "desktop": ".dreative/prototypes/bounded-desktop.jpg",
+      "mobile": ".dreative/prototypes/bounded-mobile.jpg"
+    },
+    "higherCeilingCaptures": {
+      "desktop": ".dreative/prototypes/spatial-refined-desktop.jpg",
+      "mobile": ".dreative/prototypes/spatial-refined-mobile.jpg"
+    },
+    "boundedRecordings": {
+      "desktop": ".dreative/prototypes/bounded-desktop.mp4",
+      "mobile": ".dreative/prototypes/bounded-mobile.mp4"
+    },
+    "higherCeilingRecordings": {
+      "desktop": ".dreative/prototypes/spatial-desktop.mp4",
+      "mobile": ".dreative/prototypes/spatial-mobile.mp4"
+    },
+    "builderSelectionRationale": "The user selected rendered spatial, then rejected the first dark barrel execution as ugly. The selected prototype was refined into an open front-facing drum with creased beans, visible agitator geometry, restrained cast-metal lighting, and cleaner framing before integration."
+  },
+  "prototypeFidelity": {
+    "selectedArtifact": "/prototype-spatial",
+    "prototypeSubjectSelector": ".three-chamber canvas",
+    "integratedSubjectSelector": "#roast-transformation .three-chamber canvas",
+    "focalObject": "Individually textured and independently tumbling coffee beans inside an open Probat-inspired drum",
+    "copyBalance": "Large left-side process language remains readable while the chamber owns the larger right-side field.",
+    "controlPlacement": "Five roast stages form a full-width instrument rail below the chamber on desktop and a compact touch rail on mobile.",
+    "materialLighting": "Warm cast metal, dark iron, restrained ember light, and cooling edge light replace the rejected glossy sci-fi barrel.",
+    "desktopFraming": "Open drum fills the right two-thirds with a readable mechanical rim and visible bean field.",
+    "mobileFraming": "The drum becomes a cropped in-flow stage below the explanation with labels moved away from the copy."
+  },
+  "continuity": {
+    "stateKey": "roastProfile",
+    "sourceSelector": ".hero-machine",
+    "sourceTrigger": "click",
+    "stateCount": 3,
+    "affectedRegions": [
+      {
+        "selector": "#hero",
+        "stage": "before",
+        "effect": "Changes the live chamber stage, temperature, profile code, copy, and route accent."
+      },
+      {
+        "selector": "#roast-transformation",
+        "stage": "peak",
+        "effect": "Sets the initial physical roast state before the visitor manipulates the five-stage timeline."
+      },
+      {
+        "selector": "#subscribe",
+        "stage": "after",
+        "effect": "Changes the primary subscription bag label and dispatch-profile code."
+      }
+    ]
+  },
+  "mechanisms": [
+    {
+      "name": "Profile-controlled chamber entrance",
+      "stage": "before",
+      "selector": "#hero .hero-machine",
+      "primarySelector": ".profile-caliper",
+      "primarySubject": "Roast profile material gauge synchronized with the rendered beans and chamber state",
+      "trigger": "click",
+      "experienceRole": "Lets the visitor choose the roast trajectory that will propagate through the route.",
+      "ceilingContribution": "Connects a real product preference to spatial material and downstream content.",
+      "mediaMode": "spatial-layout",
+      "continuityConnection": "Writes roastProfile for the catalogue, peak, subscription, and temperature signal.",
+      "mobileTransformation": "The chamber becomes an in-flow rendered viewport with a three-option touch instrument below it.",
+      "recommendedDifference": "Recommended would show a timestamped batch record without a live controllable machine.",
+      "meaningfulOutcome": "The visitor sees the selected roast as a material state rather than only a label.",
+      "animationOwner": "native-js",
+      "ownedProperties": ["instance matrices", "bean material color", "camera depth", "light intensity"],
+      "stateCount": 3
+    },
+    {
+      "name": "Five-stage physical roast transformation",
+      "stage": "peak",
+      "selector": "#roast-transformation",
+      "primarySelector": ".roast-geometry",
+      "primarySubject": "Thermal development curve synchronized with coffee beans changing through five roast stages",
+      "trigger": "scroll",
+      "experienceRole": "Explains how heat becomes flavor inside Northwind's 1962 Probat.",
+      "ceilingContribution": "Each bean has independent speed, depth wobble, and spin; first crack expands the field and Drop moves the batch downward.",
+      "mediaMode": "spatial-layout",
+      "continuityConnection": "Develops the profile chosen in the hero into a five-state physical process.",
+      "mobileTransformation": "A shorter cropped chamber remains directly controllable by the five-stage touch rail and releases cleanly into the brew guide.",
+      "recommendedDifference": "Recommended would use a diagram or editorial sequence rather than rendered per-bean dynamics.",
+      "meaningfulOutcome": "The animation itself communicates tumbling, expansion, development, and release.",
+      "animationOwner": "native-js",
+      "ownedProperties": ["per-bean position", "per-bean rotation", "field radius", "drop displacement", "agitator rotation"],
+      "stateCount": 5
+    },
+    {
+      "name": "Profile-aware subscription packing",
+      "stage": "after",
+      "selector": "#subscribe .packing-stage",
+      "primarySelector": ".coffee-bag.bag-one",
+      "primarySubject": "The visitor's selected roast bag inside the monthly dispatch crate",
+      "trigger": "click",
+      "experienceRole": "Turns the earlier roast choice into a visible recurring-delivery consequence.",
+      "ceilingContribution": "Maintains the connected profile state after the central rendered peak.",
+      "mediaMode": "spatial-layout",
+      "continuityConnection": "Reads roastProfile and prints its label and code on the packed bag.",
+      "mobileTransformation": "The crate and two bags become a compact layered packing composition with touch-safe static emphasis.",
+      "recommendedDifference": "Recommended would present a conventional subscription offer without stateful packaging.",
+      "meaningfulOutcome": "The subscription feels like the completion of the visitor's selected roast journey, and the visitor can cycle the packed profile directly.",
+      "animationOwner": "react-state",
+      "ownedProperties": ["bag label", "bag rotation", "bag elevation", "profile accent"],
+      "stateCount": 3
+    }
+  ]
+}

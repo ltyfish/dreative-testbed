@@ -4,5 +4,7 @@ dist
 # Dreative creates working files and prototypes here. Keep them local by
 # default, but version the small reviewer-facing package below.
 .dreative/*
+!.dreative/experience-map.json
+!.dreative/showcase-mechanism.json
 !.dreative/evaluation/
 !.dreative/evaluation/**

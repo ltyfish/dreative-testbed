@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "direction": "showcase",
+  "route": "/",
+  "concept": "From Green Bean to First Pour",
+  "primaryPeak": "roast-transformation",
+  "recommendations": [
+    "Treat intensity five as maximum meaningful transformation with calm internal holds, not continuous competing movement.",
+    "Let the visitor's roast profile change content and material across the catalogue, roast chamber, brew guide, and subscription.",
+    "Keep the central roast chamber as the clearest spatial peak even though every section has a signature mechanism."
+  ],
+  "sections": [
+    {
+      "id": "site-nav", "title": "Navigation", "role": "Orient and expose live roast state", "intensity": 5,
+      "inputState": "Route position and selected roast profile", "startState": "Expanded identity and journey links", "endState": "Compact thermal rail with current chapter",
+      "mechanismOwner": "GSAP route choreography", "connection": "Carries roast temperature and section position across the route",
+      "desktop": "Pinned horizontal rail transforms as chapters change", "mobile": "Compact bottom-accessible chapter strip", "reducedMotion": "Instant state changes without travel",
+      "evidenceTarget": "#site-nav", "selector": "#site-nav", "trigger": "scroll", "ownedProperties": ["layout", "temperature state", "active chapter"], "meaningfulOutcome": "Visitors retain direct task access while seeing roast progress."
+    },
+    {
+      "id": "hero", "title": "Hero", "role": "Orient the visitor inside the roast journey", "intensity": 5,
+      "inputState": "Initial profile choice", "startState": "Green coffee and cold chamber", "endState": "Selected roast enters the drum",
+      "mechanismOwner": "Three.js and GSAP handoff", "connection": "Creates the profile state used before, during, and after the peak",
+      "desktop": "Spatial chamber entrance with profile control", "mobile": "Touch-controlled staged viewport", "reducedMotion": "Resolved product rendering and profile buttons",
+      "evidenceTarget": "#hero", "selector": "#hero", "trigger": "click", "ownedProperties": ["camera", "bean material", "profile state"], "meaningfulOutcome": "The visitor selects how the product journey should develop."
+    },
+    {
+      "id": "story", "title": "Story and stats", "role": "Prove the machine, scale, farm relationships, and dispatch promise", "intensity": 5,
+      "inputState": "Selected profile and scroll", "startState": "Fishing shed archival field", "endState": "1962 machine blueprint resolves into four facts",
+      "mechanismOwner": "GSAP spatial typography", "connection": "Turns spectacle into Northwind-specific evidence",
+      "desktop": "Stats occupy mechanical blueprint berths", "mobile": "Swipeable annotated machine sections", "reducedMotion": "Static annotated blueprint",
+      "evidenceTarget": "#story", "selector": "#story", "trigger": "scroll", "ownedProperties": ["type scale", "diagram geometry", "stat focus"], "meaningfulOutcome": "The page visibly connects Northwind's physical constraints to its claims."
+    },
+    {
+      "id": "beans", "title": "Bean catalogue", "role": "Explore and purchase six origins", "intensity": 5,
+      "inputState": "Profile choice and product interaction", "startState": "Origins orbit around the selected roast", "endState": "Focused coffee opens as a dimensional batch card",
+      "mechanismOwner": "React state and GSAP spatial rail", "connection": "Makes the selected profile affect product emphasis",
+      "desktop": "Depth-based finite gallery with keyboard controls", "mobile": "Native snap rail with bounded depth", "reducedMotion": "Static accessible product grid",
+      "evidenceTarget": "#beans", "selector": "#beans", "trigger": "click", "ownedProperties": ["gallery depth", "product focus", "profile emphasis"], "meaningfulOutcome": "All six products remain legible and purchasable while origin relationships become spatial."
+    },
+    {
+      "id": "roast-transformation", "title": "Roast transformation", "role": "Explain charge, drying, first crack, development, and drop", "intensity": 5,
+      "inputState": "Scroll and selected profile", "startState": "Green beans enter a cold 1962 Probat drum", "endState": "Roasted beans fall into cooling air with a shipping timestamp",
+      "mechanismOwner": "Three.js coordinated by GSAP", "connection": "Central peak converts earlier choice into visible physical change",
+      "desktop": "Pinned rendered drum with camera, bean material, heat and geometry transformation", "mobile": "Shorter staged chamber with touch controls and safe release", "reducedMotion": "Five selectable rendered states",
+      "evidenceTarget": "#roast-transformation", "selector": "#roast-transformation", "trigger": "scroll", "ownedProperties": ["camera path", "bean geometry", "bean material", "heat lighting", "drum motion"], "meaningfulOutcome": "Visitors understand why roast development and rapid dispatch change the coffee."
+    },
+    {
+      "id": "brew-guide", "title": "Brew guide", "role": "Turn roast precision into a usable four-step recipe", "intensity": 5,
+      "inputState": "Profile and scroll progress", "startState": "Tools appear as an exploded preparation layout", "endState": "A completed pour resolves into brew time",
+      "mechanismOwner": "GSAP SVG/DOM sequence", "connection": "Reuses temperature and time as practical instruction",
+      "desktop": "Scroll-authored scale, grinder, bloom and pour sequence", "mobile": "Tap/scroll step instrument with persistent timer", "reducedMotion": "Four readable illustrated states",
+      "evidenceTarget": "#brew-guide", "selector": "#brew-guide", "trigger": "scroll", "ownedProperties": ["tool geometry", "water path", "timer", "step focus"], "meaningfulOutcome": "The four original steps become easier to perform."
+    },
+    {
+      "id": "reviews", "title": "Subscriber reviews", "role": "Prove freshness through subscriber dispatch records", "intensity": 5,
+      "inputState": "Scroll and review focus", "startState": "Sealed dispatch envelopes", "endState": "Three voices unfold around receipt timestamps",
+      "mechanismOwner": "GSAP shared-element choreography", "connection": "Transforms shipping records into human proof",
+      "desktop": "Layered dispatch notes unfold in sequence", "mobile": "Direct-manipulation stack with full readable quotes", "reducedMotion": "Three open dispatch notes",
+      "evidenceTarget": "#reviews", "selector": "#reviews", "trigger": "click", "ownedProperties": ["note geometry", "reading order", "timestamp emphasis"], "meaningfulOutcome": "All three testimonials remain readable and feel causally tied to freshness."
+    },
+    {
+      "id": "subscribe", "title": "Subscription", "role": "Resolve profile choice into a recurring delivery", "intensity": 5,
+      "inputState": "Selected roast profile", "startState": "Loose bags and monthly cadence", "endState": "Personalized dispatch crate seals for shipment",
+      "mechanismOwner": "React state and GSAP packaging sequence", "connection": "Shows the downstream consequence of the initial choice",
+      "desktop": "Profile-aware packing choreography and offer", "mobile": "Compact touch-controlled crate assembly", "reducedMotion": "Resolved subscription pack with profile copy",
+      "evidenceTarget": "#subscribe", "selector": "#subscribe", "trigger": "click", "ownedProperties": ["package geometry", "profile copy", "dispatch state"], "meaningfulOutcome": "The $29 offer feels like the completion of the selected journey."
+    },
+    {
+      "id": "contact", "title": "Contact", "role": "Connect directly with the two-person roastery", "intensity": 5,
+      "inputState": "Form focus, validation, and submission", "startState": "Quiet radio-console form", "endState": "Message transmits and receives a reply-time confirmation",
+      "mechanismOwner": "React state and CSS signal motion", "connection": "Returns the spatial system to a human-scale exchange",
+      "desktop": "Console fields activate a bounded transmission visualization", "mobile": "Single-column radio panel with large controls", "reducedMotion": "Static signal states",
+      "evidenceTarget": "#contact", "selector": "#contact", "trigger": "input", "ownedProperties": ["signal geometry", "field focus", "success state"], "meaningfulOutcome": "Validation and success feedback become unmistakable without obstructing the form."
+    },
+    {
+      "id": "site-footer", "title": "Footer", "role": "Close the batch ledger and preserve legal routes", "intensity": 5,
+      "inputState": "Journey completion", "startState": "Cooling line carries the final batch", "endState": "Dispatch stamp resolves with four routes",
+      "mechanismOwner": "GSAP route resolution", "connection": "Completes the temperature signal as a shipping timestamp",
+      "desktop": "Cooling rail transforms into final identity and links", "mobile": "Vertical dispatch receipt with accessible routes", "reducedMotion": "Resolved receipt",
+      "evidenceTarget": "#site-footer", "selector": "#site-footer", "trigger": "scroll", "ownedProperties": ["cooling geometry", "timestamp", "link reveal"], "meaningfulOutcome": "The journey ends with preserved identity and all footer destinations."
+    }
+  ]
+}
