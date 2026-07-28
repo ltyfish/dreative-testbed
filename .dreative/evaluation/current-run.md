@@ -4,7 +4,7 @@
 
 ## Run identity
 
-- Commit or branch: `v.20.11; submitted repository HEAD`
+- Commit or branch: `c2e47b15287ed8818bfbd1c74d0f801c3a624ba9`
 - Baseline: `baseline`
 - Date: `2026-07-28`
 - User prompt: `"redesign the whole website"`
