@@ -1,175 +1,318 @@
 # Planning protocol
 
-The canonical plan is `.dreative/plan.yaml`. Do not keep a synchronized
-`plan.json`; JSON is export or migration input only.
+Planning has three required, blocking user-facing stages—direction, compact
+configuration, and the Experience Map—plus a blocking prototype review whenever Prototype is selected
+and produced, and an optional reveal of the detailed Creative Decision Brief.
+The reveal is optional; creating and using the complete private brief is not.
+Keep private exploration private. Do not edit implementation files until all
+three stages have an explicit user response. Never silently apply recommended settings.
 
-## Intake before concept planning
+## Stage 1: direction
 
-A user-facing task is interactive. Auto-detect reliable facts from the prompt
-and repository, then ask only for unresolved material information. Plain text is
-enough when a structured question tool is unavailable. Never silently default
-Ambition, Execution, Prototype or Purpose for a substantial user-facing run.
-Non-interactive automation must supply all four explicitly in
-`contract.workflow`.
+Inspect the real product and read `references/CREATIVE_DIRECTION.md`. Privately
+create three genuinely different concepts before assigning them to delivery
+levels. They must differ in experience structure or interaction logic, not
+only color, type, and effort.
 
-Present these choices exactly:
+Show exactly:
 
-Ambition:
+1. **Recommended — <project-native concept>**
+   The direction most likely to produce the strongest product for this
+   audience, content, and implementation reality.
 
-- Standard — strong professional design with restrained originality.
-- Expressive — visibly authored composition with purposeful motion and interaction.
-- Award — a distinctive experience with structural or transformational motion,
-  media or spatial behaviour.
-- Experimental — Award-level foundations plus a small number of unconventional
-  provocations and higher creative variance.
+2. **Efficient — <focused concept>**
+   The highest-value improvement using the least tokens and implementation cost,
+   preserving the current structure, assets, and stack where useful.
 
-Execution:
+3. **Showcase — <flagship concept>**
+   The highest creative and technical ceiling. Any treatment is available, but
+   select only those that materially strengthen the premise. Its delivered
+   route must be visibly and structurally distinct from Recommended; a long
+   conventional page with one isolated spectacle is insufficient.
 
-- Fast — smallest safe workflow for early work.
-- Lean (Recommended) — recommended quality workflow.
-- Full Audit — broader traceability, performance and certification evidence.
-  Full Audit controls evidence, not visual ambition.
+Each option must name its premise, composition, material/type voice, meaningful
+media or interaction, and product fit. Do not mention reference brands as the
+concept. Do not offer three versions of the same editorial landing page.
+Each must be the strongest honest design for its stated constraint: Efficient
+is not deliberately weak, Recommended is not a diluted Showcase, and Showcase
+must genuinely reach the highest coherent creative and technical ceiling.
 
-Prototype:
+End with:
+
+> I recommend **<direction>**. Reply with **1, 2, or 3**. You can also say
+> **show detailed plan**.
+
+If the user asks for detail before choosing, expand Recommended by default.
+This expands information only; it does not select Recommended. Wait for the
+user's explicit direction choice. A general instruction such as "go ahead,"
+"redesign it," or "use your judgment" is not a direction choice unless it
+explicitly authorizes choosing among the three options.
+
+## Stage 2: compact configuration
+
+After selection, show five compact choices with direction-adapted
+recommendations. End with:
+
+> Reply **use recommended settings** or list any changes. Say **show detailed
+> plan** for the full project-specific Creative Decision Brief.
+
+Wait for the reply. Do not treat the displayed recommendations as accepted
+until the user says `use recommended settings` or explicitly supplies their
+choices. The prototype choice must always appear and be confirmed; for
+Showcase, clearly state that `Required` means prototyping the riskiest signature
+mechanism before integrating the route.
+
+### Review depth
+
+- Fast — production build and one focused desktop/mobile primary-flow pass.
+- Lean — full-page desktop/mobile, key interactions, console/overflow/text
+  integrity, and one visible correction pass.
+- Full Audit — Lean plus 320px, reduced motion, performance, direct routes,
+  console/network, asset failures, and final full-page regression.
+
+Defaults: Efficient=Fast, Recommended=Lean, Showcase=Full Audit.
+
+Full Audit increases observable review. It never adds approval hashes,
+attestation, provenance, evidence ledgers, or a mandatory critic.
+
+### References
+
+- Follow a website, URL, image, or file supplied by the user.
+- Scout and synthesize relevant references.
+- Use no external reference.
+
+Efficient uses supplied references only. Recommended uses supplied material or
+a small cross-domain scout. Showcase uses supplied material plus two to four
+strong references from different domains. Extract principles; never reproduce
+a reference's complete visual fingerprint.
+
+### Sources
+
+- Existing assets only.
+- Allow sourced/licensed images.
+- Allow sourced and generated images; use video or 3D when useful.
+- Ask before each new asset.
+
+Efficient defaults to existing assets. Recommended chooses best-fit media.
+Showcase permits maximum useful sourced/generated imagery, video, and 3D.
+
+### Packages
+
+- Allow focused package installation.
+- Keep the existing stack.
+- Ask before installing.
+
+Efficient keeps the stack. Recommended and Showcase allow packages whose
+capabilities are necessary for the selected experience.
+
+### Prototype
 
 - Skip — build directly.
-- Auto (Recommended) — prototype only uncertain mechanisms.
-- Required — prototype the most technically uncertain mechanism before integration.
+- Auto — test only a central mechanism with real uncertainty.
+- Required — test the riskiest signature mechanism before integration.
 
-Purpose:
+Defaults: Efficient=Skip, Recommended=Auto, Showcase=Required.
 
-- Project Delivery (Recommended)
-- Production Certification
-- Dreative Dogfood
+If Auto results in a prototype, or Required is selected, implementation pauses
+after both alternatives and their desktop/mobile captures and recordings exist.
+Show them together and ask the user to select the bounded or higher-ceiling
+approach. Do not integrate, self-select, or treat silence/general permission as
+a choice. Record the resulting selection as `selectedBy: "user"`.
 
-Do not ask again for values already supplied.
+## Stage 3: editable Experience Map
 
-Before any contract is written, the first intake output must show the complete
-ten-treatment review, proposed section allocation, ownership overlaps and
-tensions, plus a creative capability preflight. Unresolved permissions are
-reported as unresolved rather than denied. The same intake explicitly asks for
-package-installation permission; permission and detected capability are never
-collapsed into one state.
+After configuration, turn the recommended concept into a short section-level
+proposal the user can understand without design or animation terminology.
+Include every major page or section, Dreative's recommended role, intensity
+from 1–5, and its connection to the surrounding journey. Add one to three
+targeted recommendations explaining where stronger treatment will help and
+where it would create competition.
 
-Resolve repository root, preview URL or command, routes and scope, required
-workflows, preserved content/brand, supplied and missing assets, installation
-permission, media permission, priority devices, minimum mobile width,
-performance constraints, references/anti-references and user-language success
-criteria. Do not implement while target or scope is materially ambiguous.
+End with:
 
-Ask the creative-source questions separately rather than collapsing them into
-one media switch:
+> Reply **use Dreative's recommended approach** or name section changes:
+> **more animated**, **calmer**, **change layout**, **change interaction**,
+> **keep static**, or add an instruction.
 
-- Does the user have reference URLs/files, have no references, or want suggested
-  directions? Record provided references and anti-references.
-- May generated images be used: allowed, not allowed, or ask per asset?
-- May externally sourced/licensed images be used: allowed, not allowed, or ask
-  per asset?
-- May generated video be used: allowed, not allowed, or ask per asset?
-- May externally sourced/licensed video be used: allowed, not allowed, or ask
-  per asset?
-- What is the 3D asset/prop policy: not allowed, supplied only, external
-  sourcing allowed, generation and sourcing allowed, or ask per asset?
-- Record supplied image, video and 3D assets separately and name known missing
-  or needed assets.
+Wait for the reply. After acceptance, privately compile every row into
+`schemas/experience-map.schema.json`: role, input state, visible start and end
+states, mechanism owner, connection, desktop, mobile, reduced-motion, and
+evidence target. This working map is a promise-to-implementation bridge, not an
+approval receipt or a claim of visual quality. Journey-balance arithmetic is
+advisory and must lead to screenshot comparison, not a taste score.
+This is the user's concrete design decision, not a second approval artifact.
 
-## Contract and approval
+## Stage 4: private Creative Decision Brief and optional reveal
 
-`contract` is user-editable and contains target/scope, workflow, transformation
-depth, treatments, priority/allocation, preservation, concept, blueprint,
-experience arc, motion/media, mobile, functional truth, performance and
-acceptance criteria.
+After direction, configuration, and the Experience Map are resolved, always complete this entire
+project-specific brief privately before implementation. It is the working
+blueprint for section allocation, treatments, assets, signature mechanisms,
+continuity, mobile transformation, runtime ownership, fallbacks, and review.
+Keep it current when repository inspection or prototyping changes a decision.
 
-`approval` hashes only `contract`. `execution` may change without invalidating
-that hash. After planning, show a concise summary, point to
-`.dreative/plan.yaml`, and wait for approval before substantial source edits.
+When `.dreative/evaluation/README.md` exists in the target project, it is an
+explicit request for a compact evaluator handoff. After configuration, write
+the selected direction and a concise, inspectable decision summary to the
+current-run record named by that local contract. Include product observations,
+the alternatives considered at a summary level, selection reasons, promises,
+and material later changes with their triggers. Do not expose chain-of-thought,
+private exploration, raw conversation, or scratch notes. This handoff reports
+decisions; it does not replace the private brief or become an approval gate.
+Record the exact branch and commit, updating `uncommitted` after the final
+commit. Only paths named by the local evaluation README belong to the handoff;
+remove stale untracked legacy critic, verification, certification, trace, and
+evidence artifacts rather than allowing an evaluator to confuse them with the
+current build.
 
-Material edits require a same-file change request describing reason,
-consequence and alternative. They invalidate approval until approved again.
+Do not require the user to read or approve it. By default, show only the short
+build brief required by `SKILL.md`, including this compact execution map:
 
-## Prototype and concept checkpoint
+```text
+Experience arc: <hero> → <proof> → <transformation> → <decision>
+Section ownership: <section → perceptible treatment or role>
+Post-hero peak: <section and meaningful state change>
+Continuity owner: <device that carries the concept beyond the hero>
+Mobile transformation: <structural changes, not “stack everything”>
+Showcase ceiling: <highest coherent mechanism/media decision and prototype result>
+```
 
-A mechanism prototype proves technical feasibility only. It does not approve
-the concept, visual quality, page-wide motion, treatment coverage, mobile
-composition or experience arc.
+Keep it concrete and under roughly ten lines. It exposes the implementation
+shape without turning the private brief into an approval or evidence artifact.
+If the user says `show detailed plan`, reveal the current full brief. Do not
+create a plan file, approval record, or other compliance artifact merely to
+prove that the private brief exists.
 
-Award, Experimental, Full Audit Dogfood and explicit all-treatment work require
-a real application vertical slice: actual hero, one downstream section, real
-visual system, defining temporal/media idea, 390px composition and reduced
-motion. A user or independent critic must approve it before system-wide spread.
+Adapt every decision below to the inspected project and selected direction.
+The user's explicit choices and corrections are the source of truth. Use direction
+defaults and agent judgment only where the user left a decision open. Do not
+reinterpret a direction label to reduce its promised scope, and do not change taste,
+intensity, treatments, or page allocation merely because implementation is
+harder than expected.
 
-## Canonical v9 planning and lifecycle rules
+Ask one focused question before implementation when two plausible readings of
+the user's intent would materially change a page or section, or when uncertain
+whether a major section should carry an unusually intense, spatial, cinematic,
+or experimental treatment. Ask again before any later material deviation from
+the brief unless the user delegated that choice. Do not interrupt for routine
+craft decisions the selected direction already resolves.
 
-For substantial work, no contract may be written until `--treatments` is supplied.
-The review always shows UX, Mobile, Refined, Motion, Interaction, Media, 3D,
-Immersive, Cinematic and Experimental with selected/declined state. UX and
-Mobile become foundational only after the optional-treatment decision.
+### 1. Product truth
 
-Connected capabilities may be supplied with
-`--capabilities-file .dreative/capabilities.json` or repeatable
-`--capability id=state`. Permission alone records
-`permitted-but-tool-unverified`; it never records sourcing or authoring as
-available. Canvas and WebGL start as `expected-browser-api-unverified`.
+Summarize audience, primary task, routes, content shape, subject vocabulary,
+working behavior, valuable visual equity, assets, dependencies, defects, and
+preservation.
 
-The v9 contract stores intent only. Mechanism status, prototype results,
-sourcing attempts, generated files, browser observations, asset survival,
-critic findings and verification evidence belong under `execution`. Normal
-execution updates therefore do not change the approved contract hash.
+### 2. Selected direction
 
-Tiny maintenance exemption: `--tiny` is only for a narrow, non-creative repair
-that does not alter visual direction, treatment allocation, media strategy,
-section structure or interaction behavior. It may use UX and Mobile foundations
-without a full optional-treatment intake. Any substantial redesign, new visual
-system, new section, new mechanism or media change must use explicit treatment
-selection.
+Define the project-native premise, composition rule, typography, material/color
+logic, media role, motion/interaction grammar, continuity device, and why they
+fit. Include three decisions that could only come from this product.
 
-Resolve package installation separately from creative asset permissions. Run
-capability preflight and report runtime libraries, FFmpeg/Sharp, browser
-verification, search/sourcing, image/video generation and editing, 3D
-sourcing/generation/authoring, screenshot capture and automation independently.
+### 3. Reference synthesis
 
-Allocate treatments to concrete sections as primary, supporting or foundation,
-and as peak, connective tissue or foundation. Name one continuity owner when
-Immersive or Cinematic is selected.
+For each supplied or scouted source, show only the principle being adapted and
+what will deliberately differ. Confirm that no source contributes the complete
+palette + type + layout + signature-motion combination.
 
-Experimental and all-treatment Full Audit/Dogfood may prototype up to three
-materially different unresolved risk families. Fast normally prototypes none;
-Lean Auto selects one; Required selects high-risk families up to three. Record
-exactly what each probe proves and does not prove.
+### 4. Workflow and resources
 
-After spread, validate current desktop/mobile route captures,
-start/active/resolved peak evidence, planned-versus-observed mechanisms,
-fallback disclosure, section-role coverage and source/run identity. Add one
-representative continuity recording only when static evidence cannot prove the
-mechanism. Reverse evidence is only for promised reversibility, pin release or
-lifecycle risk.
+Show Fast/Lean/Full Audit, Skip/Auto/Required, reference strategy, Sourced images,
+Generated images, sourced/generated video, 3D sourcing or generation,
+Packages, and actual detected capabilities. Mark recommendations.
 
-## Runtime-grounded ambitious delivery
+### 5. Treatment and experience allocation
 
-Award, Experimental and explicit all-treatment work records typed
-`execution.runtimeObservations` for every important mechanism. Each observation
-names the implementation owner, source assets, mechanism family, input drivers,
-honest spatial classification, mobile/reduced-motion form, performance result,
-handoff architecture, recordings and controlled 0/25/50/75/100 samples.
-Samples include current-build artifact/composition hashes, observed runtime
-properties and, where applicable, frame/video time, camera, uniforms, particles
-or masks plus pixel/structural difference measurements.
+For each relevant treatment, state the project-specific use, selected/declined
+decision, cost, risk, and insufficient version. Then map the selected treatments
+to route sections, including a meaningful post-hero peak and the continuity
+owner. User-selected treatment names or counts override direction defaults. UX and
+Mobile always apply. Showcase may use any treatment but has no minimum technology
+count. It requires one connected experience system: a meaningful choice or
+transformation must propagate through at least three non-adjacent regions across
+the pre-peak, central peak, and post-peak experience. Static grids, isolated
+widgets, and thematic labels do not count.
+Selection is a delivery promise, not checkbox coverage: every
+selected treatment needs a named owner and perceptible contribution, although
+one coherent mechanism may serve several treatments.
 
-Free-form `transformations`, `sceneHandoffs`, `motionVocabulary`,
-`treatmentObservations` and similar notes explain evidence but cannot satisfy a
-gate. Ambitious delivery fails when it is a mostly static stack, lacks two
-substantial post-hero mechanisms, disables defining mobile behavior, or relies
-on ordinary controls and a rigid textured plane.
+Start from the accepted Experience Map. Preserve every row's role and intensity
+intent while privately adding executable states, owners, handoffs, responsive
+forms, fallbacks, and evidence targets. Do not force a generic architecture.
 
-Capability and ambition prototypes are separate. Capability proves the API or
-mechanism works. Ambition proves final-quality media, one complete post-hero
-peak, a true asset transformation, a 10–20 second recording, desktop/mobile
-authorship and fresh independent criticism. Approval containing a concern is
-`approved-with-required-revisions` until those revisions are recaptured.
+For Showcase, write the compact JSON contract defined by
+`schemas/showcase-mechanism.schema.json`. Bind the Recommended baseline, at
+least two perceptible Showcase-only differences, two concrete product-native
+media opportunities and their use/reject reasons, and an observed comparison
+between one bounded prototype and one higher-ceiling media/spatial approach.
+Reference actual prototype routes or files and desktop/mobile captures for both,
+plus short desktop/mobile motion recordings for human comparison; self-authored
+prose is not evidence. Record any selection explanation only as a
+non-authoritative `builderSelectionRationale`; never call it a reviewer decision.
+Name one shared state, its source selector,
+and at least three affected selectors across `before`, `peak`, and `after`, with
+the concrete downstream effect in each. Then list only the real executable
+signature mechanisms. Each mechanism must identify its primary product subject
+and selector; a decorative orbit, particle, label, or `aria-hidden` element
+cannot satisfy primary transformation salience. Hover cannot own a journey's peak or post-peak
+transformation. If the
+concept is a journey, process, or transformation, at least one mechanism must
+be scroll-authored and visibly transform content across stages; smooth scroll
+alone does not qualify. It is executable input and an accountability contract,
+not proof that the visual result is good.
 
-When video is allowed and Media plus Cinematic/Experimental is selected, the
-contract records one explicit decision: use video, use a frame sequence or
-pre-rendered motion, or obtain an approved exemption. Missing FFmpeg with
-installation permission produces an `ffmpeg-static` or equivalent install
-attempt, confirmed processing-provider route, or recorded high-fidelity
-fallback—not quiet omission.
+### 6. Build architecture
+
+Name the signature mechanism, semantic fallback, runtime ownership, component
+boundaries, asset pipeline, mobile transformation, accessibility behavior, and
+performance budget. Use a prototype only when its result can change the build.
+
+### 7. Review, risks, and decision
+
+List observable review passes, material risks, and fallbacks that preserve the
+concept. End with one editable decision line containing direction, review,
+prototype, treatments, references, sources, packages, and missing-content
+choices.
+
+Before completion, reconcile the rendered product against this current brief.
+Check every promised route, section role, treatment owner, signature mechanism,
+mobile transformation, preserved behavior, fallback, and chosen review pass.
+Do not call the work complete while an item is absent, imperceptible, replaced
+by a weaker substitute, or unverified. Continue correcting it or report the
+specific blocker and remaining scope.
+
+For Showcase, perform a below-hero comparison: inspect the route after its
+first major peak and reject completion if those sections could plausibly be the
+Efficient or ordinary Recommended direction. In the final response include two
+short disclosures:
+
+```text
+Showcase implementation attempted: <what visibly shipped>
+Independent visual verdict: awaiting user review
+Not pursued: <material advanced treatment rejected or replaced, and why>
+```
+
+Omit the second line only when no material treatment was considered, promised,
+rejected, downgraded, or replaced. Do not turn these lines into a ledger.
+Always ask the user to inspect the supplied rendered views and provide the
+independent visual verdict. Codex must not author, infer, store, or promote it.
+
+After the explicit Experience Map reply, implement. Do not generate another
+approval or contract gate. The prototype-review pause above and a small
+integrated experience checkpoint are the only exceptions.
+
+For Showcase and experience-led Recommended work, the integrated checkpoint
+shows only the primary peak, its most important downstream development or
+consequence, and their handoff at desktop and mobile. Ask whether their
+relative weight matches the accepted map before polishing the entire route.
+
+Every substantial final handoff ends with:
+
+```text
+Implementation complete; human taste verdict: awaiting user review
+```
+
+This applies to Efficient, Recommended, and Showcase. Technical completion is
+not human acceptance. Supply the rendered views, ask for the verdict, and do
+not call the design finished or taste-approved before the user replies.
+For an opted-in evaluation package, reconcile the decision record and final
+review with the delivered source and rendered result before completion.
