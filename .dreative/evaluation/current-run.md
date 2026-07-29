@@ -5,7 +5,7 @@
 
 ## Run identity
 
-- Commit or branch: `v.20.12` at `2b59de8`; redesign changes currently uncommitted
+- Commit or branch: `v.20.12`; checkpoint implementation commit `0cd163e`; final run commit pending
 - Baseline: `baseline`
 - Date: `2026-07-29`
 - User prompt: `"redesign this whole website"`
