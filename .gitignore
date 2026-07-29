@@ -1,8 +1,11 @@
 node_modules
 dist
+checkpoint-evidence/
 
 # Dreative creates working files and prototypes here. Keep them local by
 # default, but version the small reviewer-facing package below.
 .dreative/*
 !.dreative/evaluation/
 !.dreative/evaluation/**
+!.dreative/experience-map.json
+!.dreative/showcase-mechanism.json
