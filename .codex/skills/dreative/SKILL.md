@@ -17,17 +17,62 @@ artifact or a performance of following instructions.
    dependencies, audience, visual equity, and defects. If
    `.dreative/context.json` exists, validate and read it as fallible working
    memory; reconcile stale statements against the current product.
-2. For an open redesign, read `references/CREATIVE_DIRECTION.md`, privately
-   synthesize divergent project-native concepts, then use `PLAN.md` to show
-   Recommended, Efficient, and Showcase. If the user already chose or delegated
-   the decision, choose and continue.
-3. Resolve the compact review, reference, source, package, and prototype
-   choices. Treat the user's direction, settings, named treatments, and later
+   When changing Dreative itself or running a Dreative dogfood, read
+   `references/DOGFOOD_LESSONS.md` and `skills/learning.md` first. Update the
+   lesson record only for repeatable failures or later independently validated
+   corrections; never promote a same-run proposal to validated.
+2. For every open design or redesign, run the planning protocol in `PLAN.md`
+   before implementation: read `references/CREATIVE_DIRECTION.md`, privately
+   synthesize divergent project-native concepts, then show Recommended,
+   Efficient, and Showcase. Explicitly ask the user to choose. Do not infer a
+   choice from tone, prior defaults, schedule pressure, or a request to proceed;
+   do not auto-select Recommended. Only skip the direction question when the
+   user's current request explicitly names Efficient, Recommended, or Showcase.
+3. After direction selection, show the compact review, reference, source,
+   package, and prototype choices and explicitly ask the user to confirm the
+   recommended settings or list changes. This is a blocking gate before code
+   edits. In particular, never mark Prototype as Auto, Required, completed, or
+   skipped without showing that choice to the user first. Treat the user's
+   direction, settings, named treatments, and later
    corrections as binding; direction defaults fill only unspecified decisions. Never
    silently downgrade them for convenience, time, tokens, or implementation
    preference. Ask one focused question when uncertainty would materially alter
    a page's intensity, a selected treatment, the signature behavior, or scope.
-4. After direction and configuration are resolved, privately complete the full
+   When Prototype is selected and a prototype is actually produced, it creates
+   a third blocking gate: build both promised alternatives, capture the required
+   desktop/mobile stills and recordings, show them to the user, and stop. Do not
+   integrate either approach until the user explicitly selects one. The builder
+   cannot select for the user, and a general instruction to continue is not a
+   prototype choice.
+4. After configuration, present a compact, project-specific **Experience Map**
+   before editing code. Show every major page or section with Dreative's
+   recommended role, craft intensity from 1–5, simple journey rhythm
+   (`Rest`, `Build`, `Peak`, or `Release`), user agency (`Watch`, `Influence`,
+   or `Control`), and connection to the surrounding journey. Intensity is the
+   section's quality and transformation ambition, not an instruction to keep it
+   moving. A user may choose 5 for every section while Dreative preserves one
+   clear Peak through the rhythm field. Lead with `Use Dreative's recommended approach`; let the user change
+   a row with `more animated`, `calmer`, `change layout`, `change interaction`,
+   `keep static`, or a plain-language instruction. Add one to three targeted
+   recommendations about where more motion would strengthen the journey and
+   where it would create competition. Ask the user to confirm the recommended
+   map or list changes. This is the concrete design proposal, not another set of
+   abstract global dials.
+5. Compile the accepted map into the obligations defined by
+   `schemas/experience-map.schema.json`: section role, input state, visible
+   start and end states, mechanism owner, connection, desktop behavior, mobile
+   behavior, reduced-motion behavior, and evidence target. Intensity-5 rows
+   additionally name a real selector, trigger, owned properties, and meaningful
+   outcome so rendered verification can exercise the promise. Treat an all-5
+   map as flagship craft everywhere, not maximum energy everywhere. Exactly one
+   row owns the Peak rhythm, and Showcase includes at least one Control row.
+   The schema makes
+   promises traceable; it is not an approval artifact and does not prove taste.
+   Let architecture fit the promised complexity; do not impose a generic scene
+   registry, timeline controller, or folder structure.
+6. Only after the user has explicitly resolved direction, configuration, and
+   Experience Map,
+   privately complete the full
    project-specific Creative Decision Brief defined in `PLAN.md`. Always create
    and use this working blueprint even when the user does not ask to see it;
    update it when repository or prototype evidence changes. State only a short
@@ -40,24 +85,41 @@ artifact or a performance of following instructions.
    as an explicit opt-in review contract: read it and update its designated
    current-run decision record with the prompt, selected direction, concise
    rationale, implementation promise, and later material decision changes.
+   Identify the exact current branch and commit (or explicitly say `uncommitted`
+   until one exists), and update them after the final commit. Treat only files
+   designated by that README as evaluator input. Legacy `.dreative` critic,
+   verify, certification, trace, or evidence files are not current evidence;
+   remove stale untracked copies before handoff so they cannot be mistaken for
+   the submitted build.
    Record inspectable conclusions, never hidden chain-of-thought, private
    exploration, raw transcripts, or discarded scratch work.
-5. Read `references/CREATIVE_EXECUTION.md` before adding an advanced runtime.
+7. Read `references/CREATIVE_EXECUTION.md` before adding an advanced runtime.
    Load only the relevant specialty and zero or one relevant native foundation initially. Zero is valid;
    add another only when a separate named mechanism genuinely requires it. Prototype only a
    central, uncertain mechanism whose result could change the build.
-6. Finish the real route, including post-hero sections and mobile composition.
+8. Finish the real route, including post-hero sections and mobile composition.
    Implement every selected treatment in its named section or state and make
    its contribution perceptible. Preserve required behavior and fix scoped
    defects. Before materially changing the brief, ask the user unless they
    explicitly delegated the decision; technical fallbacks must preserve the
    chosen concept and delivery direction.
-7. Read `references/VISUAL_REFINEMENT.md`. Inspect screenshots of the rendered
+9. For Showcase and other experience-led builds, pause after the primary peak,
+   its most important downstream development, and their connecting handoff work
+   at desktop and mobile. Show this small integrated checkpoint to the user and
+   ask whether the experiential distribution matches the accepted map before
+   polishing the full route.
+10. Read `references/VISUAL_REFINEMENT.md`. Inspect screenshots of the rendered
    full page at desktop and 390px, exercise the primary journey and motion
    states, correct visible failures, and recapture the affected and full-page
    views. DOM or accessibility snapshots do not replace pixel inspection. Run production
    build plus existing test/typecheck/lint scripts. Substantial work requires
-   `dreative finalize --codex` to print `DREATIVE_FINALIZED`. Compare the final
+   `dreative finalize --codex --profile <direction> --visual-smoke-url <preview-url>`
+   to print `DREATIVE_CHECKS_PASSED`. Showcase contracts and the required
+   project-local Experience Map must be portable tracked files; ignored,
+   untracked, missing, absolute-machine, or inline-only evidence blocks
+   completion. Visual smoke is mandatory for every
+   substantial delivery and Showcase additionally requires an executable
+   connected-experience contract with artifact-backed prototype evidence. Compare the final
    product against the current brief and user choices. Claim completion only
    when every promised route, section, treatment, behavior, and review pass is
    implemented and verified; otherwise continue or report the exact blockers.
@@ -69,15 +131,90 @@ artifact or a performance of following instructions.
    package's size and naming rules. Never create or accumulate evaluation files
    in projects that did not opt in, and never route prototypes, bundles, caches,
    traces, browser profiles, or raw evidence into the review package.
+   Report builder-observed facts and limitations only; never award the build a
+   reviewer verdict or self-authored Pass. Every substantial design delivery,
+   regardless of direction, ends as `Implementation complete; human taste
+   verdict: awaiting user review`. Ask the user to inspect the rendered desktop,
+   mobile, and relevant motion views. Do not call the product accepted,
+   finished, Showcase-quality, or taste-approved until the user replies with
+   that verdict; technical checks may be complete while taste acceptance is not.
 
 For Showcase, the delivered route must be visibly and structurally distinct
 from Recommended. A conventional long page with one isolated spectacle does
 not fulfill the highest-ceiling promise. In the final response state
-`Showcase ceiling delivered:` followed by the concrete mechanisms, media, and
-distributed experience that actually shipped. Also state `Not pursued:` for
+`Showcase implementation attempted:` followed by the concrete mechanisms,
+media, and distributed experience actually shipped, plus
+`Independent visual verdict: awaiting user review`. Always ask the user to
+inspect the supplied desktop, mobile, and motion views and provide the verdict.
+The builder contract has no verdict field: Codex must never generate, infer,
+persist, or promote this verdict, even when it believes the result passes.
+Also state `Not pursued:` for
 any materially considered or promised advanced treatment that was rejected,
 downgraded, or replaced, with the product or prototype reason. Do not list
 irrelevant technologies merely to prove they were omitted.
+
+Showcase must implement one connected experience system. At least one meaningful
+choice or transformation must propagate through three non-adjacent regions
+spanning before the central peak, the peak, and after it. Independent widgets
+arranged in sequence do not establish continuity. If a required prototype would
+lower the selected ceiling or abandon promised choreography or media, pause
+and obtain the user's consent before changing the brief.
+Before implementation, bind the difference from Recommended: state the
+Recommended baseline, at least two perceptible Showcase-only qualities, two
+product-native media opportunities with use/reject reasons, and the observed
+result of comparing **Best Fit** with a **Bold Alternative**. Both must be
+final-worthy, use the same real content, receive the same desktop/mobile
+coverage, and differ in experience or interaction model—not merely runtime,
+budget, or visual polish. Neither may be a deliberately weaker strawman.
+Both alternatives require inspectable routes or files plus desktop and mobile
+captures and short desktop/mobile motion recordings; prose written by the
+builder is not prototype evidence. Each alternative also requires a compact
+full-page continuity storyboard showing visibly ordered hero, Peak, and
+post-Peak consequence regions plus a rendered full-page capture; an isolated
+interaction prototype is not evidence of the route's complete arc.
+The recordings support human comparison;
+the prototype routes remain executable verification targets.
+The builder may record only a `builderSelectionRationale`, which is an
+inspectable assertion and never an independent review or quality verdict.
+"It works" is not proof that either option is final-worthy.
+
+Record the executable contract using `schemas/showcase-mechanism.schema.json`.
+Prototype evidence records `selectedBy: "user"`; builder selection is invalid.
+Name the selected prototype subject and integrated subject plus the focal scale,
+copy balance, control placement, material/lighting, and desktop/mobile framing
+that caused the selection. Final smoke checks structural focal preservation; it
+does not require pixel-identical screenshots or prevent intentional evolution.
+Name the shared state, its source selector, and at least three affected region
+selectors across `before`, `peak`, and `after`, with the concrete effect in each.
+Also record each real signature mechanism with its stage, selector, primary
+product subject and selector, trigger, experience role, media mode, mobile
+transformation, and meaningful outcome. Each mechanism must also state the
+product truth it communicates, the user or system cause, the visible change,
+the resulting user decision, and what meaning would be lost if removed. Remove
+or redesign automatic loops whose removal changes neither understanding nor
+task outcome. Decorative or `aria-hidden` elements
+cannot be named as the primary subject.
+These semantic fields are structured review prompts, not deterministic proof.
+Browser checks can prove that material states change; human review still decides
+whether the change is meaningful, coherent, or tasteful.
+The mechanism list is evidence routing, not a required widget count. Hover is a
+supporting state: it cannot own the peak or post-peak mechanism in a journey.
+When the premise is a journey, process, or transformation,
+declare it as `journey` and include a substantial scroll-authored mechanism.
+Smooth scrolling alone does not qualify. Bucketed text/class replacement alone
+is not a flagship transformation. A scroll mechanism whose sampled differences
+are fully explained by text, opacity, color, filter, or uniform scale is
+rejected. Interface-style products may declare
+`interface` and use a different continuous interaction structure. Final visual
+smoke exercises each trigger on desktop, 390px, and 320px mobile, samples text
+collisions through the route, and observes a visible geometry, style, media,
+content, or state change. A written `mobileTransformation` promise does not
+pass when the actual mobile mechanism is static or missing.
+Scroll-authored mechanisms are exercised with slow, normal, and rapid wheel
+input, then in reverse. The key state must remain stable for at least 400ms
+after input settles,
+and the subject must release cleanly before the following section enters. A
+state-count pass alone does not prove readable choreography.
 
 Before relying on the rendered correction loop, distinguish Playwright package
 presence, browser executable detection, and a verified browser workflow. When
@@ -100,6 +237,11 @@ hierarchy, material, transition logic, interaction—not a complete house style.
 Prefer two to four cross-domain sources. Never lift one source's combined type,
 palette, composition, and signature motion. Never design “X-like.” GSAP and
 Lenis are capabilities, not aesthetics.
+Record whether each reference and asset came from explicit user requirements or
+from the design direction. A user-required item must appear visibly in the
+result, or be rejected only after the user explicitly approves that rejection.
+General permission to source media is not an explicit requirement to use a
+particular item.
 
 Commit to one concept fingerprint:
 
@@ -122,6 +264,22 @@ Choose mechanisms after the concept:
 - Canvas/shaders for bounded procedural behavior the DOM cannot deliver.
 - Sourced/generated media when it materially strengthens art direction.
 
+For Showcase, make an explicit focal-asset decision for the hero, Peak, and
+major post-Peak subject. Record whether each is supplied, sourced, generated,
+licensed 3D, a pre-rendered sequence, procedural, or absent, plus its real
+source/file, rights status, treatment, crop, animation technique, and mobile
+fallback. A realistic physical product, machine, character, or material must
+evaluate external media before procedural DOM/CSS/SVG fabrication. Procedural
+fabrication is allowed only when its recorded artistic advantage is stronger
+than the external options—not because it is faster, familiar, cheaper, or
+easier. If the chosen ceiling requires an unavailable sourcing, editing, model,
+render, or sequence capability, expose the capability gap and ask for a tool,
+asset, or user-approved direction change instead of silently approximating it.
+Local and generated source records must exist inside the repository and be
+tracked; remote sources must load; inline sources must resolve in the rendered
+route. `none` source/medium states and
+licensed-3D medium declarations must be internally consistent.
+
 Treat Native Foundations as baseline implementation skeletons, not preferred
 substitutes for mature specialist runtimes. Use one only when it fully
 satisfies the selected mechanism's visual, interaction, performance, and
@@ -139,6 +297,12 @@ Reject generic machinery: arbitrary particles, floating spheres, default
 smooth scroll, shader wallpaper, permanent cursor followers, telemetry
 overlays, endless fade-ups, and 3D that behaves like a flat image.
 
+Use external systems in four roles only: reference sources, accessible
+primitives, motion-recipe candidates, and runtime engines. For copied or
+installed code, record source, license, dependencies, bundle cost,
+accessibility status, intended section, required customization, and concept
+fit. A component or library never qualifies as the concept.
+
 ## Quality floor
 
 Every section needs a job, readable hierarchy, intentional spacing, and an
@@ -147,10 +311,36 @@ retain a concept-bearing relationship through continuity, an evolving visual
 variable, meaningful tactile state, media treatment, or authored handoff;
 default layout is not authored rest. Keep the primary task obvious.
 
+Do not concentrate nearly all experiential weight in one isolated set-piece.
+Inspect the route as a sequence and require a meaningful development,
+consequence, or resolution outside the primary peak when the page length and
+concept warrant it. Automated intensity counts may flag a lopsided map, but
+they are advisory: captured states, visual inspection, user feedback, and a
+real refinement decide whether the journey feels balanced.
+
+Every prominent decorative line, grid, overlay, shape, persistent element, or
+visual motif must have a perceptible role in product meaning, hierarchy,
+interaction, or continuity. If its role cannot be explained in one concrete
+sentence from the rendered experience, remove or redesign it.
+
+Do not reuse the same hero-grade image, wallpaper, render, or visual
+composition across major sections unless the repetition expresses intentional
+continuity or transformation. Reused media must visibly evolve in crop, state,
+material, meaning, or interaction; otherwise use a distinct asset or
+composition.
+
 Reject polished-hero/weak-body delivery, generic card repetition, illegible
 microtype, empty viewport gaps, content-covering canvases, clipped controls,
 broken sticky releases, accidental overflow, repeated/placeholder assets,
 fabricated claims, broken glyphs, and desktop merely stacked on mobile.
+Product-comparison layouts must preserve identity and predictable spacing.
+Every Showcase declares at least one comparison region with stable item
+identities, reordering policy, maximum travel and resize, real gap and alignment
+tolerances, and any selected-item prominence allowance. Prominence may change,
+but wholesale reshuffling that
+forces visitors to re-find every item is not an acceptable default.
+Gap checks group items into rows and columns and compare adjacent neighbours
+only; non-adjacent card distance is not a gutter.
 
 At 390px reconsider order, crop, density, type scale, controls, sticky behavior,
 and motion. Check 320px when density risk exists. Preserve keyboard, touch,
@@ -169,11 +359,13 @@ does not mean that code was written or the build passed.
 Do not create plan YAML, approval hashes, attestations, provenance, evidence
 ledgers, certification artifacts, or mandatory critic loops. Do not narrate
 checklist compliance as a substitute for editing code or correcting the
-rendered interface. `DREATIVE_FINALIZED` certifies commands only, not taste.
+rendered interface. `DREATIVE_CHECKS_PASSED` certifies commands only, not taste.
 
 ## Resource routing
 
 - Open redesign or external reference: `references/CREATIVE_DIRECTION.md`
+- Dreative dogfood or workflow change: `references/DOGFOOD_LESSONS.md` and `skills/learning.md`
+- Named adoption list or library/reference comparison: `references/REFERENCE_ADOPTION.md`
 - Advanced runtime: `references/CREATIVE_EXECUTION.md`
 - Relevant craft only: `skills/<name>.md`
 - Rendered correction loop: `references/VISUAL_REFINEMENT.md`

@@ -1,9 +1,11 @@
 # Planning protocol
 
-Planning has two required user-facing stages—direction and compact
-configuration—plus an optional reveal of the detailed Creative Decision Brief.
+Planning has three required, blocking user-facing stages—direction, compact
+configuration, and the Experience Map—plus a blocking prototype review whenever Prototype is selected
+and produced, and an optional reveal of the detailed Creative Decision Brief.
 The reveal is optional; creating and using the complete private brief is not.
-Keep private exploration private.
+Keep private exploration private. Do not edit implementation files until all
+three stages have an explicit user response. Never silently apply recommended settings.
 
 ## Stage 1: direction
 
@@ -41,6 +43,10 @@ End with:
 > **show detailed plan**.
 
 If the user asks for detail before choosing, expand Recommended by default.
+This expands information only; it does not select Recommended. Wait for the
+user's explicit direction choice. A general instruction such as "go ahead,"
+"redesign it," or "use your judgment" is not a direction choice unless it
+explicitly authorizes choosing among the three options.
 
 ## Stage 2: compact configuration
 
@@ -49,6 +55,12 @@ recommendations. End with:
 
 > Reply **use recommended settings** or list any changes. Say **show detailed
 > plan** for the full project-specific Creative Decision Brief.
+
+Wait for the reply. Do not treat the displayed recommendations as accepted
+until the user says `use recommended settings` or explicitly supplies their
+choices. The prototype choice must always appear and be confirmed; for
+Showcase, clearly state that `Required` means prototyping the riskiest signature
+mechanism before integrating the route.
 
 ### Review depth
 
@@ -73,6 +85,9 @@ Efficient uses supplied references only. Recommended uses supplied material or
 a small cross-domain scout. Showcase uses supplied material plus two to four
 strong references from different domains. Extract principles; never reproduce
 a reference's complete visual fingerprint.
+Mark each adoption as user-required or direction-recommended. A user-required
+reference must be visibly implemented, or rejected only after the user
+explicitly approves the rejection.
 
 ### Sources
 
@@ -83,6 +98,9 @@ a reference's complete visual fingerprint.
 
 Efficient defaults to existing assets. Recommended chooses best-fit media.
 Showcase permits maximum useful sourced/generated imagery, video, and 3D.
+Mark specific user-requested assets as user-required. They must ship visibly,
+or be rejected only after the user explicitly approves the rejection. Broad
+permission to source media does not make every possible asset user-required.
 
 ### Packages
 
@@ -101,9 +119,45 @@ capabilities are necessary for the selected experience.
 
 Defaults: Efficient=Skip, Recommended=Auto, Showcase=Required.
 
-## Stage 3: private Creative Decision Brief and optional reveal
+If Auto results in a prototype, or Required is selected, implementation pauses
+after both alternatives and their desktop/mobile captures and recordings exist.
+Show them together as **Best Fit** and **Bold Alternative** and ask the user to
+select one. Both must be honest final candidates with shared content, equivalent
+desktop/mobile coverage, and distinct interaction models. A lower-risk option
+must not be lower-quality by design. Do not integrate, self-select, or treat silence/general permission as
+a choice. Record the resulting selection as `selectedBy: "user"`.
 
-After direction and configuration are resolved, always complete this entire
+## Stage 3: editable Experience Map
+
+After configuration, turn the recommended concept into a short section-level
+proposal the user can understand without design or animation terminology.
+Include every major page or section, Dreative's recommended role, craft
+intensity from 1–5, a plain journey rhythm (`Rest`, `Build`, `Peak`, or
+`Release`), user agency (`Watch`, `Influence`, or `Control`), and its connection
+to the surrounding journey. Explain once that 5 means flagship craft and a
+meaningful transformation where appropriate; it does not mean continuous or
+maximal animation. Users may choose 5 everywhere while the route retains one
+Peak and deliberate quiet sections. Add one to three
+targeted recommendations explaining where stronger treatment will help and
+where it would create competition.
+
+End with:
+
+> Reply **use Dreative's recommended approach** or name section changes:
+> **more animated**, **calmer**, **change layout**, **change interaction**,
+> **keep static**, or add an instruction.
+
+Wait for the reply. After acceptance, privately compile every row into
+`schemas/experience-map.schema.json`: role, input state, visible start and end
+states, mechanism owner, connection, desktop, mobile, reduced-motion, and
+evidence target. This working map is a promise-to-implementation bridge, not an
+approval receipt or a claim of visual quality. Journey-balance arithmetic is
+advisory and must lead to screenshot comparison, not a taste score.
+This is the user's concrete design decision, not a second approval artifact.
+
+## Stage 4: private Creative Decision Brief and optional reveal
+
+After direction, configuration, and the Experience Map are resolved, always complete this entire
 project-specific brief privately before implementation. It is the working
 blueprint for section allocation, treatments, assets, signature mechanisms,
 continuity, mobile transformation, runtime ownership, fallbacks, and review.
@@ -117,6 +171,11 @@ the alternatives considered at a summary level, selection reasons, promises,
 and material later changes with their triggers. Do not expose chain-of-thought,
 private exploration, raw conversation, or scratch notes. This handoff reports
 decisions; it does not replace the private brief or become an approval gate.
+Record the exact branch and commit, updating `uncommitted` after the final
+commit. Only paths named by the local evaluation README belong to the handoff;
+remove stale untracked legacy critic, verification, certification, trace, and
+evidence artifacts rather than allowing an evaluator to confuse them with the
+current build.
 
 Do not require the user to read or approve it. By default, show only the short
 build brief required by `SKILL.md`, including this compact execution map:
@@ -180,10 +239,46 @@ For each relevant treatment, state the project-specific use, selected/declined
 decision, cost, risk, and insufficient version. Then map the selected treatments
 to route sections, including a meaningful post-hero peak and the continuity
 owner. User-selected treatment names or counts override direction defaults. UX and
-Mobile always apply. Showcase may use any treatment but has no minimum treatment
-count. Selection is a delivery promise, not checkbox coverage: every
+Mobile always apply. Showcase may use any treatment but has no minimum technology
+count. It requires one connected experience system: a meaningful choice or
+transformation must propagate through at least three non-adjacent regions across
+the pre-peak, central peak, and post-peak experience. Static grids, isolated
+widgets, and thematic labels do not count.
+Selection is a delivery promise, not checkbox coverage: every
 selected treatment needs a named owner and perceptible contribution, although
 one coherent mechanism may serve several treatments.
+
+Start from the accepted Experience Map. Preserve every row's role and intensity
+intent while privately adding executable states, owners, handoffs, responsive
+forms, fallbacks, and evidence targets. Do not force a generic architecture.
+
+For Showcase, write the compact JSON contract defined by
+`schemas/showcase-mechanism.schema.json`. Bind the Recommended baseline, at
+least two perceptible Showcase-only differences, two concrete product-native
+media opportunities and their use/reject reasons, and an observed comparison
+between one final-worthy Best Fit prototype and one final-worthy Bold
+Alternative. Reference actual prototype routes or files and desktop/mobile captures for both,
+plus short desktop/mobile motion recordings for human comparison; self-authored
+prose is not evidence. Record any selection explanation only as a
+non-authoritative `builderSelectionRationale`; never call it a reviewer decision.
+Name one shared state, its source selector,
+and at least three affected selectors across `before`, `peak`, and `after`, with
+the concrete downstream effect in each. Then list only the real executable
+signature mechanisms. Each mechanism must identify its primary product subject
+and selector; a decorative orbit, particle, label, or `aria-hidden` element
+cannot satisfy primary transformation salience. Hover cannot own a journey's peak or post-peak
+transformation. If the
+concept is a journey, process, or transformation, at least one mechanism must
+be scroll-authored and visibly transform content across stages; smooth scroll
+alone does not qualify. It is executable input and an accountability contract,
+not proof that the visual result is good.
+
+For every major mechanism, record five semantic-motion answers: product truth,
+cause, visible change, decision consequence, and removal cost. A Showcase
+journey must include at least one `Control` chain where a user action changes
+the primary subject and a downstream recommendation, configuration, content
+state, or task outcome. Color, labels, and decorative geometry alone do not
+qualify as the downstream decision.
 
 ### 6. Build architecture
 
@@ -211,13 +306,33 @@ Efficient or ordinary Recommended direction. In the final response include two
 short disclosures:
 
 ```text
-Showcase ceiling delivered: <what visibly shipped>
+Showcase implementation attempted: <what visibly shipped>
+Independent visual verdict: awaiting user review
 Not pursued: <material advanced treatment rejected or replaced, and why>
 ```
 
 Omit the second line only when no material treatment was considered, promised,
 rejected, downgraded, or replaced. Do not turn these lines into a ledger.
+Always ask the user to inspect the supplied rendered views and provide the
+independent visual verdict. Codex must not author, infer, store, or promote it.
 
-After the reply, implement. Do not generate a second approval or contract gate.
+After the explicit Experience Map reply, implement. Do not generate another
+approval or contract gate. The prototype-review pause above and a small
+integrated experience checkpoint are the only exceptions.
+
+For Showcase and experience-led Recommended work, the integrated checkpoint
+shows only the primary peak, its most important downstream development or
+consequence, and their handoff at desktop and mobile. Ask whether their
+relative weight matches the accepted map before polishing the entire route.
+
+Every substantial final handoff ends with:
+
+```text
+Implementation complete; human taste verdict: awaiting user review
+```
+
+This applies to Efficient, Recommended, and Showcase. Technical completion is
+not human acceptance. Supply the rendered views, ask for the verdict, and do
+not call the design finished or taste-approved before the user replies.
 For an opted-in evaluation package, reconcile the decision record and final
 review with the delivered source and rendered result before completion.
