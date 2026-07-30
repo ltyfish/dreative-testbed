@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.4.2",
   "target": "codex",
-  "installedAt": "2026-07-30T05:31:49.908Z",
+  "installedAt": "2026-07-30T12:06:01.629Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -19,11 +19,11 @@
   "explicitAll": false,
   "files": {
     "agents/openai.yaml": "4740ca8b8e9d4092026d1c89109af14da228295801c81fdf97e124f29656c4eb",
-    "frameworks/nextjs.md": "71e3be2691576c2eece3c03430d07a7a28bfa7dce36d094a67661ed0cb19dca3",
-    "frameworks/react-vite.md": "36d0ac84cbcb408588e27f6c47e2731edebdcc1965b4268d5015c61a5f7bd225",
-    "frameworks/styling.md": "7edbcb063e426e307a879decdaeebe98af493b4e323556ab2e76da6cabe3a1c4",
-    "frameworks/sveltekit.md": "96e134e62454d2aac31da16bc8a4c6c8cb02f9c586ac7b2f7847bcf653a82f0c",
-    "frameworks/vue-nuxt.md": "38544b0e1f3f8917c0e832502567b8820ebbc06a9f5ccd51789387f99044be0a",
+    "frameworks/nextjs.md": "7b555b5d9d0e409a2a8833a43b48a9062f6c6f7b8a5966601ccbcea49d1e7c50",
+    "frameworks/react-vite.md": "2f62116954dd44036d360ecd768636f0b26c2f80759ab393f91379a9430d4605",
+    "frameworks/styling.md": "da3b685ad7dfa19fade81f1b4fb152181b0159fbf435e16520a1c08c799405cd",
+    "frameworks/sveltekit.md": "684e49573f3c6b128358a2c02cb3b49dfefb494dd4f583f0c49888c5a224d78d",
+    "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "2008b6a118283e3269b69ccd0654344240aa2a5dbc6b6829ef647da21aea431a",
     "PLAN.md": "b70b026afc8f3a9f14594f67d424b2a8adaeb716d3de7bf9c96714d3d733f42d",
     "references/ASSET_PIPELINES.md": "f3a71f3e433924d42cb8163f3186edb693f144bc3ac1cd6a001310bf407d234b",
@@ -55,5 +55,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "a80e9ac39c912c197ad086d2c31497b03d7cf66f878507a47cb1525024951de4"
+  "manifestHash": "3da6e96febac933ec8ba3f34c452f0d7f636b7fe167fde93795138f8f6fb4027"
 }
