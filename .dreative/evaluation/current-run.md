@@ -4,7 +4,7 @@
 
 ## Run identity
 
-- Commit or branch: `codex/showcase-roast-redesign`
+- Commit or branch: `b9bda62`
 - Baseline: `baseline`
 - Date: `2026-07-30`
 - User prompt: `"redesign the whole website"` with later direction: `"showcase"` and craft override: `"all 5, heavy animated, rendered, image editing frame by frame ... modern and clean"`
