@@ -1,0 +1,412 @@
+{
+  "version": 2,
+  "experienceType": "journey",
+  "classification": {
+    "implementation": "attempted"
+  },
+  "recommendedBaseline": "A tactile editorial roast ledger with a flavor selector, stable six-bean catalogue, adapted brew recipe and subscription outcome.",
+  "showcaseDelta": [
+    "A 12-shot scroll-authored physical roast sequence shows hopper loading, sampling, drum release, bean cascade and cooling rather than representing development with labels alone.",
+    "The bright, round or deep flavor choice propagates from the hero through bean emphasis, live brew values and the monthly subscription pairing."
+  ],
+  "mediaOpportunities": [
+    {
+      "opportunity": "Full 1962 Probat roast process",
+      "decision": "use",
+      "rationale": "The machine and batch transformation are the clearest physical expression of Northwind's small-batch freshness claim."
+    },
+    {
+      "opportunity": "Farm landscape photography",
+      "decision": "reject",
+      "rationale": "Generic origin scenery would compete with the product-native machine sequence and require unverifiable farm-specific rights and identities."
+    }
+  ],
+  "referenceAdoptions": [],
+  "assetCommitments": [
+    {
+      "role": "Hero machine context",
+      "stage": "hero",
+      "subjectKind": "realistic-physical",
+      "decision": "use",
+      "requiredBy": "direction",
+      "targetSelector": ".hero-machine",
+      "medium": "image",
+      "productionSource": "generated",
+      "sourceKind": "local-file",
+      "sourceRef": "src/assets/roast-frames/frame-03.png",
+      "rights": "Generated for this project with the built-in image generation tool.",
+      "treatment": "Low-opacity full-machine presence behind the flavor decision.",
+      "crop": "Full 16:9 machine with all edges retained.",
+      "animationTechnique": "GSAP hero entrance and profile-linked frame swap.",
+      "mobileFallback": "Omitted from the hero so the decision and type retain clarity; the full machine appears in the roast section.",
+      "externalEvaluation": "Compared against a prior narrow bean-tray sprite; the full-machine source corrected destructive cropping.",
+      "rationale": "Introduces the actual instrument that fulfills the same-day roast promise."
+    },
+    {
+      "role": "Primary roast transformation",
+      "stage": "peak",
+      "subjectKind": "realistic-physical",
+      "decision": "use",
+      "requiredBy": "user",
+      "targetSelector": ".roast-pin .machine-frame",
+      "medium": "image",
+      "productionSource": "pre-rendered-sequence",
+      "sourceKind": "local-file",
+      "sourceRef": "src/assets/roast-frames/frame-00.png",
+      "rights": "Generated and edited frame by frame for this project with the built-in image generation tool.",
+      "treatment": "Twelve stepped photographic states in src/assets/roast-frames driven by a pinned scroll timeline.",
+      "crop": "Desktop 16:9 and mobile 4:3 contain framing preserve the complete machine.",
+      "animationTechnique": "GSAP ScrollTrigger maps scroll progress to distinct edited frames and synchronized mechanical copy.",
+      "mobileFallback": "Portrait composition stacks a fully contained machine above the current stage and readout.",
+      "externalEvaluation": "The user rejected two earlier crossfade prototypes; the selected replacement visibly changes hopper, trier, drum door, bean cascade and cooling arms.",
+      "rationale": "Makes the roast process understandable and materially animated without fantasy effects."
+    },
+    {
+      "role": "Tailored subscription consequence",
+      "stage": "post-peak",
+      "subjectKind": "graphic",
+      "decision": "use",
+      "requiredBy": "direction",
+      "targetSelector": ".bag-stage",
+      "medium": "svg",
+      "productionSource": "procedural",
+      "sourceKind": "local-file",
+      "sourceRef": "src/App.jsx",
+      "rights": "Original project code.",
+      "treatment": "Two physical ledger-like bag planes assemble around the chosen coffee and counterpoint.",
+      "crop": "Both bag identities remain visible on desktop and mobile.",
+      "animationTechnique": "GSAP staged translation and rotation entrance.",
+      "mobileFallback": "Narrower bags with reduced rotation avoid viewport clipping.",
+      "externalEvaluation": "Mobile screenshot correction reduced the second bag width and rotation after clipping was observed.",
+      "rationale": "Turns the upstream flavor choice into a concrete recurring-order recommendation."
+    }
+  ],
+  "prototypeEvidence": {
+    "bestFitApproach": "Scroll-authored 12-shot mechanical roast timeline.",
+    "boldAlternativeApproach": "Operator-controlled 12-shot machine advance.",
+    "selectedApproach": "Scroll-authored 12-shot mechanical roast timeline.",
+    "selectedBy": "user",
+    "bestFitArtifact": "/prototype/best",
+    "boldAlternativeArtifact": "/prototype/bold",
+    "bestFitCaptures": {
+      "desktop": "checkpoint-evidence/prototype/mechanical-v2-desktop-drop.png",
+      "mobile": "checkpoint-evidence/prototype/mechanical-v2-mobile-drop.png"
+    },
+    "boldAlternativeCaptures": {
+      "desktop": "checkpoint-evidence/prototype/operator-sequence-desktop-sample.png",
+      "mobile": "checkpoint-evidence/prototype/operator-sequence-mobile-sample.png"
+    },
+    "bestFitRecordings": {
+      "desktop": "checkpoint-evidence/prototype/mechanical-v2-desktop.webm",
+      "mobile": "checkpoint-evidence/prototype/mechanical-v2-mobile.webm"
+    },
+    "boldAlternativeRecordings": {
+      "desktop": "checkpoint-evidence/prototype/operator-sequence-desktop.webm",
+      "mobile": "checkpoint-evidence/prototype/operator-sequence-mobile.webm"
+    },
+    "fullPageContinuityStoryboards": {
+      "bestFit": {
+        "artifact": "/prototype/best",
+        "capture": "checkpoint-evidence/prototype/mechanical-v2-desktop-drop.png",
+        "heroSelector": "#proto-hero",
+        "peakSelector": "#proto-peak",
+        "postPeakSelector": "#proto-post-peak"
+      },
+      "boldAlternative": {
+        "artifact": "/prototype/bold",
+        "capture": "checkpoint-evidence/prototype/operator-sequence-desktop-sample.png",
+        "heroSelector": "#proto-hero",
+        "peakSelector": "#proto-peak",
+        "postPeakSelector": "#proto-post-peak"
+      }
+    },
+    "comparisonParity": {
+      "bothFinalWorthy": true,
+      "sharedContent": true,
+      "sharedViewportCoverage": true,
+      "distinctInteractionModels": true
+    },
+    "builderSelectionRationale": "The scroll model binds process understanding to journey progression; final selection was made explicitly by the user."
+  },
+  "prototypeFidelity": {
+    "selectedArtifact": "/prototype/best",
+    "prototypeSubjectSelector": ".sequence-shell",
+    "integratedSubjectSelector": ".roast-pin .machine-frame",
+    "focalObject": "Complete 1962 Probat roaster and cooling tray.",
+    "copyBalance": "Mechanical stage title and one consequence sentence remain subordinate to the machine.",
+    "controlPlacement": "Natural page scroll controls the selected model; progress is visible at the viewport bottom.",
+    "materialLighting": "Near-black cast iron, brass, controlled studio light and realistic bean development.",
+    "desktopFraming": "Two-column stage with complete 16:9 machine.",
+    "mobileFraming": "Complete machine in a 4:3 contained frame above compact stage text."
+  },
+  "continuity": {
+    "stateKey": "profile",
+    "sourceSelector": "#hero",
+    "sourceTrigger": "click",
+    "stateCount": 3,
+    "affectedRegions": [
+      {
+        "selector": "#hero",
+        "stage": "before",
+        "effect": "Sets bright, round or deep as the visitor's desired cup."
+      },
+      {
+        "selector": ".bean-card.is-selected",
+        "stage": "peak",
+        "effect": "Highlights a stable bean identity without reordering the six-product comparison."
+      },
+      {
+        "selector": ".subscribe-section .tailored",
+        "stage": "after",
+        "effect": "Changes the named monthly lead coffee and paired counterpoint."
+      }
+    ]
+  },
+  "agencyChain": {
+    "controlSectionSelector": "#hero",
+    "inputSelector": "#hero",
+    "primaryResponseSelector": ".bean-card.is-selected",
+    "downstreamSelector": ".subscribe-section .tailored",
+    "userAction": "Choose a bright, round or deep flavor profile.",
+    "immediateResponse": "The recommended bean gains visible prominence while every product identity remains stable.",
+    "decisionOutcome": "The brew values and monthly subscription recommendation change to match the stated taste."
+  },
+  "comparisonLayouts": [
+    {
+      "selector": ".bean-grid",
+      "itemSelector": ".bean-card",
+      "identityAttribute": "data-bean",
+      "strategy": "fixed-grid",
+      "reorderMode": "none",
+      "maxTravelViewportRatio": 0.02,
+      "maxItemResizeRatio": 0.05,
+      "gapTolerancePx": 48,
+      "alignmentTolerancePx": 8,
+      "selectedIdentity": "ethiopia",
+      "selectedItemMaxScale": 1.05
+    }
+  ],
+  "mechanisms": [
+    {
+      "name": "Flavor continuity control",
+      "stage": "before",
+      "selector": "#hero",
+      "primarySelector": ".hero-copy",
+      "primarySubject": "Desired cup profile",
+      "trigger": "click",
+      "experienceRole": "Starts the connected journey with a useful taste decision.",
+      "ceilingContribution": "One choice changes three non-adjacent product regions.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Writes the shared profile state consumed by beans, brewing and subscription.",
+      "mobileTransformation": "Full-width vertical flavor rows remain touch-accessible.",
+      "recommendedDifference": "Showcase propagates the choice beyond card emphasis into downstream task outcomes.",
+      "meaningfulOutcome": "Visitors receive a bean and subscription recommendation matched to taste.",
+      "productTruth": "Northwind's six coffees span distinct taste and roast profiles.",
+      "userCause": "Visitor chooses bright, round or deep.",
+      "visibleChange": "Accent color, selected product, brew data and subscription pairing change.",
+      "decisionConsequence": "A concrete coffee and monthly pairing become actionable.",
+      "removalCost": "The route would lose its connected personalization and return to a static catalogue.",
+      "animationOwner": "react-state",
+      "ownedProperties": [
+        "profile state",
+        "selected bean",
+        "accent color",
+        "brew values",
+        "subscription pairing"
+      ],
+      "stateCount": 3
+    },
+    {
+      "name": "Roastery proof ledger",
+      "stage": "after",
+      "selector": "#story",
+      "primarySelector": ".proof-grid",
+      "primarySubject": "Northwind's farm, price, batch and shipping proof",
+      "trigger": "click",
+      "experienceRole": "Turns brand claims into an operational ledger.",
+      "ceilingContribution": "Overscale counters and a paper-to-machine material handoff distribute craft before the Peak.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Builds credibility between the hero promise and roast process.",
+      "mobileTransformation": "Proof resolves into a two-column ledger.",
+      "recommendedDifference": "Every proof point receives authored motion and material framing.",
+      "meaningfulOutcome": "Visitors understand why the freshness claim is credible.",
+      "productTruth": "Northwind works with 11 farms, pays 2.4 times commodity price, roasts 12 kg and ships within 24 hours.",
+      "userCause": "The section enters the viewport.",
+      "visibleChange": "Proof values count into a ruled ledger.",
+      "decisionConsequence": "The visitor can evaluate sourcing and freshness before shopping.",
+      "removalCost": "The claims would remain unsupported marketing copy.",
+      "animationOwner": "gsap",
+      "ownedProperties": [
+        "counter content",
+        "vertical position",
+        "opacity"
+      ],
+      "stateCount": 2
+    },
+    {
+      "name": "Stable bean comparison",
+      "stage": "after",
+      "selector": "#beans",
+      "primarySelector": ".bean-card[data-bean=\"ethiopia\"]",
+      "primarySubject": "Six current coffee lots",
+      "trigger": "click",
+      "experienceRole": "Keeps product identities stable while allowing focused comparison.",
+      "ceilingContribution": "A product-native tasting field responds to the shared flavor state.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Consumes the hero profile and supplies the subscription recommendation.",
+      "mobileTransformation": "A horizontal snap deck shows one complete bean at a time.",
+      "recommendedDifference": "Selection changes emphasis without reshuffling the catalogue.",
+      "meaningfulOutcome": "Visitors can compare and add any of six coffees.",
+      "productTruth": "Six distinct lots with real notes, roast levels and prices are available.",
+      "userCause": "The visitor clicks a bean card.",
+      "visibleChange": "One card gains material prominence while all identities remain in place.",
+      "decisionConsequence": "The chosen coffee becomes the downstream recommendation.",
+      "removalCost": "The personalized journey would not produce a purchasable product.",
+      "animationOwner": "react-state",
+      "ownedProperties": [
+        "selected state",
+        "card elevation",
+        "disc transform"
+      ],
+      "stateCount": 2
+    },
+    {
+      "name": "Twelve-shot roast journey",
+      "stage": "peak",
+      "selector": ".roast-journey",
+      "primarySelector": ".machine-frame",
+      "primarySubject": "The Probat and physical coffee batch",
+      "trigger": "scroll",
+      "experienceRole": "Shows how a green batch becomes same-day roasted coffee.",
+      "ceilingContribution": "Frame-edited physical mechanisms create the route's central transformation.",
+      "mediaMode": "image",
+      "continuityConnection": "Turns the earlier roast promise into evidence before the brew and subscription consequence.",
+      "mobileTransformation": "Machine stays fully contained above compact copy in a dedicated portrait stage.",
+      "recommendedDifference": "Recommended would use an interactive selector; Showcase makes the actual production process the primary journey.",
+      "meaningfulOutcome": "Visitors understand loading, development, sampling, release and cooling as one sequence.",
+      "productTruth": "Northwind roasts 12 kg batches on a 1962 Probat and ships within hours.",
+      "userCause": "The visitor scrolls forward or reverses through the process.",
+      "visibleChange": "Hopper, beans, sampling trier, drum door, cascade, agitator, temperature and phase all change.",
+      "decisionConsequence": "The freshness claim becomes credible enough to support purchase and subscription decisions.",
+      "removalCost": "The site would lose its strongest proof of process, scale and same-day freshness.",
+      "animationOwner": "gsap",
+      "ownedProperties": [
+        "image source",
+        "stage copy",
+        "temperature",
+        "phase",
+        "progress geometry"
+      ],
+      "stateCount": 5,
+      "minimumDwellMs": 400,
+      "releaseSelector": "#brew-guide"
+    },
+    {
+      "name": "Pour-over path",
+      "stage": "after",
+      "selector": "#brew-guide",
+      "primarySelector": ".brew-steps",
+      "primarySubject": "The four-step pour-over recipe",
+      "trigger": "click",
+      "experienceRole": "Translates the selected coffee into an executable brew ritual.",
+      "ceilingContribution": "A drawn water path connects live recipe values to four authored chapters.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Uses profile-specific ratio and grind after the roast Peak.",
+      "mobileTransformation": "The path becomes vertical between clear recipe chapters.",
+      "recommendedDifference": "The recipe visibly develops rather than appearing as four ordinary cards.",
+      "meaningfulOutcome": "Visitors know how to brew the coffee successfully.",
+      "productTruth": "Weight, fresh grinding, bloom and controlled pour determine the cup.",
+      "userCause": "The visitor scrolls through the recipe.",
+      "visibleChange": "The water path draws while step chapters enter.",
+      "decisionConsequence": "The visitor can execute a three-minute pour-over.",
+      "removalCost": "Product selection would not translate into preparation confidence.",
+      "animationOwner": "gsap",
+      "ownedProperties": [
+        "stroke dash offset",
+        "step position",
+        "step opacity"
+      ],
+      "stateCount": 2
+    },
+    {
+      "name": "Subscriber field notes",
+      "stage": "after",
+      "selector": "#reviews",
+      "primarySelector": ".review-stack",
+      "primarySubject": "Three subscriber experiences",
+      "trigger": "click",
+      "experienceRole": "Adds human proof after the instructional release.",
+      "ceilingContribution": "Overscale editorial notes create a deliberate secondary rise.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Bridges brew confidence to subscription.",
+      "mobileTransformation": "Each quote occupies a focused vertical chapter.",
+      "recommendedDifference": "Testimonials become authored evidence rather than repeated cards.",
+      "meaningfulOutcome": "Visitors see distinct reasons people value freshness and subscriptions.",
+      "productTruth": "Subscribers cite flavor discovery, fast delivery and gifting.",
+      "userCause": "Quotes enter the viewport.",
+      "visibleChange": "Number, quote and attribution resolve in sequence.",
+      "decisionConsequence": "Social proof reduces uncertainty before subscription.",
+      "removalCost": "The route would lack human evidence.",
+      "animationOwner": "gsap",
+      "ownedProperties": [
+        "vertical position",
+        "opacity",
+        "quote scale"
+      ],
+      "stateCount": 2
+    },
+    {
+      "name": "Monthly pairing decision",
+      "stage": "after",
+      "selector": "#subscribe",
+      "primarySelector": ".bag-stage",
+      "primarySubject": "The visitor's two-bag monthly recommendation",
+      "trigger": "click",
+      "experienceRole": "Resolves discovery into a recurring-order decision.",
+      "ceilingContribution": "The recommendation materializes as two product-like physical planes and a direct start action.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Uses the same profile and bean selected before the Peak.",
+      "mobileTransformation": "Reduced bag width and rotation preserve both identities without clipping.",
+      "recommendedDifference": "Showcase makes the choice visibly consequential after the central spectacle.",
+      "meaningfulOutcome": "A visitor can start a subscription that names their lead coffee and counterpoint.",
+      "productTruth": "Northwind offers two 250 g bags monthly for $29 with free shipping and pauses.",
+      "userCause": "The visitor activates the start-subscription action.",
+      "visibleChange": "The paired recommendation remains visible while focus moves to the contact action.",
+      "decisionConsequence": "The generic subscription becomes a specific, actionable recommendation.",
+      "removalCost": "The journey would end in spectacle without a downstream product consequence.",
+      "animationOwner": "native-js",
+      "ownedProperties": [
+        "navigation target",
+        "recommendation content"
+      ],
+      "stateCount": 2
+    },
+    {
+      "name": "Roastery message stamp",
+      "stage": "after",
+      "selector": "#contact",
+      "primarySelector": ".contact-form",
+      "primarySubject": "Direct contact with the two roasters",
+      "trigger": "click",
+      "experienceRole": "Closes the ledger with a real exchange.",
+      "ceilingContribution": "The final state becomes a stamped received record.",
+      "mediaMode": "dom-state",
+      "continuityConnection": "Returns to the timestamped ledger language introduced in the hero.",
+      "mobileTransformation": "Form precedes a full-width touch target and compact success stamp.",
+      "recommendedDifference": "Submission has a perceptible narrative resolution.",
+      "meaningfulOutcome": "Visitors can send a valid message and receive clear feedback.",
+      "productTruth": "The small team reads messages and replies within a day.",
+      "userCause": "The visitor submits a valid email and optional message.",
+      "visibleChange": "The form becomes a received stamp and confirmation.",
+      "decisionConsequence": "The visitor knows the message was accepted.",
+      "removalCost": "The route would lose its working human endpoint.",
+      "animationOwner": "react-state",
+      "ownedProperties": [
+        "form content",
+        "success stamp",
+        "status text"
+      ],
+      "stateCount": 2
+    }
+  ]
+}
