@@ -1,0 +1,46 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/editorial-longform__with__202608081241
+
+This is a single long-form essay on The Marginal, an independent publication about archives and records. It is currently set in plain default type. Redesign the reading experience so it is genuinely distinctive and worth shipping.
+
+Use the Dreative skill for this work. It is installed in this project.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The full essay text — every section heading and every paragraph, unabridged
+- The headline, standfirst, and byline with date and read time
+- The lede image and its caption
+- The pull quote
+- All three footnotes in the Notes section
+- The three related articles with titles, descriptions, and read times
+- The subscribe form with email field and its success state
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+The preview server is still running in the background (task `b2qdojkvy`, port 4176) — stop it whenever you like.
+
+## What shipped
+
+**Concept — "The ruled column."** The essay is about a form that produced restraint and a record that broke, so the page is built as a station logbook rather than as an article template.
+
+- **Palette with a source:** rag paper, admiralty chart blue-grey ruling (a faint fixed rule runs behind the whole sheet), iron-gall ink, and one signal red used *only* for the light and the missing decade.
+- **Type:** old-style serif at a 33.5rem measure, headline at ~4.75rem with the word "weather" in signal red; each section's opening line set in small caps instead of a drop cap; metadata in letterspaced grotesk small caps.
+- **Byline as log column headers:** `WRITTEN BY / FILED / LENGTH` in ruled cells — the required byline, date, and read time, unchanged in content.
+- **Marginal rail:** a left column carrying `Entry 01–04` stamps and a log datum per section. On phones it folds into an inline ruled stamp above each heading rather than stacking a dead column.
+- **Peak — the record itself:** after "What automation actually removed," a ledger of one stroke per year, 1849→2026, that draws in on scroll. 1988–1997 is a visibly empty, red-washed column. The essay's thesis is the graphic.
+- **Lede figure:** an engraved-plate SVG of the point, tower, and beam — ruled sky and broken chart-style sea lines. Caption preserved verbatim.
+- Related articles set as a numbered index list (not a three-card row); subscribe input is a ruled underline; success state is a stamped "Entered in the book" entry.
+
+**Preserved and verified in the render:** all four section headings and every paragraph unabridged, headline, standfirst, byline, lede image + caption, pull quote, all three footnotes, all three related items with descriptions and read times, the email form and its success state, and the four footer links.
+
+**Verified in a real browser** at 1440, 390, and 320px: zero horizontal overflow at all three, no console or page errors, subscribe success state exercised at each width, and reduced-motion renders the ledger fully drawn (`matrix(1,0,0,1,0,0)`). Two bugs found by pixel inspection and fixed: sticky rail stamps were piling up over the Notes, and the mobile masthead was eating three rows — links now scroll on one line.
+
+`npm run build` succeeds. Nothing committed.
+
+**Direction note:** I built **Recommended**. Showcase would have added a scroll-authored sequence carrying the ledger strokes through the whole route as continuity; I did not pursue it because you couldn't confirm the direction in this session, and a reading route is better served by the restrained version. **Not pursued:** external photography for the lede — no licensed asset was available offline, so I built a deliberate engraved plate rather than a fake photograph; if you have a real image of the point, it drops straight into `LedePlate`.
+
+Implementation complete; human taste verdict: awaiting your review — please look at the desktop and 390px renders, and scroll through the ledger.

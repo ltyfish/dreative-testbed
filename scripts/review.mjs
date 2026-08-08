@@ -12,6 +12,7 @@ import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
+import { findRoundForRun, syncVerdict } from './lib/archive.mjs'
 import { freePort, killTree } from './lib/capture.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
@@ -194,6 +195,12 @@ ${rows}
 **Summary:** ${record.summary || '—'}
 `
   fs.appendFileSync(path.join(ROOT, 'VERDICTS.md'), block, 'utf8')
+
+  // Put the verdict next to the designs it judges, so the archived round carries its own
+  // result instead of relying on gitignored runs/ or on VERDICTS.md being read in order.
+  const roundDir = findRoundForRun(record.runs.with) ?? findRoundForRun(record.runs.without)
+  if (roundDir) syncVerdict(body.scenario, roundDir)
+
   return record
 }
 

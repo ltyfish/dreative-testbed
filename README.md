@@ -9,17 +9,18 @@ The question this repo exists to answer is narrow and unforgiving:
 Everything here serves that one question. If the answer is no on a scenario, that is the
 most valuable output the testbed can produce.
 
-## The whole loop is two commands
+## The whole loop
 
 ```sh
-npm install                      # once
-npx playwright install chromium  # once
+node scripts/setup.mjs           # once per machine: deps, chromium, skill, then verifies
 
-node scripts/run-all.mjs         # 10 headless sessions, then screenshots
+node scripts/run-all.mjs 2       # 2 scenarios picked at random × 2 arms, then screenshots
 node scripts/review.mjs          # blind review UI at http://127.0.0.1:4321
+node scripts/archive.mjs         # every past round at http://127.0.0.1:4322
 ```
 
-`run-all.mjs` scaffolds ten isolated projects (five scenarios × two arms), spawns a
+The number is how many scenarios to run, chosen at random; leave it off for all five.
+`run-all.mjs` scaffolds one isolated project per scenario per arm, spawns a
 headless agent in each, waits for them, then builds and screenshots every result. **You do
 not write or paste a prompt.** The brief lives in each scenario's `scenario.json`, and the
 arm flips exactly one line of it:
@@ -34,25 +35,36 @@ what makes the comparison mean anything.
 ### Options
 
 ```sh
-node scripts/run-all.mjs --direction showcase                     # default recommended
-node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs   # subset
-node scripts/run-all.mjs --concurrency 5                          # default 3
-node scripts/run-all.mjs --model opus                             # default: your CLI default
-node scripts/run-all.mjs --agent codex                            # default claude
-node scripts/run-all.mjs --timeout 40                             # minutes per session, default 25
-node scripts/run-all.mjs --arms with                              # re-run one arm only
+node scripts/run-all.mjs 3                       # 3 random scenarios, Recommended
+node scripts/run-all.mjs 2 showcase              # …in the Showcase direction
+node scripts/run-all.mjs 5 random                # direction picked at random for the round
+node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs   # a named subset instead
+node scripts/run-all.mjs --concurrency 5         # default 3
+node scripts/run-all.mjs --model opus            # default: your CLI default
+node scripts/run-all.mjs --agent codex           # default claude
+node scripts/run-all.mjs --timeout 40            # minutes per session, default 25
+node scripts/run-all.mjs --arms with             # re-run one arm only
+node scripts/run-all.mjs --no-yolo               # scoped permissions instead of full bypass
+node scripts/run-all.mjs --no-archive            # do not write to archive/
 ```
 
-**`--direction` matters.** Dreative normally blocks on the user choosing Recommended,
-Efficient, or Showcase. Unattended there is nobody to ask, so it falls back to Recommended
-and you end up scoring a direction you did not pick. The flag states the choice up front;
-`--direction none` reproduces the old implicit behaviour. Compare like with like — a
-Showcase round against a control is a different question from a Recommended round.
+Both a bare number (how many scenarios) and a bare direction word work positionally, so a
+round is one short command. Anything you do not state falls back to: all five scenarios,
+the Recommended direction, `claude`, concurrency 3.
 
-Sessions run with `acceptEdits` and a scoped tool allowlist, so an agent can edit files in
-its own run directory and run the project's npm scripts without prompting. `--yolo` gives
-full bypass; it is not the default, because these are real agents on your machine even
-though each run directory is disposable.
+**Direction matters.** Dreative normally blocks on the user choosing Recommended,
+Efficient, or Showcase. Unattended there is nobody to ask, so it falls back to Recommended
+and you end up scoring a direction you did not pick. Stating it makes the round honest;
+`random` picks one per round, and `none` reproduces the old implicit behaviour. Compare
+like with like — a Showcase round against a control is a different question from a
+Recommended round.
+
+**Permissions.** Sessions run with full bypass and network access by default, so agents can
+look up references and install what they need instead of stalling on a prompt nobody is
+there to answer. Both arms get the same access — a control that cannot look anything up is
+handicapped in a way the comparison would wrongly credit to the skill. `--no-yolo` swaps in
+`acceptEdits` plus a scoped tool allowlist (still with web access). These are real agents on
+your machine, even though each run directory is disposable.
 
 Each session's transcript is written to `runs/<run>/agent.log`. A round of ten at
 concurrency 3 takes roughly 30–45 minutes; you can walk away.
@@ -81,6 +93,53 @@ failure is shown in place of the screenshots rather than hidden, because failing
 is a real result, and a page that rendered almost nothing is flagged with a capture warning
 instead of appearing as an unexplained white rectangle.
 
+## The archive
+
+`runs/` is disposable and gitignored — it holds `node_modules` junctions, absolute paths and
+half-built state, none of which survives a pull on another machine. At the end of every
+round, each run is copied into `archive/<round>/<scenario>/<arm>/`, which **is** committed:
+
+```
+archive/202608081241/
+  round.json                     agent, model, direction, session exit codes
+  editorial-longform/
+    scenario.json                the brief, as it stood that round
+    verdict.json                 written when you score it, next to the designs it judges
+    with/     without/
+      site/                      the built site, relative base, zero dependencies
+      src/ index.html BRIEF.md   what the agent actually wrote
+      shots/                     desktop, mobile, and dark if the design declares one
+      meta.json agent.log        run metadata and the transcript (tail)
+```
+
+```sh
+node scripts/archive.mjs         # http://127.0.0.1:4322
+```
+
+Browse every past round: screenshots side by side, the verdict table, the transcripts, and
+**Open site ↗** on each design, served straight from `archive/`. This works on a bare clone
+with nothing installed and nothing built — the archived sites carry no dependencies. Arms
+are labelled here; the archive is the record after the reveal, not another blind test.
+
+A round is about 1 MB per design, mostly full-page screenshots. Delete a round directory to
+drop it; nothing else refers to it.
+
+## Working across two machines
+
+```sh
+git pull
+node scripts/setup.mjs
+```
+
+`setup.mjs` installs dependencies, installs the Chromium build Playwright uses (it lives
+outside the repo, so it never comes across with a pull), installs the skill from a sibling
+`../Dreative` checkout or the global `dreative` CLI, checks an agent CLI is on PATH, and
+prints what is still missing. `--check` verifies without changing anything.
+
+The skill itself is deliberately **not** committed here: the `with` arm has to test whatever
+version of Dreative you are working on now, and a committed copy would silently test a stale
+one. Everything else — scenarios, verdicts, and the whole archive — travels with the repo.
+
 ## The five scenarios
 
 | Scenario | Field | What it tests |
@@ -101,7 +160,8 @@ and behaviour that are product requirements rather than design opinions.
 
 ## Rules that keep the result meaningful
 
-1. **Do not open the run directories before scoring.** The folder names give it away.
+1. **Do not open the run directories or the archive before scoring.** Both name the arm.
+   `review.mjs` is the only blind surface; `archive.mjs` is for after the reveal.
 2. **Score the control honestly.** A testbed that always confirms the skill works has
    stopped measuring.
 3. **Run more than one round.** Model output varies a lot; one pair is an anecdote.
@@ -122,6 +182,7 @@ and behaviour that are product requirements rather than design opinions.
 The `with` arm is only meaningful if the installed skill is the one you are testing:
 
 ```sh
+node scripts/setup.mjs --skill-from ../Dreative   # or, by hand:
 node ../Dreative/dist/cli/index.js install-skill --skills all --claude
 node ../Dreative/dist/cli/index.js install-skill --skills all --codex
 ```
@@ -131,15 +192,18 @@ node ../Dreative/dist/cli/index.js install-skill --skills all --codex
 ## Layout
 
 ```
-scenarios/<name>/   baseline App.jsx, styles.css, scenario.json (brief + preservation contract)
-_template/          shared Vite skeleton every run is built from
-runs/               one isolated real project per run, plus verdicts/ (gitignored)
-scripts/run-all.mjs orchestrator: scaffold → sessions → capture
-scripts/review.mjs  blind review server
-scripts/new-run.mjs scaffold a single run by hand
-scripts/capture.mjs recapture after a manual fix
-VERDICTS.md         the accumulating record
-EVALUATION.md       what each scoring criterion means
+scenarios/<name>/    baseline App.jsx, styles.css, scenario.json (brief + preservation contract)
+_template/           shared Vite skeleton every run is built from
+runs/                one isolated real project per run, plus verdicts/ (gitignored)
+archive/<round>/     committed record: sources, screenshots, verdicts, dependency-free sites
+scripts/setup.mjs    prepare a fresh machine, or --check an existing one
+scripts/run-all.mjs  orchestrator: scaffold → sessions → capture → archive
+scripts/review.mjs   blind review server
+scripts/archive.mjs  archive browser, works on a bare clone
+scripts/new-run.mjs  scaffold a single run by hand
+scripts/capture.mjs  recapture after a manual fix
+VERDICTS.md          the accumulating record
+EVALUATION.md        what each scoring criterion means
 ```
 
-Runs are disposable; the verdicts are the artefact worth keeping.
+Runs are disposable; the archive and the verdicts are the artefacts worth keeping.

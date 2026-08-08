@@ -1,7 +1,9 @@
 node_modules
 dist
 
-# Runs are disposable working copies. The verdicts are the artefact worth keeping.
+# Runs are disposable working copies: node_modules junctions, absolute paths, half-built
+# state — none of it survives a pull on another machine. `archive/` is the committed copy
+# that does, and it is deliberately NOT ignored.
 runs/*
 !runs/.gitkeep
 

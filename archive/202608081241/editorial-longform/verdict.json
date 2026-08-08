@@ -1,0 +1,22 @@
+{
+  "scenario": "editorial-longform",
+  "judgedAt": "2026-08-08T13:33:06.021Z",
+  "runs": {
+    "with": "editorial-longform__with__202608081241",
+    "without": "editorial-longform__without__202608081241"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "Tie",
+    "craft": "with",
+    "mobile": "with",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "this is better, tho it lacks animation and not really showcase i expect (unless u tell me this is default to recommended) its clean,nice and genuine impressive with graph animation etc",
+    "without": "The lighthouse image is soo bad omg, it looks like it generated itslef, it didnt outsource, find images, reference, or generally generate a good realistic one base on the themne. tbh i know this is definitely dreative, and is really bad. i mean other than the image, the rest look identical ish from the screenshot. but using live, there is minial animation, tho mroe than option A, but it seems easy animation liike enlarging etc. nothing crazy unlike A where there is a graph and it has its own animation, and idk why live is dark theme when the screenshot isnt"
+  },
+  "summary": "While the winner has cleaner style, archiecture, and colour and flow. it is quite static but there is unique animation whcih is cool, unlike the loser, its easy animation on scroll first, but has no unqiue animation or good ones, and the image is stupidly uigly. the best thing about the loser i guess is that it generall had more animations, tho i can be a good and bad thing"
+}

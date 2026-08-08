@@ -1,0 +1,44 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/editorial-longform__without__202608081241
+
+This is a single long-form essay on The Marginal, an independent publication about archives and records. It is currently set in plain default type. Redesign the reading experience so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The full essay text — every section heading and every paragraph, unabridged
+- The headline, standfirst, and byline with date and read time
+- The lede image and its caption
+- The pull quote
+- All three footnotes in the Notes section
+- The three related articles with titles, descriptions, and read times
+- The subscribe form with email field and its success state
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds; nothing committed.
+
+## What I did
+
+The essay is about a logbook, so I made the page one. Two files changed: `src/App.jsx` and `src/styles.css`.
+
+**The system**
+- **Paper and ink, one colour.** Warm ledger paper (`#f2efe7`), near-black ink, and a single accent — a signal-lamp amber — used only where it means something: section marks, active state, the drop cap, the quote marks. Full dark-mode variant via `prefers-color-scheme`.
+- **Ruled paper.** A fixed hairline rule grid at ledger pitch (1.8rem) behind everything, masked out at the top of the viewport so it never fights the headline.
+- **Two typefaces doing opposite jobs.** An old-style serif for the prose, and monospace for every piece of administrative apparatus — nav, byline, caption, notes numbers, read times, the form. That split *is* the essay's argument: feeling vs. the form.
+
+**The distinctive moves**
+- **A margin rail** (`src/App.jsx:104`) that keeps a running log of where you are: numbered sections, the active entry marked with an amber bar, and a vertical gauge with a live percentage. Sticky on desktop, dropped on mobile rather than crammed in.
+- **Marginalia** — a real log entry per section (`Vol. 1–41 / LH/2/44 / Wind, visibility, hours lit.`) that floats out into the true margin above 80rem and folds into an inset card below it. New content, in the voice of the source document.
+- **The lede image is drawn, not grey.** The placeholder became a CSS Ardnamurchan at dusk: horizon, sea, tower, and a 14-second conic beam sweep with the lamp flaring as it passes.
+- **Section marks** (`§ 01`) in their own column with a hairline, sections fading up once on first view via IntersectionObserver, a three-line amber drop cap opening the essay, and a top progress filament that reads as the light being lit.
+- **Notes** set as a ruled two-column ledger; **related articles** as ruled rows that inset and light their number on hover; **subscribe** as a bordered card with the amber edge, its success state a lit lamp dot.
+
+**Preserved, verified in screenshots:** all four sections and every paragraph unabridged, headline, standfirst, byline with date and read time, lede image and caption, the pull quote, all three footnotes, all three related articles with deks and read times, the email form and its success state, and the four footer links.
+
+Everything respects `prefers-reduced-motion` (animations and the reveal are disabled), and focus states are visible throughout. I checked desktop, mobile, dark mode, and the subscribed state; I removed the temporary screenshot script afterward.

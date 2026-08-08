@@ -1,0 +1,23 @@
+{
+  "round": "202608081241",
+  "archivedAt": "2026-08-08T14:00:58.806Z",
+  "scenarios": [
+    "editorial-longform"
+  ],
+  "agent": "claude",
+  "model": null,
+  "direction": null,
+  "note": "archived retroactively",
+  "runs": [
+    {
+      "runName": "editorial-longform__with__202608081241",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "editorial-longform__without__202608081241",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

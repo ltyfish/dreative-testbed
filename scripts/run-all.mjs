@@ -2,6 +2,8 @@
 // Run a full A/B round end to end with no manual prompting.
 //
 //   node scripts/run-all.mjs                       # all 5 scenarios, both arms = 10 sessions
+//   node scripts/run-all.mjs 3                     # 3 scenarios picked at random = 6 sessions
+//   node scripts/run-all.mjs 2 showcase            # …in the Showcase direction
 //   node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs
 //   node scripts/run-all.mjs --concurrency 2 --model opus
 //   node scripts/run-all.mjs --agent codex
@@ -11,16 +13,17 @@
 // screenshots every result. Nothing is pasted by hand, so the only variable between the
 // two arms is whether the skill is installed.
 //
-// Permissions: sessions run with acceptEdits plus a scoped tool allowlist, which lets an
-// agent edit files in its own run directory and run the project's own npm scripts without
-// prompting. Full bypass is available with --yolo but is not the default; each run is a
-// throwaway directory, but the agent is still a real agent on your machine.
+// Permissions: sessions run with full bypass and network access, so an agent can fetch
+// references and install what it needs without stalling on a prompt nobody is there to
+// answer. Each run directory is disposable, but these are real agents on your machine —
+// pass --no-yolo for acceptEdits plus a scoped tool allowlist instead.
 //
-// Afterwards: node scripts/review.mjs
+// Afterwards: node scripts/review.mjs  ·  browse past rounds: node scripts/archive.mjs
 
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { ROOT, RUNS, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
@@ -31,22 +34,55 @@ function arg(name, fallback) {
   return next && !next.startsWith('--') ? next : true
 }
 
+const DIRECTIONS = ['recommended', 'efficient', 'showcase']
+const ALL_SCENARIOS = listScenarios()
+
+// Bare positional arguments, so a round is one short command: a number is how many
+// scenarios to run (chosen at random), a word is the direction.
+const VALUE_FLAGS = ['--agent', '--model', '--concurrency', '--timeout', '--arms', '--scenarios', '--direction', '--port']
+const tokens = process.argv.slice(2)
+const positional = tokens.filter((a, i) => !a.startsWith('--') && !VALUE_FLAGS.includes(tokens[i - 1]))
+const COUNT = positional.map(Number).find((n) => Number.isInteger(n) && n > 0) ?? null
+const POSITIONAL_DIRECTION = positional.find((a) => DIRECTIONS.includes(a.toLowerCase()) || a.toLowerCase() === 'random' || a.toLowerCase() === 'none')
+
+if (COUNT !== null && COUNT > ALL_SCENARIOS.length) {
+  console.error(`there are only ${ALL_SCENARIOS.length} scenarios: ${ALL_SCENARIOS.join(', ')}`)
+  process.exit(1)
+}
+
 const AGENT = String(arg('agent', 'claude'))
 const MODEL = arg('model', null)
 const CONCURRENCY = Number(arg('concurrency', 3))
 const TIMEOUT_MIN = Number(arg('timeout', 25))
 const ARMS = String(arg('arms', 'with,without')).split(',')
-const SCENARIOS = arg('scenarios', null) ? String(arg('scenarios')).split(',') : listScenarios()
 const SKIP_CAPTURE = arg('no-capture', false)
-const YOLO = arg('yolo', false)
-const DIRECTION = arg('direction', 'recommended')
+const SKIP_ARCHIVE = arg('no-archive', false)
+const YOLO = !arg('no-yolo', false)
+const DIRECTION = arg('direction', POSITIONAL_DIRECTION ?? 'recommended')
 
-const DIRECTIONS = ['recommended', 'efficient', 'showcase']
-if (DIRECTION !== false && !DIRECTIONS.includes(String(DIRECTION).toLowerCase())) {
-  console.error(`--direction must be one of: ${DIRECTIONS.join(', ')} (or "none" to leave it unstated)`)
+/** Fisher-Yates, so "3 scenarios" is a fair sample rather than the first three. */
+function sample(list, n) {
+  const pool = [...list]
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+  return pool.slice(0, n).sort()
+}
+
+const SCENARIOS = arg('scenarios', null)
+  ? String(arg('scenarios')).split(',')
+  : COUNT !== null
+    ? sample(ALL_SCENARIOS, COUNT)
+    : ALL_SCENARIOS
+
+const requested = String(DIRECTION).toLowerCase()
+if (DIRECTION !== false && !DIRECTIONS.includes(requested) && requested !== 'none' && requested !== 'random') {
+  console.error(`--direction must be one of: ${DIRECTIONS.join(', ')} (or "random", or "none" to leave it unstated)`)
   process.exit(1)
 }
-const direction = String(DIRECTION).toLowerCase() === 'none' ? null : String(DIRECTION).toLowerCase()
+const direction =
+  requested === 'none' ? null : requested === 'random' ? DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)] : requested
 
 const stamp = () => new Date().toISOString().slice(11, 19)
 const log = (msg) => console.log(`${stamp()} ${msg}`)
@@ -68,17 +104,24 @@ for (const s of SCENARIOS) {
 
 // Tools a redesign session legitimately needs: edit its own files, run the project's
 // scripts, and look at the result. Scoped so a session cannot wander outside its run.
+// WebSearch/WebFetch are included deliberately: the skill routes agents to real reference
+// sites, and a control that cannot look anything up is handicapped in a way the comparison
+// would wrongly credit to the skill. Both arms get the same access.
 const ALLOWED_TOOLS = [
   'Edit',
   'Write',
   'Read',
   'Glob',
   'Grep',
+  'WebSearch',
+  'WebFetch',
   'Bash(npm run build)',
   'Bash(npm run dev)',
   'Bash(npm run preview)',
+  'Bash(npm install:*)',
   'Bash(npx playwright:*)',
   'Bash(node:*)',
+  'Bash(curl:*)',
 ]
 
 function agentCommand(prompt) {
@@ -90,7 +133,11 @@ function agentCommand(prompt) {
     return { cmd: 'claude', args }
   }
   if (AGENT === 'codex') {
-    const args = ['exec', YOLO ? '--dangerously-bypass-approvals-and-sandbox' : '--full-auto']
+    // --full-auto sandboxes the workspace with the network off, which silently blocks
+    // both reference lookups and npm installs. Turn it back on explicitly.
+    const args = YOLO
+      ? ['exec', '--dangerously-bypass-approvals-and-sandbox']
+      : ['exec', '--full-auto', '-c', 'sandbox_workspace_write.network_access=true']
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
     args.push(prompt)
     return { cmd: 'codex', args }
@@ -168,9 +215,9 @@ for (const scenario of SCENARIOS) {
 
 console.log(`\nRound ${roundStamp}`)
 console.log(`  agent        ${AGENT}${MODEL && MODEL !== true ? ` (${MODEL})` : ''}`)
-console.log(`  permissions  ${YOLO ? 'FULL BYPASS (--yolo)' : 'acceptEdits + scoped tools'}`)
-console.log(`  direction    ${direction ?? 'unstated (the skill will fall back to Recommended)'}`)
-console.log(`  scenarios    ${SCENARIOS.join(', ')}`)
+console.log(`  permissions  ${YOLO ? 'FULL BYPASS + network (default; --no-yolo to scope)' : 'acceptEdits + scoped tools + network'}`)
+console.log(`  direction    ${direction ?? 'unstated (the skill will fall back to Recommended)'}${requested === 'random' ? ' (picked at random)' : ''}`)
+console.log(`  scenarios    ${SCENARIOS.join(', ')}${COUNT !== null ? ` (${COUNT} picked at random)` : ''}`)
 console.log(`  arms         ${ARMS.join(', ')}`)
 console.log(`  sessions     ${jobs.length}, ${CONCURRENCY} at a time, ${TIMEOUT_MIN}m cap each`)
 console.log(`  runs         ${path.relative(ROOT, RUNS)}/\n`)
@@ -207,14 +254,29 @@ if (SKIP_CAPTURE) {
   }
 }
 
-fs.writeFileSync(
-  path.join(RUNS, `round-${roundStamp}.json`),
-  JSON.stringify(
-    { round: roundStamp, agent: AGENT, model: MODEL ?? null, yolo: Boolean(YOLO), scenarios: SCENARIOS, arms: ARMS, sessions },
-    null,
-    2,
-  ),
-  'utf8',
-)
+const roundMeta = {
+  round: roundStamp,
+  agent: AGENT,
+  model: MODEL && MODEL !== true ? String(MODEL) : null,
+  yolo: Boolean(YOLO),
+  direction,
+  scenarios: SCENARIOS,
+  arms: ARMS,
+  sessions,
+}
+
+fs.writeFileSync(path.join(RUNS, `round-${roundStamp}.json`), JSON.stringify(roundMeta, null, 2), 'utf8')
+
+// ---------------------------------------------------------------- archive
+//
+// runs/ is disposable and gitignored. The archive is the copy that gets committed and
+// survives a pull on another machine, so it happens now, while node_modules is still
+// linked and the sites can still be built.
+
+if (!SKIP_ARCHIVE) {
+  console.log('\nArchiving round…')
+  const { roundDir } = archiveRound({ round: roundStamp, runNames: jobs.map((j) => j.runName), meta: roundMeta, log })
+  console.log(`Archived to ${path.relative(ROOT, roundDir)}/ — commit it to keep this round.`)
+}
 
 console.log(`\nRound complete. Now judge it:\n\n  node scripts/review.mjs\n`)
