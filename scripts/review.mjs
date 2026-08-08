@@ -8,9 +8,11 @@
 // you submit that scenario's verdict. Submissions append to VERDICTS.md and write a
 // structured record to runs/verdicts/.
 
+import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
+import { freePort, killTree } from './lib/capture.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
@@ -92,6 +94,58 @@ function buildFailure(runDir) {
   return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
 }
 
+function captureWarnings(runDir) {
+  const p = path.join(RUNS, runDir, '.captures', 'warnings.txt')
+  return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
+}
+
+// ------------------------------------------------------- live previews
+//
+// Screenshots cannot show motion, hover, or scroll behaviour, so each side can be opened
+// live. Servers are started on demand and addressed only by port, so the URL never names
+// the run and the arm stays hidden.
+
+const live = new Map() // runDir -> { port, proc }
+
+async function startLive(runDir) {
+  if (live.has(runDir)) return live.get(runDir).port
+  const dir = path.join(RUNS, runDir)
+  if (!fs.existsSync(path.join(dir, 'dist'))) {
+    const build = spawn('npm', ['run', 'build'], { cwd: dir, shell: true, stdio: 'ignore' })
+    await new Promise((r) => build.on('close', r))
+  }
+  const port = await freePort(0)
+  const proc = spawn('npm', ['run', 'preview', '--', '--port', String(port), '--strictPort'], {
+    cwd: dir,
+    shell: true,
+    stdio: 'ignore',
+  })
+  live.set(runDir, { port, proc })
+
+  // Wait for it to answer before handing over the link.
+  for (let i = 0; i < 40; i++) {
+    try {
+      await fetch(`http://127.0.0.1:${port}/`)
+      break
+    } catch {
+      await new Promise((r) => setTimeout(r, 250))
+    }
+  }
+  return port
+}
+
+function stopAllLive() {
+  for (const { proc } of live.values()) killTree(proc.pid)
+  live.clear()
+}
+for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP']) {
+  process.on(signal, () => {
+    stopAllLive()
+    process.exit(0)
+  })
+}
+process.on('exit', stopAllLive)
+
 // ------------------------------------------------------------------ writing
 
 function saveVerdict(body) {
@@ -166,7 +220,11 @@ main{padding:24px;max-width:1600px;margin:0 auto}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media(max-width:1000px){.grid{grid-template-columns:1fr}}
 .col{min-width:0}
-.tag{font:600 13px/1 ui-monospace,monospace;padding:8px 11px;background:var(--card);border:1px solid var(--line);border-radius:6px;display:inline-block;margin-bottom:10px}
+.tagrow{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.tag{font:600 13px/1 ui-monospace,monospace;padding:8px 11px;background:var(--card);border:1px solid var(--line);border-radius:6px;display:inline-block}
+.livebtn{font-size:13px;padding:7px 13px;border:1px solid var(--acc);color:var(--acc);border-radius:999px;text-decoration:none;font-weight:600}
+.livebtn:hover{background:var(--acc);color:#06101f}
+.warn{border:1px solid #d97706;color:#fbbf24;border-radius:7px;padding:9px 12px;font-size:13px;margin-bottom:10px}
 .lbl{color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;margin:14px 0 6px}
 img.shot{width:100%;border:1px solid var(--line);border-radius:8px;display:block;background:#fff}
 img.shot.mob{width:min(300px,100%)}
@@ -212,8 +270,13 @@ function page(pairs, active) {
         <div class="lbl">Build failed — this is itself a finding</div>
         <div class="fail">${esc(fail)}</div></div>`
     }
+    const warn = captureWarnings(run.dir)
     return `<div class="col">
-      <div class="tag">DESIGN ${letter}</div>
+      <div class="tagrow">
+        <span class="tag">DESIGN ${letter}</span>
+        <a class="livebtn" href="/live/${encodeURIComponent(pair.scenario)}/${letter}" target="_blank" rel="noopener">Open live ↗</a>
+      </div>
+      ${warn ? `<div class="warn">Capture warning — ${esc(warn)}</div>` : ''}
       <div class="lbl">Desktop · 1440</div>
       <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="Design ${letter} desktop">
       <div class="lbl">Mobile · 390</div>
@@ -315,6 +378,23 @@ const server = http.createServer(async (req, res) => {
     }
     res.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' })
     fs.createReadStream(p).pipe(res)
+    return
+  }
+
+  if (req.method === 'GET' && url.pathname.startsWith('/live/')) {
+    const [, , scenarioName, letter] = url.pathname.split('/').map(decodeURIComponent)
+    const pair = loadPairs().find((p) => p.scenario === scenarioName)
+    if (!pair || (letter !== 'A' && letter !== 'B')) {
+      res.writeHead(404).end('not found')
+      return
+    }
+    try {
+      const port = await startLive(pair[letter].dir)
+      // Redirect to a bare port so the URL never names the run or the arm.
+      res.writeHead(302, { location: `http://127.0.0.1:${port}/` }).end()
+    } catch (err) {
+      res.writeHead(500).end(`could not start live preview: ${err.message}`)
+    }
     return
   }
 

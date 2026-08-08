@@ -56,6 +56,12 @@ concurrency 3 takes roughly 30–45 minutes; you can walk away.
 per scenario and **stored**, so refreshing does not reshuffle and you cannot infer the arm
 by reloading. Arms are revealed only after you submit that scenario's verdict.
 
+**Screenshots cannot show motion**, so each side has an **Open live ↗** button. It builds
+that run if needed, starts a preview server on demand, and opens it on a bare
+`127.0.0.1:<random-port>` URL — the address never names the run, so scrolling, hovering,
+and animation stay blind. Stop the review server with Ctrl+C and the previews shut down
+with it.
+
 For each scenario you give:
 
 - six criteria scored A / Tie / B (see `EVALUATION.md` for what each one means)
@@ -65,7 +71,8 @@ For each scenario you give:
 
 Submitting appends to `VERDICTS.md` and writes `runs/verdicts/<scenario>.json`. A build
 failure is shown in place of the screenshots rather than hidden, because failing to build
-is a real result.
+is a real result, and a page that rendered almost nothing is flagged with a capture warning
+instead of appearing as an unexplained white rectangle.
 
 ## The five scenarios
 

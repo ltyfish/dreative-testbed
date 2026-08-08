@@ -2,8 +2,27 @@
 
 import { spawn, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
+import net from 'node:net'
 import path from 'node:path'
 import { RUNS } from './scaffold.mjs'
+
+/**
+ * Reserve a port the OS says is actually free.
+ *
+ * Without this, a stale server on the requested port makes `vite preview` quietly pick a
+ * different one while the browser still visits the original — so you screenshot whatever
+ * else happened to be listening. That produced blank and wrong-project captures.
+ */
+export function freePort(preferred) {
+  return new Promise((resolve) => {
+    const probe = net.createServer()
+    probe.once('error', () => resolve(freePort(0)))
+    probe.listen(preferred, '127.0.0.1', () => {
+      const { port } = probe.address()
+      probe.close(() => resolve(port))
+    })
+  })
+}
 
 /** Kill a process and everything it spawned. */
 export function killTree(pid) {
@@ -41,15 +60,18 @@ export async function captureRun(runName, port, log = console.log) {
     return { runName, ok: false, error: 'build failed' }
   }
 
-  const server = spawn('npm', ['run', 'preview', '--', '--port', String(port)], {
+  // strictPort makes a busy port fail loudly instead of drifting to another one.
+  const chosen = await freePort(port)
+  const server = spawn('npm', ['run', 'preview', '--', '--port', String(chosen), '--strictPort'], {
     cwd: runDir,
     shell: true,
     stdio: 'ignore',
   })
 
+  const warnings = []
   try {
     const { chromium } = await import('playwright')
-    const base = `http://127.0.0.1:${port}/`
+    const base = `http://127.0.0.1:${chosen}/`
     const browser = await chromium.launch()
     const outDir = path.join(runDir, '.captures')
     fs.rmSync(outDir, { recursive: true, force: true })
@@ -81,13 +103,31 @@ export async function captureRun(runName, port, log = console.log) {
       })
       await page.waitForTimeout(800)
 
+      // A page that renders nothing visible is a finding, not a screenshot. Catch it here
+      // rather than letting a white rectangle reach the review UI unexplained.
+      const visible = await page.evaluate(() => {
+        const text = document.body.innerText.trim().length
+        const painted = [...document.body.querySelectorAll('*')].filter((el) => {
+          const r = el.getBoundingClientRect()
+          const s = getComputedStyle(el)
+          return r.width > 4 && r.height > 4 && s.visibility !== 'hidden' && Number(s.opacity) > 0.05
+        }).length
+        return { text, painted }
+      })
+      if (visible.text < 40 || visible.painted < 5) {
+        warnings.push(`${vp.name}: page rendered almost nothing (${visible.text} chars, ${visible.painted} painted elements)`)
+      }
+
       await page.screenshot({ path: path.join(outDir, `${vp.name}.png`), fullPage: true })
-      log(`[${runName}] captured ${vp.name}`)
+      log(`[${runName}] captured ${vp.name}${visible.text < 40 ? ' — WARNING: looks blank' : ''}`)
       await page.close()
     }
 
     await browser.close()
-    return { runName, ok: true }
+    if (warnings.length) {
+      fs.writeFileSync(path.join(runDir, '.captures', 'warnings.txt'), warnings.join('\n'), 'utf8')
+    }
+    return { runName, ok: true, warnings }
   } catch (err) {
     log(`[${runName}] capture failed: ${err.message}`)
     return { runName, ok: false, error: err.message }
