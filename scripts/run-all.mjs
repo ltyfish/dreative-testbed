@@ -21,7 +21,7 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-import { captureMany } from './lib/capture.mjs'
+import { captureMany, killTree } from './lib/capture.mjs'
 import { ROOT, RUNS, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
 function arg(name, fallback) {
@@ -106,7 +106,7 @@ function runSession({ runName, runDir, prompt }) {
     const killer = setTimeout(
       () => {
         log(`[${runName}] TIMEOUT after ${TIMEOUT_MIN}m — killing session`)
-        child.kill('SIGKILL')
+        killTree(child.pid)
       },
       TIMEOUT_MIN * 60_000,
     )

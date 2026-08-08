@@ -5,6 +5,24 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { RUNS } from './scaffold.mjs'
 
+/** Kill a process and everything it spawned. */
+export function killTree(pid) {
+  if (!pid) return
+  if (process.platform === 'win32') {
+    spawnSync('taskkill', ['/pid', String(pid), '/t', '/f'], { stdio: 'ignore' })
+    return
+  }
+  try {
+    process.kill(-pid, 'SIGKILL')
+  } catch {
+    try {
+      process.kill(pid, 'SIGKILL')
+    } catch {
+      /* already gone */
+    }
+  }
+}
+
 export const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 844 },
@@ -74,10 +92,10 @@ export async function captureRun(runName, port, log = console.log) {
     log(`[${runName}] capture failed: ${err.message}`)
     return { runName, ok: false, error: err.message }
   } finally {
-    server.kill()
-    if (process.platform === 'win32') {
-      spawnSync('taskkill', ['/pid', String(server.pid), '/t', '/f'], { stdio: 'ignore' })
-    }
+    // Kill the whole tree first. `npm run preview` spawns vite as a child, so killing the
+    // wrapper on its own orphans vite, which then holds the port and the run directory
+    // open — enough to leak one server per run across a full round.
+    killTree(server.pid)
   }
 }
 
