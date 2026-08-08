@@ -279,6 +279,12 @@ function page(pairs, active) {
       ${warn ? `<div class="warn">Capture warning — ${esc(warn)}</div>` : ''}
       <div class="lbl">Desktop · 1440</div>
       <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="Design ${letter} desktop">
+      ${
+        fs.existsSync(path.join(RUNS, run.dir, '.captures', 'desktop-dark.png'))
+          ? `<div class="lbl">Desktop · 1440 · dark scheme <span style="text-transform:none;letter-spacing:0">(this design declares a dark mode)</span></div>
+             <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop-dark.png" alt="Design ${letter} desktop dark">`
+          : ''
+      }
       <div class="lbl">Mobile · 390</div>
       <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="Design ${letter} mobile">
       <div class="lbl">Your feedback on Design ${letter}</div>

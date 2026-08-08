@@ -34,6 +34,7 @@ what makes the comparison mean anything.
 ### Options
 
 ```sh
+node scripts/run-all.mjs --direction showcase                     # default recommended
 node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs   # subset
 node scripts/run-all.mjs --concurrency 5                          # default 3
 node scripts/run-all.mjs --model opus                             # default: your CLI default
@@ -41,6 +42,12 @@ node scripts/run-all.mjs --agent codex                            # default clau
 node scripts/run-all.mjs --timeout 40                             # minutes per session, default 25
 node scripts/run-all.mjs --arms with                              # re-run one arm only
 ```
+
+**`--direction` matters.** Dreative normally blocks on the user choosing Recommended,
+Efficient, or Showcase. Unattended there is nobody to ask, so it falls back to Recommended
+and you end up scoring a direction you did not pick. The flag states the choice up front;
+`--direction none` reproduces the old implicit behaviour. Compare like with like — a
+Showcase round against a control is a different question from a Recommended round.
 
 Sessions run with `acceptEdits` and a scoped tool allowlist, so an agent can edit files in
 its own run directory and run the project's npm scripts without prompting. `--yolo` gives

@@ -22,10 +22,18 @@ export function readScenario(name) {
  * The brief handed to the agent. Identical across arms except for one line, so any
  * difference in output is attributable to the skill rather than to the wording.
  */
-export function buildPrompt(meta, arm, runDir) {
+export function buildPrompt(meta, arm, runDir, direction) {
+  // Dreative normally blocks on the user choosing a direction. Unattended there is nobody
+  // to ask, so the agent quietly falls back to Recommended and the round silently tests a
+  // direction you did not pick. Stating it up front makes the round honest.
+  const directionLine =
+    arm === 'with' && direction
+      ? ` Build the ${direction} direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.`
+      : ''
+
   const skillLine =
     arm === 'with'
-      ? 'Use the Dreative skill for this work. It is installed in this project.'
+      ? `Use the Dreative skill for this work. It is installed in this project.${directionLine}`
       : 'Do not use any design skill, framework, or checklist beyond your own judgement.'
 
   return `Work in the project at ${runDir.replace(/\\/g, '/')}
@@ -41,7 +49,7 @@ When you are done, make sure \`npm run build\` succeeds. Do not commit anything.
 }
 
 /** Create an isolated, real Vite project for one scenario and one arm. */
-export function scaffoldRun({ scenario, arm, label, seq }) {
+export function scaffoldRun({ scenario, arm, label, seq, direction }) {
   const scenarioDir = path.join(ROOT, 'scenarios', scenario)
   const meta = readScenario(scenario)
 
@@ -99,12 +107,20 @@ export function scaffoldRun({ scenario, arm, label, seq }) {
     if (fs.existsSync(agents)) fs.cpSync(agents, path.join(runDir, 'AGENTS.md'))
   }
 
-  const prompt = buildPrompt(meta, arm, runDir)
+  const prompt = buildPrompt(meta, arm, runDir, direction)
   fs.writeFileSync(path.join(runDir, 'BRIEF.md'), `# Brief — ${meta.product} (${arm} Dreative)\n\n${prompt}\n`, 'utf8')
   fs.writeFileSync(
     path.join(runDir, 'run.json'),
     JSON.stringify(
-      { scenario, arm, seq: index, label: label ?? null, product: meta.product, field: meta.field },
+      {
+        scenario,
+        arm,
+        seq: index,
+        label: label ?? null,
+        direction: arm === 'with' ? (direction ?? null) : null,
+        product: meta.product,
+        field: meta.field,
+      },
       null,
       2,
     ),

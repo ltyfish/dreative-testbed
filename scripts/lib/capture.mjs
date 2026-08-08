@@ -120,6 +120,31 @@ export async function captureRun(runName, port, log = console.log) {
 
       await page.screenshot({ path: path.join(outDir, `${vp.name}.png`), fullPage: true })
       log(`[${runName}] captured ${vp.name}${visible.text < 40 ? ' — WARNING: looks blank' : ''}`)
+
+      // Playwright defaults to a light color scheme. A design with a dark mode therefore
+      // gets photographed in a state the reviewer's own browser may never show them, so
+      // the still and the live preview disagree. Capture the other scheme too.
+      if (vp.name === 'desktop') {
+        const hasDark = await page.evaluate(() =>
+          [...document.styleSheets].some((sheet) => {
+            try {
+              return [...sheet.cssRules].some(
+                (rule) => rule.media && /prefers-color-scheme:\s*dark/i.test(rule.conditionText ?? rule.media.mediaText),
+              )
+            } catch {
+              return false
+            }
+          }),
+        )
+        if (hasDark) {
+          await page.emulateMedia({ colorScheme: 'dark' })
+          await page.waitForTimeout(600)
+          await page.screenshot({ path: path.join(outDir, 'desktop-dark.png'), fullPage: true })
+          await page.emulateMedia({ colorScheme: 'light' })
+          log(`[${runName}] captured desktop-dark (design declares a dark mode)`)
+        }
+      }
+
       await page.close()
     }
 

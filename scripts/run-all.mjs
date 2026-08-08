@@ -39,6 +39,14 @@ const ARMS = String(arg('arms', 'with,without')).split(',')
 const SCENARIOS = arg('scenarios', null) ? String(arg('scenarios')).split(',') : listScenarios()
 const SKIP_CAPTURE = arg('no-capture', false)
 const YOLO = arg('yolo', false)
+const DIRECTION = arg('direction', 'recommended')
+
+const DIRECTIONS = ['recommended', 'efficient', 'showcase']
+if (DIRECTION !== false && !DIRECTIONS.includes(String(DIRECTION).toLowerCase())) {
+  console.error(`--direction must be one of: ${DIRECTIONS.join(', ')} (or "none" to leave it unstated)`)
+  process.exit(1)
+}
+const direction = String(DIRECTION).toLowerCase() === 'none' ? null : String(DIRECTION).toLowerCase()
 
 const stamp = () => new Date().toISOString().slice(11, 19)
 const log = (msg) => console.log(`${stamp()} ${msg}`)
@@ -150,7 +158,7 @@ const jobs = []
 for (const scenario of SCENARIOS) {
   for (const arm of ARMS) {
     try {
-      jobs.push(scaffoldRun({ scenario, arm, seq: roundStamp }))
+      jobs.push(scaffoldRun({ scenario, arm, seq: roundStamp, direction }))
     } catch (err) {
       console.error(`could not scaffold ${scenario}/${arm}: ${err.message}`)
       process.exit(1)
@@ -161,6 +169,7 @@ for (const scenario of SCENARIOS) {
 console.log(`\nRound ${roundStamp}`)
 console.log(`  agent        ${AGENT}${MODEL && MODEL !== true ? ` (${MODEL})` : ''}`)
 console.log(`  permissions  ${YOLO ? 'FULL BYPASS (--yolo)' : 'acceptEdits + scoped tools'}`)
+console.log(`  direction    ${direction ?? 'unstated (the skill will fall back to Recommended)'}`)
 console.log(`  scenarios    ${SCENARIOS.join(', ')}`)
 console.log(`  arms         ${ARMS.join(', ')}`)
 console.log(`  sessions     ${jobs.length}, ${CONCURRENCY} at a time, ${TIMEOUT_MIN}m cap each`)
