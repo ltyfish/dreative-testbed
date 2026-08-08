@@ -1,455 +1,355 @@
-# Dreative Plan Mode — decide everything before the first line of code
+# Planning protocol
 
-This skill is for **drastic change** — a section, a page, or the whole site being
-meaningfully redesigned or built. It is not for button tweaks or single-token
-nudges unless the user explicitly invokes it for one.
+Planning has three required, blocking user-facing stages—direction, compact
+configuration, and the Experience Map—plus a blocking prototype review whenever Prototype is selected
+and produced, and an optional reveal of the detailed Creative Decision Brief.
+The reveal is optional; creating and using the complete private brief is not.
+Keep private exploration private. Do not edit implementation files until all
+three stages have an explicit user response. Never silently apply recommended settings.
 
-**Plan Mode is MANDATORY.** Every Mode A request in scope runs this protocol —
-do not ask "plan or build directly?", do not offer a skip, do not silently jump
-to code. The ONLY exception is the user explicitly saying "no plan / just do
-it" this session; then note you're skipping and go straight to DESIGN.md +
-doctrine defaults.
+## Stage 1: direction
 
-The failure this file prevents: jumping into code with half a brief, discovering
-mid-build that media/tools/structure are missing, and shipping a page that is
-60% of what the user actually wanted.
+Inspect the real product and read `references/CREATIVE_DIRECTION.md`. Privately
+create three genuinely different concepts before assigning them to delivery
+levels. They must differ in experience structure or interaction logic, not
+only color, type, and effort.
 
-Plan Mode is ONE planning pass → a short sequence of single questions (§3) → a
-written plan → (optional) mockups for approval → execution in the plan's order.
-Questions come one at a time so each is easy to answer, but the interview stays
-short: only what the prompt genuinely leaves open, then build.
+Show exactly:
 
-## 1. Capability probe (before proposing anything)
+1. **Recommended — <project-native concept>**
+   The direction most likely to produce the strongest product for this
+   audience, content, and implementation reality.
 
-Enumerate what your environment can actually produce, and write the result down
-(one line per capability in the plan file, §4). Check for:
+2. **Efficient — <focused concept>**
+   The highest-value improvement using the least tokens and implementation cost,
+   preserving the current structure, assets, and stack where useful.
 
-- **Image generation** — an image-gen tool/MCP, or a CLI that produces images.
-- **Video generation** — a video-gen tool/MCP (seamless loops, image-to-video).
-- **Browser tools** — screenshot + console + interaction (needed for the
-  verification protocol; note it if absent).
-- **Asset tooling** — anything for compression/conversion (ffmpeg on PATH,
-  sharp/squoosh in the project) for posters, loops, and frame sequences.
+3. **Showcase — <flagship concept>**
+   The highest creative and technical ceiling. Any treatment is available, but
+   select only those that materially strengthen the premise. Its delivered
+   route must be visibly and structurally distinct from Recommended; a long
+   conventional page with one isolated spectacle is insufficient.
 
-Rules:
-- Probe by LOOKING (list your tools, `which ffmpeg`, check MCP config), never by
-  assuming. A capability you didn't verify doesn't exist.
-- If a capability is missing but the design clearly wants it (e.g. a cinematic
-  brief with no video-gen), you MUST ask a real question with a real choice —
-  **stating the gap and moving on is not an offer, it's a disclosure.** The
-  bug this catches: saying "video generation isn't available, so I'll use
-  stills" and continuing is a FAILURE even though it's honest. The fix is a
-  question with at least two live options: "install <concrete MCP/tool name>
-  now and use it" vs "skip it, use <the specific fallback>". Ask it in the
-  question round (§3), phrased as a genuine fork, not a heads-up. Never
-  install tools silently; never silently degrade either.
-- The probe result changes the blueprint: no video-gen → hero loops become
-  generated stills + ken-burns or a shader surface; **no image-gen → media
-  cells become `source-image` (DESIGN.md §7's priority: verified stock/CDN
-  photography), every planned cutout prop becomes a sourced-and-matted photo
-  or is cut, and any 3D of an organic real-world subject is re-planned as a
-  photo billboard, an abstract form, or cut (3d.md §3 rungs 2/4 — coded
-  organic geometry never becomes the fallback)**; no browser tools → the
-  verification protocol's manual fallback (SKILL.md) must be declared up front.
-  Missing tools change WHERE assets come from, never whether media/3D rules
-  apply — sourced media carries the same treatment obligations (media.md §0).
+Each option must name its premise, composition, material/type voice, meaningful
+media or interaction, and product fit. Do not mention reference brands as the
+concept. Do not offer three versions of the same editorial landing page.
+Each must be the strongest honest design for its stated constraint: Efficient
+is not deliberately weak, Recommended is not a diluted Showcase, and Showcase
+must genuinely reach the highest coherent creative and technical ceiling.
 
-## 2. The blueprint (section-by-section, media-first)
+End with:
 
-Draft the page as a compact table BEFORE asking anything — the question round
-presents choices about a concrete plan, not abstractions. Per section:
+> I recommend **<direction>**. Reply with **1, 2, or 3**. You can also say
+> **show detailed plan**.
 
-| section | layout family | media plan | motion treatment | interaction | intensity | fallback |
+If the user asks for detail before choosing, expand Recommended by default.
+This expands information only; it does not select Recommended. Wait for the
+user's explicit direction choice. A general instruction such as "go ahead,"
+"redesign it," or "use your judgment" is not a direction choice unless it
+explicitly authorizes choosing among the three options.
 
-- **media plan** — one of: `generate-image` (subject + exact aspect + palette/
-  light-temperature prompt notes), `generate-video` (loop subject, 5-10s,
-  seamless), `generate-sequence` (N frames for scroll scrub), `real-asset`
-  (exists in repo / user must supply — name it), `none`. Media enters through
-  the motion system per `skills/media.md` — name the treatment (curtain reveal,
-  mask-shaped, hover-woken, media-plane distortion…), never "add an image".
-  At dial ≥ 7 the blueprint also names the page's ONE media set-piece
-  (media.md §0 — image tornado, disintegration on scroll, shatter/reassemble,
-  living overlay…) and which section carries it; a dial-7+ plan whose media
-  column is all quiet treatments is incomplete.
-  When the set-piece is a media.md §3.5 dive (the award-tier default), its
-  `generate-image` cell must plan a DEPTH-CAPABLE composition (a corridor,
-  room, landscape, machinery receding — something a camera can enter) and
-  the companion assets in the same cell: the depth map and/or the separated
-  foreground/background plates, generated in the same prompt world.
-  The set-piece is chosen via
-  media.md's exploration protocol: invent three brand-native candidates not
-  listed in the catalogs, record them + the pick in the plan file — a media
-  plan assembled only from listed effects with no rejected invention on
-  record is minimum-effort compliance. **Custom 3D in a media cell must name
-  its asset source in the blueprint** — a GLB path, a generated/sourced
-  texture (the actual prompt or file), or the billboard cutout it will ride
-  on. "Custom 3D bean/bottle/plant geometry" with no named source is an
-  invalid cell: primitives can't produce an organic subject (3d.md §3), so
-  re-plan it as rung 2 (photo billboard) or an abstract SUPPORTING form
-  (3d.md §3 rung 3 — never the promoted signature object) at plan time —
-  don't let the build stage discover this. The user picking "custom 3D" in
-  the media question grants the *medium*, not an exemption from the ladder.
-  Every 3D prop cell also names its BERTH (3d.md §1.5): which lane/stage of
-  the section it occupies and what the layout does to make room — a prop
-  planned "over the hero image" or with no berth is an invalid cell.
-  At award-site ambition the blueprint must contain at least one 3D prop
-  cell (3d.md §0's required prop — GLB or cutout billboard, with its berth
-  and asset source named); zero prop cells = incomplete plan.
-  At dial ≥ 8 the media column additionally marks each hero/key image's
-  treatment as quiet-class or PIXEL-class (media.md §0) and must already
-  satisfy the coverage floor on paper: at least half pixel-class (min 3,
-  set-piece included), each a different mechanism, quiet cells tied to the
-  intensity curve's rests.
-- **Travel map (mandatory when any element persists across sections).** If
-  the blueprint contains a fixed canvas object, a recurring signature, or any
-  scroll-morphing prop that lives through more than one section, add a travel
-  map under the table: one line per section giving the object's position /
-  scale / opacity there, each berth chosen against that section's layout so
-  it never sits over text or controls (DESIGN.md §15). No berth fits ⇒ the
-  object is scripted HIDDEN for that section. A persistent object without a
-  travel map is an unplanned collision that verify will find later — plan it
-  now. The set-piece at dial ≥ 8 must also be pixel-transforming per
-  media.md §0 (placement choreography like orbit/collapse doesn't qualify).
-- **Mechanism-diversity quota (dial ≥ 7 / expressive+).** Floors measure the
-  weakest item; quotas measure the whole page. Across the blueprint's media +
-  interaction columns count the DISTINCT mechanisms (curtain reveal, media
-  plane, drag gallery, cursor torch, disintegration… — by name) and the
-  DISTINCT drivers (scroll, cursor/hover, drag, click, time/idle): the page
-  needs **≥ 4 distinct mechanisms spanning ≥ 3 distinct drivers, and no
-  mechanism used more than twice**. Every hero/key image gets BOTH an idle
-  life and an input response — one or the other is the floor, not the plan.
-  "Curtain reveal ×5 + one set-piece" fails the quota: that is a page grazing
-  its rules, not a designed page. The quota tallies go in the plan file and
-  are re-counted at verify.
-- **motion treatment** — from motion.md/immersive.md/cinematic.md vocabulary,
-  with the dial-appropriate ambition. **motion.md §9's inventory is a hard
-  plan gate, not a target:** at expressive/award-site ambition the blueprint
-  must enumerate every §9 item for its dial — which element carries it, what
-  triggers it — or explicitly name the item as cut with a reason. A plan that
-  neither covers nor justifies a §9 item is incomplete; rework it before
-  presenting, don't ship the gap to the build.
-- **intensity (the pacing map)** — 1–10 per section: how loud this section is
-  (motion + media + visual weight combined). The page must read as a CURVE, not
-  a flat line: uniform intensity fails in both directions (all loud = exhausting,
-  all quiet = the set-piece feels bolted on). Place deliberate rests (≤ 3)
-  immediately before and after the set-piece so it lands; the hero and the
-  set-piece section are the peaks, nothing else matches them. A blueprint whose
-  intensity column is all the same number is incomplete — rework the pacing
-  before presenting.
-- **fallback** — for every ambitious cell (WebGL, sim, scrubbed sequence,
-  generated video), the concrete boring version that ships if the fancy one
-  fails runtime verification. A plan cell without a fallback is not ambitious,
-  it's fragile.
+## Stage 2: compact configuration
 
-Plus four page-level lines: register + design read (DESIGN.md §2), signature
-element, animation stack (ONE system: GSAP+Lenis or motion/react — motion.md §0),
-and the mobile strategy per ambitious effect (DESIGN.md §13).
+After selection, show five compact choices with direction-adapted
+recommendations. End with:
 
-## 3. The questions (ONE question per call, asked in sequence)
+> Reply **use recommended settings** or list any changes. Say **show detailed
+> plan** for the full project-specific Creative Decision Brief.
 
-Ask with the structured question tool (AskUserQuestion), **one question at a
-time** — never dump the whole pool in a single round; a wall of 4 simultaneous
-questions is exactly the failure this section prevents. Each answer can change
-what you ask next (e.g. a "cinematic" treatment pick makes the media question
-matter more; "restyle" depth kills the mockup question).
+Wait for the reply. Do not treat the displayed recommendations as accepted
+until the user says `use recommended settings` or explicitly supplies their
+choices. The prototype choice must always appear and be confirmed; for
+Showcase, clearly state that `Required` means prototyping the riskiest signature
+mechanism before integrating the route.
 
-**Skip what the prompt already answers.** Before asking anything, walk the pool
-below against the user's prompt + attachments: a question whose answer is
-already CLEAR in the prompt is never asked (asking it anyway is a bug). But
-clear means clear — if the prompt touches a topic ambiguously ("make it
-animated" — which treatments? how far?), ask that question anyway, narrowed to
-the ambiguity ("you said animated — full scroll choreography, or calm
-micro-interactions?"). Restate what you inferred from the prompt in the plan
-file so silently-skipped questions are still auditable.
+### Review depth
 
-Order most-decision-changing first, keep the total short (typically 3–5 asked,
-hard cap 7). Structured tools always offer an "Other" free-text option, so
-every question doubles as a remarks channel — and the last question asked
-should explicitly invite extra direction.
+- Fast — production build and one focused desktop/mobile primary-flow pass.
+- Lean — full-page desktop/mobile, key interactions, console/overflow/text
+  integrity, and one visible correction pass.
+- Full Audit — Lean plus 320px, reduced motion, performance, direct routes,
+  console/network, asset failures, and final full-page regression.
 
-1. **Depth** (redesigns of existing code only) — the §11 transformation-depth
-   ladder: restyle / re-layout / restructure / reimagine.
-2. **Treatments** (multi-select — THE canonical skill-picker list). List every
-   option **individually**, never pre-bundled into a combo choice (a
-   "refined+motion+interaction+ux+mobile" single option is a bug — the user
-   can't select a subset of a bundle). Mark the ones the request obviously
-   implies "(Recommended)" on their own line, and always offer a literal
-   **"select all"** option separately from any individual recommendation —
-   for structured-question tools that support multiSelect, this is the
-   multiSelect list itself; for text-mode fallback, spell out "say 'all' to
-   pick every treatment below".
-   **Word the options for a non-designer**: each label/description names what
-   the VISITOR sees or feels, in plain words, with one concrete example —
-   never bare technique jargon ("kinetic type", "editorial restraint",
-   "scroll choreography" mean nothing to most users). The canonical list,
-   with user-facing phrasing to adapt:
-   - **motion** — "things move as you scroll: sections glide in, headlines animate, layers drift at different speeds"
-   - **interaction** — "everything feels touchable: buttons react, cards respond to hover, small satisfying feedback everywhere"
-   - **3d** — "real 3D on the page: an object or scene you can see depth in, lit and rendered live (like a product you scroll around)"
-   - **immersive** — "the page feels like a place you travel through — scrolling is a journey with chapters, not a document"
-   - **cinematic** — "dark, moody, movie-like atmosphere: glow, particles, fluid surfaces (think film title sequence)"
-   - **refined** — "quiet luxury: lots of space, beautiful photography, very little movement — Apple/fashion-brand calm"
-   - **media** — "AI-generated images/video made for this page and woven into the motion (hero film loop, images that come alive)"
-   - **ux** — "everything actually works: menus, forms, cart, keyboard — pretty AND functional" (recommend by default)
-   - **mobile** — first-class phone experience: bespoke mobile choreography and
-     layout treatment beyond baseline responsiveness (thumb-ergonomic redesign,
-     animations re-authored for touch, not just scaled down). **NOT recommended
-     by default** — baseline responsive/working-on-phone is already guaranteed
-     for every build via `ux` + DESIGN.md §13's required mobile strategy line,
-     so don't mark this "(Recommended)" just because a build is ambitious.
-     Recommend it only when the user asks for it, or the brief signals mobile
-     is a primary surface (e.g. explicitly mobile-first, or a mobile-heavy
-     audience/product).
-   - **experimental** — user-facing phrasing: "go weird: images that tear/
-     dissolve/reassemble as you scroll, the camera diving into scenes, one
-     never-seen-before idea per section". Internally this is the
-     creative-mindset dial (`skills/experimental.md`): full
-     scroll-reactive assets (images that disperse/reform/refract as you
-     scroll, not just sit still with particles in front), textured/materialed
-     3D instead of smooth plain geometry, camera/dimension shifts on
-     scroll/interaction (zoom into a scene, rotate to a new view, transition
-     between spatial "worlds"), willingness to try a genuinely unusual idea
-     per section rather than the safe default of that treatment. Recommend
-     this whenever the user's language points at "crazy", "bizarre", "wow",
-     "never seen before", or award-tier + immersive/cinematic/3d stacked
-     together — it's the difference between effects *placed on* the page and
-     the page *behaving* like the reference sites when you interact with it.
-   Plus "none — plain design doctrine only". Skip only when the user already
-   named the treatments or the request is trivially a restyle; read each
-   chosen `skills/<name>.md` before designing.
+Defaults: Efficient=Fast, Recommended=Lean, Showcase=Full Audit.
 
-   **Propose extra, request-specific skills beyond this fixed list** when the
-   brief hints at something the 10 named treatments don't cover well (sound
-   design, generative/procedural patterns, data-driven visuals, AR-ish
-   camera tricks, a custom cursor system, easter eggs). Name each candidate
-   in the same question as an extra option with a one-line description —
-   don't invent a `skills/<name>.md` file for a one-off idea; fold ad hoc
-   candidates into the blueprint under the closest existing skill (usually
-   `experimental` or `interaction`) and note the specific technique inline.
-3. **Media & asset types** (multi-select) — offer every asset class the probe
-   found tools for, and let choices stack: `generated images` · `generated
-   video loops` · `custom 3D` (real models/geometry, textures, and shaders
-   built in code — top-tier 3D sites are made of custom 3D assets, not
-   wallpaper images behind a canvas) · `custom props` (small isolated
-   compositional elements — transparent-bg cutout images or lightweight
-   textured 3D objects, per `skills/media.md` §1.5 — scattered/floating
-   decoration distinct from hero/gallery media) · `real assets` (in repo /
-   user supplies) · `placeholders only`. Mark the probe-backed recommendation
-   "(Recommended)".
-   **State the cost honestly: image/video generation is token-intensive** — say
-   roughly how many assets the blueprint wants and that each costs real
-   tokens/time, so "images only" or "placeholders" is a legitimate budget
-   choice, not a downgrade. If a needed tool is missing, this is where the
-   install offer goes ("I can add <X> MCP for video generation — ok?").
-4. **Ambition tier** — present each tier with a plain description, a
-   best-fit use case, AND its honest tradeoff (a user choosing blind between
-   "cool-sounding" labels is the failure this wording prevents):
-   - **safe** — polished, clean, light motion. *Best for:* dashboards, apps,
-     content-heavy sites, corporate audiences, tight deadlines. *Tradeoff:*
-     looks professional, won't turn heads.
-   - **expressive** — rich scroll motion, 3D accents, everything still
-     instantly usable. *Best for:* most product, e-commerce, and marketing
-     sites — the show/usability sweet spot and the default recommendation.
-     *Tradeoff:* heavier than safe, but visitors never fight the page.
-   - **award-site** — the page becomes an experience: immersive 3D, cinematic
-     pacing, experimental transitions (dial 9-10). *Best for:* portfolios,
-     launches, brand showcases, agency work — anywhere wow IS the goal.
-     *Tradeoff:* heaviest build, longest load, and deliberately unconventional —
-     visitors explore rather than skim, so it can frustrate someone who just
-     wants the price list. Say this plainly when offering it.
-   Higher tiers also mean a longer build and a mandatory runtime verification
-   pass — state that cost too.
-   **Which option gets "(Recommended)" is computed, and the default bias is
-   UP:** when the brief carries no strong signal either way, recommend
-   **expressive** — unnamed ambition becomes beige (DESIGN.md §2), and this
-   skill exists for drastic change. Recommend **safe** only on concrete
-   counter-signals: explicit "minimal / corporate / clean / subtle" language,
-   a product/app/dashboard surface rather than a marketing page, or a hard
-   deadline constraint (item 7). Recommending safe to a signal-free brief is
-   a bug, same class as the item-8 mockup inversion.
-5. **References (ask unless the prompt already supplied them)** — "Do you have
-   any reference — an image/screenshot, a website you love, or a video of a
-   feel/motion to chase?" Options like: attach image(s) / paste a website URL /
-   share a video (URL or file) / "surprise me — invent it from the brand" /
-   match the existing brand. When a reference arrives, actually study it before
-   designing (SKILL.md's references rule: fetch the site / read the image,
-   distill what specifically to borrow — palette, type feel, layout family,
-   motion cues — never guess a named site from memory). **Video references:**
-   if the environment has no tool that can actually watch video, say so and
-   recommend (optional, never required) installing a video-analysis MCP so you
-   can study the clip's motion/pacing for real; if the user declines, fall back
-   to their own description of the video plus any frames/screenshots they can
-   paste — never pretend to have watched it.
-6. **Vibe & audience** (when the brief is thin) — 3-4 contrasting directions
-   as options, each a one-line register + palette + energy sketch ("quiet
-   luxury: bone, near-black serif, almost no motion" vs "electric launch:
-   drenched color, kinetic type"), plus who the page must convince (buyers /
-   investors / recruiters / fans). This seeds DESIGN.md §2's design read.
-   **Always include an explicit "describe your own theme" option** (own
-   words: palette, mood, a brand they admire) alongside the presets — the
-   presets are a starting menu, not the only path, and a user with a theme
-   already in mind shouldn't have to force-fit one of 3-4 canned directions.
-   If the user has already given any theme/description language in the
-   prompt, skip the presets and just confirm what was inferred instead of
-   re-asking.
-7. **Scope & priorities** (multi-page or vague requests) — when the codebase
-   has more than one page/route, always ask explicitly which are in scope:
-   list the discovered pages by name and offer **"all pages"** as one option
-   alongside individually-named pages (multi-select, so the user can pick a
-   subset like "home + product page" without getting everything). Never
-   assume "all" just because the brief said "redesign the site" — confirm it.
-   Also capture what's in this pass vs later, and any hard constraints
-   (existing brand tokens to keep, CMS/content that must survive, deadline
-   implying the safe tier).
-8. **Mockups first?** — offer to build 1:1 mockups BEFORE the full build:
-   "Mockup the key pages first" / "Straight to build". **Which one is marked
-   "(Recommended)" is NOT static — compute it from the depth + ambition
-   answers already given:** reimagine or restructure depth, OR award-site
-   ambition, mean this is among the biggest changes the tool can make, so
-   **"Mockup first" is the recommended option.** Recommend "Straight to
-   build" only when depth is restyle/re-layout AND ambition is safe/
-   expressive. Getting this backwards (recommending straight-to-build on a
-   reimagine + award-site combo) is a bug, not a stylistic choice. When depth
-   is restructure/reimagine OR ambition is award-site, also offer a third
-   option: **"two divergent mockups"** — the two strongest concepts from the
-   explore pass (DESIGN.md §2) each built as a mockup, user picks. State the
-   honest cost (a second mockup is real tokens/time); it's an offer, never
-   the default. If yes to any mockup option, execute §4b before touching
-   real code.
-9. **Final remarks** — close the round with an open catch-all: "Anything else
-   I should know or you'd love to see — specific effects, colors you hate,
-   sections to add or kill?" Options: "no, go build" / "yes (write it in
-   Other)". Everything written here lands verbatim in the plan file and is
-   honored like the brief. **This question is asked on every single round,
-   with no exception** — it is the fixed closer, never trimmed, never
-   replaced by ending the round on whatever question happened to be last
-   (e.g. references or mockups). If references was the last substantive
-   question asked, final remarks still follows it as its own separate call.
+Full Audit increases observable review. It never adds approval hashes,
+attestation, provenance, evidence ledgers, or a mandatory critic.
 
-When trimming to stay under the cap: depth / treatments / references / media
-usually win; fold ambition into treatments' recommendations when crowded, and
-vibe/scope into the blueprint you present for approval. **Mockups (§8) and
-final remarks (§9) are never trimmed** — they are the last two questions of
-every round, in that order, regardless of how many others got cut. Never
-re-ask a question already answered (in the prompt or in an earlier answer);
-ambiguity discovered mid-build resolves by the plan's spirit + doctrine
-defaults.
+### References
 
-### Calibration references (what the top tiers actually look like)
+- Follow a website, URL, image, or file supplied by the user.
+- Scout and synthesize relevant references.
+- Use no external reference.
 
-When the user picks award-site ambition or 3d/immersive/cinematic treatments,
-these are the bar (fetch and study whichever is closest before designing):
+Efficient uses supplied references only. Recommended uses supplied material or
+a small cross-domain scout. Showcase uses supplied material plus two to four
+strong references from different domains. Extract principles; never reproduce
+a reference's complete visual fingerprint.
+Mark each adoption as user-required or direction-recommended. A user-required
+reference must be visibly implemented, or rejected only after the user
+explicitly approves the rejection.
 
-- https://www.experiencethebestyou.com/en-GB/ — coordinated scroll choreography
-  + heavy custom 3D/motion throughout.
-- https://unseen.co/projects/contra/ and https://unseen.co/projects/letter/ —
-  WebGL media planes, shader transitions, kinetic type (browse
-  https://unseen.co/projects for more in the same family).
-- https://25residences.com/ — luxury real-estate register, cinematic pacing.
-- https://www.ciaoenergy.com/ — THE reference for a real 3D product on the
-  page (stack verified from source): ONE `can.glb` + a small `base.glb`, an
-  `.hdr` environment map for lighting, `MeshPhysicalMaterial`, and six
-  per-flavor **label textures** (AVIF) swapped onto the same geometry via
-  `TextureLoader` — one model, N palettes. Scroll drives it with plain
-  `ScrollTrigger.create`; backgrounds are pre-rendered per-flavor video
-  loops, not live sims. Lesson: photoreal product 3D = real GLB + real label
-  texture + HDRI environment — never coded geometry (3d.md §3) — and the
-  cheap parts (backgrounds) are pre-rendered video.
-- https://www.cinetica.studio/ — the "composed chaos" register (stack
-  verified): Webflow + the FULL GSAP plugin suite (ScrollTrigger, SplitText,
-  ScrambleText, Flip, Draggable, InertiaPlugin, Observer, CustomEase) +
-  Lenis + embedded WebGL shader scenes (Unicorn Studio) + Spline + video.
-  Lesson: the crazy feel is mostly ELABORATE TEXT/LAYOUT CHOREOGRAPHY
-  (scramble, split-line, flip transitions, drag/inertia) layered over a few
-  shader surfaces — not one giant 3D scene.
-- https://www.penguin-capital.co.jp/en and https://designxhand.com/experience
-  — the clean-expressive pole: Next.js/custom builds with three.js + GSAP +
-  Lenis (+ Lottie), a single full-page background canvas
-  (`pointer-events: none`) behind calm editorial type. Lesson: one quiet
-  WebGL layer + disciplined type can read premium-crazy without cinematic
-  darkness.
+### Sources
 
-These teardowns were verified July 2026 and will age — sites redesign and
-registers move on. At award-site ambition, when browser tools exist, spend ONE
-fetch on a current source (Awwwards SOTD or godly.website) to confirm the
-register you're chasing is still the frontier, and note in plan.md what you
-saw. The stack LESSONS above outlive the sites themselves; the aesthetics
-don't.
+- Existing assets only.
+- Allow sourced/licensed images.
+- Allow sourced and generated images; use video or 3D when useful.
+- Ask before each new asset.
 
-Common thread: their 3D is **custom models, textures, and shaders**, not
-generated wallpapers behind text. If the environment has 3D-capable tooling and
-the user opted in, build real 3D material (geometry, materials, lighting,
-shader surfaces per `skills/3d.md`); reserve generated images/video for what
-3D can't do. This tier only happens when the user explicitly chose it in the
-question round — never impose it.
+Efficient defaults to existing assets. Recommended chooses best-fit media.
+Showcase permits maximum useful sourced/generated imagery, video, and 3D.
+Mark specific user-requested assets as user-required. They must ship visibly,
+or be rejected only after the user explicitly approves the rejection. Broad
+permission to source media does not make every possible asset user-required.
 
-## 4. Write the plan, then execute it
+### Packages
 
-Persist the approved plan to `.dreative/plan.md` (or the scratchpad if
-`.dreative/` doesn't exist): capability manifest, the **full Q&A transcript**
-(each question asked + the answer, verbatim, including free-text remarks),
-each SKIPPED question with the inference drawn from the prompt, references
-studied with the distilled borrow-list, the concept exploration (DESIGN.md §2:
-the three divergent concepts, the pick, and the rejects' one-line reasons —
-same duty as media.md's set-piece exploration), blueprint table, stack, mobile
-strategy, fallbacks. Long sessions lose context; the plan file is the re-entry
-point — a resumed session re-reads it instead of re-deciding or re-asking.
+- Allow focused package installation.
+- Keep the existing stack.
+- Ask before installing.
 
-**Then show the plan to the user in chat, before touching code.** Writing
-`plan.md` is not the same as the user having seen it — after the last
-question (§3.9) is answered, post a readable recap in the same conversation:
-the blueprint table (§2), the ambition/depth/treatments chosen, the asset
-plan and its honest cost, references studied and what was borrowed, and any
-install offers taken. This is a plan RECAP, not another approval gate — don't
-block on it unless mockups (§4b) were opted into — but skipping straight from
-the last answer to "building now" without ever surfacing the plan is a bug:
-the user answered several questions and is owed a look at what they add up to
-before code starts. Keep it scannable (the table + a few bullets), not a
-restatement of this whole file.
+Efficient keeps the stack. Recommended and Showcase allow packages whose
+capabilities are necessary for the selected experience.
 
-## 4b. Mockups (when the user opted in)
+### Prototype
 
-Pick the page(s) with the **biggest/most important planned change** (usually
-1–2; the blueprint tells you which). For each, build a mockup that is a **1:1
-replica of exactly what the full build would produce** — same stack, same
-markup structure, same type/color/spacing, same motion and effects actually
-running (real GSAP/Lenis/three.js code, not a note saying "animation here").
-It is built for VISUAL judgment, not function: strip data fetching, handlers,
-and routing to representative literals — like SKILL.md's replica/design-page
-files (single file, default export, self-contained). The rule is: what the
-user sees in the mockup is what they'd see in the shipped page; nothing in the
-mockup that the build wouldn't do, nothing in the build's look that the mockup
-hides.
+- Skip — build directly.
+- Auto — test only a central mechanism with real uncertainty.
+- Required — compare two or three cheap 3–8-frame visual treatment boards, then build one production-like prototype of the selected treatment before integration.
 
-If the user chose **two divergent mockups** (§3.8), build the highest-impact
-page twice — once per surviving explore-pass concept (genuinely different
-palette/type/signature, not two tints of one idea) — and present both;
-the user's pick becomes the committed concept and its reject reason goes in
-the plan file.
+Defaults: Efficient=Skip, Recommended=Auto, Showcase=Required.
 
-Write mockups to `.dreative/mockups/<page>.tsx` (or the scratchpad), serve or
-screenshot them for the user, and ask one approval question: approve / tweak
-(what) / rethink. Approved mockups become the source of truth — the full build
-replicates them exactly and extends the system to the remaining pages. Fold
-tweak feedback into the plan file before building.
+If Auto results in a prototype, or Required is selected, first show two or
+three cheap visual boards that concretely show input, change, and outcome, and ask the user to
+select one. Then build one production-like prototype with desktop/mobile
+captures and recordings, show it, and stop for explicit user acceptance or a
+revision request before integration. Build a second coded prototype only when a named
+decision remains genuinely unresolved and the alternatives differ materially
+in medium, interaction model, spatial structure, or mobile behavior. Changing
+only input method, runtime, or polish does not justify a second build. Label
+every artifact `treatment-board`, `animatic`, `production-like`, or
+`integration-ready`; an animatic cannot be presented as final motion fidelity
+or integrated as Showcase production evidence. Record the treatment selection
+as `selectedBy: "user"`; silence or general permission is not a selection.
+Record production-prototype acceptance as `prototypeReview.status: "accepted"`
+and `acceptedBy: "user"`; treatment selection alone is not implementation approval.
 
-**Execution order (always):**
+After treatment selection, compile a treatment-translation lock before coding.
+Name the selected board artifact; bind composition, focal subject,
+material/lighting, type scale, transition handoff, and mobile framing to visible
+prototype selectors; and list prohibited substitutions. This is not another
+approval gate. It prevents a coded probe from preserving only palette and copy
+while discarding the selected composition and media logic. At prototype review,
+show the selected board and matched desktop/mobile captures side by side. Do not
+ask for acceptance if the defining crop, realism, scale, or handoff is absent.
+Use `references/TREATMENT_TRANSLATION.md` for the required categories and
+side-by-side self-review.
 
-1. **Assets first.** Generate every planned image/video/sequence NOW, at the
-   blueprint's aspect ratios, graded to the palette (media.md §1). Sections get
-   designed around real assets, not around placeholders that "will be swapped".
-2. **Foundation.** Install and WIRE the animation stack (motion.md §8), fonts,
-   tokens, providers — before any section code.
-3. **Sections** in blueprint order, each honoring its row (skills tagged per
-   section apply to that section).
-4. **Effects + choreography** across sections (page-level timelines, transitions,
-   the signature element).
-5. **Verification** — the full runtime protocol (SKILL.md §V: runtime gates +
-   self-critique, mobile first, evidence written to `.dreative/verify.md`).
-   Any effect that fails gets its planned fallback, and the final report says
-   so: "shipped the §2 fallback for X because Y".
+## Stage 3: editable Experience Map
 
-Report against the plan when done: each blueprint row → shipped / fallback /
-cut (with reason), plus the motion inventory (motion.md §9) and the preservation
-ledger when §11 applies. A build that silently diverges from its approved plan
-is a bug even when it looks good.
+After configuration, turn the recommended concept into a short section-level
+proposal the user can understand without design or animation terminology.
+Include every major page or section, Dreative's recommended role, craft
+intensity from 1–5, a plain journey rhythm (`Rest`, `Build`, `Peak`, or
+`Release`), user agency (`Watch`, `Influence`, or `Control`), and its connection
+to the surrounding journey. Explain once that 5 means flagship craft and a
+meaningful transformation where appropriate; it does not mean continuous or
+maximal animation. Users may choose 5 everywhere while the route retains one
+Peak and deliberate quiet sections. Add one to three
+targeted recommendations explaining where stronger treatment will help and
+where it would create competition.
+
+End with:
+
+> Reply **use Dreative's recommended approach** or name section changes:
+> **more animated**, **calmer**, **change layout**, **change interaction**,
+> **keep static**, or add an instruction.
+
+Wait for the reply. After acceptance, privately compile every row into
+`schemas/experience-map.schema.json`: role, input state, visible start and end
+states, mechanism owner, connection, desktop, mobile, reduced-motion, and
+evidence target. This working map is a promise-to-implementation bridge, not an
+approval receipt or a claim of visual quality. Journey-balance arithmetic is
+advisory and must lead to screenshot comparison, not a taste score.
+This is the user's concrete design decision, not a second approval artifact.
+
+## Stage 4: private Creative Decision Brief and optional reveal
+
+After direction, configuration, and the Experience Map are resolved, always complete this entire
+project-specific brief privately before implementation. It is the working
+blueprint for section allocation, treatments, assets, signature mechanisms,
+continuity, mobile transformation, runtime ownership, fallbacks, and review.
+Keep it current when repository inspection or prototyping changes a decision.
+
+When `.dreative/evaluation/README.md` exists in the target project, it is an
+explicit request for a compact evaluator handoff. After configuration, write
+the selected direction and a concise, inspectable decision summary to the
+current-run record named by that local contract. Include product observations,
+the alternatives considered at a summary level, selection reasons, promises,
+and material later changes with their triggers. Do not expose chain-of-thought,
+private exploration, raw conversation, or scratch notes. This handoff reports
+decisions; it does not replace the private brief or become an approval gate.
+Record the exact branch and commit, updating `uncommitted` after the final
+commit. Only paths named by the local evaluation README belong to the handoff;
+remove stale untracked legacy critic, verification, certification, trace, and
+evidence artifacts rather than allowing an evaluator to confuse them with the
+current build.
+
+Do not require the user to read or approve it. By default, show only the short
+build brief required by `SKILL.md`, including this compact execution map:
+
+```text
+Experience arc: <hero> → <proof> → <transformation> → <decision>
+Section ownership: <section → perceptible treatment or role>
+Post-hero peak: <section and meaningful state change>
+Continuity owner: <device that carries the concept beyond the hero>
+Mobile transformation: <structural changes, not “stack everything”>
+Showcase ceiling: <highest coherent mechanism/media decision and prototype result>
+```
+
+Keep it concrete and under roughly ten lines. It exposes the implementation
+shape without turning the private brief into an approval or evidence artifact.
+If the user says `show detailed plan`, reveal the current full brief. Do not
+create a plan file, approval record, or other compliance artifact merely to
+prove that the private brief exists.
+
+Adapt every decision below to the inspected project and selected direction.
+The user's explicit choices and corrections are the source of truth. Use direction
+defaults and agent judgment only where the user left a decision open. Do not
+reinterpret a direction label to reduce its promised scope, and do not change taste,
+intensity, treatments, or page allocation merely because implementation is
+harder than expected.
+
+Ask one focused question before implementation when two plausible readings of
+the user's intent would materially change a page or section, or when uncertain
+whether a major section should carry an unusually intense, spatial, cinematic,
+or experimental treatment. Ask again before any later material deviation from
+the brief unless the user delegated that choice. Do not interrupt for routine
+craft decisions the selected direction already resolves.
+
+### 1. Product truth
+
+Summarize audience, primary task, routes, content shape, subject vocabulary,
+working behavior, valuable visual equity, assets, dependencies, defects, and
+preservation.
+
+### 2. Selected direction
+
+Define the project-native premise, composition rule, typography, material/color
+logic, media role, motion/interaction grammar, continuity device, and why they
+fit. Include three decisions that could only come from this product.
+
+### 3. Reference synthesis
+
+For each supplied or scouted source, show only the principle being adapted and
+what will deliberately differ. Confirm that no source contributes the complete
+palette + type + layout + signature-motion combination.
+
+### 4. Workflow and resources
+
+Show Fast/Lean/Full Audit, Skip/Auto/Required, reference strategy, Sourced images,
+Generated images, sourced/generated video, 3D sourcing or generation,
+Packages, and actual detected capabilities. Mark recommendations.
+
+### 5. Treatment and experience allocation
+
+For each relevant treatment, state the project-specific use, selected/declined
+decision, cost, risk, and insufficient version. Then map the selected treatments
+to route sections, including a meaningful post-hero peak and the continuity
+owner. User-selected treatment names or counts override direction defaults. UX and
+Mobile always apply. Showcase may use any treatment but has no minimum technology
+count. It requires one connected experience system: a meaningful choice or
+transformation must propagate through at least three non-adjacent regions across
+the pre-peak, central peak, and post-peak experience. Static grids, isolated
+widgets, and thematic labels do not count.
+Selection is a delivery promise, not checkbox coverage: every
+selected treatment needs a named owner and perceptible contribution, although
+one coherent mechanism may serve several treatments.
+
+Start from the accepted Experience Map. Preserve every row's role and intensity
+intent while privately adding executable states, owners, handoffs, responsive
+forms, fallbacks, and evidence targets. Do not force a generic architecture.
+
+For Showcase, first write a compact production-feasibility table for every
+focal subject: required medium, exact available source/tool, editing required,
+responsive deliverable, rights/cost, and readiness (`executable now`, `needs a
+tool`, `paid/licensed`, or `external production`). Read
+`references/ASSET_PIPELINES.md`. If a treatment-defining subject cannot be
+produced at the selected fidelity, stop before focal application code and ask
+for the exact missing capability or an explicit treatment change. Final focal
+assets, responsive crops, masks, and sequences come before the production-like
+signature-scene prototype; CSS/SVG stand-ins are not temporary substitutes for
+photoreal subjects. The executable production-feasibility gate records every
+treatment-defining subject, exact tool/source, editing operations, desktop and
+mobile deliverables, rights/cost, readiness, and repository-relative output
+files. All treatment-defining subjects must be `ready`; their outputs must
+exist, be tracked, and be referenced by the accepted prototype. `needs-tool`,
+`paid-licensed`, or `external-production` blocks focal implementation until
+resolved or the user explicitly changes the treatment. Output signatures and
+extensions must match the declared medium. Desktop and mobile use distinct
+files unless `responsiveMode: shared` explicitly names one responsive asset.
+Each viewport binds its repository-relative output to a visible selector in the
+accepted prototype through `data-dreative-asset-ref`; browser verification runs
+at desktop, 390px, and 320px, checks the corresponding viewport deliverable,
+and hashes the resource actually loaded by source-addressable media against the
+declared output file. The data attribute is an index, not proof by itself.
+
+Then write `schemas/showcase-mechanism.schema.json` using the
+operational rules in `SKILL.md`: bind the Recommended baseline, perceptible
+Showcase differences, media decisions, two or three concrete 3–8-frame
+treatment boards, and one user-selected production-like prototype. Build a
+second coded prototype only for a named material uncertainty. The connected
+experience system must carry either meaningful shared state or one authored
+physical/cinematic/material motif through pre-peak, central peak, and post-peak
+regions. User Control is required only when it improves the product decision. Reference
+the executable routes, captures, recordings, primary subjects, and temporal
+evidence required by the schema. These are accountability inputs, not proof of
+visual quality; `builderSelectionRationale` is never a reviewer verdict.
+
+### 6. Build architecture
+
+Name the signature mechanism, semantic fallback, runtime ownership, component
+boundaries, asset pipeline, mobile transformation, accessibility behavior, and
+performance budget. Use a prototype only when its result can change the build.
+
+### 7. Review, risks, and decision
+
+List observable review passes, material risks, and fallbacks that preserve the
+concept. End with one editable decision line containing direction, review,
+prototype, treatments, references, sources, packages, and missing-content
+choices.
+
+Before completion, reconcile the rendered product against this current brief.
+Check every promised route, section role, treatment owner, signature mechanism,
+mobile transformation, preserved behavior, fallback, and chosen review pass.
+Do not call the work complete while an item is absent, imperceptible, replaced
+by a weaker substitute, or unverified. Continue correcting it or report the
+specific blocker and remaining scope.
+
+For Showcase, inspect below the first peak and reject completion if the rest
+could plausibly be Efficient or ordinary Recommended. Disclose:
+
+```text
+Showcase implementation attempted: <what visibly shipped>
+Independent visual verdict: awaiting user review
+Not pursued: <material advanced treatment rejected or replaced, and why>
+```
+
+Omit `Not pursued:` only when no material treatment was rejected or replaced.
+Ask the user for the independent visual verdict; Codex cannot author it.
+
+After the explicit Experience Map reply, implement. Do not generate another
+approval or contract gate. The prototype-review pause above and a small
+integrated experience checkpoint are the only exceptions.
+
+For Showcase and experience-led Recommended work, checkpoint the primary peak,
+its downstream consequence, and their desktop/mobile handoff before polishing.
+
+Every substantial final handoff ends with:
+
+```text
+Implementation complete; human taste verdict: awaiting user review
+```
+
+This applies to every direction. Supply rendered views and ask for the verdict.
+For opted-in evaluation, reconcile the designated record with shipped source.

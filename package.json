@@ -1,14 +1,15 @@
 {
   "name": "dreative-testbed",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "module",
-  "description": "A/B testing ground for the Dreative frontend design skill",
+  "description": "Automated blind A/B testing ground for the Dreative frontend design skill",
   "scripts": {
+    "round": "node scripts/run-all.mjs",
+    "review": "node scripts/review.mjs",
     "new": "node scripts/new-run.mjs",
     "capture": "node scripts/capture.mjs",
-    "compare": "node scripts/compare.mjs",
-    "clean": "node -e \"fs.rmSync('runs',{recursive:true,force:true});fs.mkdirSync('runs')\""
+    "clean": "node -e \"fs.rmSync('runs',{recursive:true,force:true});fs.mkdirSync('runs');fs.writeFileSync('runs/.gitkeep','')\""
   },
   "dependencies": {
     "react": "^18.3.1",

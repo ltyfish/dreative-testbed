@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
-  "target": "codex",
-  "installedAt": "2026-08-08T12:40:42.172Z",
+  "target": "claude",
+  "installedAt": "2026-08-08T12:40:51.837Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -58,5 +58,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "bd6d941abe1840ca03c9020c8bee40fb52fac258e6c8def1123212456c5e9227"
+  "manifestHash": "0b237da9b6bb560f856fdcf93ccc2c9df982d2c9d8f036db4a1b5941af1eb2dc"
 }
