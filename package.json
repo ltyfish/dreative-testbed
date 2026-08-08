@@ -1,12 +1,14 @@
 {
   "name": "dreative-testbed",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "description": "A/B testing ground for the Dreative frontend design skill",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "new": "node scripts/new-run.mjs",
+    "capture": "node scripts/capture.mjs",
+    "compare": "node scripts/compare.mjs",
+    "clean": "node -e \"fs.rmSync('runs',{recursive:true,force:true});fs.mkdirSync('runs')\""
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -14,6 +16,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.49.0",
     "vite": "^6.0.0"
   }
 }

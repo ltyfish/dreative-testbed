@@ -1,0 +1,14 @@
+{
+  "product": "Northwind Coffee Roasters",
+  "field": "Physical product · direct-to-consumer commerce",
+  "designChallenge": "Storytelling and appetite. Craft, origin, and freshness have to be felt, and six products still have to be comparable and buyable.",
+  "prompt": "This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.",
+  "preserve": [
+    "All five nav links and their targets",
+    "All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each",
+    "The four brew-guide steps and their instructions",
+    "The contact form with email and message fields, and its success state",
+    "The four footer links",
+    "Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)"
+  ]
+}

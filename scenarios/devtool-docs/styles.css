@@ -1,0 +1,70 @@
+/* Deliberately plain baseline. Readable, unstyled-looking, no design opinion. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #222;
+  background: #fff;
+}
+
+code, pre { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+
+.page { max-width: 1080px; margin: 0 auto; padding: 0 20px 60px; }
+
+.nav { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #ccc; }
+.nav-logo { font-weight: bold; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 14px; font-size: 15px; }
+
+.layout { display: grid; grid-template-columns: 200px 1fr; gap: 32px; padding-top: 24px; }
+@media (max-width: 800px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static !important; } }
+
+.sidebar { position: sticky; top: 20px; align-self: start; font-size: 14px; }
+.sidebar-title { font-weight: bold; margin: 0 0 8px; color: #555; }
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li { margin-bottom: 6px; }
+
+.content { min-width: 0; }
+
+.doc-header { padding-bottom: 20px; border-bottom: 1px solid #eee; }
+.version { font-size: 13px; color: #666; margin: 0 0 6px; }
+.doc-header h1 { font-size: 32px; margin: 0 0 10px; }
+.tagline { font-size: 18px; color: #444; margin: 0; max-width: 620px; }
+
+.doc-section { padding: 26px 0; border-bottom: 1px solid #eee; }
+.doc-section h2 { font-size: 22px; margin: 0 0 12px; }
+.doc-section h3 { font-size: 16px; margin: 0 0 5px; }
+
+.tabs { display: flex; gap: 0; margin-bottom: 0; }
+.tab { padding: 7px 14px; border: 1px solid #999; border-bottom: 0; background: #f4f4f4; cursor: pointer; font: inherit; font-size: 14px; }
+.tab.active { background: #fff; font-weight: bold; }
+
+.code { position: relative; background: #f7f7f7; border: 1px solid #999; padding: 14px; overflow-x: auto; font-size: 14px; margin: 0 0 10px; }
+.code code { white-space: pre; }
+.copy { position: absolute; top: 8px; right: 8px; padding: 4px 10px; border: 1px solid #999; background: #fff; cursor: pointer; font: inherit; font-size: 12px; }
+
+.note { font-size: 14px; color: #555; }
+
+.api-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.api-table th, .api-table td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; vertical-align: top; }
+.api-table thead th { background: #f4f4f4; }
+.api-table code { font-size: 13px; }
+
+.commands { list-style: none; padding: 0; margin: 0; }
+.command { border: 1px solid #ccc; padding: 14px; margin-bottom: 12px; }
+.command p { margin: 0 0 6px; font-size: 15px; }
+.flags { display: flex; flex-wrap: wrap; gap: 8px; }
+.flags code { background: #f0f0f0; padding: 2px 7px; font-size: 13px; }
+
+.errors { margin: 0; }
+.error { border-left: 3px solid #cc6600; padding: 4px 0 4px 14px; margin-bottom: 14px; }
+.error dt { font-weight: bold; margin-bottom: 4px; }
+.error dd { margin: 0; font-size: 15px; color: #444; }
+
+.footer { padding: 24px 0; font-size: 14px; color: #555; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+
+a { color: #0044aa; }

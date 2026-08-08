@@ -1,8 +1,9 @@
 node_modules
 dist
 
-# Dreative creates working files and prototypes here. Keep them local by
-# default, but version the small reviewer-facing package below.
-.dreative/*
-!.dreative/evaluation/
-!.dreative/evaluation/**
+# Runs are disposable working copies. The verdicts are the artefact worth keeping.
+runs/*
+!runs/.gitkeep
+
+# Dreative working output: prototypes, recordings, caches, traces.
+.dreative/
