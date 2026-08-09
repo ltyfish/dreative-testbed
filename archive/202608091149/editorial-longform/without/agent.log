@@ -1,0 +1,35 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/editorial-longform__without__202608091149
+
+This is a single long-form essay on The Marginal, an independent publication about archives and records. It is currently set in plain default type. Redesign the reading experience so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The full essay text — every section heading and every paragraph, unabridged
+- The headline, standfirst, and byline with date and read time
+- The lede image and its caption
+- The pull quote
+- All three footnotes in the Notes section
+- The three related articles with titles, descriptions, and read times
+- The subscribe form with email field and its success state
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, nothing committed (the `runs/` directory is gitignored anyway), and the two servers I started for screenshots are stopped.
+
+**The idea:** the essay is about a ruled form whose by-product outlived its purpose — so the page is built like the logbook it describes.
+
+- **Typography.** Instrument Serif for display (high-contrast, engraved-feeling), Newsreader for the prose, IBM Plex Mono for everything administrative — kickers, labels, note numbers, read times. That mono/serif split is the design's whole argument: the record-keeping layer looks like record-keeping, the writing looks like writing.
+- **Palette.** Warm paper (#e9e4d9) with a fixed hairline rule-grid behind everything, ink near-black, and one lamp amber used only where the light is the actual subject — the italic word *accidentally* in the headline, the drop cap, the section marks, the quote marks.
+- **Marginal rail.** Each section gets a sticky left margin carrying `§ 01` and an italic slug ("The form produced the restraint", "1988 · sensor package installed") — the publication's name, made literal. It folds into a slug line above the heading under 820px.
+- **Lede.** Replaced the grey placeholder with a drawn SVG plate: a Fresnel lens seen head-on, slowly rotating beams, and the sea ruled into visibility bands. The caption is set as an archive entry ("Plate I").
+- **Reading structure.** Drop cap with small-caps first line opening the essay; a full-measure pull quote ruled top and bottom instead of the indented bar; notes as a two-column catalogue; related articles as ledger rows that indent on hover; the subscribe field as a line to write on rather than a box, over ruled paper.
+- **Motion, quiet.** A 2px amber progress line, a section-tick rail at far left that tracks position via IntersectionObserver, a lamp pulse on the wordmark. All of it drops under `prefers-reduced-motion`.
+
+Every preserved item is intact: full text and headings, headline/standfirst/byline, lede image and caption, pull quote, all three notes, all three related articles with read times, the subscribe form and its success state, and the four footer links.

@@ -158,14 +158,39 @@ function captureWarnings(runDir) {
 let ARCHIVE_PORT = null
 let archiveProc = null
 
-function startArchiveViewer() {
+async function startArchiveViewer() {
   if (process.argv.includes('--no-archive') || !listRounds().length) return
-  ARCHIVE_PORT = 4322
-  const args = [path.join(ROOT, 'scripts', 'archive.mjs'), '--port', String(ARCHIVE_PORT), '--review-port', String(PORT)]
-  archiveProc = spawn(process.execPath, args, { cwd: ROOT, stdio: 'ignore' })
-  archiveProc.on('error', () => {
+
+  // Never hard-code 4322. A review server left running from an earlier session already owns
+  // it, and the second viewer then dies of EADDRINUSE with its stdio thrown away — leaving a
+  // header link to a port that answers for somebody else, or for nobody. Take a port the OS
+  // says is free, then prove the viewer answers on it before advertising it at all.
+  const port = await freePort(4322)
+  const args = [path.join(ROOT, 'scripts', 'archive.mjs'), '--port', String(port), '--review-port', String(PORT)]
+  const proc = spawn(process.execPath, args, { cwd: ROOT, stdio: 'ignore' })
+  let dead = false
+  proc.on('error', () => {
+    dead = true
+  })
+  proc.on('exit', () => {
+    dead = true
     ARCHIVE_PORT = null
   })
+
+  for (let i = 0; i < 40 && !dead; i++) {
+    try {
+      const res = await fetch(`http://127.0.0.1:${port}/`)
+      if (res.ok) {
+        archiveProc = proc
+        ARCHIVE_PORT = port
+        return
+      }
+    } catch {
+      /* not up yet */
+    }
+    await new Promise((r) => setTimeout(r, 250))
+  }
+  killTree(proc.pid)
 }
 
 const live = new Map() // runDir -> { port, proc }
@@ -657,10 +682,11 @@ const server = http.createServer(async (req, res) => {
 
 const swept = sweepCleared()
 const pairs = loadPairs()
-startArchiveViewer()
+await startArchiveViewer()
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\nBlind review ready:  http://127.0.0.1:${PORT}`)
   if (ARCHIVE_PORT) console.log(`Past rounds:         http://127.0.0.1:${ARCHIVE_PORT}`)
+  else if (listRounds().length) console.log('Archive viewer would not start — run it yourself: node scripts/archive.mjs')
   if (swept) console.log(`Cleaned up ${swept} leftover run folder(s) from an archived round.`)
   console.log(`${pairs.length} scenario pair(s) captured: ${pairs.map((p) => p.scenario).join(', ') || 'none yet'}`)
   const bad = pairs.filter((p) => !p.health.judgeable)

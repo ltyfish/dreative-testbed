@@ -1,0 +1,22 @@
+{
+  "scenario": "editorial-longform",
+  "judgedAt": "2026-08-09T12:17:14.897Z",
+  "runs": {
+    "with": "editorial-longform__with__202608091149",
+    "without": "editorial-longform__without__202608091149"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "with",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "without": "i can see the vision fore the animation, but its so ugly and not working, animations definitely not as clean, good ans accurate as design B, but the hero animation i can see potential",
+    "with": "definitely, this is very good, its clean, nice minimal animation, images used are very nice i like, if we are talking about design tho, idk if its the prompt since the other design also somewhat the same, but ya its a little plain with alot of words, tho tbh this is a editorial long form so that my words grain of salt, also i wish theres more nimation but, ya its recommended may not fit it."
+  },
+  "summary": "worst thing about the winner is that, not mch animation, but its recommended soo, is clean and nice tho. best thing about the loser is using of lights and animation to simulate a lighthouse, potential and creative but execute wrong"
+}

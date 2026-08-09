@@ -1,0 +1,60 @@
+{
+  "round": "202608091149",
+  "archivedAt": "2026-08-09T12:26:08.579Z",
+  "scenarios": [
+    "editorial-longform",
+    "saas-analytics"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "editorial-longform__with__202608091149",
+      "code": 1,
+      "minutes": 11.4
+    },
+    {
+      "runName": "editorial-longform__without__202608091149",
+      "code": 0,
+      "minutes": 5.3
+    },
+    {
+      "runName": "saas-analytics__with__202608091149",
+      "code": 1,
+      "minutes": 11.1
+    },
+    {
+      "runName": "saas-analytics__without__202608091149",
+      "code": 1,
+      "minutes": 5.8
+    }
+  ],
+  "runs": [
+    {
+      "runName": "editorial-longform__without__202608091149",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "editorial-longform__with__202608091149",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "saas-analytics__without__202608091149",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "saas-analytics__with__202608091149",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

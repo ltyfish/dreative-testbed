@@ -1,0 +1,22 @@
+{
+  "scenario": "saas-analytics",
+  "judgedAt": "2026-08-09T12:25:18.875Z",
+  "runs": {
+    "with": "saas-analytics__with__202608091149",
+    "without": "saas-analytics__without__202608091149"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "with",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "without"
+  },
+  "overall": "without",
+  "feedback": {
+    "without": "omg this is fucking sicks, one of the ebstr design i seen and \"produce\" is clean, animations are insane, super creative design and use of animations and card, clear, sick, flows right. tho the freqenmtly asked section doesnt really work, not sure if this is design flaw.",
+    "with": "this is just hella plain, no animation, no nothing, the graphs i guess is nice, but ya just plain and boring. but its sections and the way is being puit together is interesting, compare to the other one, this has more explanation and a little more meaning. like there is \nChange the definition. Watch everything downstream move with it. operation and is interactive showing what the system does, something the other design lackjs. and theres a graph to show performance in production"
+  },
+  "summary": "worst about the winner is that, it lacks proper display of important and making sure user understands properly, like the other design, it shows \nChange the definition. Watch everything downstream move with it. and a true interactive component with graphs etc, and theres a graph and pretyt nice too to show performance in production. tho i ahve to say, the design is really good. the other has mor emeaning and more detailed with real interaction, but the design is really plain and boring"
+}

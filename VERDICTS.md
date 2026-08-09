@@ -174,3 +174,47 @@ are void and must not be counted:
 Standing after this round: **civic-clinic** and **devtool-docs** to the Dreative build,
 **coffee-roaster** to the control. coffee-roaster and devtool-docs both ended on the usage
 limit, so their designs may be cut off.
+
+## editorial-longform — 2026-08-09
+
+- with:    `editorial-longform__with__202608091149`
+- without: `editorial-longform__without__202608091149`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** definitely, this is very good, its clean, nice minimal animation, images used are very nice i like, if we are talking about design tho, idk if its the prompt since the other design also somewhat the same, but ya its a little plain with alot of words, tho tbh this is a editorial long form so that my words grain of salt, also i wish theres more nimation but, ya its recommended may not fit it.
+
+**Feedback on the control:** i can see the vision fore the animation, but its so ugly and not working, animations definitely not as clean, good ans accurate as design B, but the hero animation i can see potential
+
+**Summary:** worst thing about the winner is that, not mch animation, but its recommended soo, is clean and nice tho. best thing about the loser is using of lights and animation to simulate a lighthouse, potential and creative but execute wrong
+
+## saas-analytics — 2026-08-09
+
+- with:    `saas-analytics__with__202608091149`
+- without: `saas-analytics__without__202608091149`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | control |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | control |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** this is just hella plain, no animation, no nothing, the graphs i guess is nice, but ya just plain and boring. but its sections and the way is being puit together is interesting, compare to the other one, this has more explanation and a little more meaning. like there is 
+Change the definition. Watch everything downstream move with it. operation and is interactive showing what the system does, something the other design lackjs. and theres a graph to show performance in production
+
+**Feedback on the control:** omg this is fucking sicks, one of the ebstr design i seen and "produce" is clean, animations are insane, super creative design and use of animations and card, clear, sick, flows right. tho the freqenmtly asked section doesnt really work, not sure if this is design flaw.
+
+**Summary:** worst about the winner is that, it lacks proper display of important and making sure user understands properly, like the other design, it shows 
+Change the definition. Watch everything downstream move with it. and a true interactive component with graphs etc, and theres a graph and pretyt nice too to show performance in production. tho i ahve to say, the design is really good. the other has mor emeaning and more detailed with real interaction, but the design is really plain and boring

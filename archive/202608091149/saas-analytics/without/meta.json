@@ -1,0 +1,12 @@
+{
+  "scenario": "saas-analytics",
+  "arm": "without",
+  "seq": "202608091149",
+  "label": null,
+  "direction": null,
+  "product": "Cadence Analytics",
+  "field": "B2B SaaS · developer and operations tooling",
+  "runName": "saas-analytics__without__202608091149",
+  "site": true,
+  "archivedAt": "2026-08-09T12:26:07.531Z"
+}

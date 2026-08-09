@@ -1,0 +1,12 @@
+{
+  "scenario": "editorial-longform",
+  "arm": "without",
+  "seq": "202608091149",
+  "label": null,
+  "direction": null,
+  "product": "The Marginal — Issue 34",
+  "field": "Editorial · long-form publishing",
+  "runName": "editorial-longform__without__202608091149",
+  "site": true,
+  "archivedAt": "2026-08-09T12:26:05.299Z"
+}

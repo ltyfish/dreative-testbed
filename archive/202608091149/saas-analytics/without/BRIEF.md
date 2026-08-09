@@ -1,0 +1,19 @@
+# Brief — Cadence Analytics (without Dreative)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/saas-analytics__without__202608091149
+
+This is the marketing site for Cadence, a warehouse-native analytics layer sold to operations and data teams. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six features with their names and descriptions
+- The four performance metrics with exact values
+- All three pricing plans, their prices, unit labels, feature lists, and a working call-to-action each
+- The working monthly/annual billing toggle, including the 20% annual discount calculation
+- All four FAQ questions and answers, expandable
+- The signup form with email field and its success state
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
