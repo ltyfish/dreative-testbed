@@ -12,7 +12,7 @@ import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
-import { findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
+import { archiveRound, findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
 import { freePort, killTree } from './lib/capture.mjs'
 import { pairHealth } from './lib/health.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
@@ -129,10 +129,8 @@ let archiveProc = null
 function startArchiveViewer() {
   if (process.argv.includes('--no-archive') || !listRounds().length) return
   ARCHIVE_PORT = 4322
-  archiveProc = spawn(process.execPath, [path.join(ROOT, 'scripts', 'archive.mjs'), '--port', String(ARCHIVE_PORT)], {
-    cwd: ROOT,
-    stdio: 'ignore',
-  })
+  const args = [path.join(ROOT, 'scripts', 'archive.mjs'), '--port', String(ARCHIVE_PORT), '--review-port', String(PORT)]
+  archiveProc = spawn(process.execPath, args, { cwd: ROOT, stdio: 'ignore' })
   archiveProc.on('error', () => {
     ARCHIVE_PORT = null
   })
@@ -239,6 +237,48 @@ ${rows}
   return record
 }
 
+// ------------------------------------------------------------------ reset
+//
+// A round is finished when every judgeable pair has been scored. Clearing it by hand means
+// knowing that runs/ is disposable but runs/verdicts is not — so it is one button instead.
+// Nothing is deleted until the archive copy is on disk and verified.
+
+function resetRound() {
+  const pairs = loadPairs()
+  if (!pairs.length) throw new Error('there is nothing in runs/ to archive')
+
+  // Live previews hold the run directories open on Windows; a delete under them fails.
+  stopAllLive()
+
+  const byRound = new Map()
+  for (const p of pairs) {
+    const round = p.A.meta.seq
+    if (!byRound.has(round)) byRound.set(round, [])
+    byRound.get(round).push(p.A.dir, p.B.dir)
+  }
+
+  const archived = []
+  for (const [round, runNames] of byRound) {
+    const meta = readJson(path.join(RUNS, `round-${round}.json`), {})
+    const { roundDir } = archiveRound({ round, runNames, meta })
+    if (!fs.existsSync(path.join(roundDir, 'round.json'))) throw new Error(`archiving round ${round} failed — nothing was deleted`)
+    archived.push(round)
+  }
+
+  // Only now is it safe to clear. Everything removed here exists in archive/.
+  let removed = 0
+  for (const dirs of byRound.values()) {
+    for (const dir of dirs) {
+      fs.rmSync(path.join(RUNS, dir), { recursive: true, force: true })
+      removed++
+    }
+  }
+  fs.rmSync(VERDICT_DIR, { recursive: true, force: true })
+  fs.rmSync(ASSIGN_FILE, { force: true })
+
+  return { archived, removed }
+}
+
 // ------------------------------------------------------------------ markup
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
@@ -259,6 +299,10 @@ h1{margin:0;font-size:16px;letter-spacing:-.01em}
 .invalid{border:1px solid var(--bad);border-radius:10px;padding:14px 18px;margin-bottom:20px;background:#1b1013}
 .invalid h3{margin:0 0 6px;font-size:14px;color:var(--bad)}
 .invalid ul{margin:6px 0 0 18px;padding:0;color:var(--mut);font-size:13.5px}
+.finished{border:1px solid var(--good);border-radius:10px;padding:16px 18px;margin-bottom:22px;background:#0e1a13}
+.finished h3{margin:0;font-size:14px;color:var(--good)}
+.tab.reset{border-color:var(--mut);color:var(--mut);cursor:pointer;background:none;font:inherit;font-size:13px;padding:5px 11px}
+.tab.reset:hover{border-color:var(--bad);color:var(--bad)}
 main{padding:24px;max-width:1600px;margin:0 auto}
 .brief{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:22px}
 .brief h2{margin:0 0 6px;font-size:15px}
@@ -304,8 +348,25 @@ function page(pairs, active) {
 
   if (!pair) {
     return `<!doctype html><meta charset="utf-8"><title>Review</title><style>${STYLE}</style>
-    <header><h1>Blind review</h1></header>
-    <main><p class="empty">No captured pairs yet.<br><br>Run a round first:<br><code>node scripts/run-all.mjs</code></p></main>`
+    <header><h1>Blind review</h1><div class="sub">Nothing waiting to be scored.</div></header>
+    <main><p class="empty">No captured pairs in <code>runs/</code>.<br><br>Run a round:<br><code>node scripts/run-all.mjs --scenarios civic-clinic,coffee-roaster</code>${
+      ARCHIVE_PORT ? `<br><br>Everything already judged is in the <a href="http://127.0.0.1:${ARCHIVE_PORT}">archive ↗</a>` : ''
+    }</p></main>`
+  }
+
+  // The round is over when every pair that can be judged has been. Say so, and offer the
+  // one action that follows — otherwise the page looks the same as it did at scenario one.
+  const done = (all) => {
+    const judgeable = all.filter((p) => p.health.judgeable)
+    const left = judgeable.filter((p) => !p.scored)
+    if (!judgeable.length || left.length) return ''
+    const skipped = all.length - judgeable.length
+    return `<div class="finished">
+      <h3>Round complete — all ${judgeable.length} judgeable scenario(s) scored${skipped ? `, ${skipped} skipped as unjudgeable` : ''}</h3>
+      <p class="sub" style="margin:6px 0 12px">Archiving copies every design, screenshot, transcript and verdict into <code>archive/</code>,
+      then clears <code>runs/</code> so the next round starts with no ticks carried over. The archive is what gets committed.</p>
+      <button id="reset">Archive this round and reset</button>
+    </div>`
   }
 
   // Problems are reported by side letter, never by arm — naming the arm would unblind the
@@ -366,7 +427,7 @@ function page(pairs, active) {
     <div class="sub">One of these used Dreative. You are not told which until you submit. ${
       ARCHIVE_PORT ? `Past rounds: <a href="http://127.0.0.1:${ARCHIVE_PORT}" target="_blank" rel="noopener">archive ↗</a>` : ''
     }</div></div>
-  <nav class="tabs">${tabs}</nav>
+  <nav class="tabs">${tabs}<button class="tab reset" id="resetTop" title="Archive this round and clear runs/">Reset round</button></nav>
 </header>
 <main>
   <div class="brief">
@@ -375,6 +436,7 @@ function page(pairs, active) {
   </div>
 
   ${banner(pair)}
+  ${done(pairs)}
 
   <div class="grid">${side('A')}${side('B')}</div>
 
@@ -408,6 +470,24 @@ function page(pairs, active) {
 </main>
 <script>
 const SCENARIO = ${JSON.stringify(pair.scenario)};
+const UNSCORED = ${JSON.stringify(pairs.filter((p) => p.health.judgeable && !p.scored).map((p) => p.scenario))};
+
+async function resetRound(btn) {
+  const warn = UNSCORED.length
+    ? 'These are still unscored:\\n\\n  ' + UNSCORED.join('\\n  ') + '\\n\\nArchive anyway and clear runs/? Their designs are kept in the archive, but you cannot score them after this.'
+    : 'Archive this round and clear runs/?\\n\\nEvery design, screenshot, transcript and verdict is copied into archive/ first. The next round starts clean.';
+  if (!confirm(warn)) return;
+  const label = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Archiving… (this rebuilds each site, give it a minute)';
+  const res = await fetch('/api/reset', { method: 'POST' });
+  if (!res.ok) { alert('Reset failed — nothing was deleted:\\n\\n' + await res.text()); btn.disabled = false; btn.textContent = label; return; }
+  const out = await res.json();
+  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).');
+  location.href = '/';
+}
+document.getElementById('resetTop').addEventListener('click', (e) => resetRound(e.currentTarget));
+document.getElementById('reset')?.addEventListener('click', (e) => resetRound(e.currentTarget));
 const KEYS = ${JSON.stringify(CRITERIA.map(([k]) => k))};
 document.getElementById('submit').addEventListener('click', async () => {
   const picks = {};
@@ -473,6 +553,17 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(302, { location: `http://127.0.0.1:${port}/` }).end()
     } catch (err) {
       res.writeHead(500).end(`could not start live preview: ${err.message}`)
+    }
+    return
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/reset') {
+    try {
+      const out = resetRound()
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify(out))
+    } catch (err) {
+      res.writeHead(500).end(err.message)
     }
     return
   }

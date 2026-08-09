@@ -14,6 +14,9 @@ import path from 'node:path'
 import { ARCHIVE, listRounds, readJson } from './lib/archive.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4322
+// The archive is usually opened from the review page, and a new tab with no link back is a
+// dead end. review.mjs passes its own port; on its own the default is the right guess.
+const REVIEW_PORT = Number(process.argv[process.argv.indexOf('--review-port') + 1]) || 4321
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -83,6 +86,7 @@ h1{margin:0;font-size:16px}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
 .tab{padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:13px;text-decoration:none;color:var(--fg);white-space:nowrap}
 .tab.on{background:var(--acc);color:#06101f;border-color:var(--acc);font-weight:600}
+.tab.back{border-color:var(--acc);color:var(--acc)}
 main{padding:24px;max-width:1600px;margin:0 auto}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:22px}
 .card h2{margin:0 0 4px;font-size:15px}
@@ -117,7 +121,7 @@ function shell(title, tabsHtml, body) {
 <header>
   <div><h1><a href="/" style="text-decoration:none;color:inherit">Testbed archive</a></h1>
   <div class="sub">Every past round, with its verdict. Arms are labelled — this is the record after the reveal.</div></div>
-  <nav class="tabs">${tabsHtml}</nav>
+  <nav class="tabs">${tabsHtml}<a class="tab back" href="http://127.0.0.1:${REVIEW_PORT}">← Blind review</a></nav>
 </header>
 <main>${body}</main>`
 }
