@@ -1,0 +1,123 @@
+{
+  "round": "202608090424",
+  "archivedAt": "2026-08-09T04:39:24.211Z",
+  "scenarios": [
+    "civic-clinic",
+    "coffee-roaster",
+    "devtool-docs",
+    "editorial-longform",
+    "saas-analytics"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "civic-clinic__with__202608090424",
+      "code": 0,
+      "minutes": 6.1
+    },
+    {
+      "runName": "civic-clinic__without__202608090424",
+      "code": 0,
+      "minutes": 3.7
+    },
+    {
+      "runName": "coffee-roaster__with__202608090424",
+      "code": 1,
+      "minutes": 12.9
+    },
+    {
+      "runName": "coffee-roaster__without__202608090424",
+      "code": 0,
+      "minutes": 3.7
+    },
+    {
+      "runName": "devtool-docs__with__202608090424",
+      "code": 1,
+      "minutes": 6.9
+    },
+    {
+      "runName": "devtool-docs__without__202608090424",
+      "code": 0,
+      "minutes": 3.3
+    },
+    {
+      "runName": "editorial-longform__with__202608090424",
+      "code": 1,
+      "minutes": 3
+    },
+    {
+      "runName": "editorial-longform__without__202608090424",
+      "code": 1,
+      "minutes": 0.1
+    },
+    {
+      "runName": "saas-analytics__with__202608090424",
+      "code": 1,
+      "minutes": 0.1
+    },
+    {
+      "runName": "saas-analytics__without__202608090424",
+      "code": 1,
+      "minutes": 0.1
+    }
+  ],
+  "runs": [
+    {
+      "runName": "civic-clinic__with__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "civic-clinic__without__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "coffee-roaster__with__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "coffee-roaster__without__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__with__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__without__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "editorial-longform__with__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "editorial-longform__without__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "saas-analytics__with__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "saas-analytics__without__202608090424",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

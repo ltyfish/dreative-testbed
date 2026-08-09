@@ -1,0 +1,35 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/devtool-docs__without__202608090424
+
+This is the documentation homepage for Quill, an open-source markdown build tool. It is currently plain and hard to scan. Redesign it so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five navigation entries and the on-page sidebar, both linking to the same five sections
+- All four install methods with their exact commands, switchable, with a working copy button
+- The quickstart code block exactly as written
+- All six configuration keys with their type, default, and description
+- All four commands with their descriptions and every flag
+- All three error codes with their messages and fixes
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build succeeds; nothing committed.
+
+**What I did** — rebuilt the page as a dark "engineering ledger" doc site rather than a plain page:
+
+- **Identity**: near-black ink canvas with a warm amber accent (quill/ink), a cyan secondary for types and flags, and a faint grid + glow wash behind the top of the page. Monospace carries all the technical surfaces (keys, flags, codes, tabs); the sans is reserved for prose.
+- **Hero**: oversized gradient wordmark with a blinking cursor, version/licence/Node pills, two actions, and a decorative terminal panel showing a build run — so the page states what the tool *does* before you scroll.
+- **Nav**: sticky, blurred, with a scroll-progress hairline and links that highlight the section you're in. The sidebar mirrors this with a numbered rail and an active marker (scroll-spy, `App.jsx:96`).
+- **Scannability**: each section gets a numbered chip, a heading, and a one-line kicker. Commands became a responsive card grid; config became a bordered table with colour-coded key/type/default; errors became cards with a red code chip, the message as the loud line, and a "FIX" tag on the remedy.
+- **Install**: one card containing a segmented tab switcher with a sliding thumb, the command with a `$` prompt, a copy button that flips to a green ✓, and a per-method hint line.
+
+**Preserved exactly**: all five nav entries and the sidebar linking to the same five sections; all four install commands, switchable, copy working (now also on the quickstart block); the quickstart block verbatim; all six config keys with type/default/description; all four commands with descriptions and every flag; all three error codes with messages and fixes; the four footer links. Existing hooks (`data-install`, `data-key`, `data-cmd`, `data-error`, section ids) are intact.
+
+Also handled: responsive collapse at 980px/640px, reduced-motion, and visible focus rings.

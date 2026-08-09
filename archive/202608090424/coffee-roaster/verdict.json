@@ -1,0 +1,22 @@
+{
+  "scenario": "coffee-roaster",
+  "judgedAt": "2026-08-09T05:21:58.052Z",
+  "runs": {
+    "with": "coffee-roaster__with__202608090424",
+    "without": "coffee-roaster__without__202608090424"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "Tie"
+  },
+  "overall": "without",
+  "feedback": {
+    "without": "This is deadass nice, but the use of prop images, i think it sided with generating 3d props or smth, i dont really quite like the prop image, animation is smooth and minimal crazy, quite nice. cards look professional. but compare to the other, the graph looks sad, however it looks more premium, definitewly has more potential. i like the footer too",
+    "with": "this look very professional and clean, thje animation for graph is nice and thge prop image is way btr than design A. however, theres alot of text chunked up, its hard to really understand, compaered to the other design, have cards, [placeholders etc it helps to tell a story and action . tbh it has no clear separation and design A just looks more easy to understand"
+  },
+  "summary": "worst thing about design A is prop image, and there is no graph animation like design B, tho those section mean different thing. best thign about the loser is prop image and use of animation for graph and a graph to show the cycle which is quite interesting"
+}

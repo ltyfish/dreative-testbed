@@ -1,0 +1,49 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__with__202608090424
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, nothing committed (this run directory is git-ignored by the parent repo anyway).
+
+## What I built — Recommended direction
+
+**Concept:** the site answers one question, in this order — *Can I be seen today? What will it cost? How do I get there?* The front-desk clock is the through-line: `src/clinic.js` computes the real walk-in state from the hours table, and every section is written relative to "now".
+
+**Concept fingerprint**
+- *Premise:* a printed front-desk notice, not a landing page. Answer first, evidence directly beneath it.
+- *Colour as a signal set, with a rule:* red appears **only** on the 911 notice, so it never means anything else; green means "open to you now"; blue means "something you can do". Everything else is ink on warm paper.
+- *Type:* one loud answer per section, then dense scannable detail with tabular numerals for times.
+- *Continuity:* the clock — hero status, today's row in the hours table, the "last walk-in at 19:30 today" note, and the walk-in/book split all derive from the same computed state.
+
+**Concrete improvements for patients**
+- The hero is now a computed answer with a status dot: *Yes — walk in now / Not open yet / Walk-in registration has closed / Closed right now*, each with the correct next step and reopening time. The original hardcoded "Open now… 19:30" is preserved as real logic (registration closes 30 min before close), so it can't be wrong at 9pm.
+- The hours table gains a fourth column: a bar per day on a 7:00–21:00 scale, today highlighted, with a marker at the current time. It reads at a glance and the table stays a real, screen-reader-friendly table.
+- Services are regrouped by the decision the patient is making — **five walk-in, one book-ahead (dental)** — instead of six equal-weight cards. Every eligibility and cost line is intact, with Who/Cost labelled and cost set in ink-black.
+- The assurances are now a dark panel titled "What we will never ask you for", with the two required lines plus the no-fixed-address point pulled out of the body copy — the highest-contrast object on the first screen.
+- Getting here splits into address + a big call button, and Bus / Train / Car / Access as a labelled list.
+- Interpreter line is a called-out block, not a footnote.
+- Skip link, visible focus rings, 44px+ tap targets, `aria-labelledby` per section, honest meta description.
+
+**Mobile (390px and 320px, both verified, no horizontal overflow):** decisions made *for* mobile — the nav link row is removed (the call number stays), the hours bar column is dropped rather than crushed, service rows become stacked blocks, and Call 911 / hero actions go full-width.
+
+**Motion:** none, deliberately. Per the slop catalogue, scroll reveals on a clinic site would only delay the one task; the only thing that moves is the now-marker, once a minute, because it's data.
+
+I verified the rendered page with Playwright at 1440/390/320 across the open, closing, and closed clock states — zero console errors, no overflow — and removed the capture scripts afterwards. Run `npm run dev` to view it.
+
+Implementation complete; human taste verdict: awaiting user review. Please inspect the desktop and 390px views, and the hero in both open and closed states.

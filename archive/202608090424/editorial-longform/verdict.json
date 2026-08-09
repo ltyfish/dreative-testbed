@@ -1,0 +1,24 @@
+{
+  "scenario": "editorial-longform",
+  "judgedAt": "2026-08-09T05:30:12.149Z",
+  "runs": {
+    "with": "editorial-longform__with__202608090424",
+    "without": "editorial-longform__without__202608090424"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "Tie",
+    "hierarchy": "Tie",
+    "craft": "Tie",
+    "mobile": "Tie",
+    "restraint": "Tie"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "i mean it has a image i guess, there is a big blank space tho, dk if it means anything, and the nav bar is not alinged",
+    "without": "looks bloody the ame haha, just no image"
+  },
+  "summary": "urm itg looks the same, just the loser doens thvae  aproper image and has aligned header. tho the loser does have lesser words ig",
+  "void": true,
+  "voidReason": "the control arm was never edited — the \"with\" build was compared against the untouched seed project"
+}

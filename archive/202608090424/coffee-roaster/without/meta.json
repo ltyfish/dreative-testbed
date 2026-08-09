@@ -1,0 +1,12 @@
+{
+  "scenario": "coffee-roaster",
+  "arm": "without",
+  "seq": "202608090424",
+  "label": null,
+  "direction": null,
+  "product": "Northwind Coffee Roasters",
+  "field": "Physical product · direct-to-consumer commerce",
+  "runName": "coffee-roaster__without__202608090424",
+  "site": true,
+  "archivedAt": "2026-08-09T04:39:17.345Z"
+}

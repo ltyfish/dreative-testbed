@@ -1,0 +1,22 @@
+{
+  "scenario": "devtool-docs",
+  "judgedAt": "2026-08-09T05:27:51.051Z",
+  "runs": {
+    "with": "devtool-docs__with__202608090424",
+    "without": "devtool-docs__without__202608090424"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "without",
+    "hierarchy": "with",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "without"
+  },
+  "overall": "with",
+  "feedback": {
+    "without": "this is so ai slop, so many colour ways but is code so i get it. i like tghe use of cardds and seperation and it just overall has more animation and stuff. its cards and design is more unique in terms of like cli card, which the other one doesnt have, but it looks slop",
+    "with": "this looks very professional and good, tho no clear seperation and a little harder to understand, actually not sure, because the use of tables is not too bad, to be honest is objective, but definitely it looks way btr and cleaner, not much animation and use of design thiungs to sybolize \"dev code\" tho"
+  },
+  "summary": "Worst abut the winner is that it does desing things fit to the theme, like rn it just has nothing that truly stands out as dev, like the other has a command line card, looks pretty sick, the seperation is controversial. the besrt about the loser is using of unique design and more colour way to distinguish code etc."
+}

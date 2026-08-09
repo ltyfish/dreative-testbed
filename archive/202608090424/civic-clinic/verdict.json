@@ -1,0 +1,22 @@
+{
+  "scenario": "civic-clinic",
+  "judgedAt": "2026-08-09T05:15:01.188Z",
+  "runs": {
+    "with": "civic-clinic__with__202608090424",
+    "without": "civic-clinic__without__202608090424"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "without",
+    "hierarchy": "Tie",
+    "craft": "with",
+    "mobile": "with",
+    "restraint": "Tie"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "This definitely look more professional, and non ai slop and cleaner, but its form is not as nice as design B and, it did tables instead of cards which look clean, but the hero card is a square , no border, looks pretty weird. it lacks the use of icons but it looks cleaner because it has minimal colour choice",
+    "without": "this look so ai slop HAHAHH, urm the colour choice is nice but cards are rounded border, it just defionitely look like ai done it. alsot he mobile isnt interactive and responsive. anmd live view, some stuff are overly sized"
+  },
+  "summary": "the winner has minimal icon and image use, and colour choice quite minimal tho is a good and bad thing. i would say design A using cards would be btr to highlight the important points, dont need to be card but just text and table is hard to diffrientiate. the best thing about B is using of icons and cards for clarity, and colour choice suite the theme clinic"
+}

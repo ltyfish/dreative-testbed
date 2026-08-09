@@ -25,6 +25,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
+import { runHealth } from './lib/health.mjs'
 import { ROOT, RUNS, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
 function arg(name, fallback) {
@@ -145,7 +146,17 @@ function agentCommand(prompt) {
   throw new Error(`unknown agent: ${AGENT} (expected claude or codex)`)
 }
 
+// Once the account is out of budget every remaining session fails the same way — but each
+// one still costs a scaffold, a build and a screenshot, and drops an untouched seed project
+// into the blind review looking like a design. Stop the round instead.
+const LIMIT_RE = /you'?ve hit your (session|usage) limit|(usage|rate) limit reached|credit balance is too low|quota exceeded/i
+let limitHit = false
+
 function runSession({ runName, runDir, prompt }) {
+  if (limitHit) {
+    log(`[${runName}] skipped — the account hit its usage limit earlier in this round`)
+    return Promise.resolve({ runName, code: -2, skipped: true })
+  }
   return new Promise((resolve) => {
     const { cmd, args } = agentCommand(prompt)
     const started = Date.now()
@@ -155,8 +166,15 @@ function runSession({ runName, runDir, prompt }) {
     log(`[${runName}] session started`)
     const child = spawn(cmd, args, { cwd: runDir, shell: false })
 
-    child.stdout.on('data', (d) => logStream.write(d))
-    child.stderr.on('data', (d) => logStream.write(d))
+    const watch = (d) => {
+      logStream.write(d)
+      if (!limitHit && LIMIT_RE.test(String(d))) {
+        limitHit = true
+        log(`[${runName}] provider usage limit reached — no further sessions will be started`)
+      }
+    }
+    child.stdout.on('data', watch)
+    child.stderr.on('data', watch)
 
     const killer = setTimeout(
       () => {
@@ -232,7 +250,23 @@ const failed = sessions.filter((s) => s.code !== 0)
 console.log(`\nAll sessions done in ${((Date.now() - sessionStart) / 60_000).toFixed(1)}m.`)
 if (failed.length) {
   console.log(`${failed.length} exited non-zero — their output is still captured and judged:`)
-  for (const f of failed) console.log(`  ${f.runName} (exit ${f.code})`)
+  for (const f of failed) console.log(`  ${f.runName} (exit ${f.code}${f.skipped ? ', skipped' : ''})`)
+}
+
+// A session that ended without touching the seed is not a design. Say so here, loudly,
+// rather than letting it reach the blind review looking like one.
+const empty = jobs.map((j) => j.runName).filter((name) => runHealth(name).untouched)
+if (empty.length) {
+  console.log(`\n${empty.length} session(s) produced NO design (the seed is untouched):`)
+  for (const name of empty) console.log(`  ${name}`)
+  const scenarios = [...new Set(empty.map((n) => n.split('__')[0]))]
+  console.log(`These pairs cannot be judged. Re-run them once you have budget:`)
+  console.log(`  node scripts/run-all.mjs --scenarios ${scenarios.join(',')}`)
+}
+if (limitHit) {
+  console.log('\nThe round stopped early on a provider usage limit. Cheaper next time:')
+  console.log('  node scripts/run-all.mjs --scenarios <one,two>   # 2 scenarios = 4 sessions, not 10')
+  console.log('  node scripts/run-all.mjs 2 --timeout 15          # shorter cap per session')
 }
 
 // ---------------------------------------------------------------- capture
@@ -241,11 +275,10 @@ if (SKIP_CAPTURE) {
   console.log('\n--no-capture set. Run: node scripts/capture.mjs --all')
 } else {
   console.log('\nCapturing screenshots…')
-  const shots = await captureMany(
-    jobs.map((j) => j.runName),
-    4173,
-    log,
-  )
+  // Building and photographing an untouched seed produces five identical screenshots of
+  // the starting point. Skip them — the health check already recorded why.
+  const toCapture = jobs.map((j) => j.runName).filter((name) => !runHealth(name).untouched)
+  const shots = await captureMany(toCapture, 4173, log)
   const broken = shots.filter((s) => !s.ok)
   if (broken.length) {
     console.log(`\n${broken.length} run(s) failed to build or capture:`)

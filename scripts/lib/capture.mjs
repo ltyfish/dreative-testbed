@@ -78,7 +78,10 @@ export async function captureRun(runName, port, log = console.log) {
     fs.mkdirSync(outDir, { recursive: true })
 
     for (const vp of VIEWPORTS) {
-      const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } })
+      // reducedMotion is not a preference here, it is a photography setting: a still of a
+      // page mid-entrance-animation is a picture of a state no visitor ever sees, and most
+      // reveal implementations honour the query by rendering their final state immediately.
+      const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height }, reducedMotion: 'reduce' })
       let loaded = false
       for (let attempt = 0; attempt < 30 && !loaded; attempt++) {
         try {
@@ -93,12 +96,15 @@ export async function captureRun(runName, port, log = console.log) {
       // Settle entrance animations, then scroll so lazy and scroll-triggered content
       // actually renders before the full-page shot.
       await page.waitForTimeout(1200)
+      await page.evaluate(() => document.fonts?.ready).catch(() => {})
       await page.evaluate(async () => {
-        const step = window.innerHeight
+        const step = Math.round(window.innerHeight * 0.6) // overlap, so nothing sits between two stops
         for (let y = 0; y < document.body.scrollHeight; y += step) {
           window.scrollTo(0, y)
-          await new Promise((r) => setTimeout(r, 150))
+          await new Promise((r) => setTimeout(r, 200))
         }
+        window.scrollTo(0, document.body.scrollHeight)
+        await new Promise((r) => setTimeout(r, 400))
         window.scrollTo(0, 0)
       })
       await page.waitForTimeout(800)
@@ -116,6 +122,29 @@ export async function captureRun(runName, port, log = console.log) {
       })
       if (visible.text < 40 || visible.painted < 5) {
         warnings.push(`${vp.name}: page rendered almost nothing (${visible.text} chars, ${visible.painted} painted elements)`)
+      }
+
+      // Anything still fully transparent after a full scroll pass is a reveal that never
+      // fired. It photographs as a blank band and reads as a hole in the design, so flag it
+      // instead of letting the reviewer score a gap the live page does not have.
+      const hidden = await page.evaluate(() => {
+        let count = 0
+        let area = 0
+        for (const el of document.body.querySelectorAll('*')) {
+          const r = el.getBoundingClientRect()
+          if (r.width < 80 || r.height < 40) continue
+          const s = getComputedStyle(el)
+          if (Number(s.opacity) <= 0.05 && s.visibility !== 'hidden' && s.display !== 'none') {
+            count++
+            area += r.width * r.height
+          }
+        }
+        return { count, area, viewport: window.innerWidth * window.innerHeight }
+      })
+      if (hidden.count && hidden.area > hidden.viewport * 0.15) {
+        warnings.push(
+          `${vp.name}: ${hidden.count} block(s) were still invisible when photographed — a scroll reveal that never fired. Judge this one from the live preview, not the still.`,
+        )
       }
 
       await page.screenshot({ path: path.join(outDir, `${vp.name}.png`), fullPage: true })

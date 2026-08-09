@@ -1,0 +1,40 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__without__202608090424
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, and nothing is committed.
+
+## What I changed and why
+
+The old page buried the one thing a patient actually opens it for. The redesign reorders the page around three questions in the order they get asked: *Can I be seen today? What does it cost? How do I get there?*
+
+**The status card is now the centerpiece.** Instead of a hardcoded sentence in a thin green strip, `getWalkInStatus()` (`src/App.jsx:98`) derives the answer from the clock against the real hours table, with four honest states: open, opens-later-today, registration-closed-but-still-open, and closed. It sits in the hero as a sticky card with a colour-coded dot, today's hours, "Cost of a visit — Free", and a link to the full table. I verified all four branches against Mon/Fri/Sat/Sun edge times, including the 19:30 cutoff and the "come in anyway if urgent" case.
+
+**Cost is now scannable per service.** Each of the six services carries a "Walk in today" / "Appointment needed" pill at the top — the distinction that decides whether someone gets on a bus right now — and eligibility and cost are labelled rows so you can read down one column across the whole grid.
+
+**The address and phone got treated as the destination they are.** A dark green card at 24–26px type, phone as a tap target, transit options as separate icon rows rather than a bullet list — a bus rider and a driver can each find their own line.
+
+**Assurances kept prominent.** The three "no insurance / no immigration questions / no cost" claims are now shield-marked chips directly under the headline, above the fold.
+
+**Emergency notice strengthened.** Moved to a solid red full-bleed bar at the very top, lead with the symptoms rather than the conditional, and added a tap-to-call 911 button.
+
+Also: a fixed bottom Call/Directions bar on phones, today's row highlighted in the hours table, 17px base type with generous touch targets, visible focus rings, and `prefers-reduced-motion` respected.
+
+Every preserved item is intact — full hours table, all six services with their exact eligibility and cost strings, address, both phone numbers, all seven languages, interpreter line, and the 911 notice.

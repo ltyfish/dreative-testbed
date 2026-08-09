@@ -12,8 +12,9 @@ import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
-import { findRoundForRun, syncVerdict } from './lib/archive.mjs'
+import { findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
 import { freePort, killTree } from './lib/capture.mjs'
+import { pairHealth } from './lib/health.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
@@ -56,9 +57,16 @@ function loadPairs() {
 
   const pairs = []
   for (const [scenario, list] of byScenario) {
-    const withArm = list.filter((r) => r.meta.arm === 'with').at(-1)
-    const withoutArm = list.filter((r) => r.meta.arm === 'without').at(-1)
-    if (!withArm || !withoutArm) continue
+    // Both sides must come from the same round. Taking the newest of each arm
+    // independently silently pairs this round's "with" against a previous round's
+    // "without" whenever one arm is missing — a comparison of two different experiments.
+    const rounds = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()
+    const seq = rounds.find(
+      (s) => list.some((r) => r.meta.seq === s && r.meta.arm === 'with') && list.some((r) => r.meta.seq === s && r.meta.arm === 'without'),
+    )
+    if (!seq) continue
+    const withArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'with')
+    const withoutArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'without')
 
     const assignments = readJson(ASSIGN_FILE, {})
     const key = `${scenario}::${withArm.dir}::${withoutArm.dir}`
@@ -84,7 +92,13 @@ function loadPairs() {
       challenge: info.designChallenge ?? '',
       A: withIsA ? withArm : withoutArm,
       B: withIsA ? withoutArm : withArm,
-      scored: fs.existsSync(path.join(VERDICT_DIR, `${scenario}.json`)),
+      // A verdict counts only if it judged *these* two runs. Keying it on the scenario
+      // alone carried last round's tick onto this round's untouched pair.
+      scored: (() => {
+        const prev = readJson(path.join(VERDICT_DIR, `${scenario}.json`), null)
+        return Boolean(prev && prev.runs?.with === withArm.dir && prev.runs?.without === withoutArm.dir)
+      })(),
+      health: pairHealth(withArm.dir, withoutArm.dir),
     })
   }
   return pairs.sort((a, b) => a.scenario.localeCompare(b.scenario))
@@ -105,6 +119,24 @@ function captureWarnings(runDir) {
 // Screenshots cannot show motion, hover, or scroll behaviour, so each side can be opened
 // live. Servers are started on demand and addressed only by port, so the URL never names
 // the run and the arm stays hidden.
+
+// Finished rounds live in the archive viewer, which is a separate script on its own port.
+// Nobody remembers that, so it is started alongside the review server and linked from the
+// header — otherwise every past round is invisible from the only page you actually open.
+let ARCHIVE_PORT = null
+let archiveProc = null
+
+function startArchiveViewer() {
+  if (process.argv.includes('--no-archive') || !listRounds().length) return
+  ARCHIVE_PORT = 4322
+  archiveProc = spawn(process.execPath, [path.join(ROOT, 'scripts', 'archive.mjs'), '--port', String(ARCHIVE_PORT)], {
+    cwd: ROOT,
+    stdio: 'ignore',
+  })
+  archiveProc.on('error', () => {
+    ARCHIVE_PORT = null
+  })
+}
 
 const live = new Map() // runDir -> { port, proc }
 
@@ -138,6 +170,8 @@ async function startLive(runDir) {
 function stopAllLive() {
   for (const { proc } of live.values()) killTree(proc.pid)
   live.clear()
+  if (archiveProc) killTree(archiveProc.pid)
+  archiveProc = null
 }
 for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP']) {
   process.on(signal, () => {
@@ -154,6 +188,7 @@ function saveVerdict(body) {
   const pairs = loadPairs()
   const pair = pairs.find((p) => p.scenario === body.scenario)
   if (!pair) throw new Error('unknown scenario')
+  if (!pair.health.judgeable) throw new Error('this pair has no design on one side — nothing to judge')
 
   const armOf = (side) => pair[side].meta.arm
   const resolve = (choice) => (choice === 'Tie' || !choice ? choice || '—' : armOf(choice))
@@ -220,6 +255,10 @@ h1{margin:0;font-size:16px;letter-spacing:-.01em}
 .tab{padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:13px;text-decoration:none;color:var(--fg);white-space:nowrap}
 .tab.on{background:var(--acc);color:#06101f;border-color:var(--acc);font-weight:600}
 .tab.done{border-color:var(--good);color:var(--good)}
+.tab.dead{border-color:var(--bad);color:var(--bad);opacity:.75}
+.invalid{border:1px solid var(--bad);border-radius:10px;padding:14px 18px;margin-bottom:20px;background:#1b1013}
+.invalid h3{margin:0 0 6px;font-size:14px;color:var(--bad)}
+.invalid ul{margin:6px 0 0 18px;padding:0;color:var(--mut);font-size:13.5px}
 main{padding:24px;max-width:1600px;margin:0 auto}
 .brief{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:22px}
 .brief h2{margin:0 0 6px;font-size:15px}
@@ -259,7 +298,7 @@ function page(pairs, active) {
   const tabs = pairs
     .map(
       (p) =>
-        `<a class="tab${p.scenario === pair?.scenario ? ' on' : ''}${p.scored ? ' done' : ''}" href="/?s=${encodeURIComponent(p.scenario)}">${esc(p.scenario)}${p.scored ? ' ✓' : ''}</a>`,
+        `<a class="tab${p.scenario === pair?.scenario ? ' on' : ''}${p.scored ? ' done' : ''}${p.health.judgeable ? '' : ' dead'}" href="/?s=${encodeURIComponent(p.scenario)}">${esc(p.scenario)}${!p.health.judgeable ? ' ✕' : p.scored ? ' ✓' : ''}</a>`,
     )
     .join('')
 
@@ -267,6 +306,28 @@ function page(pairs, active) {
     return `<!doctype html><meta charset="utf-8"><title>Review</title><style>${STYLE}</style>
     <header><h1>Blind review</h1></header>
     <main><p class="empty">No captured pairs yet.<br><br>Run a round first:<br><code>node scripts/run-all.mjs</code></p></main>`
+  }
+
+  // Problems are reported by side letter, never by arm — naming the arm would unblind the
+  // comparison before you have scored it.
+  const banner = (p) => {
+    const rows = ['A', 'B'].flatMap((letter) => {
+      const h = p.health[p[letter].meta.arm]
+      return h.reasons.map((r) => `<li><strong>Design ${letter}</strong> — ${esc(r)}</li>`)
+    })
+    if (!rows.length) return ''
+    const dead = !p.health.judgeable
+    return `<div class="invalid">
+      <h3>${dead ? 'This pair is not judgeable' : 'Judge this one with care'}</h3>
+      <ul>${rows.join('')}</ul>
+      <p class="sub" style="margin:10px 0 0">${
+        dead
+          ? 'Scoring is disabled. A verdict here would compare the seed project, or a build that never ran, against a real attempt. Re-run this scenario: <code>node scripts/run-all.mjs --scenarios ' +
+            esc(p.scenario) +
+            '</code>'
+          : 'The session did not end cleanly, so the work may be cut off. That is a legitimate finding, but do not read a cut-off run as a design decision.'
+      }</p>
+    </div>`
   }
 
   const side = (letter) => {
@@ -301,7 +362,10 @@ function page(pairs, active) {
 
   return `<!doctype html><meta charset="utf-8"><title>Blind review — ${esc(pair.scenario)}</title><style>${STYLE}</style>
 <header>
-  <div><h1>Blind review</h1><div class="sub">One of these used Dreative. You are not told which until you submit.</div></div>
+  <div><h1>Blind review <span class="sub">· round ${esc(pair.A.meta.seq ?? '')}</span></h1>
+    <div class="sub">One of these used Dreative. You are not told which until you submit. ${
+      ARCHIVE_PORT ? `Past rounds: <a href="http://127.0.0.1:${ARCHIVE_PORT}" target="_blank" rel="noopener">archive ↗</a>` : ''
+    }</div></div>
   <nav class="tabs">${tabs}</nav>
 </header>
 <main>
@@ -309,6 +373,8 @@ function page(pairs, active) {
     <h2>${esc(pair.product)}</h2>
     <p><strong>${esc(pair.field)}</strong>${pair.challenge ? ' — ' + esc(pair.challenge) : ''}</p>
   </div>
+
+  ${banner(pair)}
 
   <div class="grid">${side('A')}${side('B')}</div>
 
@@ -331,7 +397,7 @@ function page(pairs, active) {
     <div class="lbl">Summary — the worst thing about the winner, the best thing about the loser</div>
     <textarea id="summary" placeholder="Forcing both stops this collapsing into a verdict you already held."></textarea>
 
-    <p style="margin-top:16px"><button id="submit">Submit verdict and reveal</button></p>
+    <p style="margin-top:16px"><button id="submit"${pair.health.judgeable ? '' : ' disabled title="one side of this pair has no design to judge"'}>Submit verdict and reveal</button></p>
 
     <div id="reveal">
       <p><strong>Design A</strong> was <code id="ra"></code> &nbsp;·&nbsp; <strong>Design B</strong> was <code id="rb"></code></p>
@@ -444,9 +510,13 @@ const server = http.createServer(async (req, res) => {
 })
 
 const pairs = loadPairs()
+startArchiveViewer()
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\nBlind review ready:  http://127.0.0.1:${PORT}`)
+  if (ARCHIVE_PORT) console.log(`Past rounds:         http://127.0.0.1:${ARCHIVE_PORT}`)
   console.log(`${pairs.length} scenario pair(s) captured: ${pairs.map((p) => p.scenario).join(', ') || 'none yet'}`)
+  const bad = pairs.filter((p) => !p.health.judgeable)
+  if (bad.length) console.log(`${bad.length} pair(s) NOT judgeable (a side never got built): ${bad.map((p) => p.scenario).join(', ')}`)
   if (!pairs.length) console.log('Run a round first:  node scripts/run-all.mjs')
   console.log('\nCtrl+C to stop.\n')
 })

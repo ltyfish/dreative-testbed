@@ -1,0 +1,24 @@
+{
+  "scenario": "saas-analytics",
+  "judgedAt": "2026-08-09T05:30:40.285Z",
+  "runs": {
+    "with": "saas-analytics__with__202608090424",
+    "without": "saas-analytics__without__202608090424"
+  },
+  "criteria": {
+    "distinct": "Tie",
+    "fit": "Tie",
+    "hierarchy": "Tie",
+    "craft": "Tie",
+    "mobile": "Tie",
+    "restraint": "Tie"
+  },
+  "overall": "Tie",
+  "feedback": {
+    "with": "",
+    "without": ""
+  },
+  "summary": "its thge same thing, i think something went wrong here",
+  "void": true,
+  "voidReason": "both arms were the untouched seed project — the two sides were byte-identical, so the tie was structural, not a judgement"
+}

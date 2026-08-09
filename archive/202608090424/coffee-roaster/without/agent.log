@@ -1,0 +1,41 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/coffee-roaster__without__202608090424
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Redesigned and built clean.
+
+**What it is now:** a dark "roastery ledger" — near-black warm ground, ember/amber accents, a cold sea-green for measured values. Old-style serif for voice, mono for anything that's a number or a spec. Static film grain over the whole page.
+
+**Section by section:**
+- **Nav** — sticky, blurred, with a glowing bean mark, mono uppercase links with an underline that wipes in from the left, and a live cart chip (count + running total).
+- **Hero** — asymmetric split: an oversized serif headline with a gradient italic on "it ships", beside a real *roast log* panel (timestamps, lots, charge/drop weights, drum temp) that makes the freshness claim concrete instead of asserted.
+- **Story** — the four facts become a hairline-ruled ledger row with huge figures and a line of context under each; all four numbers (11, 2.4×, 12kg, <24h) intact, plus every copy claim verbatim.
+- **Beans** — a hairline grid where each card has a CSS-drawn bean cross-section tinted by lot hue and darkened by roast level, a three-pip roast meter, notes set in amber italic, and an add-to-cart that actually adds to state and fires a toast (replacing the `alert`).
+- **Brew guide** — full-width numbered rows with outlined numerals that fill ember on hover, and a mono spec pulled out on the right (`18g / 300ml`, `30 seconds`, `2:30`). All four instructions unchanged.
+- **Reviews** — staggered pull-quote cards with an oversized quote mark.
+- **Subscribe** — an ember-lit panel with the price as display type.
+- **Contact** — two columns, underline-style fields, roastery address; success state is now a sea-green confirmation card with a drawn check.
+- **Footer** — giant outlined "Northwind" wordmark above the meta row.
+
+Scroll reveals run through an IntersectionObserver and are disabled under `prefers-reduced-motion`; there's a visible focus ring and the layout collapses cleanly at 1040/860/560px.
+
+**Preserved as required:** all five nav links and targets, all six beans with names/notes/roast/price/working button, the four brew steps, the email+message form and its success state, the four footer links, and every factual claim.
+
+`npm run build` succeeds (446ms). Nothing committed.
