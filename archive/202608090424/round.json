@@ -1,6 +1,6 @@
 {
   "round": "202608090424",
-  "archivedAt": "2026-08-09T04:39:24.211Z",
+  "archivedAt": "2026-08-09T11:39:26.783Z",
   "scenarios": [
     "civic-clinic",
     "coffee-roaster",
@@ -80,22 +80,22 @@
       "site": true
     },
     {
-      "runName": "coffee-roaster__with__202608090424",
-      "ok": true,
-      "site": true
-    },
-    {
       "runName": "coffee-roaster__without__202608090424",
       "ok": true,
       "site": true
     },
     {
-      "runName": "devtool-docs__with__202608090424",
+      "runName": "coffee-roaster__with__202608090424",
       "ok": true,
       "site": true
     },
     {
       "runName": "devtool-docs__without__202608090424",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__with__202608090424",
       "ok": true,
       "site": true
     },

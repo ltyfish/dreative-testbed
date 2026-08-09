@@ -42,6 +42,47 @@ export function killTree(pid) {
   }
 }
 
+/**
+ * Start a preview server for a run and return a process we can actually kill.
+ *
+ * `npm run preview` puts two wrappers between us and vite, and on Windows the npm shim
+ * frequently exits as soon as it has spawned its child — so the pid we hold is already dead
+ * by the time we kill the tree, and vite survives with its cwd inside the run directory.
+ * That is a permanently undeletable folder and a held port per run. Spawning vite's entry
+ * script directly means the pid we hold is the process we mean.
+ */
+export function spawnPreview(runDir, port) {
+  const vite = path.join(runDir, 'node_modules', 'vite', 'bin', 'vite.js')
+  if (!fs.existsSync(vite)) {
+    // No local install to point at — fall back, and accept the wrapper.
+    return spawn('npm', ['run', 'preview', '--', '--port', String(port), '--strictPort'], { cwd: runDir, shell: true, stdio: 'ignore' })
+  }
+  return spawn(process.execPath, [vite, 'preview', '--port', String(port), '--strictPort'], { cwd: runDir, stdio: 'ignore' })
+}
+
+/**
+ * Kill any process still running out of a run directory. Rounds from before previews were
+ * spawned directly leaked vite servers that hold their folder open forever; without this
+ * they survive every reset and every restart until the machine reboots.
+ */
+export function killProcessesIn(runDir) {
+  if (process.platform !== 'win32') return 0
+  const probe = spawnSync('wmic', ['process', 'where', "name='node.exe'", 'get', 'ProcessId,CommandLine', '/format:csv'], {
+    encoding: 'utf8',
+  })
+  if (probe.status !== 0 || !probe.stdout) return 0
+  const needle = path.resolve(runDir).toLowerCase()
+  let killed = 0
+  for (const line of probe.stdout.split('\n')) {
+    if (!line.toLowerCase().includes(needle)) continue
+    const pid = line.trim().split(',').pop()
+    if (!/^\d+$/.test(pid)) continue
+    killTree(pid)
+    killed++
+  }
+  return killed
+}
+
 export const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 844 },
@@ -62,11 +103,7 @@ export async function captureRun(runName, port, log = console.log) {
 
   // strictPort makes a busy port fail loudly instead of drifting to another one.
   const chosen = await freePort(port)
-  const server = spawn('npm', ['run', 'preview', '--', '--port', String(chosen), '--strictPort'], {
-    cwd: runDir,
-    shell: true,
-    stdio: 'ignore',
-  })
+  const server = spawnPreview(runDir, chosen)
 
   const warnings = []
   try {

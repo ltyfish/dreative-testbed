@@ -13,13 +13,14 @@ import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
 import { archiveRound, findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
-import { freePort, killTree } from './lib/capture.mjs'
+import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture.mjs'
 import { pairHealth } from './lib/health.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
 const VERDICT_DIR = path.join(RUNS, 'verdicts')
 const ASSIGN_FILE = path.join(RUNS, '.review-assignments.json')
+const CLEARED_FILE = path.join(RUNS, '.cleared-rounds.json')
 
 const CRITERIA = [
   ['distinct', 'Distinctiveness', 'Could this be any other company? Swap the logo and copy for a competitor — does it still work perfectly? Then it is generic.'],
@@ -38,6 +39,33 @@ const readJson = (p, fallback) => {
   }
 }
 
+const clearedRounds = () => readJson(CLEARED_FILE, [])
+
+/**
+ * Delete leftovers from rounds that were already archived and retired. Whatever held a
+ * directory open during the reset has long since exited by the next time the server starts,
+ * so the second attempt is the one that succeeds.
+ */
+function sweepCleared() {
+  const cleared = clearedRounds()
+  if (!cleared.length || !fs.existsSync(RUNS)) return 0
+  let swept = 0
+  for (const dir of fs.readdirSync(RUNS)) {
+    const full = path.join(RUNS, dir)
+    if (!fs.statSync(full).isDirectory()) continue
+    const meta = readJson(path.join(full, 'run.json'), null)
+    if (!meta || !cleared.includes(meta.seq)) continue
+    killProcessesIn(full)
+    try {
+      fs.rmSync(full, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 })
+      swept++
+    } catch {
+      /* still locked — it is retired either way, try again next start */
+    }
+  }
+  return swept
+}
+
 function loadPairs() {
   if (!fs.existsSync(RUNS)) return []
   const runs = fs
@@ -48,6 +76,10 @@ function loadPairs() {
     })
     .map((d) => ({ dir: d, meta: readJson(path.join(RUNS, d, 'run.json'), null) }))
     .filter((r) => r.meta && fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png')))
+    // A round that has been archived is done, whether or not Windows let go of its
+    // directories. The marker is what retires it — leftover folders must never reappear
+    // as something still waiting to be scored.
+    .filter((r) => !clearedRounds().includes(r.meta.seq))
 
   const byScenario = new Map()
   for (const r of runs) {
@@ -146,11 +178,7 @@ async function startLive(runDir) {
     await new Promise((r) => build.on('close', r))
   }
   const port = await freePort(0)
-  const proc = spawn('npm', ['run', 'preview', '--', '--port', String(port), '--strictPort'], {
-    cwd: dir,
-    shell: true,
-    stdio: 'ignore',
-  })
+  const proc = spawnPreview(dir, port)
   live.set(runDir, { port, proc })
 
   // Wait for it to answer before handing over the link.
@@ -265,18 +293,43 @@ function resetRound() {
     archived.push(round)
   }
 
-  // Only now is it safe to clear. Everything removed here exists in archive/.
+  // The round is retired here, by marker, before anything is deleted. Windows keeps
+  // handles on a directory for a while after the process that used it exits — vite's
+  // preview and the archive build both leave one — so a delete can fail for a few seconds
+  // through no fault of ours. Reporting that as "reset failed" while the round is already
+  // safely archived is the wrong answer: the marker is the source of truth, and the
+  // directories are just disk space.
+  const cleared = [...new Set([...clearedRounds(), ...archived])]
+  fs.writeFileSync(CLEARED_FILE, JSON.stringify(cleared, null, 2), 'utf8')
+
   let removed = 0
+  const stuck = []
   for (const dirs of byRound.values()) {
     for (const dir of dirs) {
-      fs.rmSync(path.join(RUNS, dir), { recursive: true, force: true })
-      removed++
+      const target = path.join(RUNS, dir)
+      killProcessesIn(target) // anything still serving out of here would block the delete
+      // Unlink the node_modules junction first — deleting a link's *target* would take the
+      // shared install with it, and leaving it behind is what usually blocks the parent.
+      const modules = path.join(target, 'node_modules')
+      try {
+        if (fs.lstatSync(modules).isSymbolicLink()) fs.unlinkSync(modules)
+      } catch {
+        /* not a link, or already gone */
+      }
+      try {
+        // The archive rebuilt every one of these seconds ago; the last few still have a
+        // vite handle open. Node retries EPERM/EBUSY, so give it long enough to matter.
+        fs.rmSync(target, { recursive: true, force: true, maxRetries: 20, retryDelay: 500 })
+        removed++
+      } catch (err) {
+        stuck.push(`${dir} (${err.code ?? err.message})`)
+      }
     }
   }
-  fs.rmSync(VERDICT_DIR, { recursive: true, force: true })
+  fs.rmSync(VERDICT_DIR, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 })
   fs.rmSync(ASSIGN_FILE, { force: true })
 
-  return { archived, removed }
+  return { archived, removed, stuck }
 }
 
 // ------------------------------------------------------------------ markup
@@ -483,7 +536,9 @@ async function resetRound(btn) {
   const res = await fetch('/api/reset', { method: 'POST' });
   if (!res.ok) { alert('Reset failed — nothing was deleted:\\n\\n' + await res.text()); btn.disabled = false; btn.textContent = label; return; }
   const out = await res.json();
-  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).');
+  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).'
+    + (out.stuck?.length ? '\\n\\nWindows would not release ' + out.stuck.length + ' folder(s) yet:\\n  ' + out.stuck.join('\\n  ')
+        + '\\n\\nThey are archived and retired — the review page ignores them. Delete runs/ later if you want the disk space.' : ''));
   location.href = '/';
 }
 document.getElementById('resetTop').addEventListener('click', (e) => resetRound(e.currentTarget));
@@ -600,11 +655,13 @@ const server = http.createServer(async (req, res) => {
   res.writeHead(404).end('not found')
 })
 
+const swept = sweepCleared()
 const pairs = loadPairs()
 startArchiveViewer()
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\nBlind review ready:  http://127.0.0.1:${PORT}`)
   if (ARCHIVE_PORT) console.log(`Past rounds:         http://127.0.0.1:${ARCHIVE_PORT}`)
+  if (swept) console.log(`Cleaned up ${swept} leftover run folder(s) from an archived round.`)
   console.log(`${pairs.length} scenario pair(s) captured: ${pairs.map((p) => p.scenario).join(', ') || 'none yet'}`)
   const bad = pairs.filter((p) => !p.health.judgeable)
   if (bad.length) console.log(`${bad.length} pair(s) NOT judgeable (a side never got built): ${bad.map((p) => p.scenario).join(', ')}`)
