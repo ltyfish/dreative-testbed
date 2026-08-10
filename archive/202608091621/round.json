@@ -1,0 +1,60 @@
+{
+  "round": "202608091621",
+  "archivedAt": "2026-08-09T17:22:35.120Z",
+  "scenarios": [
+    "saas-analytics",
+    "coffee-roaster"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "showcase",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "saas-analytics__with__202608091621",
+      "code": 1,
+      "minutes": 16.1
+    },
+    {
+      "runName": "saas-analytics__without__202608091621",
+      "code": 0,
+      "minutes": 5
+    },
+    {
+      "runName": "coffee-roaster__with__202608091621",
+      "code": 1,
+      "minutes": 15.7
+    },
+    {
+      "runName": "coffee-roaster__without__202608091621",
+      "code": 0,
+      "minutes": 4
+    }
+  ],
+  "runs": [
+    {
+      "runName": "coffee-roaster__without__202608091621",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "coffee-roaster__with__202608091621",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "saas-analytics__with__202608091621",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "saas-analytics__without__202608091621",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

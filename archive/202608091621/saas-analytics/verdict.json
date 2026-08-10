@@ -1,0 +1,22 @@
+{
+  "scenario": "saas-analytics",
+  "judgedAt": "2026-08-09T17:22:23.815Z",
+  "runs": {
+    "with": "saas-analytics__with__202608091621",
+    "without": "saas-analytics__without__202608091621"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "with",
+    "craft": "with",
+    "mobile": "without",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "yooo this is very tough, unique, correctly executed animation, it brings story and has a purpose, tho it doenst have many animations but when it has, its super good. tho i have to say mobile doesnt look as impressive",
+    "without": "this is generic, like i can tell rightr away is claude already, always the same design with graph and floating stuff. urm the animations are minimal, theres alot but nothing packs a punch and is not impressive. looks lioke every other website that is non ai slop"
+  },
+  "summary": "worst thing about winner is that eventhouugh it has unique animation and is showcase, urm number of it is little, like the rest feels pretty static, a least soime minimal animations can help, , tho i do like how it generates graph to explain, pretty understandable and clean. the bestr thing about the loser is more animations, and better as mobile i guess"
+}

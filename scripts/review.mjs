@@ -234,6 +234,63 @@ process.on('exit', stopAllLive)
 
 // ------------------------------------------------------------------ writing
 
+// The scoreboard used to be hand-maintained, so it drifted: it read 1 verdict
+// while eight were recorded below it. It is now derived from the verdict blocks
+// themselves on every submission. A round retracted after the fact is excluded
+// by putting `<!-- void: <run-directory> -->` on its own line anywhere in the
+// file. It matches the run, not the scenario or the date, because one scenario
+// is often scored more than once on the same day and only one of those rounds
+// is bad. Voiding is a deliberate edit, never inferred from prose.
+export function rebuildScoreboard() {
+  const file = path.join(ROOT, 'VERDICTS.md')
+  if (!fs.existsSync(file)) return
+  const text = fs.readFileSync(file, 'utf8')
+  const voided = new Set([...text.matchAll(/<!--\s*void:\s*(\S+)\s*-->/g)].map((m) => m[1]))
+
+  const tally = new Map()
+  const blocks = text.split(/^## (?=\S)/m).slice(1)
+  for (const block of blocks) {
+    const heading = block.match(/^(\S+) — (\d{4}-\d{2}-\d{2})/)
+    const overall = block.match(/^\|\s*\*\*Overall\*\*\s*\|\s*([^|]+?)\s*\|/m)
+    if (!heading || !overall) continue
+    const [, scenario] = heading
+    const runs = [...block.matchAll(/^- (?:with|without):\s+`([^`]+)`/gm)].map((m) => m[1])
+    if (runs.some((run) => voided.has(run))) continue
+    const row = tally.get(scenario) ?? { with: 0, without: 0, tie: 0 }
+    const winner = overall[1].trim()
+    if (winner === 'WITH Dreative') row.with += 1
+    else if (winner === 'control') row.without += 1
+    else if (/^tie$/i.test(winner)) row.tie += 1
+    else continue
+    tally.set(scenario, row)
+  }
+
+  const scenarios = [...tally.keys()].sort()
+  const rows = scenarios.map((name) => {
+    const row = tally.get(name)
+    return `| ${name} | ${row.with} | ${row.without} | ${row.tie} |`
+  })
+  const totals = scenarios.reduce((sum, name) => {
+    const row = tally.get(name)
+    return { with: sum.with + row.with, without: sum.without + row.without, tie: sum.tie + row.tie }
+  }, { with: 0, without: 0, tie: 0 })
+  const table = [
+    '| Scenario | With Dreative | Without | Tie |',
+    '|---|---|---|---|',
+    ...rows,
+    `| **Total** | **${totals.with}** | **${totals.without}** | **${totals.tie}** |`,
+  ].join('\n')
+
+  // Anchored on the table's own header row rather than the surrounding prose,
+  // so editing the note above it cannot silently stop the rebuild.
+  const eol = text.includes('\r\n') ? '\r\n' : '\n'
+  const updated = text.replace(
+    /^\| Scenario \| With Dreative \| Without \| Tie \|\r?\n(?:\|[^\r\n]*\r?\n)+/m,
+    `${table.split('\n').join(eol)}${eol}`,
+  )
+  if (updated !== text) fs.writeFileSync(file, updated, 'utf8')
+}
+
 function saveVerdict(body) {
   fs.mkdirSync(VERDICT_DIR, { recursive: true })
   const pairs = loadPairs()
@@ -281,6 +338,7 @@ ${rows}
 **Summary:** ${record.summary || '—'}
 `
   fs.appendFileSync(path.join(ROOT, 'VERDICTS.md'), block, 'utf8')
+  rebuildScoreboard()
 
   // Put the verdict next to the designs it judges, so the archived round carries its own
   // result instead of relying on gitignored runs/ or on VERDICTS.md being read in order.

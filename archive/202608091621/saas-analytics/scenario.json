@@ -1,0 +1,16 @@
+{
+  "product": "Cadence Analytics",
+  "field": "B2B SaaS · developer and operations tooling",
+  "designChallenge": "Density and credibility. A technical buyer needs to compare three plans, scan six features, and believe the performance claims. Decoration reads as a lack of substance here, but so does a generic Tailwind landing page.",
+  "prompt": "This is the marketing site for Cadence, a warehouse-native analytics layer sold to operations and data teams. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.",
+  "preserve": [
+    "All five nav links and their targets",
+    "All six features with their names and descriptions",
+    "The four performance metrics with exact values",
+    "All three pricing plans, their prices, unit labels, feature lists, and a working call-to-action each",
+    "The working monthly/annual billing toggle, including the 20% annual discount calculation",
+    "All four FAQ questions and answers, expandable",
+    "The signup form with email field and its success state",
+    "The four footer links"
+  ]
+}

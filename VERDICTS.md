@@ -9,15 +9,23 @@ changing the score.
 
 ## Scoreboard
 
-Overall winner per scored round.
+Overall winner per scored round. Rebuilt from the verdict blocks below on every
+submission — do not edit this table by hand. To retract a round after the fact,
+add `<!-- void: <run-directory> -->` on its own line; the two below are the
+202608090424 pairs whose control arm was never edited before the provider usage
+limit hit.
+
+<!-- void: editorial-longform__with__202608090424 -->
+<!-- void: saas-analytics__with__202608090424 -->
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| coffee-roaster | 0 | 0 | 0 |
-| saas-analytics | 0 | 0 | 0 |
-| editorial-longform | 1 | 0 | 0 |
-| devtool-docs | 0 | 0 | 0 |
-| civic-clinic | 0 | 0 | 0 |
+| civic-clinic | 1 | 0 | 0 |
+| coffee-roaster | 0 | 2 | 0 |
+| devtool-docs | 1 | 0 | 0 |
+| editorial-longform | 2 | 0 | 0 |
+| saas-analytics | 1 | 1 | 0 |
+| **Total** | **5** | **3** | **0** |
 
 ## Notes across rounds
 
@@ -28,8 +36,12 @@ Overall winner per scored round.
 - Direction was unstated in that round, so the skill fell back to Recommended and the
   reviewer correctly noticed the absence of Showcase-level motion. Rounds now pass
   `--direction` explicitly.
-- Neither arm could source real photography offline. Judge generated/procedural imagery
-  accordingly until asset access is part of the harness.
+- **2026-08-10, imagery.** Earlier rounds were noted here as offline. That was wrong: both
+  arms run with network access, so neither arm was prevented from sourcing photography —
+  they chose to fabricate it. Fabricated product imagery was the single sharpest complaint
+  in the set ("the lighthouse image is soo bad", "the prop image... I don't really like").
+  This is a skill failure, not a harness gap, and the external-media-first rule was
+  strengthened in response. Judge generated imagery as a decision, not as a limitation.
 
 ---
 
@@ -218,3 +230,45 @@ Change the definition. Watch everything downstream move with it. operation and i
 
 **Summary:** worst about the winner is that, it lacks proper display of important and making sure user understands properly, like the other design, it shows 
 Change the definition. Watch everything downstream move with it. and a true interactive component with graphs etc, and theres a graph and pretyt nice too to show performance in production. tho i ahve to say, the design is really good. the other has mor emeaning and more detailed with real interaction, but the design is really plain and boring
+
+## coffee-roaster — 2026-08-09
+
+- with:    `coffee-roaster__with__202608091621`
+- without: `coffee-roaster__without__202608091621`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | Tie |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** this is bold, expressive, but it executed wrong alot, like it definitely looks way off, but its distinct and expressive, unqiue and interesting animation for showcase, tho the colour choice is weired for props and the cofeebeans dont look like it. the brew guide looks messy and hard to understabnd, i like the orb shifting and resizing while u scrol it looks likes a graph, just shit execution
+
+**Feedback on the control:** This is clean, minimal, noithing can go wrong, quite decent witrh graph animatiion and some other animation, tho is a little plain if uw showcase. and prop image is fine
+
+**Summary:** worst thing about the winner is the lack of animations, is quite plain and boring, repittied graph and sliding animation. tho nothing can go wrong with it, the loser, bold expressive, but too much wrong details, confusing colours and elements, like the orb spinning with multiple beans etc. best thing about the loser is its distinctiveness and unique interesting design.
+
+## saas-analytics — 2026-08-09
+
+- with:    `saas-analytics__with__202608091621`
+- without: `saas-analytics__without__202608091621`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | control |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** yooo this is very tough, unique, correctly executed animation, it brings story and has a purpose, tho it doenst have many animations but when it has, its super good. tho i have to say mobile doesnt look as impressive
+
+**Feedback on the control:** this is generic, like i can tell rightr away is claude already, always the same design with graph and floating stuff. urm the animations are minimal, theres alot but nothing packs a punch and is not impressive. looks lioke every other website that is non ai slop
+
+**Summary:** worst thing about winner is that eventhouugh it has unique animation and is showcase, urm number of it is little, like the rest feels pretty static, a least soime minimal animations can help, , tho i do like how it generates graph to explain, pretty understandable and clean. the bestr thing about the loser is more animations, and better as mobile i guess

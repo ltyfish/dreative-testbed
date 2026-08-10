@@ -1,0 +1,803 @@
+/*
+ * Cadence — visual system.
+ *
+ * Palette source: the two surfaces this product actually lives between. A
+ * printed audit ledger (warm paper, hairline rules, index numbers in the
+ * margin) and a query console at 3am (near-black, one governed teal, one
+ * vermilion for the thing that broke). The page is paper until the metric
+ * breaches its band, and then it is the console.
+ *
+ * Type: monospace is the primary voice, not an accent. This is a product whose
+ * central object is a text definition under version control; the numerals need
+ * to align in columns and the headline should read as the same material as the
+ * definition panel.
+ */
+
+:root {
+  --paper: #efeae0;
+  --paper-2: #e7e1d4;
+  --paper-3: #ddd5c4;
+  --ink: #14161a;
+  --ink-soft: #565d6a;
+  --rule: #cbc2b1;
+  --rule-soft: #ded7c8;
+  --governed: #1f4a46;
+  --breach: #c74a16;
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --gutter-l: clamp(58px, 13vw, 210px);
+  --gutter-r: clamp(20px, 5vw, 72px);
+  --rhythm: clamp(72px, 9vw, 132px);
+}
+
+body.is-ink {
+  --paper: #0d0f12;
+  --paper-2: #14171c;
+  --paper-3: #1b1f26;
+  --ink: #ece7db;
+  --ink-soft: #99a1ae;
+  --rule: #2b313a;
+  --rule-soft: #1e232a;
+  --governed: #86b0a8;
+  --breach: #ff6a2b;
+}
+
+* { box-sizing: border-box; }
+
+html { overflow-x: hidden; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  transition: background-color 620ms cubic-bezier(0.4, 0, 0.2, 1), color 620ms cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--breach); color: #fff; }
+
+/* The Line lives behind everything, in the left gutter, and is never clickable. */
+.spine {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 var(--gutter-r) 0 var(--gutter-l);
+}
+
+h1, h2, h3 {
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+a { color: inherit; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+
+.lede { color: var(--ink-soft); font-size: 17px; max-width: 46ch; }
+
+/* ---------- nav ---------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 18px 0 14px;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.nav-mark svg { width: 26px; height: 17px; display: block; stroke: var(--breach); stroke-width: 1.6; fill: none; }
+
+.nav-links {
+  display: flex;
+  gap: clamp(14px, 2.2vw, 30px);
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  transition: color 160ms, border-color 160ms;
+  white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); border-bottom-color: var(--breach); }
+.nav-links .nav-cta { color: var(--ink); border-bottom-color: var(--rule); }
+
+/* ---------- hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+  padding: clamp(56px, 9vw, 120px) 0 var(--rhythm);
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 4.6vw, 62px);
+  line-height: 1.02;
+  margin: 0 0 26px;
+}
+
+.hero-line-2 { display: block; color: var(--ink-soft); }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+.hero-note { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin: 16px 0 0; }
+
+/* The definition panel: the governed object itself, not a screenshot of a chart. */
+.definition {
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  font-family: var(--mono);
+  box-shadow: 6px 6px 0 var(--paper-3);
+}
+
+.definition-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.definition-ver { color: var(--governed); }
+
+.definition-body {
+  margin: 0;
+  padding: 18px 14px;
+  font-size: 13px;
+  line-height: 1.75;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.tok-kw { color: var(--breach); }
+.tok-nm { color: var(--ink); font-weight: 600; }
+.tok-k { color: var(--ink-soft); }
+.tok-v { color: var(--governed); }
+.tok-fn { color: var(--ink); }
+.tok-p { color: var(--ink-soft); }
+
+.changelog {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px dashed var(--rule);
+  font-size: 11.5px;
+}
+
+.changelog li {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 10px;
+  padding: 7px 14px;
+  border-bottom: 1px dashed var(--rule);
+  color: var(--ink-soft);
+}
+
+.cl-v { color: var(--ink); }
+.cl-who { color: var(--governed); }
+
+.definition-foot {
+  margin: 0;
+  padding: 11px 14px 13px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---------- sections ---------- */
+
+.section { padding: var(--rhythm) 0; border-bottom: 1px solid var(--rule); }
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.section h2 { font-size: clamp(22px, 2.6vw, 34px); }
+.section-note { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin: 0; }
+
+/* ---------- customers ---------- */
+
+.customers { padding-top: clamp(36px, 5vw, 56px); padding-bottom: clamp(36px, 5vw, 56px); }
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.logos li {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex: 1 1 170px;
+  padding: 13px 16px 13px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+.logo-idx { font-size: 10px; color: var(--ink-soft); }
+
+/* ---------- metrics ---------- */
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+
+.metric {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 22px 22px 26px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  transition: background-color 200ms;
+}
+
+.metric:hover { background: var(--paper-2); }
+
+/* The flagship reading gets real dominance instead of an equal quarter. */
+/* The flagship reading is set as a headline with its caption alongside, so the
+   number carries the row instead of floating in an empty box. */
+.metric-lead {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "idx idx" "value label" "value note";
+  column-gap: clamp(20px, 3vw, 44px);
+  padding: 30px 22px 34px;
+  background: var(--paper-2);
+}
+
+.metric-lead .metric-idx { grid-area: idx; margin-bottom: 6px; }
+.metric-lead strong { grid-area: value; font-size: clamp(56px, 10vw, 132px); align-self: end; }
+.metric-lead .metric-label { grid-area: label; font-size: clamp(15px, 1.8vw, 21px); align-self: end; margin: 0; }
+.metric-lead .metric-note { grid-area: note; align-self: start; }
+
+.metric-idx { font-family: var(--mono); font-size: 10px; color: var(--ink-soft); letter-spacing: 0.1em; }
+
+.metric strong {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 46px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-label { font-size: 13.5px; margin-top: 6px; }
+.metric-note { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
+
+/* ---------- feature ledger ---------- */
+
+.ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+
+.ledger-row { border-bottom: 1px solid var(--rule); }
+
+.ledger-hit {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 190px;
+  gap: clamp(14px, 3vw, 40px);
+  align-items: start;
+  padding: 24px 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: padding 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ledger-row.is-open .ledger-hit { padding: 34px 0 38px; }
+
+.ledger-idx {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  padding-top: 5px;
+  transition: color 200ms;
+}
+
+.ledger-row.is-open .ledger-idx { color: var(--breach); }
+
+.ledger-name {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(17px, 2vw, 24px);
+  letter-spacing: -0.03em;
+  margin-bottom: 7px;
+}
+
+.ledger-body { display: block; color: var(--ink-soft); font-size: 15px; max-width: 62ch; }
+
+.ledger-glyph { justify-self: end; }
+
+.glyph {
+  width: 178px;
+  height: 107px;
+  opacity: 0.34;
+  color: var(--ink);
+  transition: opacity 320ms;
+}
+
+.ledger-row.is-open .glyph, .ledger-hit:hover .glyph { opacity: 1; }
+
+.glyph [class^="g-"] { stroke: currentColor; stroke-width: 1.4; fill: none; vector-effect: non-scaling-stroke; }
+.glyph rect, .glyph circle { fill: none; }
+
+/* Each diagram animates the thing its feature does, only while its row is open. */
+.g-store { fill: var(--paper-2); }
+.g-flow, .g-head { stroke: var(--governed); }
+.is-open .g-flow, .is-open .g-head { animation: drop 1.6s calc(var(--i) * 0.18s) infinite; }
+@keyframes drop { 0%, 70%, 100% { opacity: 0.25; } 25% { opacity: 1; } }
+.g-plane-2 { stroke-dasharray: 3 4; opacity: 0.5; }
+
+.g-def { stroke: var(--breach); fill: color-mix(in srgb, var(--breach) 10%, transparent); }
+.g-leaf { fill: var(--paper-2); }
+.is-open .g-drop { stroke-dasharray: 12; stroke-dashoffset: 12; animation: inherit-flow 1.4s calc(var(--i) * 0.16s) infinite; }
+@keyframes inherit-flow { 0% { stroke-dashoffset: 12; } 60%, 100% { stroke-dashoffset: 0; } }
+
+.g-band { stroke-dasharray: 2 4; opacity: 0.55; }
+.g-series { stroke: var(--governed); stroke-width: 1.6; }
+.g-breach { stroke: var(--breach); fill: var(--breach); }
+.is-open .g-breach { animation: ping 1.5s infinite; transform-origin: 76px 12px; }
+@keyframes ping { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.45); } }
+
+.g-inner { stroke: var(--governed); fill: color-mix(in srgb, var(--governed) 8%, transparent); }
+.g-bar { stroke: var(--governed); stroke-width: 3; }
+.is-open .g-bar { animation: bar 1.8s infinite alternate; }
+@keyframes bar { from { opacity: 0.4; } to { opacity: 1; } }
+
+.g-code { opacity: 0.6; }
+.g-caret { fill: var(--breach); stroke: none; }
+.is-open .g-caret { animation: blink 1.05s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.g-gate { stroke: var(--breach); stroke-dasharray: 4 3; }
+.g-col { stroke: var(--governed); }
+.g-col.is-blocked { stroke: var(--breach); }
+.g-lock { fill: var(--paper-2); stroke: var(--breach); }
+
+/* ---------- the alert act: full-bleed peak ---------- */
+
+.act {
+  position: relative;
+  margin-left: calc(-1 * var(--gutter-l));
+  margin-right: calc(-1 * var(--gutter-r));
+  padding: clamp(88px, 13vw, 160px) var(--gutter-r) clamp(88px, 13vw, 160px) var(--gutter-l);
+  min-height: 96vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-content: center;
+  align-items: center;
+  border: 0;
+  /* Deliberately no background: the whole page has already inverted, and the
+     canvas must stay visible here — this is where the series breaches. */
+}
+
+.act-time { font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--breach); margin: 0 0 22px; }
+
+.act-head { font-size: clamp(34px, 6.4vw, 88px); line-height: 0.98; margin: 0 0 26px; }
+.act-breach { display: block; color: var(--breach); }
+
+.act-copy { color: var(--ink-soft); font-size: 17px; max-width: 44ch; margin: 0 0 30px; }
+
+.act-chart { display: none; }
+
+.alert-card {
+  margin: 0;
+  border: 1px solid var(--breach);
+  background: color-mix(in srgb, var(--breach) 7%, transparent);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.alert-cap {
+  padding: 8px 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--breach) 45%, transparent);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--breach);
+}
+
+.alert-card dl { margin: 0; padding: 4px 0; }
+.alert-card dl > div { display: grid; grid-template-columns: 92px 1fr; gap: 10px; padding: 9px 14px; }
+.alert-card dt { color: var(--ink-soft); }
+.alert-card dd { margin: 0; }
+.alert-card dd.is-breach { color: var(--breach); font-weight: 600; }
+
+/* ---------- pricing ---------- */
+
+.billing-toggle {
+  display: inline-flex;
+  border: 1px solid var(--ink);
+  font-family: var(--mono);
+}
+
+.billing-toggle button {
+  padding: 9px 18px;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12.5px;
+  transition: background-color 200ms, color 200ms;
+}
+
+.billing-toggle button + button { border-left: 1px solid var(--ink); }
+.billing-toggle button.active { background: var(--ink); color: var(--paper); }
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px 26px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.plan:first-child { border-left: 1px solid var(--rule); }
+
+/* The recommended plan is not a card with a coloured border; it is a solid block
+   that outranks its neighbours in the column system. */
+.plan-featured {
+  background: var(--ink);
+  color: var(--paper);
+  margin-top: -20px;
+  padding-top: 48px;
+  padding-bottom: 40px;
+  border-color: var(--ink);
+}
+
+.plan-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.plan h3 { font-size: 15px; letter-spacing: 0.02em; }
+.plan-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+
+.plan-price { margin: 18px 0 0; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+
+.plan-price strong {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(34px, 3.4vw, 48px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  animation: reprice 380ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* The price moves because a discount was applied to it — the motion is the
+   causality, not a flourish. */
+@keyframes reprice {
+  from { transform: translateY(0.28em); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.plan-price span { font-family: var(--mono); font-size: 12px; opacity: 0.7; }
+
+.plan-delta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--breach);
+  margin: 8px 0 20px;
+  min-height: 1.2em;
+  white-space: pre;
+}
+
+.plan-featured .plan-delta { color: #ff8a4d; }
+
+.plan-features { list-style: none; padding: 0; margin: 0 0 26px; font-size: 14px; flex: 1; }
+
+.plan-features li {
+  padding: 8px 0 8px 20px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  position: relative;
+}
+
+.plan-features li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 17px;
+  width: 8px;
+  height: 1px;
+  background: var(--breach);
+}
+
+.plan-cta { width: 100%; text-align: center; }
+.plan-featured .plan-cta { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+/* ---------- faq ---------- */
+
+.faq-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); max-width: 900px; }
+.faq-item { border-bottom: 1px solid var(--rule); }
+
+.faq-q {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 46px 1fr 24px;
+  gap: 12px;
+  align-items: baseline;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 20px 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.faq-idx { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; }
+.faq-qt { font-family: var(--mono); font-size: clamp(15px, 1.6vw, 19px); font-weight: 600; letter-spacing: -0.025em; }
+
+.faq-sign { position: relative; justify-self: end; width: 14px; height: 14px; align-self: center; }
+.faq-sign::before, .faq-sign::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+  transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.faq-sign::before { left: 0; top: 6px; width: 14px; height: 1.5px; }
+.faq-sign::after { left: 6px; top: 0; width: 1.5px; height: 14px; }
+.faq-item.is-open .faq-sign::after { transform: scaleY(0); }
+.faq-item.is-open .faq-sign::before { background: var(--breach); }
+
+.faq-a {
+  margin: 0 0 22px;
+  padding-left: 58px;
+  max-width: 68ch;
+  color: var(--ink-soft);
+  font-size: 15.5px;
+  animation: unfold 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes unfold { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+
+/* ---------- signup ---------- */
+
+.signup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 70px);
+  align-items: end;
+}
+
+.signup h2 { font-size: clamp(26px, 3.2vw, 42px); margin-bottom: 16px; }
+
+.signup-form { display: flex; flex-direction: column; gap: 8px; }
+.signup-form label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+
+.field { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.signup-form input {
+  flex: 1 1 240px;
+  padding: 13px 14px;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--ink);
+  min-width: 0;
+}
+
+.signup-form input:focus-visible { outline: 2px solid var(--breach); outline-offset: 1px; }
+.form-note { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); margin: 4px 0 0; }
+
+.form-success {
+  font-family: var(--mono);
+  font-size: 15px;
+  padding: 20px 22px;
+  border: 1px solid var(--governed);
+  background: color-mix(in srgb, var(--governed) 9%, transparent);
+  align-self: center;
+  animation: unfold 340ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 1px solid var(--ink);
+  background: none;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  letter-spacing: -0.01em;
+  transition: background-color 180ms, color 180ms, transform 180ms;
+}
+
+.btn:hover { transform: translate(-1px, -1px); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--breach); border-color: var(--breach); color: #fff; }
+.btn-secondary:hover { background: var(--paper-3); }
+.btn-ghost { border-color: var(--breach); color: var(--breach); }
+.btn-ghost:hover { background: var(--breach); color: #fff; }
+
+:focus-visible { outline: 2px solid var(--breach); outline-offset: 3px; }
+
+/* ---------- footer ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 0 56px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
+.footer-links a { text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.footer-links a:hover { color: var(--ink); border-bottom-color: var(--breach); }
+
+/* ---------- 390px is its own composition ---------- */
+
+@media (max-width: 900px) {
+  .hero, .signup { grid-template-columns: minmax(0, 1fr); }
+  .act { grid-template-columns: minmax(0, 1fr); min-height: auto; }
+  .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ledger-hit { grid-template-columns: 40px minmax(0, 1fr) 110px; }
+  .plan-grid { grid-template-columns: minmax(0, 1fr); border-left: 1px solid var(--rule); }
+  .plan { border-left: 0; }
+  .plan:first-child { border-left: 0; }
+  .plan-featured { margin-top: 0; padding-top: 32px; padding-bottom: 32px; }
+}
+
+@media (max-width: 720px) {
+  /* The left gutter stays wide enough that the spine thread never reaches the
+     text column. It is the one piece of desktop geometry the phone keeps. */
+  :root { --gutter-l: 54px; --gutter-r: 18px; --rhythm: 56px; }
+
+  body { font-size: 15.5px; }
+
+  /* All five links wrap onto two rows rather than clipping in a scroller, and
+     the bar stops being sticky — two rows of nav is too much of a 844px screen
+     to spend permanently. */
+  .nav { position: static; flex-direction: column; align-items: stretch; gap: 8px; padding-top: 14px; }
+  .nav-links { flex-wrap: wrap; row-gap: 0; column-gap: 18px; }
+  .nav-links a { padding: 9px 0; line-height: 1.4; }
+
+  .act-chart { display: block; margin: 4px 0 30px; }
+  .act-chart svg { width: 100%; height: 116px; display: block; }
+  .ac-rail { stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 3 5; opacity: 0.7; vector-effect: non-scaling-stroke; }
+  .ac-series { stroke: var(--governed); stroke-width: 1.6; fill: none; vector-effect: non-scaling-stroke; }
+  .ac-breach { fill: var(--breach); stroke: none; animation: ping 1.6s infinite; transform-origin: 208px 14px; }
+  .act-chart figcaption { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px; }
+
+  .hero { padding-top: 40px; }
+  .hero h1 { font-size: clamp(28px, 8.4vw, 40px); }
+  .lede { font-size: 15.5px; }
+  .hero-actions .btn { flex: 1 1 auto; text-align: center; }
+
+  .definition-body { font-size: 11.5px; padding: 14px 12px; }
+  .changelog li { grid-template-columns: 38px 1fr; row-gap: 2px; }
+  .cl-who { grid-column: 2; font-size: 10.5px; }
+
+  /* One reading per row on a phone: these numbers are the argument, so they get
+     the full width rather than being shrunk into a 2×2. */
+  .metric-grid { grid-template-columns: minmax(0, 1fr); }
+  .metric, .metric-lead { padding: 18px 16px 20px; }
+  .metric-lead { display: flex; flex-direction: column; gap: 4px; }
+  .metric-lead strong { font-size: clamp(52px, 17vw, 78px); }
+  .metric-lead .metric-label { font-size: 15px; margin-top: 6px; }
+
+  /* The diagrams drop below the text instead of squeezing the description. */
+  .ledger-hit { grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 18px 0; }
+  .ledger-glyph { grid-column: 2; justify-self: start; margin-top: 14px; }
+  .glyph { width: 108px; height: 65px; }
+  .ledger-row:not(.is-open) .ledger-glyph { display: none; }
+
+  .act-head { font-size: clamp(30px, 10vw, 46px); }
+  .alert-card dl > div { grid-template-columns: 78px 1fr; font-size: 12px; }
+
+  .section-head { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 26px; }
+  .billing-toggle { width: 100%; }
+  .billing-toggle button { flex: 1; padding: 12px 8px; }
+
+  .faq-q { grid-template-columns: 30px 1fr 20px; padding: 16px 0; }
+  .faq-a { padding-left: 42px; }
+
+  .footer { flex-direction: column; gap: 18px; }
+}
+
+@media (max-width: 380px) {
+  :root { --gutter-l: 46px; }
+  .definition-body { font-size: 10.5px; }
+  .alert-card dl > div { grid-template-columns: 66px 1fr; padding: 8px 10px; }
+  .plan-features { font-size: 13.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .glyph { opacity: 1; }
+}

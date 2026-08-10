@@ -1,0 +1,42 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/saas-analytics__without__202608091621
+
+This is the marketing site for Cadence, a warehouse-native analytics layer sold to operations and data teams. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six features with their names and descriptions
+- The four performance metrics with exact values
+- All three pricing plans, their prices, unit labels, feature lists, and a working call-to-action each
+- The working monthly/annual billing toggle, including the 20% annual discount calculation
+- All four FAQ questions and answers, expandable
+- The signup form with email field and its success state
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`npm run build` succeeds (last run above). Nothing committed — `dist/` is a new untracked build output.
+
+## What I did
+
+The baseline was a stack of bordered boxes on white. I rebuilt it around a single idea: **Cadence is an instrument**, so the site reads like a control room — a deep ink field, engineering hairlines instead of card borders, monospace for anything machine-generated, and a serif voice for the sentences a human wrote. One amber signal colour carries all meaning (anomalies, the active toggle, the recommended plan); a teal is reserved for "healthy/confirmed" states.
+
+Section by section:
+
+- **Hero** — asymmetric split. A 92px serif headline with *Every dashboard* set in amber italic, against a live "instrument panel": the actual `revenue.net.yml` governed metric, then an SVG trace of that metric that draws itself on load with one flagged anomaly, dropline, and pulsing halo. It shows the product's premise instead of describing it. A masked engineering grid sits behind.
+- **Customers** — the six names as a paused-on-hover marquee in serif, edge-masked, between hairlines.
+- **Metrics** — four columns divided by hairlines, no boxes; each value in large serif over its own deterministic sparkline that brightens on hover. Values are exact and unchanged.
+- **Features** — a two-column indexed register (`01`–`06`) rather than a card grid, with an amber rule wiping in under each row on hover.
+- **Pricing** — one bordered slab split into three columns so the plans read as a single table. The toggle thumb is measured from the DOM (and re-measured after webfonts load and on resize), so it can't drift off its label. Prices animate on switch; the 20% annual math is untouched. Plan CTAs now raise a real toast instead of `alert()`.
+- **FAQ** — serif questions with a `+`→`−` mark, animated open via `grid-template-rows: 0fr→1fr`.
+- **Signup** — inline field + button in a lifted panel; the success state is a teal-bordered confirmation with a drawn tick.
+
+Everything you listed as a product requirement is preserved verbatim: all five nav links and targets, six features with names and descriptions, four metrics with exact values, three plans with prices/units/feature lists/working CTAs, the monthly-annual toggle and its discount, all four FAQ entries expandable, the email form and success state, four footer links.
+
+Also carried through: a skip link, visible focus rings, `aria-pressed`/`aria-expanded` on the interactive controls, `aria-live` on the toast, a real `<h3>` wrapper on each FAQ trigger, breakpoints at 980/720px, and a `prefers-reduced-motion` block that disables the draw, marquee, pulse, and reveals.

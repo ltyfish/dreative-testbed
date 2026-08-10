@@ -1,0 +1,22 @@
+{
+  "scenario": "coffee-roaster",
+  "judgedAt": "2026-08-09T17:17:05.930Z",
+  "runs": {
+    "with": "coffee-roaster__with__202608091621",
+    "without": "coffee-roaster__without__202608091621"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "Tie",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "without",
+  "feedback": {
+    "without": "This is clean, minimal, noithing can go wrong, quite decent witrh graph animatiion and some other animation, tho is a little plain if uw showcase. and prop image is fine",
+    "with": "this is bold, expressive, but it executed wrong alot, like it definitely looks way off, but its distinct and expressive, unqiue and interesting animation for showcase, tho the colour choice is weired for props and the cofeebeans dont look like it. the brew guide looks messy and hard to understabnd, i like the orb shifting and resizing while u scrol it looks likes a graph, just shit execution"
+  },
+  "summary": "worst thing about the winner is the lack of animations, is quite plain and boring, repittied graph and sliding animation. tho nothing can go wrong with it, the loser, bold expressive, but too much wrong details, confusing colours and elements, like the orb spinning with multiple beans etc. best thing about the loser is its distinctiveness and unique interesting design."
+}

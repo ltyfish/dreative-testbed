@@ -1,0 +1,9 @@
+{
+  "scenario": "coffee-roaster",
+  "arm": "without",
+  "seq": "202608091621",
+  "label": null,
+  "direction": null,
+  "product": "Northwind Coffee Roasters",
+  "field": "Physical product · direct-to-consumer commerce"
+}
