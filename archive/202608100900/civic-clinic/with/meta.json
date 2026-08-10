@@ -1,0 +1,12 @@
+{
+  "scenario": "civic-clinic",
+  "arm": "with",
+  "seq": "202608100900",
+  "label": null,
+  "direction": "recommended",
+  "product": "Eastside Community Health",
+  "field": "Public service · healthcare access",
+  "runName": "civic-clinic__with__202608100900",
+  "site": true,
+  "archivedAt": "2026-08-10T09:08:18.792Z"
+}

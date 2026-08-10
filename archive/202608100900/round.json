@@ -1,0 +1,60 @@
+{
+  "round": "202608100900",
+  "archivedAt": "2026-08-10T09:08:19.820Z",
+  "scenarios": [
+    "coffee-roaster",
+    "civic-clinic"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "coffee-roaster__with__202608100900",
+      "code": 1,
+      "minutes": 5.9
+    },
+    {
+      "runName": "coffee-roaster__without__202608100900",
+      "code": 0,
+      "minutes": 4.3
+    },
+    {
+      "runName": "civic-clinic__with__202608100900",
+      "code": 1,
+      "minutes": 5.9
+    },
+    {
+      "runName": "civic-clinic__without__202608100900",
+      "code": 1,
+      "minutes": 2.7
+    }
+  ],
+  "runs": [
+    {
+      "runName": "coffee-roaster__with__202608100900",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "coffee-roaster__without__202608100900",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "civic-clinic__with__202608100900",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "civic-clinic__without__202608100900",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

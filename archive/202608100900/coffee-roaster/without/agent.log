@@ -1,0 +1,39 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/coffee-roaster__without__202608100900
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build succeeds. Here's what changed.
+
+**Direction:** a roastery *log book* — warm paper stock with a multiply-blended grain overlay, near-black ink, a single ember-orange accent, and Fraunces (display) / Inter (text) / IBM Plex Mono (all metadata). Every data-bearing element is set as a dotted-leader ledger row, the way a roast ticket actually reads.
+
+**Section by section**
+- **Nav** — wordmark with a bean mark (roasted-gradient disc with a center crease), sticky bar that condenses and gains a blurred paper backdrop past 24px of scroll. The cart is now real state: a live bag count and running total instead of `alert()`.
+- **Hero** — oversized ragged headline with the last clause in ember italic, an ember glow bleed, and a **roast ticket** card whose profile curve draws itself in via `stroke-dashoffset`. Underneath, a dark scrolling band carrying the four facts.
+- **Story** — drop-capped serif prose against a ledger where each stat is a big tabular numeral with its unit in ember; the four required claims (11 / 2.4× / 12kg / <24h) each got a note line rather than a bare label.
+- **Beans** — hairline-seamed grid, no gaps. Each card is a lot record: numbered 01–06, a per-origin gradient tile with a bean disc that rotates on hover, spec rows (origin, altitude, 250g bag), a three-pip roast meter, and an add-to-cart button that slides to "Added ✓" and back.
+- **Brew guide** — a timeline: connected rule with nodes, clock markers (00:00 → 03:00), and outlined ghost numerals behind each step.
+- **Reviews** — slightly rotated paper cards that straighten and lift on hover, brass quote glyph.
+- **Subscribe** — full-bleed pine-green break with an ember bloom, the only dark section mid-page.
+- **Contact** — split: roastery facts on the left, form on the right in a raised paper panel with underline fields; success state is a large serif line with a popping ember check.
+- **Footer** — outlined "Northwind" wordmark at display scale, four links, coordinates.
+
+**Requirements preserved:** all five nav links and targets, all six beans with names/notes/roast/price and a working add button, the four brew steps verbatim, email + message form with its success state, the four footer links, and every factual claim.
+
+Also added: skip link, `aria-live` cart announcements, visible focus rings, `IntersectionObserver` scroll reveals with a no-observer fallback, and a full `prefers-reduced-motion` block. Nothing committed.

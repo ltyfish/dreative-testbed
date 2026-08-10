@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage({viewport:{width:1440,height:900}});
+const r = await p.goto('https://unsplash.com/s/photos/coffee-roaster', {waitUntil:'domcontentloaded', timeout:60000});
+console.log('status', r && r.status(), p.url());
+await p.waitForTimeout(4000);
+const n = await p.evaluate(()=>({imgs:document.querySelectorAll('img').length, figs:document.querySelectorAll('figure').length, title:document.title, body:document.body.innerText.slice(0,300)}));
+console.log(JSON.stringify(n,null,1));
+const srcs = await p.evaluate(()=>[...document.querySelectorAll('img')].map(i=>i.currentSrc||i.src).filter(s=>s.includes('images.unsplash.com')).slice(0,15));
+console.log(srcs.join('\n'));
+await b.close();
