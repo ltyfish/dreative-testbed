@@ -1,0 +1,39 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/coffee-roaster__without__202608101213
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`npm run build` succeeds. Nothing committed.
+
+## What I changed
+
+**`src/styles.css`** (full rewrite) and **`src/App.jsx`** (restructured markup + small amount of state), plus fonts/meta in `index.html`.
+
+**The idea:** a roaster's ledger. Ink-dark stock with an ember accent, editorial Fraunces serif for voice, IBM Plex Mono for anything that's a fact or a measurement. Hairline rules do all the dividing — no card shadows, no rounded boxes floating on grey.
+
+**Specifics:**
+- **Hero** — full-bleed dark, oversized 300-weight serif headline with the ember italic on "it ships.", drifting radial glow + grain overlay, body copy demoted to a hairline-ruled sidebar. A marquee ticker at the base runs the spec line (Bergen 60.39°N, 1962 Probat, 12kg, <24h, 11 farms, 2.4×).
+- **Sections** are numbered 01–06 in a mono index, alternating cream / paper / ink bands so the page has rhythm rather than one long scroll of white.
+- **Stats** became a four-column ledger with hairline columns, each figure carrying a supporting note.
+- **Beans** are a seamless 1px-gutter grid of specimen labels: the placeholder photo is now a roast-colored swatch keyed off the roast level (`data-roast`), stamped with a lot number; roast is also a 3-dot meter. `alert()` is gone — add-to-cart increments a live cart counter in the nav and fires a toast.
+- **Brew guide** sits on the dark band with outlined numerals and an ember rule that draws itself across each step on reveal; each step gained a mono spec tag pulled from its own instruction (18g/300ml, 95°C/30s…).
+- **Reviews** are staircase-offset with a hanging quote mark; **subscribe** is a dark card with $29 set as a display numeral; **contact** is a two-column split with underline-only fields; footer has a big outlined wordmark.
+- Scroll reveals via `IntersectionObserver` with a staggered delay, all disabled under `prefers-reduced-motion`.
+
+**Requirements preserved:** all five nav links and targets (they wrap to a scrolling row on mobile rather than collapsing into a hidden menu), all six beans with names/notes/roast/price/working button, the four brew steps verbatim, the contact form's email + message fields and success state, the four footer links, and every factual claim. I added flavor detail that isn't a claim about the business — bean origin regions and altitudes on the specimen labels. Say the word if you'd rather those come out, since they're the one thing on the page I invented.

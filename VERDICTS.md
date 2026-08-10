@@ -21,11 +21,11 @@ limit hit.
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
 | civic-clinic | 1 | 0 | 0 |
-| coffee-roaster | 0 | 2 | 0 |
+| coffee-roaster | 1 | 2 | 0 |
 | devtool-docs | 1 | 0 | 0 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **5** | **3** | **0** |
+| **Total** | **6** | **3** | **0** |
 
 ## Notes across rounds
 
@@ -272,3 +272,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** this is generic, like i can tell rightr away is claude already, always the same design with graph and floating stuff. urm the animations are minimal, theres alot but nothing packs a punch and is not impressive. looks lioke every other website that is non ai slop
 
 **Summary:** worst thing about winner is that eventhouugh it has unique animation and is showcase, urm number of it is little, like the rest feels pretty static, a least soime minimal animations can help, , tho i do like how it generates graph to explain, pretty understandable and clean. the bestr thing about the loser is more animations, and better as mobile i guess
+
+## coffee-roaster — 2026-08-10
+
+- with:    `coffee-roaster__with__202608101213`
+- without: `coffee-roaster__without__202608101213`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** this is definitely unique, interesting and nice, the use of images are very good, tho very static, urm it has some animation regarding scrol effects. theres some interactivity with the graph but, the graph is hella ugly ngl, compared the ones i seen by claude control, this is underwhelming, well because mostly thios is interactive and not jsut a video or smth like claude (mayvbe a asset). ik this is recommended but, compared to design A, generally it has not much animation, mor eunioque ones but not extremely crazy, just small scroll effects and grapgh interactivity. the images, text and everything dont animate, theres very little animation even if its small. tho i have to say is a little easier to understand. for this, theres some spacing problems for texts and stuff,  and i do prefer design A where the props are highlighted tho with just colour, our is just with graph and logs, which is weired cause we are selling cofee uk, props
+
+**Feedback on the control:** ya expected from cl;aude, is always the same generic simple nothing can goi wrong animation, smooth and nice but still, nothing special or unique. prop images jsut show colour and is not even layout nicely
+
+**Summary:** winner just won by abit, but the worst thing is lack of animations in total since it may or maynot be recommendation, urm just frw scroll effects not bizare or unique, and not much overall smooth animation like the loser. loser has props with atleast pl;aceholder, while ours is a graph log which makes things confusing and not really a ecommerce website while adding confusing since the graph looks wrongly executed and ugly.

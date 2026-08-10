@@ -1,0 +1,22 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/coffee-roaster__with__202608101213
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+You've hit your session limit · resets 11:20pm (Asia/Singapore)
