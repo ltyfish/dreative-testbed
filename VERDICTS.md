@@ -21,11 +21,11 @@ limit hit.
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
 | civic-clinic | 1 | 0 | 0 |
-| coffee-roaster | 1 | 3 | 0 |
+| coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 1 | 0 | 0 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **6** | **4** | **0** |
+| **Total** | **7** | **4** | **0** |
 
 ## Notes across rounds
 
@@ -314,3 +314,28 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** this is clean, mordern, slit, and smooth calm animation, nothing bizare and nothing can go wrong, is easy to understand  and genuine good ecommerce website
 
 **Summary:** best thign about the loser is its ambition i guess, but its genuine messy and wrongly executed, design doesnt look good, go see it urself. worst thing about the winner is ig, lack of using of images, its animations are plain and overused, notjing unique, design is generic
+
+## coffee-roaster — 2026-08-11
+
+<!-- Entered by hand after the round was archived: the reviewer judged the pair live
+     but committed before submitting, and `runs/` no longer held both arms on pull.
+     Wording is the reviewer's own, transcribed verbatim. -->
+
+- with:    `coffee-roaster__with__202608110800`
+- without: `coffee-roaster__without__202608110800`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** for this showcase, is less confusing, images are used really well here, tho abit static, still looks nice overall, i do see more unique and nice animations for some sections, like interaction does make it looks nice when zoom in and blur for images, tho prop section didnt really highlight the props/products well when adding to cart, but did show the other props like colour/type of coffee really well (not the product, the type), the product the image looks small and a little irrelevant (add to cart section). some section got nice scroll animation but it isnt fit within user view, so after i scroll pass section then there is scroll effects, so pretty weird and bad ux, but pretty nice. somehow this run tho not as easy to understand as claude control, still pretty neat and not as messy as previous run. a cool part of dreative interactivity is a fact i didnt observe in: when i select the type of bean, it highlights and enlarges text/image of that product that relates to the type, super cool and nice effect while being useful, but not as well executed cause if just one product has that type, its overly big, and highlighting that certain product, the others look super tiny in comparison. and only when i select certain interaction does the scroll effect work properly. i do see the vision but images are too cut/cramped together and some specific outcomes has no image/relevant one. dreative in general eventhough other text/sections have stuff, it remains plain and no transition/smooth ones like claude, it generally only amplifies since there is some few unique ones
+
+**Feedback on the control:** the claude control, i realize something that always make it seems smooth, its its transition and the way u interact with stuff. like when i scroll, theres minimal but still subtle clean transition of it popping up or sliding something like that, same goes with interacting where it changes colour/background/shadow to match the background or add a little gradient making it look "cool" and interactive, popping up and smooth, tho very overused and not unique. theres also custom animation (tho always overused by claude) like names sliding from left to right infinitely. tho product/prop image not as good a source, its better in clarifying this product is add to cart/for sale like, there are cards with big images and text. is also much less wordy and cleaner in separation
+
+**Summary:** overall i give dreative cause claude is really bland and boring and those, nothing can go wrong websites that dont look half bad but look like lovable did it with the prompt saying "no ai slop". dreative won on distinctiveness, fit, hierarchy, craft and restraint, mobile tie. worst thing about the winner: scroll effects fire outside the viewport so they land after you've already passed the section, the add-to-cart product image is small and irrelevant, the bean-type highlight over-scales when only one product matches, and everything outside the few signature moments is still flat with no transitions. best thing about the loser: subtle scroll and hover transitions everywhere, and cards with big images and text that make it obvious what is for sale.
