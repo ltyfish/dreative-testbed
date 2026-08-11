@@ -42,6 +42,16 @@ limit hit.
   in the set ("the lighthouse image is soo bad", "the prop image... I don't really like").
   This is a skill failure, not a harness gap, and the external-media-first rule was
   strengthened in response. Judge generated imagery as a decision, not as a limitation.
+- **2026-08-11, what "smooth" actually means.** The reviewer finally named the control's
+  standing advantage, and it is not big animation. It is that *every* element responds:
+  subtle enter-on-scroll, and colour/background/shadow/gradient shifts on interaction,
+  everywhere, all the time. Dreative "only amplifies" — a few strong signature moments
+  with flat, transition-less material between them. The motion floor counts signature
+  moments and cannot see this: a route can clear it and still feel dead. Baseline
+  responsiveness across ordinary elements is the gap, not more spectacle.
+- **2026-08-11, scroll triggers.** Dreative's scroll effects fired outside the viewport,
+  so they had already played by the time the section was on screen. A motion check that
+  only asks whether state changed will pass this.
 
 ---
 
