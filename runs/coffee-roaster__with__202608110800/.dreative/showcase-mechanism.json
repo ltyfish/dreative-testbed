@@ -1,0 +1,247 @@
+{
+  "version": 3,
+  "experienceType": "journey",
+  "signature": {
+    "name": "The roast ladder",
+    "selector": "#roast-ladder",
+    "whyOnlyThisProduct": "Northwind's six coffees differ chiefly by where the drum is stopped, so the catalogue's own sorting axis is turned into four macro photographs of the bean at four points in the roast, with the coffees docked at their real rung — a control that would be meaningless on any site that does not roast its own coffee."
+  },
+  "referenceMode": "scout",
+  "referenceAdoptions": [
+    {
+      "source": "Printed shipping and contract ledgers",
+      "sourceRef": "https://en.wikipedia.org/wiki/Ledger",
+      "rights": "Principle only; no artwork reproduced",
+      "principle": "Hairline-ruled rows with an oversized figure hung left of its unit, so a claim can be scanned before it is read.",
+      "decision": "use",
+      "targetSelector": "#story .ledger-table"
+    },
+    {
+      "source": "Film editing timelines",
+      "sourceRef": "https://en.wikipedia.org/wiki/Non-linear_editing_system",
+      "rights": "Principle only",
+      "principle": "A proportional time axis where the width of a segment is its real duration, so a 30-second bloom cannot look the same size as a 150-second pour.",
+      "decision": "use",
+      "targetSelector": "#brew-guide .brew-axis"
+    },
+    {
+      "source": "Darkroom contact sheets and colour grading",
+      "sourceRef": "https://en.wikipedia.org/wiki/Color_grading",
+      "rights": "Principle only",
+      "principle": "Holding a set of images in one graded state and lifting only the selected frame to full colour, so selection reads as attention rather than as filtering.",
+      "decision": "use",
+      "targetSelector": "#beans [data-bean=\"colombia\"] .bean-photo"
+    },
+    {
+      "source": "Contemporary agency-site scroll spectacle (pinned WebGL sequences)",
+      "sourceRef": "https://tympanus.net/codrops/",
+      "rights": "Principle only",
+      "principle": "Pinned, scroll-jacked hero sequences as the primary peak.",
+      "decision": "reject"
+    }
+  ],
+  "assetCommitments": [
+    {
+      "role": "Hero focal subject — the drum discharging a finished batch",
+      "decision": "use",
+      "targetSelector": ".hero-image",
+      "medium": "image",
+      "sourceKind": "local-file",
+      "sourceRef": "src/media/hero-drum.jpg",
+      "rights": "Pexels licence, free for commercial use, no attribution required (credited anyway in the footer). Source: https://images.pexels.com/photos/31890552/pexels-photo-31890552.jpeg",
+      "mobileFallback": "Same file, object-position shifted to 68% 45% and a bottom-weighted veil so type never sits over the falling beans."
+    },
+    {
+      "role": "Peak focal subject — four macro frames of the bean through the roast",
+      "decision": "use",
+      "targetSelector": "[data-ladder-shot=\"medium\"]",
+      "medium": "image",
+      "sourceKind": "local-file",
+      "sourceRef": "src/media/roast-2-medium.jpg",
+      "rights": "Pexels licence, free for commercial use. Frames: photos 4815899, 18932309, 209476 and 28409854.",
+      "mobileFallback": "Stage becomes 4:3 and the readout note is dropped so the roast name and drop line stay legible over the photograph."
+    },
+    {
+      "role": "Post-peak focal subject — the 1962 Probat named in the copy",
+      "decision": "use",
+      "targetSelector": ".ledger-figure img",
+      "medium": "image",
+      "sourceKind": "local-file",
+      "sourceRef": "src/media/probat.jpg",
+      "rights": "Pexels licence, free for commercial use. Source: https://images.pexels.com/photos/4816467/pexels-photo-4816467.jpeg",
+      "mobileFallback": "Column capped at 420px and moved above the figure ledger."
+    },
+    {
+      "role": "Catalogue identity — one origin photograph per coffee",
+      "decision": "use",
+      "targetSelector": "#beans [data-bean=\"ethiopia\"] .bean-photo img",
+      "medium": "image",
+      "sourceKind": "local-file",
+      "sourceRef": "src/media/origin-ethiopia.jpg",
+      "rights": "Pexels licence, free for commercial use. Six distinct files, labelled as origin rather than as photographs of the product.",
+      "mobileFallback": "Dropped from racked rows in favour of a roast-ink tick, because a 52px landscape reads as a smudge; shown at 16:10 in the open group."
+    },
+    {
+      "role": "Brew clock — bloom and pour",
+      "decision": "use",
+      "targetSelector": ".brew-shot--pour",
+      "medium": "image",
+      "sourceKind": "local-file",
+      "sourceRef": "src/media/brew-bloom.jpg",
+      "rights": "Pexels licence, free for commercial use. Photos 11069886 and 14679166.",
+      "mobileFallback": "Same cross-fade at reduced height; the dry state keeps its hatch."
+    },
+    {
+      "role": "Procedural fabrication of beans, bags or machinery from CSS and SVG",
+      "decision": "reject",
+      "targetSelector": "none",
+      "medium": "none",
+      "sourceKind": "none",
+      "sourceRef": "not used",
+      "rights": "n/a",
+      "mobileFallback": "n/a — external photography was sourced and verified by eye instead."
+    }
+  ],
+  "continuity": {
+    "mode": "shared-state",
+    "motif": "The roast ink: one colour sampled from the four roast photographs, carried from the nav chip through the ledger figures, the ladder, the catalogue rack, the subscription shelf and the footer stamp.",
+    "stateKey": "roast",
+    "sourceSelector": "#roast-ladder [data-rung]",
+    "sourceTrigger": "click",
+    "stateCount": 4,
+    "affectedRegions": [
+      {
+        "selector": "#story .ledger-row:first-child .ledger-value",
+        "stage": "before",
+        "effect": "The four ledger figures are set in the current roast ink and re-grade when the rung changes."
+      },
+      {
+        "selector": "#roast-ladder .ladder-stage",
+        "stage": "peak",
+        "effect": "The macro photograph cross-fades to the selected roast and the readout names its drop point."
+      },
+      {
+        "selector": "#beans [data-rack-group=\"medium\"]",
+        "stage": "after",
+        "effect": "The selected roast's group opens into full-colour origin cards while the others compress to racked priced lines."
+      },
+      {
+        "selector": "#subscribe [data-subscribe-box]",
+        "stage": "after",
+        "effect": "The shelf lists the bags of the selected roast, with their prices and an ink rule."
+      }
+    ]
+  },
+  "comparison": {
+    "selector": "#beans .beans-rack",
+    "itemSelector": ".bean-card",
+    "identityAttribute": "data-bean",
+    "identityChannels": [
+      {
+        "channel": "Origin photograph",
+        "selector": ".bean-photo img",
+        "uniqueProperty": "src"
+      },
+      {
+        "channel": "Origin tone sampled from that coffee's own photograph",
+        "selector": ".bean-photo",
+        "uniqueProperty": "background-color"
+      }
+    ]
+  },
+  "mechanisms": [
+    {
+      "name": "Drum drift",
+      "stage": "before",
+      "selector": "#hero",
+      "primarySelector": ".hero-image",
+      "primarySubject": "The roaster discharging a finished batch into the cooling tray",
+      "trigger": "scroll",
+      "mediaMode": "image",
+      "mobileTransformation": "Drift is retained but the veil is bottom-weighted and the batch card leaves the image, becoming a three-column strip beneath the buttons.",
+      "visibleChange": "The photograph scales from 1.0 to 1.14 and shifts down 8% while the veil darkens to 0.92, so the hero ends on near-black and the cut to paper lands as a cut.",
+      "animationOwner": "gsap",
+      "ownedProperties": [
+        "transform",
+        "opacity"
+      ],
+      "stateCount": 2
+    },
+    {
+      "name": "Roast ladder selection",
+      "stage": "peak",
+      "selector": "#roast-ladder",
+      "primarySelector": ".ladder-stage",
+      "primarySubject": "Macro photographs of Northwind's coffee at four points in the roast",
+      "trigger": "click",
+      "mediaMode": "image",
+      "mobileTransformation": "The stage becomes 4:3 and the four rungs stay one horizontal ladder as tall tap targets with the count stacked under the label.",
+      "visibleChange": "The stage photograph cross-fades between four distinct macro frames, the brass travel bar slides to the chosen rung, the readout swaps roast name, drop point and note, and the page ink changes colour.",
+      "animationOwner": "react-state",
+      "ownedProperties": [
+        "opacity",
+        "transform",
+        "left",
+        "--ink",
+        "background-color"
+      ],
+      "stateCount": 4
+    },
+    {
+      "name": "Catalogue rack",
+      "stage": "after",
+      "selector": "#beans",
+      "primarySelector": "[data-bean=\"colombia\"] .bean-photo img",
+      "primarySubject": "The six coffees Northwind sells, with their origins, notes and prices",
+      "trigger": "click",
+      "mediaMode": "image",
+      "mobileTransformation": "Racked rows replace the thumbnail with a roast-ink tick and the open group becomes single-column 16:10 cards; every add-to-cart button stays at 44px in both states.",
+      "visibleChange": "The selected roast's rows change from 76px duotone lines to tall 4:5 full-colour origin cards, and the group rule and heading take the roast ink.",
+      "animationOwner": "css",
+      "ownedProperties": [
+        "filter",
+        "opacity",
+        "aspect-ratio",
+        "grid-template-columns",
+        "background-color"
+      ],
+      "stateCount": 3
+    },
+    {
+      "name": "Brew clock scrub",
+      "stage": "after",
+      "selector": "#brew-guide",
+      "primarySelector": ".brew-clock",
+      "primarySubject": "The pour-over Northwind's brew guide describes, on its real 3-minute clock",
+      "trigger": "scroll",
+      "mediaMode": "image",
+      "mobileTransformation": "The axis loses its sub-labels and the four steps stack full width, with unreached steps dimmed rather than hidden.",
+      "visibleChange": "A brass fill travels the axis, the elapsed clock counts from 0:00 to 3:00, the dry hatch gives way to the bloom photograph and then the pour photograph, and each step lights as the fill passes its mark.",
+      "animationOwner": "gsap",
+      "ownedProperties": [
+        "width",
+        "left",
+        "opacity",
+        "--brew"
+      ],
+      "stateCount": 4
+    },
+    {
+      "name": "Subscription shelf",
+      "stage": "after",
+      "selector": "#subscribe",
+      "primarySelector": "[data-subscribe-box]",
+      "primarySubject": "The bags the chosen roast would put in the monthly box",
+      "trigger": "none",
+      "mediaMode": "dom-state",
+      "mobileTransformation": "The shelf drops below the pitch at full width and keeps every named bag and price.",
+      "visibleChange": "The shelf's named coffees, prices, heading and top rule change with the roast chosen at the ladder.",
+      "animationOwner": "react-state",
+      "ownedProperties": [
+        "background-color",
+        "color"
+      ],
+      "stateCount": 3
+    }
+  ]
+}

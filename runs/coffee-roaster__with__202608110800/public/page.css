@@ -1,0 +1,145 @@
+/* Shared styling for the three static footer pages. Same iron/paper system and
+   typefaces as the main route, at a single-column reading width. */
+@import '/fonts.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --iron: #14181a;
+  --iron-deep: #0b0e0f;
+  --bone: #efe8dc;
+  --paper-rule: #c8bda9;
+  --brass: #c7954f;
+  --ink: #b25f2c;
+  --display: 'Zodiak', 'Iowan Old Style', Georgia, serif;
+  --text: 'Supreme', 'Helvetica Neue', Arial, sans-serif;
+  --gutter: clamp(20px, 5vw, 76px);
+}
+
+body {
+  font-family: var(--text);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--iron);
+  background: var(--bone);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px var(--gutter);
+  background: var(--iron-deep);
+  color: var(--bone);
+}
+.bar a {
+  color: var(--bone);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.bar .brand {
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-weight: 400;
+}
+.bar .brand em {
+  font-style: italic;
+  color: #8d9698;
+}
+
+main {
+  max-width: 62ch;
+  padding: clamp(48px, 8vw, 110px) var(--gutter) clamp(56px, 8vw, 120px);
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 26px;
+}
+h1 em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 26px);
+  margin: 34px 0 10px;
+}
+
+p {
+  margin-bottom: 14px;
+}
+
+dl.facts {
+  border-top: 2px solid var(--iron);
+  margin: 30px 0 10px;
+}
+dl.facts > div {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.5fr) minmax(0, 1fr);
+  gap: 12px 28px;
+  align-items: baseline;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--paper-rule);
+}
+dl.facts dt {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1;
+  color: var(--ink);
+}
+dl.facts dd {
+  font-size: 15px;
+  color: #4a473f;
+}
+
+footer {
+  padding: 26px var(--gutter) 34px;
+  background: var(--iron-deep);
+  color: #8d9698;
+  font-size: 13px;
+}
+footer a {
+  color: var(--brass);
+}
+
+@media (max-width: 620px) {
+  dl.facts > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+}
