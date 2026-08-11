@@ -21,11 +21,11 @@ limit hit.
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
 | civic-clinic | 1 | 0 | 0 |
-| coffee-roaster | 1 | 2 | 0 |
+| coffee-roaster | 1 | 3 | 0 |
 | devtool-docs | 1 | 0 | 0 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **6** | **3** | **0** |
+| **Total** | **6** | **4** | **0** |
 
 ## Notes across rounds
 
@@ -293,3 +293,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** ya expected from cl;aude, is always the same generic simple nothing can goi wrong animation, smooth and nice but still, nothing special or unique. prop images jsut show colour and is not even layout nicely
 
 **Summary:** winner just won by abit, but the worst thing is lack of animations in total since it may or maynot be recommendation, urm just frw scroll effects not bizare or unique, and not much overall smooth animation like the loser. loser has props with atleast pl;aceholder, while ours is a graph log which makes things confusing and not really a ecommerce website while adding confusing since the graph looks wrongly executed and ugly.
+
+## coffee-roaster — 2026-08-11
+
+- with:    `coffee-roaster__with__202608110146`
+- without: `coffee-roaster__without__202608110146`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | control |
+| Fit to the product | control |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | control |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** this whole thing is messy, its hard to understand, is like cramping too much ambitions and words and design.  its design, text,images and theyw ay it uses graph and props are so confusing and uncessary. theres so much stats everywhere. i can see the creativity b ut no user experience, also its messy and iugly, the graph execution and in general. it lacks animation overall too and nothing distcit
+
+**Feedback on the control:** this is clean, mordern, slit, and smooth calm animation, nothing bizare and nothing can go wrong, is easy to understand  and genuine good ecommerce website
+
+**Summary:** best thign about the loser is its ambition i guess, but its genuine messy and wrongly executed, design doesnt look good, go see it urself. worst thing about the winner is ig, lack of using of images, its animations are plain and overused, notjing unique, design is generic

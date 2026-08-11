@@ -1,0 +1,38 @@
+$ claude (claude)
+
+Work in the project at C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/coffee-roaster__without__202608110800
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, no console errors, nothing committed, and my preview server and temp scripts are cleaned up.
+
+## The direction: "The Roast Log"
+
+Northwind's one genuinely distinctive asset is a timestamp — coffee roasted this morning, shipped today. So the whole site is built as a roastery's working ledger rather than a shop template: Bergen-dark espresso ink, warm letterpress paper, a single ember accent, and one cold sea-green note so the warmth never goes syrupy. Type carries the identity — Fraunces (soft, wonky, high-contrast) for display against a plain grotesk and a mono used as the ledger/lab voice for labels.
+
+**The signature move:** a live roast clock in the hero — a ticking counter since the drum dropped at 07:00, on a perforated batch ticket, with a bar filling toward the 24-hour ship deadline. The freshness claim becomes something the page is literally doing.
+
+Other things that carry weight:
+- **Beans as lots, not products.** Each of the six is numbered NW-01…06, ordered light→dark under a roast-spectrum axis, with a per-bean position dot. The old grey photo placeholder is now the bean's own roast colour with its roast-profile curve drawn over it — invented imagery replaced by information. Forced to 3-across so six lots read as two even rows.
+- **The story as a ledger.** The four facts (11 / 2.4× / 12kg / <24h) are hairline-ruled ledger rows with sourcing notes, and the paragraph gets an ember drop cap.
+- **Brew guide as a timeline** on a dashed rail, with cumulative clock stamps (0:00 → 3:00) and the measurement pulled out as a chip; steps activate on hover/click/focus.
+- **Add-to-cart got better, not just prettier** — real cart count in the nav, an "Added" confirmation on the button, and a toast, replacing `alert()`.
+
+Everything you listed is intact: five nav links and targets, six beans with notes/roast/price/working buttons, four brew steps verbatim, the email + message form and its success state, four footer links, and all four factual claims. I added no new factual claims — the lot numbers and roast curves are presentation of existing data.
+
+Two judgement calls worth flagging: fonts load from Google Fonts (with Georgia/system fallbacks, so an offline render degrades rather than breaks), and I dropped the literal quotation marks from the review text since a decorative quote glyph now sits above it — the quoted wording itself is unchanged.

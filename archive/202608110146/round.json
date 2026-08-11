@@ -1,0 +1,39 @@
+{
+  "round": "202608110146",
+  "archivedAt": "2026-08-11T02:23:19.624Z",
+  "scenarios": [
+    "coffee-roaster"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "showcase",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "coffee-roaster__with__202608110146",
+      "code": 1,
+      "minutes": 25
+    },
+    {
+      "runName": "coffee-roaster__without__202608110146",
+      "code": 0,
+      "minutes": 3.9
+    }
+  ],
+  "runs": [
+    {
+      "runName": "coffee-roaster__without__202608110146",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "coffee-roaster__with__202608110146",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

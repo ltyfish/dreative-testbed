@@ -1,0 +1,41 @@
+$ claude (claude)
+
+Work in the project at C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/coffee-roaster__without__202608110146
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`npm run build` succeeds; nothing committed (this run directory isn't tracked by the repo, and HEAD is unchanged at `ce51743`).
+
+## The design
+
+**Concept: Bergen cold against roast heat.** The site alternates between an espresso-dark canvas and a warm paper mid-section, with an ember gradient as the one recurring accent — and that gradient does double duty as the *roast dial*, the site's signature element.
+
+**Type system** — Fraunces (a wonky optical-size serif) for display, JetBrains Mono for labels/metadata/buttons, Inter for body. Editorial, not SaaS-generic. Tasting notes are set in italic serif; specs are set in mono. The distinction carries meaning.
+
+**Section by section:**
+- **Hero** — full-bleed with a slow-breathing ember radial and a fine grain overlay, a coordinate eyebrow (60°23′N), a 6.6rem headline with "roasted the morning" in gradient italic, and a marquee ticker of all six lots + their notes running under it.
+- **Story** — dark, drop-capped serif paragraph in ember, paired with a hairline-grid stat block. Each of the four facts now carries a sub-line for context ("one 1962 Probat", "stamped on the bag") without inventing new claims.
+- **Beans** — the page flips to warm paper here, which makes the shop section feel like a different room. Each grey placeholder box is replaced by a CSS-rendered coffee bean on a per-origin gradient, with an origin chip; the card tilts the bean on hover. Every card carries a roast dial with the marker positioned by roast level, under a shared Light→Dark legend.
+- **Brew guide** — reworked from cramped boxes into a full-width ruled list with oversized numerals and a mono spec chip per step (`18g : 300ml`, `95°C · 0:30`).
+- **Reviews** — back to dark, offset middle card, oversized ember quote mark.
+- **Subscribe** — a self-contained ember-lit card rather than a plain centered block.
+- **Contact** — two-column, dark inset fields with ember focus; the success state is a serif line with an ember dot instead of green text.
+
+**Interaction:** sticky nav that condenses on scroll, IntersectionObserver reveals, a live cart counter with running total in the nav, and per-button "Added" state plus a toast — replacing the `alert()`, which is a real UX upgrade while keeping every add-to-cart working.
+
+**Preserved as specified:** all five nav links and targets (kept visible on mobile as a scrollable row rather than hidden behind a menu), all six beans with names/notes/roast/price/buttons, the four brew steps verbatim, the email + message form and its success copy, the four footer links, and all four factual claims. Reduced-motion and focus-visible are handled throughout.

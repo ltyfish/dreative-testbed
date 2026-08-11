@@ -1,0 +1,22 @@
+{
+  "scenario": "coffee-roaster",
+  "judgedAt": "2026-08-11T02:23:09.796Z",
+  "runs": {
+    "with": "coffee-roaster__with__202608110146",
+    "without": "coffee-roaster__without__202608110146"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "without"
+  },
+  "overall": "without",
+  "feedback": {
+    "without": "this is clean, mordern, slit, and smooth calm animation, nothing bizare and nothing can go wrong, is easy to understand  and genuine good ecommerce website",
+    "with": "this whole thing is messy, its hard to understand, is like cramping too much ambitions and words and design.  its design, text,images and theyw ay it uses graph and props are so confusing and uncessary. theres so much stats everywhere. i can see the creativity b ut no user experience, also its messy and iugly, the graph execution and in general. it lacks animation overall too and nothing distcit"
+  },
+  "summary": "best thign about the loser is its ambition i guess, but its genuine messy and wrongly executed, design doesnt look good, go see it urself. worst thing about the winner is ig, lack of using of images, its animations are plain and overused, notjing unique, design is generic"
+}

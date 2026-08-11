@@ -106,14 +106,14 @@
     "mode": "shared-state",
     "motif": "The roast ink: one colour sampled from the four roast photographs, carried from the nav chip through the ledger figures, the ladder, the catalogue rack, the subscription shelf and the footer stamp.",
     "stateKey": "roast",
-    "sourceSelector": "#roast-ladder [data-rung]",
+    "sourceSelector": "#roast-ladder [data-rung=\"light\"]",
     "sourceTrigger": "click",
     "stateCount": 4,
     "affectedRegions": [
       {
-        "selector": "#story .ledger-row:first-child .ledger-value",
+        "selector": "#site-nav .nav-roast-swatch",
         "stage": "before",
-        "effect": "The four ledger figures are set in the current roast ink and re-grade when the rung changes."
+        "effect": "The roast chip in the sticky nav, visible on every screen before the peak, takes the colour of the selected roast."
       },
       {
         "selector": "#roast-ladder .ladder-stage",
@@ -171,7 +171,7 @@
       "name": "Roast ladder selection",
       "stage": "peak",
       "selector": "#roast-ladder",
-      "primarySelector": ".ladder-stage",
+      "primarySelector": "[data-ladder-current]",
       "primarySubject": "Macro photographs of Northwind's coffee at four points in the roast",
       "trigger": "click",
       "mediaMode": "image",
