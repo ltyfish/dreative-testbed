@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "claude",
-  "installedAt": "2026-08-12T04:27:51.853Z",
+  "installedAt": "2026-08-12T04:42:00.389Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -33,7 +33,7 @@
     "references/ASSET_PIPELINES.md": "f3a71f3e433924d42cb8163f3186edb693f144bc3ac1cd6a001310bf407d234b",
     "references/CREATIVE_DIRECTION.md": "4f8a28cddc5e9318dff4743feab4baad9e0c77995a9f2dfbb7fb9c16751bca8b",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
-    "references/DOGFOOD_LESSONS.md": "be1ca919868dad49fb3263200afeb5f445dea6cbf65c70105f9f784e9abf2c0b",
+    "references/DOGFOOD_LESSONS.md": "17d5784248ee1c04fa7e1980959f8cc33942a0994e95d3126e818a655bfc9c9a",
     "references/MEDIA_SOURCES.md": "9ea3d3084fffa83c84aea1b1bf21d1f3b97d3fe88c8cedb512142de917c5d8e2",
     "references/REFERENCE_ADOPTION.md": "7f30039b337b1a5df0c9830aca598f178d83397a21d07f9a7dec206b34360eae",
     "references/SKILL_CONTRACT.md": "3ab7acb5232c98e443cbc71b7c719f186ea38b885490c44e86c4f4b0aa3f10a3",
@@ -60,5 +60,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "fa0e906427b3ac7c8287c301aa38b61710756189c35e370480e245955aa0f5a5"
+  "manifestHash": "fe4f98c4c1658155e478f5c698a7069b43052898575bfc44f129be82141caf4e"
 }

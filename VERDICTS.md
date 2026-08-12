@@ -329,7 +329,10 @@ Change the definition. Watch everything downstream move with it. and a true inte
 
 <!-- Entered by hand after the round was archived: the reviewer judged the pair live
      but committed before submitting, and `runs/` no longer held both arms on pull.
-     Wording is the reviewer's own, transcribed verbatim. -->
+     Wording is the reviewer's own, transcribed verbatim.
+     Not an archiving fault: both arms are intact in archive/202608110800/, which is what
+     to read to re-examine this verdict. Only the structured record was lost, because the
+     verdict never went through the review UI. -->
 
 - with:    `coffee-roaster__with__202608110800`
 - without: `coffee-roaster__without__202608110800`

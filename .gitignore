@@ -10,8 +10,9 @@ runs/*
 # Dreative working output: prototypes, recordings, caches, traces.
 .dreative/
 
-# ...except inside `archive/`. The Experience Map and Showcase contract are the
-# skill's own portable, tracked evidence files; dropping them from the archived
-# copy means a later round cannot check what the build actually promised.
-!archive/**/.dreative/
-!archive/**/.dreative/*.json
+# Two contract files from 202608110800 sit under archive/ and stay tracked anyway,
+# because an ignore rule does not untrack. They were recovered by hand and are a one-off:
+# no script reads them, the archive viewer never shows them, and scoring never touches
+# them. If a later round genuinely needs the Experience Map and Showcase contract
+# archived, copy them in `archiveRun` (scripts/lib/archive.mjs) and unignore them here.
+# Not speculatively — an unread file is cost, not evidence.
