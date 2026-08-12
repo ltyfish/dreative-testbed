@@ -9,3 +9,9 @@ runs/*
 
 # Dreative working output: prototypes, recordings, caches, traces.
 .dreative/
+
+# ...except inside `archive/`. The Experience Map and Showcase contract are the
+# skill's own portable, tracked evidence files; dropping them from the archived
+# copy means a later round cannot check what the build actually promised.
+!archive/**/.dreative/
+!archive/**/.dreative/*.json

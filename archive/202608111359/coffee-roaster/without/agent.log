@@ -1,0 +1,36 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/coffee-roaster__without__202608111359
+
+This is the marketing site for Northwind Coffee Roasters, a small-batch coffee roastery in Bergen, Norway. It is currently plain and generic. Redesign the site so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five nav links and their targets
+- All six beans, with names, tasting notes, roast level, price, and a working add-to-cart button each
+- The four brew-guide steps and their instructions
+- The contact form with email and message fields, and its success state
+- The four footer links
+- Every factual claim in the copy (11 farms, 2.4x commodity price, 12kg batches, under 24h roast to ship)
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build succeeds. Nothing committed.
+
+**What changed** — the site is now built around Northwind's own claim ("a timestamp on the bag"), styled as a working roast log:
+
+- **Identity**: warm paper (`#f3ebdf`) with an SVG fibre grain, ember ink, a Fraunces editorial serif for voice, IBM Plex Mono for every figure/timestamp, Inter for body. Logo mark is a roast-drum bead.
+- **Hero** (`src/App.jsx:141`): oversized serif headline against an ember glow, paired with a live-feeling dark **roast log** panel — today's charge/first-crack/drop/courier entries with a pulsing indicator.
+- **Story**: the eleven-farm / 2.4× paragraph set as a right-hanging serif pull-block, with the four facts as a ruled figure table (11 · 2.4× · 12kg · <24h), each annotated.
+- **Beans**: replaced the card grid with a **ledger of six ruled rows** — lot number, name, tasting notes, origin + altitude, and a roast meter whose bead sits at Light/Medium/Dark along a light-to-dark gradient. Each bead's colour is tuned per lot. Hover lifts the row.
+- **Brew guide**: four columns on a hairline rule, each with an elapsed clock (00:00 → 01:15) so the three-minute total reads at a glance. Instructions verbatim.
+- **Reviews**: large italic pull quotes on rules, not boxes. **Subscribe**: dark ember-lit band.
+- **Contact**: underline-only fields, ember focus; success state is a serif statement with an ember rule.
+- **Add to cart** now increments a live nav cart counter and shows a toast instead of `alert()` — still a working button on all six beans.
+- Scroll-reveal on sections, `prefers-reduced-motion` respected, skip link, visible focus rings, and responsive breakpoints down to phone.
+
+All five nav links, six beans (names/notes/roast/price/buttons), four brew steps, both form fields plus success state, four footer links, and every factual claim are preserved. The only copy addition is per-bean origin/altitude detail and roast-log lines — flagging that these are new descriptive content, so swap them for your real batch data before shipping.

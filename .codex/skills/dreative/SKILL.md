@@ -19,13 +19,76 @@ been losing:
 
 - It reliably removes the generated look — the repeated rounded cards, the
   stock gradient, the same five sections every product gets.
-- It has lost, repeatedly, on three things: **too little motion**, **no single
-  component that could only belong to this product**, and **prose and tables
-  where the reader needed something scannable**.
+- It has lost, repeatedly, on **too little motion**, **no single component that
+  could only belong to this product**, and **prose and tables where the reader
+  needed something scannable**.
 - Restraint is not free. Removing spectacle also removes the thing people
   remember. Subtracting is the start of the work, not the end of it.
 
-Design against those three, not just against slop.
+The round after those were turned into requirements found a fourth thing, and
+it is the most important sentence in this file. What makes the control read as
+smooth and crafted is not its best moment. It is a **pervasive, cheap, entirely
+unoriginal transition layer** — hover, focus, and scroll-in feedback on
+everything — while the Dreative arm spent its whole budget on two signature
+moments and left the rest of the page dead:
+
+> *"when i scroll, theres minimal but still subtle clean transition of it
+> popping up… same goes with interacting where it changes colour/background/
+> shadow… tho very overused and not unique"* — on the control, which won
+> smoothness
+>
+> *"everything outside the few signature moments is still flat with no
+> transitions"* — on the Dreative build, which won overall and was still called
+> short of animation
+
+The same round produced the first losses on the opposite failure. Given a
+positive requirement, the builds became **cramped, wordy, and overloaded** —
+*"cramping too much ambitions and words and design"*, *"so much stats
+everywhere"*, *"messy, cramped, not tidy"* — and the signature component
+requirement was twice satisfied by an abstract readout on a page that was
+selling something: *"a graph log which makes things confusing and not really a
+ecommerce website"*.
+
+So: breadth of small motion, not count of big moments. A signature component
+about the product, not a chart about the product. And ambition measured in
+resolution, not in elements per section.
+
+## What the checks are for
+
+Read this before the workflow, because it governs everything below it.
+
+The single worst outcome for this skill is a build where the question stopped
+being *"what would look best?"* and became *"what arrangement passes all these
+checks?"* A page assembled to satisfy a threshold is a page nobody chose. It is
+also, specifically, how this system has failed before: told to have a signature
+component, it produced a chart; told to have motion, it fired one qualifying
+transition; told to be ambitious, it added elements until the route was cramped.
+Every one of those satisfied the rule and lost the round.
+
+So the checks are deliberately not a definition of good work:
+
+- **Blockers are defects, not taste.** Something is a blocker only when it is
+  broken in a way any human would call broken and no arrangement of a good page
+  can trip: a route that 500s, text colliding, content overflowing its viewport,
+  unreadable type, a clipped sticky element, a console error, a reveal that
+  fires after the reader has already scrolled past, a promise the contract made
+  that does not resolve on the page. Nothing about how good it looks.
+- **Everything taste-shaped is an advisory**, and an advisory means *go look at
+  it* — not *raise the number*. Motion breadth, density, scannability, signature
+  size and subject are all advisories, because in every case the browser is
+  measuring a proxy and the reviewer was responding to something else.
+- **Numbers in this system are unvalidated.** Where a threshold exists it was
+  invented by whoever wrote the check. Treat it as the trigger for a look, and
+  say so if you disagree with what it flagged; a defended judgement beats a
+  satisfied threshold.
+- **Satisfying an advisory without improving the page is a failure**, even
+  though nothing will catch it. Fading every region in uniformly clears the
+  motion advisory and is slop by `exemplars/SLOP.md` #5. Deleting words clears
+  the density advisory and can gut the section. If the honest fix is nothing,
+  do nothing and say why.
+
+Design first, then check. The check is the last thing that happens to a page,
+never the thing that shapes it.
 
 ## Workflow
 
@@ -159,41 +222,106 @@ Design against those three, not just against slop.
 
 Every Recommended and Showcase route ships one component that could not be
 lifted onto a competitor's page. A command-line card on a developer tool, a
-roast-curve on a coffee page, a triage clock on a clinic page: something whose
-form comes from what the product actually does. Name it in the brief with the
-one sentence explaining why only this product could have it, and bind its
-selector in the Showcase contract, where final smoke checks that it resolves,
-renders, and is large enough to carry the route.
+triage clock on a clinic page: something whose form comes from what the product
+actually does. Name it in the brief with the one sentence explaining why only
+this product could have it, and bind its selector in the Showcase contract,
+where final smoke checks that it resolves and renders. Whether it is large
+enough to carry the route is an advisory you answer by looking; a small
+component can still be the thing a reader remembers, and a viewport-area
+percentage is exactly the kind of number a page gets arranged around.
+`exemplars/MATERIALS.md` §6 lists signature shapes that have worked by product
+kind — as stock to choose from, never a menu to pick the passing option off.
 
 This is a positive requirement, and it is the one most often missing. Removing
 generic components is not the same as making a specific one. A page can pass
 every restraint check and still be forgettable because nothing on it is
 recognisably about this product.
 
-## Motion is a floor, not a ceiling
+**It must be about the product, not about data concerning the product.** The
+requirement has now been satisfied twice by an abstract readout — a roast curve
+and a log stream on a page whose job was selling coffee — and both times the
+reviewer called it confusing, ugly, and off-topic while preferring the control's
+plain product cards. A chart, graph, log stream, terminal, or metrics panel is
+the right signature component when the product *is* data or developer tooling.
+On a shop, a service, a clinic, or a publication it is an instrument pointed at
+the wrong subject.
 
-Recommended and Showcase both require authored motion. Final smoke samples every
-major region entering, centred in, and leaving the viewport, and blocks a route
-where nothing at all changes. One purposeful motion clears the floor; the check
-exists because clean-and-completely-static keeps losing to messier work that
-moves.
+Bind `productSubjectSelector` and `productSubject` to the thing the component
+operates on — the item for sale, the document being read, the appointment being
+booked. Final smoke confirms that subject resolves inside the component and
+renders at readable size, and raises an advisory when the component contains no
+image, video, or canvas of it. Two further rules the same round produced:
 
-Motion still has to earn its place. Prefer few, well-executed, product-meaning
-motions over many decorative ones, and remove any automatic loop whose removal
-changes neither understanding nor task outcome. But do not treat stillness as
-automatically the more tasteful answer — reviewers read an unmoving route as
-unfinished more often than as restrained.
+- The signature component must serve the route's primary task, not compete with
+  it. If the page sells something, the clearest path to buying it must not be
+  the second most prominent thing on screen.
+- Emphasis mechanisms must be bounded at their degenerate case. A filter that
+  scales up the matching item looked "super cool" until one filter matched a
+  single product, which then blew up while everything else collapsed. Design
+  for one match and for all matches before shipping the effect.
 
-Efficient is exempt.
+## Two motion budgets
 
-## Scannability
+Motion is two separate obligations and they are funded separately. Building the
+second while skipping the first is the specific mistake that keeps losing.
 
-A section a reader has to read in full to understand is a design failure, even
-when the prose is good. Final smoke raises an advisory for any section that is a
-long block of text with almost nothing to land on. The remedy is yours —
-subheads, figures, a table with real structure, a diagram, cards where cards
-genuinely help. Do not add cards reflexively; do check that every section can be
-understood at a glance before it is read.
+**1. The interaction baseline — required on every profile, Efficient included.**
+Every element a user can touch has a designed hover, focus, and press state.
+Every major region has a small entrance. Colour, background, shadow, underline,
+a few pixels of movement; 120–200ms; the same grammar everywhere on the route.
+
+This layer is supposed to be cheap and unoriginal. It is not where
+distinctiveness comes from and it should not try to be. It is what makes a page
+feel responsive to the person using it, and blind review reads its absence as
+the page being unfinished — while reading its presence as craft even when the
+reviewer can see it is generic. Skipping it because it is generic is how a
+route with two beautiful mechanisms is still described as having no animation.
+
+Final smoke hovers and focuses the interactive elements it can find and blocks a
+route where **none** of them respond — the zero case, which is a page that was
+never given this layer at all. How far the layer spreads is an advisory that
+asks you to look at the route, not a ratio to clear: the same number goes up if
+you fade every region in uniformly, which is slop by `exemplars/SLOP.md` #5.
+Build the layer because the page should answer the person using it.
+
+**2. Signature moments — few, expensive, product-meaning.** Here the old rule
+still holds: prefer few well-executed motions over many decorative ones, and
+remove any automatic loop whose removal changes neither understanding nor task
+outcome. Budget these; do not budget the baseline.
+
+Reveals must complete while the region is on screen. A reveal whose end state
+arrives only after the reader has scrolled past fires behind them and reads as
+broken; final smoke blocks a region that is identical entering and centred and
+different once scrolled past. Choose thresholds against the top of the viewport,
+not the bottom, and account for a section taller than one screen.
+
+Do not treat stillness as automatically the more tasteful answer. Reviewers read
+an unmoving route as unfinished more often than as restrained.
+
+## Scannability and density
+
+Both directions of this fail, and Dreative has now lost rounds to each.
+
+**Too little structure:** a section a reader has to read in full to understand is
+a design failure, even when the prose is good. Final smoke raises an advisory for
+any section that is a long block of text with almost nothing to land on. The
+remedy is yours — subheads, figures, a table with real structure, a diagram,
+cards where cards genuinely help. Do not add cards reflexively; do check that
+every section can be understood at a glance before it is read.
+
+**Too much:** the more recent and now more common failure. Given a positive
+requirement, builds answer it by adding — more stats, more copy, more panels,
+more tightly packed — and reviewers call the result cramped, wordy, and messy
+while preferring a control with a third of the content. Advisories fire for a
+section carrying too many words or ten or more competing statistic blocks. Both
+thresholds were invented and neither has been validated; they mark a section
+worth a second look, and the right response is sometimes to leave it alone and
+say why. A pixel-gap crowding count used to live here and was removed —
+"cramped" is perceptual, and a spacing number is arrangeable.
+
+Ambition is resolution, not element count. One idea rendered precisely beats
+four crammed into the same band. Before adding an element to a section, delete
+one and see whether the section got worse.
 
 ## Ambition is capped by what you can verify
 
@@ -297,7 +425,9 @@ spectacle and some are damaged by it: a clinic, a checkout, a docs page, or a
 crisis notice is better when it is calmer and faster than what it replaced.
 Choosing restraint for a real user reason is a design decision of the same rank
 as choosing a set-piece, not a downgrade to justify. Restraint still owes the
-route a signature component and authored motion; calm is not the same as empty.
+route a signature component, the interaction baseline, and authored motion; calm
+is not the same as empty, and a calm page that does not respond to being used is
+not calm, it is inert.
 
 Treat references as ingredients. Extract individual principles—rhythm,
 hierarchy, material, transition logic, interaction—not a complete house style.
@@ -306,7 +436,15 @@ lift one source's combined type, palette, composition, and signature motion.
 Never design “X-like.” GSAP and Lenis are capabilities, not aesthetics.
 Read `exemplars/SLOP.md` before committing to a visual system; it lists the
 default shapes that make generated frontends recognisable as generated. Read
-`exemplars/PRINCIPLES.md` for what to build instead, which is the harder half.
+`exemplars/PRINCIPLES.md` for what to build instead, which is the harder half,
+and `exemplars/MATERIALS.md` for actual stock to build it out of — real type
+pairings, palette constructions, compositions, depth treatments, and the ambient
+transition grammar, each indexed by the condition it belongs to.
+
+Materials are a shelf, not a style. Take one row from type, a different one's
+palette construction, another's composition; taking a whole column reproduces
+this system's own failure one level up, as a Dreative average replacing the
+generic one. If the product wants something not on the shelf, build that.
 Record reference mode as `none`, `supplied`, or `scout`. `scout` requires at
 least two traceable candidates with real URLs/files and rights status;
 `supplied` requires the configured supplied references. Final smoke resolves
@@ -373,7 +511,16 @@ accessibility, section, customization, and fit for copied or installed code.
 ## Quality floor
 
 Every section needs a job, readable hierarchy, intentional spacing, and an
-authored handoff. Alternate intensity and rest. A rest may be still, but must
+authored handoff. A section whose job takes more than four words to state is
+carrying two sections' worth of material. Alternate intensity and rest.
+
+Every interactive element needs designed hover, focus, press, and disabled
+states, in one grammar across the route. This is not polish deferred to the end;
+it is the first motion work, and it applies on every profile.
+
+Any emphasis that scales, highlights, or isolates a selected item must be
+bounded at both degenerate cases — every item matching, and exactly one item
+matching. An effect tuned for the middle case blows up on the single match. A rest may be still, but must
 retain a concept-bearing relationship through continuity, an evolving visual
 variable, meaningful tactile state, media treatment, or authored handoff;
 default layout is not authored rest. Keep the primary task obvious.
@@ -427,6 +574,13 @@ by catching a failure a human reviewer would also have called a failure, on a
 project that had not been used to invent the check. Prefer an advisory that
 prompts a look over a blocker that encodes taste as pass/fail.
 
+Removing a check is as legitimate as adding one, and is usually the better move
+when the evidence is one round of one reviewer. A rule that has not caught a
+real failure since it was written is costing context and steering the builder
+toward arrangement; delete it and record why. The system has already added three
+blockers in a single change against its own advice — that was the mistake, and
+the correction was to demote them, not to add a fourth.
+
 ## Resource routing
 
 - Open redesign or external reference: `references/CREATIVE_DIRECTION.md`
@@ -436,6 +590,7 @@ prompts a look over a blocker that encodes taste as pass/fail.
 - Where to source real imagery, texture, 3D, or type: `references/MEDIA_SOURCES.md`
 - Focal media feasibility and offline production: `references/ASSET_PIPELINES.md`
 - What to build, not only what to avoid: `exemplars/PRINCIPLES.md` and `exemplars/SLOP.md`
+- Concrete type, colour, composition, depth, and ambient-motion stock: `exemplars/MATERIALS.md`
 - Relevant craft only: `skills/<name>.md`
 - Rendered correction loop: `references/VISUAL_REFINEMENT.md`
 - Opted-in evaluator handoff: project-local `.dreative/evaluation/README.md`

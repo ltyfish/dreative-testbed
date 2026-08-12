@@ -1,0 +1,22 @@
+{
+  "scenario": "devtool-docs",
+  "judgedAt": "2026-08-11T14:46:30.740Z",
+  "runs": {
+    "with": "devtool-docs__with__202608111359",
+    "without": "devtool-docs__without__202608111359"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "without"
+  },
+  "overall": "without",
+  "feedback": {
+    "with": "this is horibble, its using image, not sure if its image or generating,  but its so complex, wordy, not clear presentation, and i think the ban of borders is so strict to the point it only uses rectangle. on scroll through the website and its so confusing, i do like the mini animation for hero bbut thats it",
+    "without": "this si good, clean, mordern nice, good animations, miniminalistic and clean. genuine design that reduce perplexity and confusion, cli looking cards to look like theme etc"
+  },
+  "summary": "worst thing about the winner is lack of animation and good ones, but its still pretty ok cause its a devtool doc, the animations are minimistic but relates to the type and environment. best thing about the loser is just that interesting unique hero animation that all, its messy, cramped, not tidy, everywhere, rectangles,  but i have to say, its really good with details and explanation + interaction, like interactions are actually meaningful and docs do shiw more content"
+}

@@ -22,10 +22,10 @@ limit hit.
 |---|---|---|---|
 | civic-clinic | 1 | 0 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
-| devtool-docs | 1 | 0 | 0 |
+| devtool-docs | 1 | 1 | 0 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **7** | **4** | **0** |
+| **Total** | **7** | **5** | **0** |
 
 ## Notes across rounds
 
@@ -349,3 +349,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** the claude control, i realize something that always make it seems smooth, its its transition and the way u interact with stuff. like when i scroll, theres minimal but still subtle clean transition of it popping up or sliding something like that, same goes with interacting where it changes colour/background/shadow to match the background or add a little gradient making it look "cool" and interactive, popping up and smooth, tho very overused and not unique. theres also custom animation (tho always overused by claude) like names sliding from left to right infinitely. tho product/prop image not as good a source, its better in clarifying this product is add to cart/for sale like, there are cards with big images and text. is also much less wordy and cleaner in separation
 
 **Summary:** overall i give dreative cause claude is really bland and boring and those, nothing can go wrong websites that dont look half bad but look like lovable did it with the prompt saying "no ai slop". dreative won on distinctiveness, fit, hierarchy, craft and restraint, mobile tie. worst thing about the winner: scroll effects fire outside the viewport so they land after you've already passed the section, the add-to-cart product image is small and irrelevant, the bean-type highlight over-scales when only one product matches, and everything outside the few signature moments is still flat with no transitions. best thing about the loser: subtle scroll and hover transitions everywhere, and cards with big images and text that make it obvious what is for sale.
+
+## devtool-docs — 2026-08-11
+
+- with:    `devtool-docs__with__202608111359`
+- without: `devtool-docs__without__202608111359`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | control |
+| Fit to the product | control |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | control |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** this is horibble, its using image, not sure if its image or generating,  but its so complex, wordy, not clear presentation, and i think the ban of borders is so strict to the point it only uses rectangle. on scroll through the website and its so confusing, i do like the mini animation for hero bbut thats it
+
+**Feedback on the control:** this si good, clean, mordern nice, good animations, miniminalistic and clean. genuine design that reduce perplexity and confusion, cli looking cards to look like theme etc
+
+**Summary:** worst thing about the winner is lack of animation and good ones, but its still pretty ok cause its a devtool doc, the animations are minimistic but relates to the type and environment. best thing about the loser is just that interesting unique hero animation that all, its messy, cramped, not tidy, everywhere, rectangles,  but i have to say, its really good with details and explanation + interaction, like interactions are actually meaningful and docs do shiw more content

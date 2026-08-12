@@ -1,0 +1,50 @@
+{
+  "round": "202608111359",
+  "archivedAt": "2026-08-11T14:46:36.925Z",
+  "scenarios": [
+    "coffee-roaster",
+    "devtool-docs"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "showcase",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "coffee-roaster__with__202608111359",
+      "code": 1,
+      "minutes": 12.3
+    },
+    {
+      "runName": "coffee-roaster__without__202608111359",
+      "code": 0,
+      "minutes": 3.2
+    },
+    {
+      "runName": "devtool-docs__with__202608111359",
+      "code": 1,
+      "minutes": 11.8
+    },
+    {
+      "runName": "devtool-docs__without__202608111359",
+      "code": 0,
+      "minutes": 3
+    }
+  ],
+  "runs": [
+    {
+      "runName": "devtool-docs__with__202608111359",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__without__202608111359",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

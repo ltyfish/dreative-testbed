@@ -1,0 +1,39 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/devtool-docs__without__202608111359
+
+This is the documentation homepage for Quill, an open-source markdown build tool. It is currently plain and hard to scan. Redesign it so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five navigation entries and the on-page sidebar, both linking to the same five sections
+- All four install methods with their exact commands, switchable, with a working copy button
+- The quickstart code block exactly as written
+- All six configuration keys with their type, default, and description
+- All four commands with their descriptions and every flag
+- All three error codes with their messages and fixes
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Redesigned and building clean. Nothing committed.
+
+**Direction: ink on paper, terminal where it's literally a terminal.** Warm paper ground (`#f5f1e8`) with a faint ruled-paper wash, high-contrast serif for display type, monospace for every technical token, and a single quill-ink accent (`#b3401f`). Code lives in near-black terminal panels — the contrast between the two surfaces is what makes the page scannable.
+
+What changed, beyond skin:
+- **Nav** is sticky with a scroll-spy underline; the sidebar mirrors it with numbered entries and an active rail. Both still link to the same five sections.
+- **Reading-progress bar** across the top (rAF-throttled).
+- **Hero** — oversized serif wordmark with a blinking cursor, chip row, and a small terminal vignette showing a real build.
+- **Install tabs** are now a segmented control with arrow-key/Home/End roving tabindex and proper `tabpanel` wiring. Copy button rewritten: per-button state (so blocks don't light up together), `execCommand` fallback, and distinct copied/failed states.
+- **Syntax highlighting** for shell snippets — binary, flags, strings, comments. The quickstart block's text is byte-identical to the original; only spans wrap it.
+- **Config table** in a card with monospace type pills, and it reflows into labelled cards under 620px instead of scrolling sideways.
+- **Commands** are a responsive card grid with flag pills; **errors** are gradient-washed cards with a mono `fix` label.
+- Respects `prefers-reduced-motion`; focus-visible rings throughout.
+
+All preserved: five nav entries + sidebar, four install methods with exact commands and a working copy button, the quickstart block verbatim, six config keys with type/default/description, four commands with every flag, three error codes with messages and fixes, four footer links. `npm run build` succeeds (12.2 kB CSS, 3.5 kB gzipped).
+
+One thing to flag: the display serif is a system stack (Iowan Old Style → Palatino → Georgia). It's deliberate — no webfont dependency, no layout shift — but it does render somewhat differently across platforms. If you want the typography locked, self-hosting one display face is the change to make.
