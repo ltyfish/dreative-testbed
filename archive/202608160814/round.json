@@ -1,0 +1,60 @@
+{
+  "round": "202608160814",
+  "archivedAt": "2026-08-16T09:10:13.843Z",
+  "scenarios": [
+    "devtool-docs",
+    "civic-clinic"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "devtool-docs__with__202608160814",
+      "code": 0,
+      "minutes": 10.4
+    },
+    {
+      "runName": "devtool-docs__without__202608160814",
+      "code": 0,
+      "minutes": 3.1
+    },
+    {
+      "runName": "civic-clinic__with__202608160814",
+      "code": 1,
+      "minutes": 25
+    },
+    {
+      "runName": "civic-clinic__without__202608160814",
+      "code": 0,
+      "minutes": 2
+    }
+  ],
+  "runs": [
+    {
+      "runName": "civic-clinic__with__202608160814",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "civic-clinic__without__202608160814",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__with__202608160814",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__without__202608160814",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

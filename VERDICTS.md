@@ -20,12 +20,12 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| civic-clinic | 3 | 1 | 0 |
+| civic-clinic | 4 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
-| devtool-docs | 1 | 3 | 1 |
+| devtool-docs | 2 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **9** | **8** | **1** |
+| **Total** | **11** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -500,3 +500,45 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** just ai slop tbh, i mena is easyto follow and all but ya, too much rounded corners, look too ai slop, tho the use of icons and cards are good for clarity
 
 **Summary:** winner just lacks proper reasoning of a user, like its hard to understand and all, and it is not that distinct from any other websites or desings by claude, like it really needs to learn to outsource, find refernece and good materials and design, thats the worst thing, some ui are also not ideal and reasonable. the best thing about loser is that is summareized, less compact, more spacing and have elements to support the flow and help navigate
+
+## civic-clinic — 2026-08-16
+
+- with:    `civic-clinic__with__202608160814`
+- without: `civic-clinic__without__202608160814`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | control |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** oo pretty nice, way better than porevious run, is clean, professional, and genuinely look like a website done by someone, tho i have opinions, i do see alot of potential, like some sections can have images, tables isnt a really good choice, is still slightly less easy to follow/messy compared to design B, like hero page and what can we help with, sometimes i feel showing as calendar is nicer than bar, is like subjective design choices for specific theme, so take it a grain of salt, but animation, creativity, consideration can improve. the flow and structure is somewhat the same tho.
+
+**Feedback on the control:** ya same remark as previous run, plain,boring, minimalistic with animation, ai slop, tho still relatively easier to follow
+
+**Summary:** winner is hard to follow cause it has more details etc. best thing about the loser is is pacing  i guess
+
+## devtool-docs — 2026-08-16
+
+- with:    `devtool-docs__with__202608160814`
+- without: `devtool-docs__without__202608160814`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | control |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** this is definitely done better, interactions are more meaningful etc, good colour scheme etc, not much difference from design B tho, tho i wish it uses icons, images, or any visual representation, and also i lacks animation compared to design B
+
+**Feedback on the control:** quite smooth and clean, it like how it uses cards to highlight and make sure user cna follow properly, clean animation minimilastic, tho loses bencause of the detail and interaction
+
+**Summary:** slightly better, the worst thing about the winner is lack of outsource, icons, animations, assets, pacing and use of elements to highlight or demonstrate text heacvy content. best thing about loser is clean minimialstic overused animations but generally easier to pace and follow content, tbh whenever i say this, is when i just first look, and i jujst feel like is clean and makes me wanna learn, if its too text heavy with nothing summarized, i usually dont like it

@@ -176,8 +176,10 @@ function runSession({ runName, runDir, prompt }) {
     child.stdout.on('data', watch)
     child.stderr.on('data', watch)
 
+    let timedOut = false
     const killer = setTimeout(
       () => {
+        timedOut = true
         log(`[${runName}] TIMEOUT after ${TIMEOUT_MIN}m — killing session`)
         killTree(child.pid)
       },
@@ -188,8 +190,10 @@ function runSession({ runName, runDir, prompt }) {
       clearTimeout(killer)
       logStream.end()
       const mins = ((Date.now() - started) / 60_000).toFixed(1)
-      log(`[${runName}] session finished in ${mins}m (exit ${code})`)
-      resolve({ runName, code, minutes: Number(mins) })
+      log(
+        `[${runName}] session finished in ${mins}m (exit ${code})${timedOut ? ' — KILLED AT CAP, duration is a floor not a measurement' : ''}`,
+      )
+      resolve({ runName, code, minutes: Number(mins), timedOut })
     })
 
     child.on('error', (err) => {
@@ -251,6 +255,15 @@ console.log(`\nAll sessions done in ${((Date.now() - sessionStart) / 60_000).toF
 if (failed.length) {
   console.log(`${failed.length} exited non-zero — their output is still captured and judged:`)
   for (const f of failed) console.log(`  ${f.runName} (exit ${f.code}${f.skipped ? ', skipped' : ''})`)
+}
+
+// A killed session's `minutes` is the cap, not its real cost. Judging it as if it
+// finished reads a truncated build as a finished one and understates what it spent.
+const capped = sessions.filter((s) => s.timedOut)
+if (capped.length) {
+  console.log(`\n${capped.length} session(s) hit the ${TIMEOUT_MIN}m cap and were killed mid-work:`)
+  for (const c of capped) console.log(`  ${c.runName}`)
+  console.log('Their builds are truncated and their durations are floors, not measurements.')
 }
 
 // A session that ended without touching the seed is not a design. Say so here, loudly,

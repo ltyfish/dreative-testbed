@@ -1,0 +1,17 @@
+{
+  "product": "Quill CLI documentation",
+  "field": "Developer tooling · technical documentation",
+  "designChallenge": "Utility under density. A six-row API table, four command blocks, and copyable install snippets all have to stay scannable. This is the scenario where 'make it beautiful' and 'make it usable' most often pull apart, and where decorative motion is actively hostile.",
+  "prompt": "This is the documentation homepage for Quill, an open-source markdown build tool. It is currently plain and hard to scan. Redesign it so it is genuinely distinctive and worth shipping.",
+  "preserve": [
+    "On-page navigation to every major section of the page, however you choose to present it",
+    "All four install methods with their exact commands, switchable, with a working copy button",
+    "The quickstart code block exactly as written",
+    "All six configuration keys with their type, default, and description",
+    "All four commands with their descriptions and every flag",
+    "All three error codes with their messages and fixes",
+    "The four footer links"
+  ],
+  "baseline": "content-only",
+  "promptContentOnly": "This is the documentation homepage for Quill, an open-source markdown build tool. Design and build it so it is genuinely distinctive and worth shipping."
+}

@@ -1,0 +1,22 @@
+{
+  "scenario": "devtool-docs",
+  "judgedAt": "2026-08-16T09:10:04.081Z",
+  "runs": {
+    "with": "devtool-docs__with__202608160814",
+    "without": "devtool-docs__without__202608160814"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "without",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "this is definitely done better, interactions are more meaningful etc, good colour scheme etc, not much difference from design B tho, tho i wish it uses icons, images, or any visual representation, and also i lacks animation compared to design B",
+    "without": "quite smooth and clean, it like how it uses cards to highlight and make sure user cna follow properly, clean animation minimilastic, tho loses bencause of the detail and interaction"
+  },
+  "summary": "slightly better, the worst thing about the winner is lack of outsource, icons, animations, assets, pacing and use of elements to highlight or demonstrate text heacvy content. best thing about loser is clean minimialstic overused animations but generally easier to pace and follow content, tbh whenever i say this, is when i just first look, and i jujst feel like is clean and makes me wanna learn, if its too text heavy with nothing summarized, i usually dont like it"
+}

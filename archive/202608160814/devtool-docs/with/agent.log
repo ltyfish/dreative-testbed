@@ -1,0 +1,51 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/devtool-docs__with__202608160814
+
+This is the documentation homepage for Quill, an open-source markdown build tool. Design and build it so it is genuinely distinctive and worth shipping.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- On-page navigation to every major section of the page, however you choose to present it
+- All four install methods with their exact commands, switchable, with a working copy button
+- The quickstart code block exactly as written
+- All six configuration keys with their type, default, and description
+- All four commands with their descriptions and every flag
+- All three error codes with their messages and fixes
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, nothing committed (this run directory is git-ignored by the parent testbed repo, so there was nothing staged either way).
+
+## What I built
+
+**Concept — the manual page, not the landing page.** Quill's claim is "a directory of files into a directory of files, predictably." So the page is set as a printed manual: ink on warm paper, mono for anything the machine says, Newsreader serif for anything a person wrote. Light, not dark — this is a docs page read in daylight by someone who came to find one command.
+
+**Section order** (`#top` masthead → `#install` → `#quickstart` → `#config` → `#commands` → `#errors` → footer). The opening is type-only: version bar, the one-sentence claim at a hard scale break, then a numbered contents index. That index *is* the required on-page navigation, and its 01–05 numbering repeats in the sticky left rail and beside every section title — that's the continuity device.
+
+**Signature component — the configuration ledger** (`#config`). The six config keys are not a table; they're a live `quill.config.js` whose right-hand pane shows the run it produces against a fixed example tree. Toggle an `exclude` glob and files strike out and the file count drops; flip `strict` and the warning row turns rust-red and the build fails; drag `concurrency` to 1 and the determinism note changes; edit `output` and the resolved path plus the `quill build --out` line update. Each key still carries its exact type, default, and description. It's the reference and the demo in one place, which is the shape a developer tool earns.
+
+Both degenerate cases are designed, not accidental: **all patterns off** → "Nothing matched. Quill exits 0 and writes no files"; **strict + warning** → a failed-build state in rust.
+
+**Preserved requirements**, all verified in the browser: four install methods with exact commands as a real tablist (arrow-key navigable) plus a working copy button with a `Copied` state; the quickstart block verbatim in a dark transcript panel; six config keys; four commands as a definition list with every flag as a chip; three error codes with message and fix; four footer links.
+
+**Motion.** One hover grammar across the route — surface shifts one step toward the accent, 120–180ms. Regional entrances trigger against the top of the viewport with `once`, never on the first screen. Reduced-motion is honoured.
+
+**Mobile is its own composition,** not stacked desktop: the rail becomes a sticky horizontal number strip, the index drops its right-hand descriptions, the install tabs go 2×2 with the copy button as a full-width bar, the ledger stacks controls above the run they change, and at 320px the tree notes wrap to their own line.
+
+## Verified
+- `npm run build` ✓
+- Rendered at 1440, 1120, 390, 320 — zero horizontal overflow at every width, no console errors
+- Exercised: install tab switch, copy, config-key open/close, glob chips, strict toggle, concurrency, scrollspy
+- Screenshots in `shots/` (`desktop`, `desktop-1120`, `m390`, `m320`, `desktop-interact`, `m390-strict`, `m390-ledger`, `edge-empty`, `edge-strict`)
+
+**Not pursued:** no sourced imagery or icons. A CLI has no physical subject to photograph, and the honest focal asset here is its own output — so the ledger renders real file paths and real build results rather than a fabricated product shot. Fonts (JetBrains Mono, Newsreader) load from Google Fonts with system fallbacks; if you'd rather not depend on the network, say so and I'll self-host them.
+
+Implementation complete; human taste verdict: awaiting user review. Please look at the desktop and 390px full-page shots and the ledger's strict/empty states, and tell me whether the balance is right.

@@ -1,0 +1,22 @@
+{
+  "scenario": "civic-clinic",
+  "judgedAt": "2026-08-16T09:05:45.486Z",
+  "runs": {
+    "with": "civic-clinic__with__202608160814",
+    "without": "civic-clinic__without__202608160814"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "without",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "oo pretty nice, way better than porevious run, is clean, professional, and genuinely look like a website done by someone, tho i have opinions, i do see alot of potential, like some sections can have images, tables isnt a really good choice, is still slightly less easy to follow/messy compared to design B, like hero page and what can we help with, sometimes i feel showing as calendar is nicer than bar, is like subjective design choices for specific theme, so take it a grain of salt, but animation, creativity, consideration can improve. the flow and structure is somewhat the same tho.",
+    "without": "ya same remark as previous run, plain,boring, minimalistic with animation, ai slop, tho still relatively easier to follow"
+  },
+  "summary": "winner is hard to follow cause it has more details etc. best thing about the loser is is pacing  i guess"
+}

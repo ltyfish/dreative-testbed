@@ -1,0 +1,1465 @@
+/* =========================================================================
+   Eastside Community Health
+   -------------------------------------------------------------------------
+   Ink on warm paper, the way a public notice is printed. Saturated colour is
+   reserved for state and nothing else: green means open / free / yes, red
+   means call an ambulance instead. Everything not carrying a state is ink.
+   ========================================================================= */
+
+:root {
+  --paper: #f4f0e6;
+  --paper-2: #ece6d8;
+  --paper-3: #dfd8c5;
+  --rule: #cdc4ae;
+  --rule-soft: #ded6c3;
+
+  --ink: #16201b;
+  --ink-2: #3d4a44;
+  --ink-3: #6c7871;
+
+  --green: #0b5a43;
+  --green-2: #0e7154;
+  --green-wash: #dfe9e0;
+
+  --siren: #a5210f;
+  --siren-2: #8d1a0a;
+
+  --shell: 1180px;
+  --gutter: clamp(20px, 5vw, 56px);
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.6, 0, 0.3, 1);
+  --t-fast: 130ms;
+  --t-base: 200ms;
+  --t-slow: 340ms;
+
+  --sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  font-feature-settings: 'ss01';
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* A whisper of paper tooth, so the flat field is not plastic. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 18px;
+  font-size: 15px;
+  text-decoration: none;
+}
+.skip:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* ---------------------------------------------------------- ambient ---- */
+
+a,
+button,
+select,
+input,
+summary,
+.svc__row,
+.week__row,
+.langs__chip {
+  transition:
+    color var(--t-fast) var(--ease-out),
+    background-color var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out),
+    box-shadow var(--t-base) var(--ease-out),
+    transform var(--t-base) var(--ease-out);
+}
+
+:where(a, button, select, input):focus-visible {
+  outline: 2px solid var(--green-2);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--t-slow) var(--ease-out),
+    transform var(--t-slow) var(--ease-out);
+}
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ----------------------------------------------------------- buttons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font: inherit;
+  font-weight: 500;
+  font-size: 15.5px;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+}
+
+/* One hover grammar everywhere: the surface darkens one step and the element
+   lifts a single pixel against a shadow tinted with the paper, never black. */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 -1px rgba(22, 32, 27, 0.22);
+}
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn--green {
+  background: var(--green);
+  color: #f7f4ec;
+}
+.btn--green:hover {
+  background: var(--green-2);
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn--ink:hover {
+  background: #223029;
+}
+
+.btn--siren {
+  background: #f7ece8;
+  color: var(--siren-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.btn--siren:hover {
+  background: #fff;
+}
+
+.btn--quiet {
+  color: var(--ink);
+  border-color: var(--rule);
+  background: transparent;
+}
+.btn--quiet:hover {
+  background: var(--paper-2);
+  border-color: var(--ink-3);
+}
+
+.btn--outline {
+  min-height: 40px;
+  padding: 7px 14px;
+  font-size: 14.5px;
+  color: var(--green);
+  border-color: var(--green);
+  background: transparent;
+}
+.btn--outline:hover {
+  background: var(--green);
+  color: #f7f4ec;
+}
+
+/* ---------------------------------------------------------- masthead --- */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 74px;
+  padding-block: 12px;
+}
+
+.wordmark {
+  text-decoration: none;
+  display: grid;
+  gap: 1px;
+  margin-right: auto;
+}
+.wordmark__name {
+  font-family: var(--display);
+  font-size: 25px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.wordmark__kind {
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.wordmark:hover .wordmark__name {
+  color: var(--green);
+}
+
+.masthead__nav {
+  display: flex;
+  gap: 22px;
+  font-size: 14.5px;
+}
+.masthead__nav a {
+  text-decoration: none;
+  padding-block: 4px;
+  border-bottom: 1px solid transparent;
+  color: var(--ink-2);
+}
+.masthead__nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.masthead__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 5px 12px 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  white-space: nowrap;
+}
+.pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pill--open {
+  color: var(--green);
+  background: var(--green-wash);
+  border-color: #bcd3c2;
+}
+.pill--closing {
+  color: #7a4a06;
+  background: #f4e9d6;
+  border-color: #ddc79c;
+}
+.pill--closed {
+  color: var(--ink-2);
+  background: var(--paper-2);
+}
+
+/* --------------------------------------------------------- emergency --- */
+
+.emergency {
+  background: var(--siren);
+  color: #fbeee9;
+}
+.emergency__inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-block: 11px;
+}
+.emergency__flag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border: 1px solid rgba(251, 238, 233, 0.55);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.emergency__text {
+  font-size: 15.5px;
+  line-height: 1.4;
+  margin-right: auto;
+}
+
+/* ------------------------------------------------------------- today --- */
+
+.today {
+  padding-block: clamp(40px, 6vw, 76px) clamp(34px, 4.5vw, 56px);
+  scroll-margin-top: 80px;
+}
+
+.today__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  column-gap: clamp(32px, 5vw, 72px);
+  row-gap: clamp(36px, 5vw, 60px);
+  align-items: stretch;
+}
+
+.eyebrow {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 18px;
+}
+
+.today__headline {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(46px, 7.4vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.today__headline em {
+  display: block;
+  font-style: italic;
+  color: var(--green);
+}
+.today--closed .today__headline em {
+  color: var(--ink-2);
+}
+
+.today__line {
+  margin-top: 22px;
+  max-width: 46ch;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.today__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* The three assurances are the second question every visitor has, so they sit
+   beside the status rather than further down the page. */
+/* The three assurances stretch to the height of the status column, so the
+   bottom rule lands on the same line as the buttons opposite. */
+.assure {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--ink);
+}
+.assure li {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 82px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.assure__no {
+  font-family: var(--display);
+  font-size: 40px;
+  line-height: 0.7;
+  color: var(--green);
+  min-width: 54px;
+}
+.assure__what {
+  font-size: 18.5px;
+  font-weight: 450;
+  line-height: 1.3;
+}
+
+.today__clock {
+  grid-column: 1 / -1;
+}
+
+/* ------------------------------------------------- the walk-in clock --- */
+
+.clock {
+  margin: 0;
+  border-top: 1px solid var(--rule);
+  padding-top: 22px;
+}
+
+.clock__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 26px;
+  /* clears the "now" flag, which sits above the track */
+  margin-bottom: 30px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+.clock__left {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.clock__left b {
+  font-family: var(--sans) !important;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--green) !important;
+}
+.clock--closed .clock__left,
+.clock--closed .clock__left b {
+  color: var(--ink-2) !important;
+}
+.clock__day {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.clock__caption b {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.clock__track {
+  position: relative;
+  height: 52px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+}
+
+.clock__window {
+  position: absolute;
+  inset-block: -1px;
+  border: 1px solid var(--green);
+  background: var(--green-wash);
+  overflow: hidden;
+}
+
+/* The tail of the day when the doors are open but registration has shut. */
+.clock__regzone,
+.ribbon__reg {
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(11, 90, 67, 0.34) 0 1px,
+    transparent 1px 6px
+  );
+}
+
+/* The solid block is the time still available to walk in. It grows out of the
+   now-marker on load, so the first thing the bar says is how long you have. */
+.clock__live {
+  position: absolute;
+  inset-block: 0;
+  width: 0;
+  background: var(--green);
+  transition: width 820ms var(--ease-out) 90ms;
+}
+.clock__live.is-armed {
+  width: var(--w);
+}
+/* On a closed day the block is the next session, not an invitation to come
+   now, so it takes the week's quieter green rather than the "open" one. */
+.clock--closed .clock__live {
+  background: #6f9b87;
+}
+
+/* The marker travels from opening time to the current minute on load: the one
+   authored motion on the page, and it says where in the day you are. */
+.clock__now {
+  position: absolute;
+  inset-block: -8px;
+  left: var(--from);
+  width: 2px;
+  background: var(--ink);
+  transition: left 820ms var(--ease-out);
+}
+.clock__now.is-armed {
+  left: var(--x);
+}
+.clock__now--start .clock__nowlabel {
+  transform: none;
+}
+.clock__now--end .clock__nowlabel {
+  transform: translateX(-100%);
+}
+.clock__nowlabel {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 0;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.clock__axis {
+  position: relative;
+  height: 20px;
+  margin-top: 7px;
+}
+.clock__tick {
+  position: absolute;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  transform: translateX(-50%);
+}
+.clock__tick::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 1px;
+  height: 6px;
+  background: var(--rule);
+}
+.clock__tick--major::before {
+  height: 9px;
+  background: var(--ink-3);
+}
+
+/* --------------------------------------------------------- promise ----- */
+
+.promise {
+  border-block: 1px solid var(--rule);
+  background: var(--paper-2);
+  padding-block: clamp(48px, 7vw, 96px);
+}
+.promise__text {
+  font-family: var(--display);
+  font-size: clamp(26px, 3.5vw, 44px);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  max-width: 22ch;
+  text-wrap: pretty;
+}
+.promise__inner {
+  max-width: calc(var(--shell));
+}
+
+/* --------------------------------------------------------- section head */
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px 40px;
+  margin-bottom: 34px;
+}
+.head h2,
+.head__h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.head__note {
+  max-width: 52ch;
+  font-size: 15.5px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------- services ----- */
+
+.services {
+  padding-block: clamp(56px, 8vw, 104px);
+  scroll-margin-top: 80px;
+}
+
+.svc {
+  border-top: 2px solid var(--ink);
+}
+
+.svc__row {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 4.2fr) minmax(0, 3fr) minmax(0, 2.6fr) auto;
+  align-items: baseline;
+  column-gap: 24px;
+  padding: 22px 16px 21px 8px;
+  margin-inline: -8px;
+  border-bottom: 1px solid var(--rule);
+}
+.svc__row:hover {
+  background: var(--paper-2);
+  border-bottom-color: var(--ink);
+}
+
+.svc__num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.svc__name {
+  font-size: clamp(19px, 1.7vw, 23px);
+  font-weight: 450;
+  line-height: 1.24;
+  letter-spacing: -0.012em;
+}
+.svc__elig {
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+.svc__cost {
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--green);
+  font-weight: 500;
+}
+.svc__act {
+  justify-self: end;
+  align-self: center;
+}
+.svc__walk {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.svc__row:hover .svc__walk {
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------ week ----- */
+
+.week {
+  background: var(--paper-2);
+  border-block: 1px solid var(--rule);
+  padding-block: clamp(56px, 8vw, 100px);
+  scroll-margin-top: 80px;
+}
+.week__inner {
+  --lane-left: 148px;
+  --lane-right: 122px;
+}
+
+.week__axis {
+  position: relative;
+  height: 16px;
+  margin-left: var(--lane-left);
+  margin-right: var(--lane-right);
+}
+.week__axis span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.week__list {
+  border-top: 1px solid var(--rule);
+}
+
+.week__row {
+  display: grid;
+  grid-template-columns: var(--lane-left) minmax(0, 1fr) var(--lane-right);
+  align-items: center;
+  gap: 16px;
+  padding: 11px 8px;
+  margin-inline: -8px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.week__row:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.week__day {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15.5px;
+  color: var(--ink-2);
+}
+.week__badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid #bcd3c2;
+  background: var(--green-wash);
+  border-radius: 2px;
+  padding: 2px 6px;
+}
+.week__row.is-today {
+  background: rgba(255, 255, 255, 0.62);
+  border-bottom-color: var(--ink);
+}
+.week__row.is-today .week__day,
+.week__row.is-today .week__time {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.week__time {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.ribbon {
+  position: relative;
+  height: 18px;
+  background-image: repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 5px);
+  background-size: 100% 1px;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+}
+/* Filled, not outlined: the week has to be readable as a shape at a glance,
+   and today has to be the darkest bar in it. */
+.ribbon__window {
+  position: absolute;
+  inset-block: 0;
+  background: #6f9b87;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.week__row:hover .ribbon__window {
+  background: #598670;
+}
+.week__row.is-today .ribbon__window {
+  background: var(--green);
+}
+.ribbon__reg {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(244, 240, 230, 0.75) 0 1px,
+    transparent 1px 5px
+  );
+}
+.ribbon__none {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+}
+.ribbon__now {
+  position: absolute;
+  inset-block: -5px;
+  width: 2px;
+  /* reads against the dark fill of today's bar as well as the paper either side */
+  background: var(--paper);
+  box-shadow: 0 0 0 1px var(--ink);
+  left: var(--from);
+  transition: left 820ms var(--ease-out) 140ms;
+}
+.ribbon__now.is-armed {
+  left: var(--x);
+}
+
+.week__note {
+  margin-top: 26px;
+  max-width: 62ch;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  padding-left: 16px;
+  border-left: 2px solid var(--green);
+}
+
+/* ---------------------------------------------------------- arrive ----- */
+
+.arrive {
+  padding-block: clamp(56px, 8vw, 100px);
+}
+.arrive__figure {
+  position: relative;
+  margin: 0;
+}
+.arrive__figure img {
+  width: 100%;
+  height: clamp(300px, 46vw, 520px);
+  object-fit: cover;
+  object-position: 50% 76%;
+  /* Graded toward the page's own two temperatures so a sourced photograph
+     belongs to the palette instead of sitting on top of it. */
+  filter: saturate(0.68) contrast(1.11) sepia(0.12);
+}
+.arrive__caption {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 0;
+  width: min(430px, calc(100% - var(--gutter) * 2));
+  background: var(--paper);
+  border-top: 3px solid var(--green);
+  padding: 24px 26px 26px;
+}
+.arrive__label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+.arrive__caption p {
+  font-size: 16.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------ find ----- */
+
+.find {
+  padding-block: clamp(56px, 8vw, 100px);
+  scroll-margin-top: 80px;
+}
+.find__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+.find__address {
+  font-family: var(--display);
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 20px 0 26px;
+}
+.find__address span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 17px;
+  letter-spacing: 0;
+  color: var(--ink-3);
+  margin-top: 10px;
+}
+
+.find__transit {
+  border-top: 2px solid var(--ink);
+}
+.find__transit li {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.find__mark {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  color: var(--green);
+  background: var(--paper);
+}
+.mark {
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.find__copy {
+  font-size: 16.5px;
+  line-height: 1.45;
+}
+.find__transit li:hover .find__mark {
+  background: var(--green);
+  color: #f7f4ec;
+  border-color: var(--green);
+}
+
+/* ----------------------------------------------------------- langs ----- */
+
+.langs {
+  background: var(--paper-2);
+  border-block: 1px solid var(--rule);
+  padding-block: clamp(56px, 8vw, 100px);
+  scroll-margin-top: 80px;
+}
+.langs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.langs__chip {
+  display: grid;
+  gap: 2px;
+  padding: 13px 20px 14px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.langs__chip:hover {
+  border-color: var(--green);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 -1px rgba(22, 32, 27, 0.16);
+}
+.langs__native {
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 450;
+}
+.langs__en {
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.langs__line {
+  margin-top: 30px;
+  max-width: 60ch;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.langs__line a {
+  font-family: var(--mono);
+  font-weight: 500;
+  color: var(--green);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.langs__line a:hover {
+  color: var(--ink);
+  text-decoration-thickness: 2px;
+}
+
+/* ------------------------------------------------------------ book ----- */
+
+.book {
+  padding-block: clamp(56px, 8vw, 100px);
+  scroll-margin-top: 80px;
+}
+.book__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(30px, 5vw, 68px);
+  align-items: start;
+}
+.book__lede p {
+  margin-top: 16px;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 34ch;
+}
+
+.book__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 22px;
+  border-top: 2px solid var(--ink);
+  padding-top: 28px;
+}
+.field {
+  display: grid;
+  gap: 8px;
+}
+.field--wide {
+  grid-column: 1 / -1;
+}
+.field label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.field input,
+.field select {
+  font: inherit;
+  font-size: 16.5px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 2px;
+  padding: 12px 13px;
+  min-height: 50px;
+  width: 100%;
+}
+.field input:hover,
+.field select:hover {
+  border-color: var(--ink-3);
+  background: #f8f5ee;
+}
+.field input:focus,
+.field select:focus {
+  border-bottom-color: var(--green);
+}
+.field.is-flash select {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-wash);
+}
+.btn--submit {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-height: 52px;
+  padding-inline: 26px;
+}
+
+.book__done {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  border: 1px solid var(--green);
+  border-left-width: 3px;
+  background: var(--green-wash);
+  padding: 28px 30px;
+  border-radius: 3px;
+}
+.book__check {
+  font-size: 24px;
+  line-height: 1;
+  color: var(--green);
+}
+.book__done p {
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 44ch;
+}
+
+/* ------------------------------------------------------------ foot ----- */
+
+.foot {
+  background: var(--ink);
+  color: #cdd4cf;
+  padding-block: 46px 40px;
+}
+.foot__inner {
+  display: grid;
+  gap: 16px;
+}
+.foot__who {
+  font-size: 15.5px;
+  color: var(--paper);
+}
+.foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  font-size: 15px;
+}
+.foot__links a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(205, 212, 207, 0.35);
+  padding-bottom: 2px;
+}
+.foot__links a:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+.foot__credit {
+  margin-top: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #8f9a94;
+  max-width: 70ch;
+}
+.foot__credit a {
+  color: #b9c2bc;
+}
+.foot__credit a:hover {
+  color: #fff;
+}
+
+/* ======================================================== mobile ======= */
+
+@media (max-width: 1040px) {
+  .masthead__nav {
+    display: none;
+  }
+  .today__grid {
+    grid-template-columns: 1fr;
+  }
+  /* Stacked, the timing detail belongs immediately under the status it
+     explains; the assurances follow it rather than interrupting it. */
+  .today__lede {
+    order: 1;
+  }
+  .today__clock {
+    order: 2;
+  }
+  .assure {
+    order: 3;
+  }
+  .assure {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 22px;
+    border-top-width: 2px;
+  }
+  .assure li {
+    border-bottom: none;
+    align-items: baseline;
+    min-height: 0;
+    padding-top: 14px;
+  }
+  .find__grid,
+  .book__grid {
+    grid-template-columns: 1fr;
+  }
+  .svc__row {
+    grid-template-columns: 40px minmax(0, 5fr) minmax(0, 4fr) auto;
+    row-gap: 6px;
+  }
+  .svc__name {
+    grid-column: 2 / 4;
+  }
+  .svc__elig {
+    grid-column: 2 / 3;
+  }
+  .svc__cost {
+    grid-column: 3 / 4;
+  }
+  .svc__act {
+    grid-row: 1 / 3;
+    grid-column: 4;
+  }
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 16.5px;
+  }
+
+  /* One slim sticky row on a phone: who we are, and the tap that calls us.
+     The open/closed pill is dropped here because the headline underneath is
+     already the same answer at ten times the size. */
+  .masthead__inner {
+    gap: 12px;
+    padding-block: 9px;
+    min-height: 0;
+  }
+  .wordmark__name {
+    font-size: 18.5px;
+  }
+  .wordmark__kind {
+    font-size: 10px;
+  }
+  .masthead__right .pill {
+    display: none;
+  }
+  .masthead__right .btn {
+    min-height: 42px;
+    padding-inline: 14px;
+    font-size: 14.5px;
+  }
+
+  /* On a phone the emergency notice is read, not scanned across. */
+  .emergency__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 12px;
+    padding-block: 12px 14px;
+  }
+  .emergency__flag {
+    grid-column: 1;
+  }
+  .emergency__text {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 15px;
+  }
+  .emergency .btn--siren {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .today {
+    padding-block: 30px 30px;
+  }
+  .today__headline {
+    font-size: clamp(38px, 12vw, 52px);
+  }
+  .today__line {
+    font-size: 17px;
+    margin-top: 16px;
+  }
+  .today__actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  /* Three columns of assurance become three lines, which is how they read. */
+  .assure {
+    grid-template-columns: 1fr;
+  }
+  .assure li {
+    border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
+    min-height: 0;
+  }
+  .assure__no {
+    font-size: 27px;
+    min-width: 38px;
+  }
+  .assure__what {
+    font-size: 17px;
+  }
+
+  .today__grid {
+    row-gap: 24px;
+  }
+  .clock__track {
+    height: 42px;
+  }
+  .clock__caption {
+    gap: 4px 18px;
+    margin-bottom: 42px;
+    font-size: 13px;
+  }
+  .clock__left {
+    margin-left: 0;
+    width: 100%;
+  }
+  .assure li:last-child {
+    border-bottom: none;
+  }
+
+  .head {
+    margin-bottom: 24px;
+  }
+
+  /* A service is one block of text with its action beneath, not a table row. */
+  .svc__row {
+    grid-template-columns: 34px 1fr;
+    row-gap: 4px;
+    padding: 18px 6px 20px;
+  }
+  .svc__num {
+    grid-row: 1;
+  }
+  .svc__name,
+  .svc__elig,
+  .svc__cost,
+  .svc__act {
+    grid-column: 2;
+  }
+  .svc__name {
+    font-size: 19px;
+  }
+  .svc__act {
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 8px;
+  }
+
+  /* The week keeps its bars — they are the fastest way to read it — but the
+     day names shorten and the axis labels thin out. */
+  .week__inner {
+    --lane-left: 78px;
+    --lane-right: 0px;
+  }
+  .week__row {
+    grid-template-columns: var(--lane-left) minmax(0, 1fr);
+    grid-template-areas:
+      'day time'
+      'bar bar';
+    gap: 6px 12px;
+    padding: 10px 4px 12px;
+  }
+  .week__day {
+    grid-area: day;
+    font-size: 15px;
+  }
+  .week__time {
+    grid-area: time;
+    text-align: right;
+  }
+  .ribbon {
+    grid-area: bar;
+  }
+  .week__axis {
+    margin-inline: 0;
+  }
+
+  .arrive {
+    padding-block: 34px;
+  }
+  .arrive__figure img {
+    height: 260px;
+  }
+  .arrive__caption {
+    position: static;
+    width: auto;
+    margin-inline: var(--gutter);
+    margin-top: -34px;
+    padding: 20px;
+  }
+
+  .find__transit li {
+    gap: 14px;
+    padding: 15px 0;
+  }
+  .find__mark {
+    width: 40px;
+    height: 40px;
+  }
+  .find__copy {
+    font-size: 16px;
+  }
+
+  .langs__list {
+    gap: 8px;
+  }
+  .langs__chip {
+    padding: 10px 14px 11px;
+  }
+  .langs__native {
+    font-size: 18px;
+  }
+
+  .book__form {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .btn--submit {
+    justify-self: stretch;
+    justify-content: center;
+  }
+  .book__done {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --gutter: 16px;
+  }
+  .wordmark__name {
+    font-size: 19px;
+  }
+  .week__inner {
+    --lane-left: 68px;
+  }
+  .langs__native {
+    font-size: 17px;
+  }
+}

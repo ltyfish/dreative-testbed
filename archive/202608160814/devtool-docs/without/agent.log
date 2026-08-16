@@ -1,0 +1,46 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/devtool-docs__without__202608160814
+
+This is the documentation homepage for Quill, an open-source markdown build tool. Design and build it so it is genuinely distinctive and worth shipping.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- On-page navigation to every major section of the page, however you choose to present it
+- All four install methods with their exact commands, switchable, with a working copy button
+- The quickstart code block exactly as written
+- All six configuration keys with their type, default, and description
+- All four commands with their descriptions and every flag
+- All three error codes with their messages and fixes
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Built and building clean. Nothing committed (this run directory is gitignored by the parent repo).
+
+## The design
+
+**Concept: a technical datasheet.** Not the usual dark-mode dev-docs template — warm paper stock (`#f2efe6`) with a fine multiply-blend grain, ink-red accent (`#b8371f`), hairline rules, and numbered sections (`§00`…`§05`). Monospace carries every piece of structure (nav numbers, labels, chips, table headers, flags); Instrument Serif carries the voice (headline, section titles, error messages). The only dark surfaces on the page are the terminal blocks — so your eye goes straight to the commands.
+
+**Section order** — install-first, because that's what a homepage visitor came for:
+
+| | |
+|---|---|
+| §00 Overview | Hero: "A markdown build tool that does *one thing*." + a 4-cell fact grid (version / licence / Node 20+ / plugin resolution: none) |
+| §01 Install | Four tabs, sliding into a connected terminal panel, copy button top-right |
+| §02 Quickstart | The block verbatim, then the how-it-works prose |
+| §03 Configuration | Real table — key / type pill / default / description |
+| §04 Commands | Two-up card grid, `$` prompt prefix, flags as bordered chips |
+| §05 Errors | Accent-barred cards: code chip, message in serif, fix below |
+
+**Navigation** is a sticky left rail with a live scroll-spy via `IntersectionObserver` (top-third of viewport wins) — the active item turns red with an underline that draws in. Under 900px it collapses into a horizontal pill scroller docked beneath the masthead.
+
+**Requirements kept intact:** all four installers with exact commands, arrow-key-navigable tabs and a working `navigator.clipboard` copy with "Copied" feedback; quickstart string untouched; all six config keys with type/default/description; all four commands with every flag; all three errors with message and fix; all four footer links. The `data-install` / `data-config` / `data-cmd` / `data-error` hooks are preserved.
+
+Also tightened the original behaviour slightly: the copy timeout is now cleared on unmount and on re-click, so rapid clicks don't reset the label early.

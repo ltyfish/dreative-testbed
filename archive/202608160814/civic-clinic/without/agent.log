@@ -1,0 +1,42 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__without__202608160814
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. Design and build that website.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the opening hours for every day of the week
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build succeeds. Nothing committed.
+
+**What I built**
+
+Page order follows the order a walk-in patient's questions arrive:
+
+1. **Emergency notice** — a red-edged strip pinned above everything, with a tappable `tel:911`. It's the one thing that must never be scrolled to.
+2. **Masthead** — sticky, with the clinic phone number always visible as a button.
+3. **Hero** — "Open now for walk-ins" as a green status pill, the free-care headline, last-patient time, and directions/services buttons. Directly under it the three assurances (no insurance, no immigration questions, no cost) as a full-width tiled band, then the longer privacy promise as a pull-quote.
+4. **Hours** — all seven days in a card, closed days visibly dimmed, with the late-arrival note beside it so it can't be missed.
+5. **Services** — six cards, each with Who/Cost as a definition list so eligibility and cost line up across cards; cost is coloured to be the fastest thing to scan.
+6. **Getting here** — address on a solid teal card with the phone, transit and access notes as a bulleted list beside it.
+7. **Languages** — the seven languages as chips, interpreter line below.
+8. **Request an appointment** — the form, framed as the exception ("walk-ins are always welcome"), so nobody thinks booking is required.
+9. **Footer** — funding line and the three secondary links.
+
+Visually: warm off-white paper, one deep teal, near-black text, no gradients or decoration. Large type and generous spacing, since people read this stressed or on a phone. Focus rings are explicit, and `data-day`/`data-service` attributes are preserved.
+
+One judgement call worth flagging: today is a Sunday, which the hours list shows as Closed, while the required status line says "Open now for walk-ins." I kept both strings verbatim and did **not** compute or highlight "today" from the clock — a dynamic highlight would have put a contradiction on the page. If the status line is meant to be live data later, the hours row highlighting should be driven by the same source.
