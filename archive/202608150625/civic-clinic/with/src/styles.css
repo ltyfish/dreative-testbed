@@ -1,0 +1,1123 @@
+/* Eastside Community Health
+   Palette source: the clinic's own two signal colours — the green it already
+   used for "open" and the red it already used for 911 — set on civic paper.
+   No webfonts: these patients are on cheap phones and hospital wifi, so the
+   type voice comes from scale, weight and tabular numerals instead of payload. */
+
+:root {
+  --paper: #f4f1ea;
+  --paper-raised: #fdfcf8;
+  --paper-sunk: #e8e3d7;
+  --rule: #d6d0c1;
+  --rule-strong: #b8b1a0;
+
+  --ink: #191a16;
+  --ink-2: #4d4e46;
+  --ink-3: #6f7066;
+
+  --green: #17603a;
+  --green-deep: #0f4a2c;
+  --green-soft: #cfe1d2;
+  --green-wash: #e6efe6;
+
+  --red: #a11b12;
+  --red-wash: #f7e4e0;
+  --amber: #8a5a10;
+
+  --gutter: clamp(20px, 5vw, 60px);
+  --measure: 62ch;
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.6, 0, 0.3, 1);
+  --t-fast: 130ms;
+  --t-base: 180ms;
+  --t-slow: 320ms;
+
+  --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--green-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.num,
+.hours-table td,
+.todaybar-clock,
+.todaybar-axis {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- the one hover grammar: a warm tint shift + a darkening edge ---------- */
+
+a,
+button,
+select,
+input,
+.service,
+.languages li,
+.transit li,
+.hours-table tbody tr {
+  transition: color var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out), box-shadow var(--t-base) var(--ease-out),
+    transform var(--t-base) var(--ease-out), text-decoration-color var(--t-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--green);
+  background: var(--green-wash);
+}
+
+:where(a, button, [role='button'], select, input, summary):focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- layout shell ---------- */
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 0;
+}
+
+.nav,
+.hero,
+.section,
+.footer {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- emergency: the one full-bleed band on the page ---------- */
+
+.emergency {
+  background: var(--red-wash);
+  border-bottom: 2px solid var(--red);
+  color: var(--red);
+  padding: 12px var(--gutter);
+  font-size: 15px;
+}
+
+.emergency strong {
+  color: #6d0f09;
+}
+
+.emergency a {
+  color: var(--red);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.emergency a:hover {
+  background: #f0cfc9;
+  color: #6d0f09;
+}
+
+/* ---------- header ---------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  padding-block: 12px;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 4px 6px 4px 0;
+}
+
+.nav-logo:hover {
+  background: transparent;
+  color: var(--green);
+}
+
+/* The mark is a cross built from the page's own rule weight — it reads as the
+   clinic sign outside the door, and it is the only ornament on the route. */
+.nav-mark {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  background: linear-gradient(var(--green), var(--green)) center / 100% 6px no-repeat,
+    linear-gradient(var(--green), var(--green)) center / 6px 100% no-repeat;
+}
+
+.nav-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-left: auto;
+  font-size: 15px;
+}
+
+.nav-links a {
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 4px 6px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--green);
+}
+
+.nav-call {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ink-3);
+}
+
+.dot[data-open='true'] {
+  background: var(--green);
+  box-shadow: 0 0 0 3px var(--green-soft);
+}
+
+/* ---------- hero: asymmetric split, the answer on the left ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-areas:
+    'answer panel'
+    'claim panel';
+  gap: 0 clamp(28px, 5vw, 64px);
+  align-items: start;
+  padding-block: clamp(32px, 5vw, 64px) clamp(36px, 5vw, 72px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+
+.answer {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: clamp(31px, 5.4vw, 54px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--green-deep);
+  text-wrap: balance;
+}
+
+.page[data-open='false'] .answer {
+  color: var(--ink);
+}
+
+.answer .dot {
+  width: 14px;
+  height: 14px;
+  margin-top: 0.4em;
+}
+
+.answer-detail {
+  margin-top: 14px;
+  font-size: 18px;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+
+.hero-answer {
+  grid-area: answer;
+}
+
+.hero-claim {
+  grid-area: claim;
+}
+
+.hero h1 {
+  margin-top: clamp(28px, 4vw, 44px);
+  padding-top: clamp(24px, 3vw, 36px);
+  border-top: 1px solid var(--rule);
+  font-size: clamp(23px, 2.5vw, 31px);
+  font-weight: 650;
+  max-width: 22ch;
+}
+
+.assurances {
+  display: grid;
+  gap: 0;
+  margin-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.assurance {
+  display: grid;
+  gap: 2px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.assurance strong {
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+.assurance span {
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.hero-panel {
+  grid-area: panel;
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hero-address {
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 650;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: #fbfdfb;
+  border-color: var(--green);
+}
+
+.btn-primary:hover {
+  background: var(--green-deep);
+  border-color: var(--green-deep);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 74, 44, 0.22);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+
+.btn-secondary:hover {
+  background: var(--green-wash);
+  border-color: var(--green);
+  color: var(--green-deep);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+
+/* ---------- signature component: the Today Bar ---------- */
+
+.todaybar {
+  margin: 0;
+  padding: 20px 22px 18px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  box-shadow: 0 1px 0 var(--rule), 0 14px 30px -26px rgba(25, 26, 22, 0.5);
+}
+
+.todaybar-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.todaybar-day {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.todaybar-clock {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.todaybar-track {
+  position: relative;
+  height: 46px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+}
+
+.todaybar-band,
+.todaybar-walkin {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: left 600ms var(--ease-in-out), width 600ms var(--ease-in-out);
+}
+
+.todaybar-band {
+  background: var(--green-soft);
+}
+
+.todaybar-walkin {
+  background: var(--green);
+}
+
+.todaybar-cutoff {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 2px;
+  background: var(--ink);
+}
+
+/* Nothing is open today: the track stays empty and hatched, so the "now" marker
+   never has any text to collide with. */
+.todaybar[data-phase='closed-today'] .todaybar-track {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--paper-sunk) 0 7px,
+    var(--paper-raised) 7px 14px
+  );
+}
+
+.key-shut {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--paper-sunk) 0 4px,
+    var(--paper-raised) 4px 8px
+  );
+}
+
+.todaybar-now {
+  position: absolute;
+  top: -14px;
+  bottom: -8px;
+  width: 2px;
+  background: var(--red);
+  transition: left 600ms var(--ease-in-out);
+}
+
+.todaybar-now-label {
+  position: absolute;
+  top: -17px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.todaybar-axis {
+  position: relative;
+  height: 20px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.todaybar-axis span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.todaybar-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.todaybar-key li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.key-swatch {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 1px solid var(--rule-strong);
+}
+
+.key-walkin {
+  background: var(--green);
+}
+
+.key-band {
+  background: var(--green-soft);
+}
+
+/* ---------- sections ---------- */
+
+.section {
+  padding-block: clamp(40px, 5vw, 72px);
+  border-bottom: 1px solid var(--rule);
+  opacity: 1;
+}
+
+.section[data-revealed='false'] {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.section[data-revealed='true'] {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--t-slow) var(--ease-out), transform var(--t-slow) var(--ease-out);
+}
+
+.section-head {
+  margin-bottom: 26px;
+}
+
+.section h2 {
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 700;
+}
+
+.lead {
+  margin-top: 10px;
+  font-size: 17px;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 15px;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+/* ---------- hours ---------- */
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.hours-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 640px;
+}
+
+.hours-table th,
+.hours-table td {
+  padding: 11px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hours-table .num,
+.hours-table .closed-cell {
+  white-space: nowrap;
+}
+
+.hours-table thead th {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.hours-table tbody th {
+  font-weight: 650;
+}
+
+.hours-table tbody tr:hover {
+  background: var(--paper-raised);
+}
+
+.hours-table tbody tr[data-today='true'] {
+  background: var(--green-wash);
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.hours-table tbody tr[data-today='true']:hover {
+  background: var(--green-soft);
+}
+
+.today-tag {
+  margin-left: 10px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fbfdfb;
+  background: var(--green);
+  vertical-align: 2px;
+}
+
+.closed-cell {
+  color: var(--ink-3);
+}
+
+/* ---------- services: rows, not a card grid ---------- */
+
+.services,
+.transit {
+  border-top: 1px solid var(--rule-strong);
+  margin-left: -12px;
+}
+
+.service {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) minmax(0, 230px);
+  gap: 8px 24px;
+  align-items: baseline;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Same grammar as today's row in the hours table: a tint plus an inset marker
+   on the leading edge. Nothing reflows. */
+.service:hover {
+  background: var(--paper-raised);
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.service[data-walkin='false']:hover {
+  box-shadow: inset 3px 0 0 var(--amber);
+}
+
+.service-channel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--green-deep);
+  align-self: start;
+  padding-top: 3px;
+}
+
+.service[data-walkin='false'] .service-channel {
+  color: var(--amber);
+}
+
+.service h3 {
+  font-size: 19px;
+  font-weight: 650;
+}
+
+.service-eligibility {
+  grid-column: 2;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.service-cost {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+/* ---------- getting here ---------- */
+
+.visit {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+
+.address {
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.visit-phone {
+  display: grid;
+  gap: 2px;
+  margin: 18px 0 20px;
+}
+
+.visit-phone span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.visit-phone a {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border-bottom: 2px solid var(--green-soft);
+  justify-self: start;
+}
+
+.visit-phone a:hover {
+  border-bottom-color: var(--green);
+}
+
+.transit li {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 16px;
+}
+
+.transit li:hover {
+  background: var(--paper-raised);
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.transit-mode {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-top: 3px;
+}
+
+/* ---------- languages ---------- */
+
+.languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.languages li {
+  padding: 8px 14px;
+  font-size: 16px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+}
+
+.languages li:hover {
+  background: var(--green-wash);
+  border-color: var(--green);
+}
+
+.interpreter {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--green);
+  font-size: 17px;
+  max-width: var(--measure);
+}
+
+.interpreter a {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- booking ---------- */
+
+.booking-form {
+  display: grid;
+  gap: 16px;
+  max-width: 440px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.booking-form label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.booking-form input,
+.booking-form select {
+  padding: 12px 13px;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-raised);
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.booking-form input:hover,
+.booking-form select:hover {
+  border-color: var(--ink-3);
+}
+
+.booking-form input:focus-visible,
+.booking-form select:focus-visible {
+  border-color: var(--green);
+  background: #fff;
+}
+
+.booking-form .btn {
+  justify-self: start;
+  margin-top: 4px;
+}
+
+.form-success {
+  padding: 18px 20px;
+  background: var(--green-wash);
+  border: 1px solid var(--green);
+  border-left: 4px solid var(--green);
+  font-size: 17px;
+  max-width: var(--measure);
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 28px 40px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+.footer-links a {
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 1px;
+}
+
+.footer-links a:hover {
+  color: var(--green-deep);
+  border-bottom-color: var(--green);
+}
+
+/* ---------- mobile dock: the two things a patient needs in the street ---------- */
+
+.dock {
+  display: none;
+}
+
+/* ---------- mobile composition ---------- */
+
+/* Desktop editorial spine: the section's name sits in a narrow left column and
+   holds its place while its content scrolls past on the right. */
+@media (min-width: 941px) {
+  .section {
+    display: grid;
+    grid-template-columns: minmax(0, 264px) minmax(0, 1fr);
+    gap: 0 clamp(32px, 5vw, 80px);
+    align-items: start;
+  }
+
+  .section-head {
+    position: sticky;
+    top: 96px;
+    margin-bottom: 0;
+  }
+
+  .section-body {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 940px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'answer' 'panel' 'claim';
+  }
+
+  .hero-panel {
+    margin-top: 26px;
+  }
+
+  .hero-claim {
+    margin-top: 8px;
+  }
+
+  .visit {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  html {
+    scroll-padding-top: 20px;
+  }
+
+  .nav {
+    position: static;
+    backdrop-filter: none;
+  }
+
+  .nav-call {
+    display: none;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    gap: 4px 14px;
+  }
+
+  .page {
+    padding-bottom: 78px;
+  }
+
+  .dock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px var(--gutter);
+    background: var(--paper-raised);
+    border-top: 1px solid var(--rule-strong);
+    box-shadow: 0 -8px 24px -20px rgba(25, 26, 22, 0.8);
+  }
+
+  .dock-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  .dock-call {
+    padding: 10px 16px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 620px) {
+  .service {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-block: 16px;
+  }
+
+  .service-eligibility,
+  .service-cost {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .service-cost {
+    margin-top: 4px;
+  }
+
+  .todaybar {
+    padding: 16px 16px 14px;
+  }
+
+  .todaybar-key {
+    display: grid;
+    gap: 6px;
+  }
+
+  .transit li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .hours-table th,
+  .hours-table td {
+    padding: 10px 8px 10px 0;
+    font-size: 15px;
+  }
+
+  .hours-table th:first-child,
+  .hours-table td:first-child {
+    padding-left: 0;
+  }
+
+  .hours-table tbody tr[data-today='true'] {
+    box-shadow: none;
+    outline: 1px solid var(--green);
+    outline-offset: -1px;
+  }
+
+  /* At phone width the day name and its "today" flag stack rather than
+     forcing the whole table wider than the screen. */
+  .today-tag {
+    display: block;
+    width: fit-content;
+    margin: 3px 0 0;
+  }
+
+  .visit-phone a {
+    font-size: 20px;
+  }
+
+  .footer {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 380px) {
+  .todaybar-axis span:nth-child(even) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+
+  .section[data-revealed='false'] {
+    opacity: 1;
+    transform: none;
+  }
+}

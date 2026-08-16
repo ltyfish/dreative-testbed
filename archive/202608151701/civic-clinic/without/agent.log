@@ -1,0 +1,37 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__without__202608151701
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build passes. Nothing committed.
+
+## What I changed
+
+The old page was a stack of undifferentiated grey boxes — every element had the same visual weight, so the three things a patient actually needs were buried among the things they don't.
+
+**Status is now computed, not hardcoded.** The old page said "Open now for walk-ins. Last patient accepted at 19:30" as static text — which is wrong six days a week and dangerously wrong on Sunday. `readStatus()` (`src/App.jsx:110`) reads the real clock against the hours table and produces one of five honest states: open now, closing soon (registration shut but come in if urgent), not open yet, closed for today, closed today — each with the correct next-opening time. It refreshes every minute for pages left open in a waiting room. Right now, on a Sunday, the page correctly says *"We are closed today. We open again tomorrow at 8:00."*
+
+**Visual hierarchy matched to the actual questions:**
+- *Can I be seen?* — a single large status card is the first thing below the masthead, colour-coded green/amber with a left rule, carrying the badge, the plain-language headline, and the last-intake time.
+- *What does it cost?* — the three assurances went from small bordered chips to full cards with checkmarks and a plain-language second line ("Bring nothing. We will never ask for a card."). Every service card leads with a green cost pill before its eligibility line, so scanning the section reads as a column of "Free".
+- *How do I get there?* — the address and phone are a dark teal card at display size, transit is an icon list with the mode bolded out front, and a fixed bottom call bar keeps Call/Directions one tap away on mobile at all scroll positions.
+
+**Other judgement calls:** the emergency notice is a full-bleed red band above everything with `call 911` as a live `tel:` link, not a pale pink box mid-page. Today's row is highlighted in the hours table with a "Today" tag. The booking form is de-emphasised and paired with a panel saying most people don't need it, since the old page's prominent form invited patients to wait for a callback when they could just walk in. The interpreter line got promoted from footnote text to a real call button.
+
+I preserved every required element verbatim — the six services with their exact eligibility and cost strings, all seven language entries, both phone numbers, the transit lines, the late-arrival note, and the existing `id`/`data-day`/`data-service` hooks.

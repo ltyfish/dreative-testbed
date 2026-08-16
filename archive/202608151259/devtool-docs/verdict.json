@@ -1,0 +1,22 @@
+{
+  "scenario": "devtool-docs",
+  "judgedAt": "2026-08-15T16:26:31.715Z",
+  "runs": {
+    "with": "devtool-docs__with__202608151259",
+    "without": "devtool-docs__without__202608151259"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "Tie"
+  },
+  "overall": "Tie",
+  "feedback": {
+    "with": "looks exactly tjhe same before, cards with no rounded borders, harder to understand, tables and text everywherre, still detailedd and informative but ya, same remark as previous round, nothing special, unqiue, nice about this design",
+    "without": "genuine this is nicer than previousa run, ik this is claude, is clean, mordern, easy to follow for its theme, same remark lah as prev round, fitted animaiton etc"
+  },
+  "summary": "same remark, winner worst is not much immersive, and well use way of teaching and showing etc, notjhing unique just smooth webpage. best thing about loser is just have more information and interactions for teaching ig. same remark as previouis run for this theme tho\n"
+}

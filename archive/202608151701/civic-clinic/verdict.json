@@ -1,0 +1,22 @@
+{
+  "scenario": "civic-clinic",
+  "judgedAt": "2026-08-15T18:07:52.875Z",
+  "runs": {
+    "with": "civic-clinic__with__202608151701",
+    "without": "civic-clinic__without__202608151701"
+  },
+  "criteria": {
+    "distinct": "Tie",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "Tie"
+  },
+  "overall": "without",
+  "feedback": {
+    "with": "this is just so disappointing, its really bad, u should see it urself, its plain, boring, and basically the same as previous run, tbh i think its worse, its harder to understand, and everything just doesnt fit right",
+    "without": "same remark as before, good i guess"
+  },
+  "summary": "dreative is just soo bad rn, it just cant do design, structure, oiutsource or do anything professionaly, nice, creatively, authenticitically"
+}

@@ -1,0 +1,39 @@
+{
+  "round": "202608151135",
+  "archivedAt": "2026-08-15T12:20:39.949Z",
+  "scenarios": [
+    "civic-clinic"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "civic-clinic__with__202608151135",
+      "code": 0,
+      "minutes": 22.1
+    },
+    {
+      "runName": "civic-clinic__without__202608151135",
+      "code": 0,
+      "minutes": 2.8
+    }
+  ],
+  "runs": [
+    {
+      "runName": "civic-clinic__with__202608151135",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "civic-clinic__without__202608151135",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

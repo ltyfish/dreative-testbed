@@ -20,12 +20,12 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| civic-clinic | 1 | 0 | 0 |
+| civic-clinic | 2 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
-| devtool-docs | 1 | 1 | 0 |
+| devtool-docs | 1 | 2 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **7** | **5** | **0** |
+| **Total** | **8** | **7** | **1** |
 
 ## Notes across rounds
 
@@ -373,3 +373,88 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** this si good, clean, mordern nice, good animations, miniminalistic and clean. genuine design that reduce perplexity and confusion, cli looking cards to look like theme etc
 
 **Summary:** worst thing about the winner is lack of animation and good ones, but its still pretty ok cause its a devtool doc, the animations are minimistic but relates to the type and environment. best thing about the loser is just that interesting unique hero animation that all, its messy, cramped, not tidy, everywhere, rectangles,  but i have to say, its really good with details and explanation + interaction, like interactions are actually meaningful and docs do shiw more content
+
+## devtool-docs — 2026-08-15
+
+- with:    `devtool-docs__with__202608150625`
+- without: `devtool-docs__without__202608150625`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | control |
+| Fit to the product | control |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** on first look it does look slightly btr than design A, however i would say is less clean and smooth cause it has no rounded borders and its typography is not as clean as design A, its a typography i personally would only use for professional website not websites that has people learning from etc, buit just personal preference and my review is subjective and only one seed. some section use of table and stuffto display information looks a little cramp and messy, the pacing isnt really there and its a little hard to follow. tho one thign i realise is, this provides alot of information, it can be good and bad but, the website has tons of information and details, and has more interactions for student to learn, just the way they present isnt clean and is hard to follow, theres cards but they arent rounded too, eveyrhings squarish, like i mean everything, even buttons etc, theres no variety. theres more information but i feel like they way it display it isnt adhering to the audience point of view, is hard to follow, is minimilastic and with clean animation, just super  hard to follow with chunk of text, no clean seperation, tables everywhere, squarish design everywhere, but bhas alot of infromation and interactive teaching
+
+**Feedback on the control:** this layout is cleaner, and in this case, rounded borders to make it look like a cli card its really nice and clean, the typography used in this is mucgh cleaner and smoother, great for its audienc elike learners where is not exagerated and easy to follow. layout is smooth too and not cramp, styling is minimalistic with interactions. fprmat it presents like a table with cards etc is very easy to follow and highlights it perfectly.
+
+**Summary:** worst thing for winner, theres no distinct or unique interaction/teaching style for user, just generic text and copy paste. best thing about the loser is the amount of information that design A lacks and interactions that generally helps aid teaching, tho is generally the same interaction, but is considered more useful cause of the amount of information and things they add for interaction.
+
+## civic-clinic — 2026-08-15
+
+- with:    `civic-clinic__with__202608151135`
+- without: `civic-clinic__without__202608151135`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | Tie |
+| Fit to the product | Tie |
+| Hierarchy and pacing | Tie |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | Tie |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** this loook much more professional and non ai slop, i can predict is dreative,  but heres the thing, designs donme by dreative thjat is not showcase, are generally all the literally same and identical, there isnt anything dreative is showing that amazes me compared to the other evnethough dreative one looks slightly btr, might be just because is recommended, but even if theres a unique component or smth, is drastically the same and not as nice if literally the other one looks identical
+
+**Feedback on the control:** probably claude, very ai slop, urm i guess the use of icons like ticks are good ways dreative can adopt for clarity etc, theres no images and everything like desing A, its pretty ai slop
+
+**Summary:** nothing much to say, is just looks identical, one has more rounded borders and icons the other one doesnt, while the other has more polished and clean layout and design. nothjing unique, nothing interesting, nothing beautiful. tho this is a clinical website, but when i here of a theme like this, i dont expect a agent to product the same result with differnet skill, dreative should be more ahering and influential.
+
+## devtool-docs — 2026-08-15
+
+- with:    `devtool-docs__with__202608151259`
+- without: `devtool-docs__without__202608151259`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | control |
+| Fit to the product | control |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | Tie |
+| **Overall** | Tie |
+
+**Feedback on the Dreative build:** looks exactly tjhe same before, cards with no rounded borders, harder to understand, tables and text everywherre, still detailedd and informative but ya, same remark as previous round, nothing special, unqiue, nice about this design
+
+**Feedback on the control:** genuine this is nicer than previousa run, ik this is claude, is clean, mordern, easy to follow for its theme, same remark lah as prev round, fitted animaiton etc
+
+**Summary:** same remark, winner worst is not much immersive, and well use way of teaching and showing etc, notjhing unique just smooth webpage. best thing about loser is just have more information and interactions for teaching ig. same remark as previouis run for this theme tho
+
+
+## civic-clinic — 2026-08-15
+
+- with:    `civic-clinic__with__202608151701`
+- without: `civic-clinic__without__202608151701`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | Tie |
+| Fit to the product | control |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | Tie |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** this is just so disappointing, its really bad, u should see it urself, its plain, boring, and basically the same as previous run, tbh i think its worse, its harder to understand, and everything just doesnt fit right
+
+**Feedback on the control:** same remark as before, good i guess
+
+**Summary:** dreative is just soo bad rn, it just cant do design, structure, oiutsource or do anything professionaly, nice, creatively, authenticitically

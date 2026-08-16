@@ -1,0 +1,12 @@
+{
+  "scenario": "devtool-docs",
+  "arm": "with",
+  "seq": "202608151259",
+  "label": null,
+  "direction": "recommended",
+  "product": "Quill CLI documentation",
+  "field": "Developer tooling · technical documentation",
+  "runName": "devtool-docs__with__202608151259",
+  "site": true,
+  "archivedAt": "2026-08-15T16:26:41.567Z"
+}

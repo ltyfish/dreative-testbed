@@ -1,0 +1,40 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__without__202608150625
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`npm run build` succeeds. Nothing committed.
+
+## What I changed
+
+Both `src/App.jsx` and `src/styles.css` were rewritten. All six preserved items are intact — I checked each against the original copy.
+
+**The walk-in status is now computed, not hardcoded.** `getWalkInStatus()` (`src/App.jsx:112`) reads the actual clock against the `HOURS` table and the 30-minute registration buffer, and resolves to one of four honest answers: opens later today, open now, open but registration closed, or closed with the next opening day named. It re-ticks every minute so a page left open doesn't lie. The old page said "Open now… last patient at 19:30" regardless of whether it was 3am Sunday.
+
+**Layout is built around the one question patients arrive with.** A sticky status card sits beside the headline on desktop and jumps *above* it on mobile — colour-coded green/amber/grey, with today's hours and the Call/Directions buttons attached directly to it. Today's row in the full hours table is highlighted and tagged.
+
+Other decisions:
+- **Emergency notice** kept first in the DOM with `role="alert"`, rebuilt as a bordered red panel with `tel:911` made tappable and the imperative moved to the front ("Do not wait for the clinic").
+- **Assurances** promoted from small grey outlined chips to full-width green check cards — they now read as the loudest thing after the status.
+- **Services** get an icon, and the cost line splits into a pill plus qualifier, so "Free" is scannable while "limited slots each week" survives verbatim.
+- **Phone number** rendered at 1.5rem inside a tappable block rather than inline body text; a fixed bottom call bar follows you on small screens.
+- **Booking** is framed by a "most people do not need this form" callout, since walk-in is the actual path for four of six services.
+- 54px minimum tap targets, visible focus rings, a skip link to the status, and `prefers-reduced-motion` handling throughout.
+
+One thing I did not do: I had no browser tooling available here, so the build passing is a compile check, not a visual confirmation. If you want, run `npm run dev` and I'll adjust anything that reads wrong on a real screen.

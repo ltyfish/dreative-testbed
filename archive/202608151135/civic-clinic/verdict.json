@@ -1,0 +1,22 @@
+{
+  "scenario": "civic-clinic",
+  "judgedAt": "2026-08-15T12:20:33.721Z",
+  "runs": {
+    "with": "civic-clinic__with__202608151135",
+    "without": "civic-clinic__without__202608151135"
+  },
+  "criteria": {
+    "distinct": "Tie",
+    "fit": "Tie",
+    "hierarchy": "Tie",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "Tie"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "this loook much more professional and non ai slop, i can predict is dreative,  but heres the thing, designs donme by dreative thjat is not showcase, are generally all the literally same and identical, there isnt anything dreative is showing that amazes me compared to the other evnethough dreative one looks slightly btr, might be just because is recommended, but even if theres a unique component or smth, is drastically the same and not as nice if literally the other one looks identical",
+    "without": "probably claude, very ai slop, urm i guess the use of icons like ticks are good ways dreative can adopt for clarity etc, theres no images and everything like desing A, its pretty ai slop"
+  },
+  "summary": "nothing much to say, is just looks identical, one has more rounded borders and icons the other one doesnt, while the other has more polished and clean layout and design. nothjing unique, nothing interesting, nothing beautiful. tho this is a clinical website, but when i here of a theme like this, i dont expect a agent to product the same result with differnet skill, dreative should be more ahering and influential."
+}

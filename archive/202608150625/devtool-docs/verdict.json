@@ -1,0 +1,22 @@
+{
+  "scenario": "devtool-docs",
+  "judgedAt": "2026-08-15T08:09:48.484Z",
+  "runs": {
+    "with": "devtool-docs__with__202608150625",
+    "without": "devtool-docs__without__202608150625"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "without",
+  "feedback": {
+    "without": "this layout is cleaner, and in this case, rounded borders to make it look like a cli card its really nice and clean, the typography used in this is mucgh cleaner and smoother, great for its audienc elike learners where is not exagerated and easy to follow. layout is smooth too and not cramp, styling is minimalistic with interactions. fprmat it presents like a table with cards etc is very easy to follow and highlights it perfectly.",
+    "with": "on first look it does look slightly btr than design A, however i would say is less clean and smooth cause it has no rounded borders and its typography is not as clean as design A, its a typography i personally would only use for professional website not websites that has people learning from etc, buit just personal preference and my review is subjective and only one seed. some section use of table and stuffto display information looks a little cramp and messy, the pacing isnt really there and its a little hard to follow. tho one thign i realise is, this provides alot of information, it can be good and bad but, the website has tons of information and details, and has more interactions for student to learn, just the way they present isnt clean and is hard to follow, theres cards but they arent rounded too, eveyrhings squarish, like i mean everything, even buttons etc, theres no variety. theres more information but i feel like they way it display it isnt adhering to the audience point of view, is hard to follow, is minimilastic and with clean animation, just super  hard to follow with chunk of text, no clean seperation, tables everywhere, squarish design everywhere, but bhas alot of infromation and interactive teaching"
+  },
+  "summary": "worst thing for winner, theres no distinct or unique interaction/teaching style for user, just generic text and copy paste. best thing about the loser is the amount of information that design A lacks and interactions that generally helps aid teaching, tho is generally the same interaction, but is considered more useful cause of the amount of information and things they add for interaction."
+}

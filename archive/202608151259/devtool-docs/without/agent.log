@@ -1,0 +1,39 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/devtool-docs__without__202608151259
+
+This is the documentation homepage for Quill, an open-source markdown build tool. It is currently plain and hard to scan. Redesign it so it is genuinely distinctive and worth shipping.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All five navigation entries and the on-page sidebar, both linking to the same five sections
+- All four install methods with their exact commands, switchable, with a working copy button
+- The quickstart code block exactly as written
+- All six configuration keys with their type, default, and description
+- All four commands with their descriptions and every flag
+- All three error codes with their messages and fixes
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build passes. Nothing committed.
+
+**What changed**
+
+The page now has a point of view: ink on a dark desk. A serif wordmark (`Quill`, with a blinking terminal caret) plays against an otherwise all-monospace documentation grid — the tension between the two is the identity, and it costs nothing at load since both are system stacks.
+
+- **Nav** (`src/App.jsx:118`) is sticky and blurred, with all five entries plus a GitHub affordance. Entries highlight as you scroll.
+- **Sidebar** is a hairline rail with `01–05` numbering and an amber active marker driven by an `IntersectionObserver` scrollspy (`src/App.jsx:47`), shared with the top nav. On narrow screens it collapses to a chip row and the nav links become a scrollable strip — both sets stay present.
+- **Header** gains a fact grid (input/output/plugin resolution/config merging) that turns the tagline's claim into something scannable, plus version/licence/runtime pills.
+- **Install** is a real terminal chrome: four tabs (npm/pnpm/brew/curl, exact commands unchanged), arrow-key navigable, with a `$` prompt and a per-block copy button that confirms in cyan. Copy state moved into a `CopyButton` component so each block tracks its own feedback and clears its timer on unmount.
+- **Quickstart** block is byte-identical, now in a titled terminal window and independently copyable.
+- **Config** keeps the semantic table but types are colour-coded chips (string/string[]/boolean/number), defaults read as code, and rows restack into labelled cards under 620px.
+- **Commands** become a two-up card grid, each headed by a shell prompt with a labelled flag row — all four commands and every flag intact.
+- **Errors** are bordered callouts with a red code badge, the message in paper white, and the fix tagged `fix`.
+- **Footer** keeps all four links, now on a single justified row.
+
+Accessibility: skip link, visible amber focus rings, `aria-selected` tabs with roving tabindex, copy buttons labelled with the command they copy, and a full `prefers-reduced-motion` opt-out (the caret blink and scroll smoothing both stop).

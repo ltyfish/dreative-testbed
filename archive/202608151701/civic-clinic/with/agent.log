@@ -1,0 +1,46 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__with__202608151701
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`DREATIVE_CHECKS_PASSED` — build, docs-check, and visual smoke all pass against the production preview.
+
+## Build brief
+
+**Concept** — The page is an *answer sheet*, not a landing page: the three questions patients actually arrive with, in the order they ask them. The old hero, status line, and assurance pills were one question ("can I come, and what will you ask me"), so they became one band; services moved ahead of the hours table; booking was demoted because walk-ins are the default and only one of six services needs it.
+
+**Signature component** — **"Can I be seen today?"** A triage clock that computes the verdict from the real schedule and the real 30-minute registration cut, shows today as a rail with a *now* marker, and takes an **arrival check** — *Right now / in 30 min / 1 hr / 2 hrs* — that re-answers for when you'd actually reach the door ("Yes, you can walk in — you would have 1 hr 10 min to spare"). It operates on the visit, not on data about the clinic. Degenerate case bounded: on Sundays and after closing every option gives the same answer, so the control is removed rather than left inert.
+
+**Visual system** — Palette taken from printed public-health signage: warm paper, ink, one signage green for *open*, one red-oxide for *emergency*. Light, not dark — the reader is anxious, in daylight, often on a cheap phone. No photograph and no map: a stock clinic photo or a fabricated map of a fictional address would be the worst thing on the page, and type-led also loads fastest.
+
+**Continuity** — The verdict travels: full panel at the top, condensed into the sticky bar once you scroll past, echoed in the highlighted *today* row and *Last walk-in* column of the hours table, and again in the booking section's "you probably do not need this form."
+
+**Motion** — Baseline hover/focus/press in one grammar (background fills, border darkens) across nav, buttons, chips, service rows, language tiles, hours rows, footer links, and form fields; five regional entrances; two authored moments that do a job — the rail marker sliding and the verdict re-landing when you change your arrival.
+
+**Mobile** — Composed at 390/320, not stacked: nav links drop for a status-plus-Call bar, the four-column hours table becomes `8:00–20:00 · last walk-in 19:30` per day, service cost gets its own line, and the reassurance leads the booking form instead of trailing it.
+
+**Preserved, verified in the render:** live walk-in status; all seven hours rows; address, phone, all four transit lines; all six services with eligibility and cost verbatim; both assurances on the first screen at 21px; seven languages (now shown in their own scripts) plus the interpreter line; the 911 notice at the top, with 911 now a tappable `tel:` link.
+
+**Two defects fixed beyond the brief:** the footer's `/privacy`, `/rights`, and `/volunteer` links rendered this same page — they now point at the privacy and rights statements that genuinely exist here, and volunteering became a line with the clinic's real phone number rather than a dead route. The status panel was outside `<main>`; it is the page's primary content and now sits inside it.
+
+**Advisory I did not act on:** smoke reports "1 of 6 regions change on approach." I checked each region directly — all five reveals fire 0→1 and complete while still on screen; the low count is the sampler's cadence against reveals that deliberately trigger early, not a missing layer. Fading more regions in uniformly would raise the number and not improve the page, so I left it.
+
+Rendered views for you in `shots/`: `final-desktop.png`, `final-mobile.png` (390), `final-narrow.png` (320), `final-arrival.png` (arrival check exercised), `final-sticky.png` (verdict in the condensed bar). Nothing was committed; `npm run build` succeeds.
+
+Implementation complete; human taste verdict: awaiting user review.

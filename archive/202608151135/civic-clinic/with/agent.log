@@ -1,0 +1,53 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__with__202608151135
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, `DREATIVE_CHECKS_PASSED`, nothing committed.
+
+## Build brief
+
+**Concept — "The Door."** The page is ordered by the questions a person asks standing on the pavement: *can I be seen today → what does it cost → how do I get in → what happens once I'm inside.*
+
+- **Signature component: the Today panel.** It reads the real clock against the real opening-hours table and answers in one sentence at headline scale, with a band showing today's walk-in window, a *now* marker, and "5 hr 20 min left to walk in today." It's the availability itself, not a chart about the clinic — no competitor page could carry it.
+- **Visual system.** Warm paper (`#f6f2ea`) and warm ink, one civic green carrying every affirmative (open, free, yes), red spent *only* on the 911 notice so it never competes. No webfont — deliberate: this is read on old phones and bad connections, and the system stack renders instantly.
+- **Structure.** Asymmetric hero split instead of a centred one; services as a scannable row list with a walk-in/booking filter rather than a card grid; arrival as five numbered steps on a ruled path; the footer restates the five patient rights so the page ends on the reason it's safe to come in.
+- **Motion.** Interaction baseline everywhere (verified: 17/17 hover targets respond, 3px green focus ring on every tabbable element, `:active` press states); regional entrances that resolve before centre; one signature motion — the band drawing to *now* on load. Reduced motion renders everything statically.
+
+## Preserved
+
+All six services with eligibility and cost verbatim; the full seven-row hours table (now with a derived "last walk-in" column and today's row marked); address, phone, all four transit lines; the three assurances promoted to a large list in the hero; all seven languages plus the interpreter line; the 911 notice, full-bleed at the top. The booking form still works. Languages now also show their native names (Español, Tiếng Việt, العربية …) so a visitor who can't read English can find their own.
+
+## Defects found and corrected in the rendered page
+
+1. **The panel lied between 19:30 and 20:00** — it said "Open now for walk-ins" after registration had closed. Now a distinct third state with the honest next opening, computed per weekday (Friday→Saturday 9:00, not "8:00 tomorrow").
+2. **The headline claimed "You can see a doctor today" while the clinic was closed.** Now state-aware.
+3. **The band's middle label didn't sit under its tick.** The band now spans exactly the walk-in window, so both labels are its ends.
+4. **Section content didn't share a left edge** with its headings (margin resets beating `margin-inline: auto`). Replaced with one measured grid column.
+5. **24px horizontal overflow at 320px** from the hours table. Fixed with a mobile-specific header and density.
+6. **`/privacy`, `/rights`, `/volunteer` were dead links** serving the SPA fallback — inherited from the baseline, and flagged as blockers. Rather than invent policy pages, they now point to a real "Your rights here" block built from statements the clinic already makes, and Volunteer goes to the clinic phone.
+7. Mobile: the sticky header ate a fifth of the screen. On phones the header is static and a fixed bottom call bar carries the number and status instead.
+
+**One advisory I'm not acting on:** the smoke reports "2 of 6 regions change on approach." I checked — all six reveal correctly; they simply finish *before* the region is centred, which is the behaviour the skill requires. Raising that number means fading regions in later, i.e. behind the reader. Leaving it.
+
+Views to inspect: `%TEMP%\shots\` — `desktop.png`, `mobile.png`, `narrow.png` (320), `open-desktop.png` and `closing-desktop.png` (clock-mocked states), `services-filtered.png`, `book-success.png`, `reduced.png`. The preview is still serving at http://127.0.0.1:4173/.
+
+Implementation complete; human taste verdict: awaiting user review.
+
+Unrelated: the claude.ai and Google Drive MCP connectors need authorization before their tools work — that's done in your claude.ai connector settings, and I can't run the OAuth flow in this non-interactive session.
