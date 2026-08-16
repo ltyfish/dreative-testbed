@@ -1,0 +1,41 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__without__202608160436
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the full opening hours table
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Build passes. Nothing committed.
+
+## What I changed
+
+The redesign is organized around the three questions a patient actually arrives with, in order of urgency.
+
+**1. Can I be seen today?** The status line was hardcoded ("Open now… last patient at 19:30"), which is wrong for most of the week. It's now computed from the same `HOURS` table shown below it (`getStatus`, `src/App.jsx:88`), ticking every 30s, with four states: open, opening soon, registration-closed-but-still-open, and closed (with the next opening day/time). The two can't drift apart. Today's row in the hours table is highlighted with a "Today" tag so the table confirms what the status card says.
+
+**2. What does it cost?** The three assurances are now solid teal blocks directly under the headline, each built as a large "No" + the thing you don't need — the shape reads before the words do. Each service card carries a green cost line and a Walk in / Book first tag, so you can scan the grid for "can I just show up" without reading eligibility text.
+
+**3. How do I get there?** "Getting here" is a two-card split: the address as large bold type on a solid teal card with a call button, and transit directions as a spaced list rather than a cramped bullet run.
+
+Other decisions:
+- The 911 notice is a full-bleed solid red bar above everything, with a tappable `tel:911` link — previously a pale pink box that scanned as decoration.
+- A persistent call bar pins to the bottom on screens under 900px. Calling is the highest-value action and shouldn't require scrolling to find.
+- Languages now lead with the endonym (Español, Tiếng Việt, 普通话) above the English name — a speaker scanning for their own language finds it faster. The interpreter line is a bordered callout with the number as a button, not a footnote.
+- Base type is 18px, buttons and inputs have 52–54px minimum height, and body text sits at high contrast on warm off-white — the visual system assumes an older phone and a person who is unwell.
+- Added a skip link, a table caption, `dl` markup for service facts, focus rings, and a reduced-motion guard.
+
+All six services, the full hours table, address, both phone numbers, transit directions, language list, and both assurances are preserved verbatim.

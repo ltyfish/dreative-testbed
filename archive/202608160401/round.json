@@ -1,0 +1,39 @@
+{
+  "round": "202608160401",
+  "archivedAt": "2026-08-16T04:36:31.939Z",
+  "scenarios": [
+    "devtool-docs"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "devtool-docs__with__202608160401",
+      "code": 0,
+      "minutes": 13.6
+    },
+    {
+      "runName": "devtool-docs__without__202608160401",
+      "code": 0,
+      "minutes": 5.2
+    }
+  ],
+  "runs": [
+    {
+      "runName": "devtool-docs__without__202608160401",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "devtool-docs__with__202608160401",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

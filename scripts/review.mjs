@@ -15,6 +15,7 @@ import path from 'node:path'
 import { archiveRound, findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
 import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture.mjs'
 import { pairHealth } from './lib/health.mjs'
+import { recordVerdict } from './lib/vault.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
@@ -344,6 +345,15 @@ ${rows}
   // result instead of relying on gitignored runs/ or on VERDICTS.md being read in order.
   const roundDir = findRoundForRun(record.runs.with) ?? findRoundForRun(record.runs.without)
   if (roundDir) syncVerdict(body.scenario, roundDir)
+
+  // Project memory lives outside this repo and used to be updated by hand, which is how a
+  // scored round could be reset and forgotten. No-ops when the vault is not on this machine.
+  try {
+    const written = recordVerdict(record)
+    if (written) console.log(`recorded verdict in ${written}`)
+  } catch (error) {
+    console.warn(`could not record verdict in the vault: ${error.message}`)
+  }
 
   return record
 }

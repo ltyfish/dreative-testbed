@@ -36,9 +36,17 @@ export function buildPrompt(meta, arm, runDir, direction) {
       ? `Use the Dreative skill for this work. It is installed in this project.${directionLine}`
       : 'Do not use any design skill, framework, or checklist beyond your own judgement.'
 
+  // A content-only baseline has no design to redesign, so the "it is currently plain, improve it"
+  // framing would be a lie and would still invite an edit-in-place response.
+  const contentOnly = meta.baseline === 'content-only'
+  const brief = (contentOnly && meta.promptContentOnly) || meta.prompt
+  const baselineLine = contentOnly
+    ? `\n\n\`src/App.jsx\` holds the required content and behaviour as unstyled markup in no meaningful order, and \`src/styles.css\` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.`
+    : ''
+
   return `Work in the project at ${runDir.replace(/\\/g, '/')}
 
-${meta.prompt}
+${brief}${baselineLine}
 
 ${skillLine}
 
@@ -63,8 +71,19 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
   if (fs.existsSync(runDir)) throw new Error(`run already exists: ${runName}`)
 
   fs.cpSync(path.join(ROOT, '_template'), runDir, { recursive: true })
-  fs.cpSync(path.join(scenarioDir, 'App.jsx'), path.join(runDir, 'src', 'App.jsx'))
-  fs.cpSync(path.join(scenarioDir, 'styles.css'), path.join(runDir, 'src', 'styles.css'))
+
+  // A designed baseline hands both arms the same section architecture, and both arms keep it —
+  // the 2026-08-16 rounds shipped the fixture's own section list in the fixture's own order, so
+  // the comparison could not show a structural difference even in principle. `content-only`
+  // gives the same facts and the same behaviour with no architecture at all, so the page has to
+  // be designed rather than reordered. See BASELINES.md.
+  const contentOnly = meta.baseline === 'content-only'
+  fs.cpSync(
+    path.join(scenarioDir, contentOnly ? 'content.jsx' : 'App.jsx'),
+    path.join(runDir, 'src', 'App.jsx'),
+  )
+  if (contentOnly) fs.writeFileSync(path.join(runDir, 'src', 'styles.css'), '', 'utf8')
+  else fs.cpSync(path.join(scenarioDir, 'styles.css'), path.join(runDir, 'src', 'styles.css'))
   if (fs.existsSync(path.join(scenarioDir, 'public'))) {
     fs.cpSync(path.join(scenarioDir, 'public'), path.join(runDir, 'public'), { recursive: true })
   }

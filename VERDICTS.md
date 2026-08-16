@@ -20,12 +20,12 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| civic-clinic | 2 | 1 | 0 |
+| civic-clinic | 3 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
-| devtool-docs | 1 | 2 | 1 |
+| devtool-docs | 1 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **8** | **7** | **1** |
+| **Total** | **9** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -458,3 +458,45 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** same remark as before, good i guess
 
 **Summary:** dreative is just soo bad rn, it just cant do design, structure, oiutsource or do anything professionaly, nice, creatively, authenticitically
+
+## devtool-docs — 2026-08-16
+
+- with:    `devtool-docs__with__202608160401`
+- without: `devtool-docs__without__202608160401`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | control |
+| Fit to the product | control |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | control |
+| **Overall** | control |
+
+**Feedback on the Dreative build:** still as squairsh, looks the same, nothing unique and nice, plain and boring, animations minimal, effectively the same as previous round
+
+**Feedback on the control:** this was way btr than previous round, probably claude control, it cleaner, with nicer presentation and unique demonstration fo theme like cli card, ya same verdict, smooth clean nice, but effectrive boring thats why i make dreative
+
+**Summary:** worst thing about the winner is bits boring, nothing unique compared tio websites out there, same looking llm website, minimal animation and stuff, no sourcing or using of rela image and creativity ig. loser best thing is, more detail i guess, it presents more interactions with other code instead opf just showing details as table so is more immersive, same a sprev dog feed, same verdict
+
+## civic-clinic — 2026-08-16
+
+- with:    `civic-clinic__with__202608160436`
+- without: `civic-clinic__without__202608160436`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | Tie |
+| Hierarchy and pacing | control |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** well this is btr than the previous run, however, i just feel like its way of presenting is confusing, like what we can help with section, a table with all text, is hard to follow, its use of bars to indicate opening hours too is hard to understand, like it doiesnt show much, and it being on the hero page is ugly. do like the section where it highlights the promosing details. it doesnt looks ai slop but ya, still kinda plain and boring, some sectins are done btr by design B too like how it presents, organize and stuff, i just see alot of potential of this theme and it just doesnt execute to my standard of this theme, it lacks outsourc eimages, icons etc
+
+**Feedback on the control:** just ai slop tbh, i mena is easyto follow and all but ya, too much rounded corners, look too ai slop, tho the use of icons and cards are good for clarity
+
+**Summary:** winner just lacks proper reasoning of a user, like its hard to understand and all, and it is not that distinct from any other websites or desings by claude, like it really needs to learn to outsource, find refernece and good materials and design, thats the worst thing, some ui are also not ideal and reasonable. the best thing about loser is that is summareized, less compact, more spacing and have elements to support the flow and help navigate

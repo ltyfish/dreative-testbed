@@ -1,0 +1,22 @@
+{
+  "scenario": "devtool-docs",
+  "judgedAt": "2026-08-16T04:36:24.987Z",
+  "runs": {
+    "with": "devtool-docs__with__202608160401",
+    "without": "devtool-docs__without__202608160401"
+  },
+  "criteria": {
+    "distinct": "without",
+    "fit": "without",
+    "hierarchy": "without",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "without"
+  },
+  "overall": "without",
+  "feedback": {
+    "without": "this was way btr than previous round, probably claude control, it cleaner, with nicer presentation and unique demonstration fo theme like cli card, ya same verdict, smooth clean nice, but effectrive boring thats why i make dreative",
+    "with": "still as squairsh, looks the same, nothing unique and nice, plain and boring, animations minimal, effectively the same as previous round"
+  },
+  "summary": "worst thing about the winner is bits boring, nothing unique compared tio websites out there, same looking llm website, minimal animation and stuff, no sourcing or using of rela image and creativity ig. loser best thing is, more detail i guess, it presents more interactions with other code instead opf just showing details as table so is more immersive, same a sprev dog feed, same verdict"
+}

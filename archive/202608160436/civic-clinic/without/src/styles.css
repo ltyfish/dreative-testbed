@@ -1,0 +1,947 @@
+/* Eastside Community Health
+   Design goal: a stressed patient on a cheap phone should learn, in this order,
+   (1) am I having an emergency, (2) can I be seen today, (3) does it cost anything,
+   (4) how do I get there — without reading a paragraph. Everything else is quieter. */
+
+:root {
+  --ink: #10201f;
+  --ink-soft: #45605d;
+  --ink-faint: #6d8683;
+
+  --paper: #f6f4ef;
+  --card: #ffffff;
+  --line: #ded8cd;
+
+  --teal: #0f5f57;
+  --teal-dark: #0a4640;
+  --teal-tint: #e2efec;
+
+  --green: #17693b;
+  --green-tint: #e2f2e6;
+  --amber: #8a5300;
+  --amber-tint: #fdf0d9;
+  --red: #a51c1c;
+  --red-tint: #fdeaea;
+
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow: 0 1px 2px rgba(16, 32, 31, 0.05), 0 8px 24px -12px rgba(16, 32, 31, 0.18);
+  --focus: 0 0 0 3px var(--paper), 0 0 0 6px var(--teal);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition: none !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--teal);
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: 6px;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  z-index: 50;
+}
+.skip-link:focus {
+  left: 20px;
+}
+
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
+/* ---------- Emergency notice: first thing, loudest thing ---------- */
+
+.emergency {
+  background: var(--red);
+  color: #fff;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 14px 18px;
+  margin: 0 -4px 8px;
+}
+
+.emergency-inner {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  max-width: 900px;
+}
+
+.emergency p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.emergency a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+
+.emergency-mark {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 19px;
+  line-height: 1;
+}
+
+/* ---------- Nav ---------- */
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  align-items: center;
+  padding: 14px 0;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.15;
+  margin-right: auto;
+}
+
+.nav-logo small {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.nav-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--teal);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.nav-links a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.nav-links a:hover {
+  background: var(--teal-tint);
+  color: var(--teal-dark);
+}
+
+.nav-call {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--teal-dark);
+  background: var(--teal-tint);
+  padding: 10px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .nav-call {
+    display: inline-flex;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 26px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+@media (min-width: 820px) {
+  .hero {
+    padding: 40px 44px;
+  }
+}
+
+.hero h1 {
+  font-size: clamp(30px, 5.2vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 22px 0 14px;
+  max-width: 16ch;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--teal);
+}
+
+.hero-lede {
+  margin: 0;
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 58ch;
+}
+
+/* Status: the answer to "can I be seen today?" */
+
+.status-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  border: 2px solid;
+}
+
+.status-headline {
+  margin: 0;
+  font-size: clamp(21px, 3.2vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.status-detail {
+  margin: 4px 0 0;
+  font-size: 16.5px;
+  color: var(--ink-soft);
+}
+
+.status-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-top: 9px;
+  flex: none;
+  background: currentColor;
+  box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.status-open {
+  background: var(--green-tint);
+  border-color: var(--green);
+  color: var(--green);
+}
+.status-soon,
+.status-last-call {
+  background: var(--amber-tint);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.status-closed {
+  background: #f0eee9;
+  border-color: var(--ink-faint);
+  color: var(--ink-soft);
+}
+
+.status-card .status-headline {
+  color: var(--ink);
+}
+
+/* Assurances — the money question, answered as three refusals */
+
+.assurances {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .assurances {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.assurance {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--teal);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.assurance-no {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  padding-right: 12px;
+  border-right: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+.assurance-text {
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 12px 24px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+}
+.btn-primary:hover {
+  background: var(--teal-dark);
+  border-color: var(--teal-dark);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--teal-dark);
+  border-color: var(--teal);
+}
+.btn-secondary:hover {
+  background: var(--teal-tint);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  padding: 44px 0 0;
+}
+
+.section-head {
+  margin-bottom: 18px;
+}
+
+.section h2 {
+  font-size: clamp(24px, 3.4vw, 30px);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.section-kicker {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-size: 17px;
+  max-width: 62ch;
+}
+
+.section h3 {
+  font-size: 19px;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Hours ---------- */
+
+.hours-panel {
+  display: grid;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (min-width: 780px) {
+  .hours-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+.hours-table {
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.hours-table th,
+.hours-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+}
+
+.hours-table thead th {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: #faf8f4;
+}
+
+.hours-table tbody th {
+  font-weight: 600;
+}
+
+.hours-table tbody tr:last-child th,
+.hours-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.hours-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.closed-cell {
+  color: var(--ink-faint);
+}
+
+.hours-table .is-today th,
+.hours-table .is-today td {
+  background: var(--teal-tint);
+  font-weight: 700;
+  color: var(--teal-dark);
+}
+
+.hours-table .is-today th {
+  box-shadow: inset 4px 0 0 var(--teal);
+}
+
+.today-tag {
+  display: inline-block;
+  margin-left: 8px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  vertical-align: 2px;
+}
+
+.note {
+  font-size: 16px;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin: 0;
+}
+
+.note strong {
+  color: var(--ink);
+}
+
+/* ---------- Services ---------- */
+
+.services {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.service {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.service h3 {
+  margin: 12px 0 14px;
+  max-width: 24ch;
+}
+
+.service-tag {
+  align-self: flex-start;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.tag-walkin {
+  background: var(--green-tint);
+  color: var(--green);
+}
+
+.tag-booked {
+  background: var(--amber-tint);
+  color: var(--amber);
+}
+
+.service-facts {
+  margin: auto 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  align-items: baseline;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.service-facts dt {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.service-facts dd {
+  margin: 0;
+  font-size: 16px;
+}
+
+.service-eligibility {
+  color: var(--ink-soft);
+}
+
+.service-cost {
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* ---------- Getting here ---------- */
+
+.visit-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 780px) {
+  .visit-grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+}
+
+.visit-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.visit-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+}
+
+.visit-card-primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+.visit-card-primary h3,
+.visit-card-primary .visit-phone strong {
+  color: #fff;
+}
+
+.visit-card-primary a {
+  color: #fff;
+}
+
+.visit-card-primary .btn-primary {
+  background: #fff;
+  color: var(--teal-dark);
+  border-color: #fff;
+  margin-top: 16px;
+}
+
+.visit-card-primary .btn-primary:hover {
+  background: var(--teal-tint);
+  border-color: var(--teal-tint);
+}
+
+.address {
+  font-style: normal;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+}
+
+.visit-phone {
+  margin: 0;
+  font-size: 17px;
+}
+
+.transit {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.transit li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 17px;
+}
+
+.transit li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0.62em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 4px var(--teal-tint);
+}
+
+/* ---------- Languages ---------- */
+
+.languages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+
+.languages li {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+
+.language-native {
+  display: block;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.language-name {
+  display: block;
+  font-size: 14.5px;
+  color: var(--ink-faint);
+}
+
+.interpreter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--teal-tint);
+  border: 2px solid var(--teal);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+
+.interpreter p {
+  margin: 0;
+  font-size: 17px;
+  color: var(--teal-dark);
+  max-width: 46ch;
+}
+
+/* ---------- Booking form ---------- */
+
+.booking-form {
+  display: grid;
+  gap: 16px;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.booking-form label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.booking-form input,
+.booking-form select {
+  padding: 13px 14px;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 17px;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 52px;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+  border-color: var(--teal);
+}
+
+.booking-form .btn {
+  justify-self: start;
+}
+
+.form-note {
+  margin: 0;
+  font-size: 15px;
+  color: var(--ink-faint);
+}
+
+.form-success {
+  background: var(--green-tint);
+  border: 2px solid var(--green);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  font-size: 18px;
+  max-width: 520px;
+  margin: 0;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  margin-top: 52px;
+  border-top: 1px solid var(--line);
+  padding: 26px 0 0;
+  font-size: 15.5px;
+  color: var(--ink-faint);
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.footer-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--teal-dark);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.footer-call small {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.footer-links a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.footer-links a:hover {
+  background: var(--teal-tint);
+  color: var(--teal-dark);
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* ---------- Persistent call bar (small screens) ---------- */
+
+.call-bar {
+  display: none;
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 40;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: 12px 20px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px -8px rgba(16, 32, 31, 0.55);
+}
+
+@media (max-width: 899px) {
+  .call-bar {
+    display: flex;
+  }
+  .page {
+    padding-bottom: 92px;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    font-size: 17px;
+  }
+  .hero,
+  .visit-card,
+  .booking-form {
+    padding: 20px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+  .hours-table th,
+  .hours-table td {
+    padding: 11px 12px;
+  }
+}

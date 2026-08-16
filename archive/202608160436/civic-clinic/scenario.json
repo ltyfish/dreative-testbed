@@ -4,13 +4,11 @@
   "designChallenge": "Restraint. This is the control scenario for taste. The users are stressed, some are on old phones, some do not read English first. Expressive motion, dark drama, and scroll choreography are the WRONG answer here. A good redesign is calmer, clearer, and faster than the baseline. A skill that reaches for spectacle should visibly fail this one.",
   "prompt": "This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. It is currently plain and hard to scan. Redesign the site so it genuinely serves these patients better.",
   "preserve": [
-    "Today's walk-in status and the opening hours for every day of the week",
+    "Today's walk-in status and the full opening hours table",
     "The address, phone number, and transit directions",
     "All six services with their eligibility and cost lines",
     "The 'no insurance required' and 'no immigration status questions' assurances, kept prominent",
     "The language-support list and the interpreter phone line",
     "The emergency notice directing chest pain and severe bleeding to call 911"
-  ],
-  "baseline": "content-only",
-  "promptContentOnly": "This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. Design and build that website."
+  ]
 }
