@@ -1,0 +1,221 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__with__202608181141
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by invoking the Dreative skill, since that's the required workflow here.
+  → Skill
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Network is available. Sourcing real media and an icon set before I build.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\met066.jpg
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\watchmaker.jpg
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\lac.jpg
+Media sourced (both real, licence-checked). Installing an icon set and vendoring the images.
+  → Bash
+
+  → Bash
+Now building. Writing the page.
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\src\App.jsx
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\src\styles.css
+
+  → Bash
+Now let me run it and look at the rendered page.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-00.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-01.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-02.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-03.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-04.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-05.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-07.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk-06.png
+Now correcting what the render shows: a broken workshop grid, an oversized lineage plate, orphaned figures, and too much dead vertical space.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk2-04.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk2-05.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\desk3-05.png
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\mob2-00.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\mob2-01.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\mob2-04.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\mob2-06.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\i-confirm.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\i-stack-collapsed.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\i-finishes.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\f-workshop.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\f-finishes.png
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\f-sw.png
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\finm-08.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608181141\_scratch\trace-0.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Built and verified. `npm run build` succeeds; nothing committed.
+
+## What the page is
+
+**Concept:** the page is the movement's own dossier — energy traced through the caliber, the caliber taken apart, then the run of 200 counted out. Six sections, numbered on a hairline rule:
+
+1. **Hero** — asymmetric: the name at display scale against a power-reserve arc that winds from 0 to 72 hours once on load. That gauge *is* the headline claim, not decoration.
+2. **01 Where the energy goes** — the six stages as a vertical trace. A blued spine fills as you scroll and each stage lights in sequence (causality, in the order energy actually travels). Each stage has a bespoke line mark drawn for it — spiral, toothed barrel, meshing wheels, lever and escape wheel, balance, hands — so the list is scannable before it is read. Detail line under the name, figure in mono on the right.
+3. **02 Four plates, 3.8 millimetres** — the signature component: an oblique exploded view where every plate's front edge is its real thickness at one scale, with a *Separate / Assemble* toggle that collapses them into the 3.8mm the spec sheet quotes. Hovering or focusing a layer in the list isolates its plate.
+4. **03 Specification** — all ten rows, aligned and tabular, against one scale-break figure (62).
+5. **04 The workshop** — dark band on a photograph of the Lac de Joux. The run of 200 is drawn as 200 marks, 123 dim and 77 brass; the five facts sit under leads a reader can land on (1 / 11 / 200 / 21 / ∞).
+6. **05 Three finishes** — a comparable set with material swatches, exact CHF prices, delivery, and remaining allocation. Choosing here fills the reservation.
+7. **06 Reserve** — form beside a live reservation slip; submitting replaces it with the stamped confirmation naming the finish, price, delivery date, and that nothing is binding and no payment is taken.
+
+**Sourced material** (both licence-checked, vendored to `public/media/`): a CC0 Charles Cabrier movement from the Met, captioned honestly as *not* Caliber 08 — it's there for lineage, and showing another maker's movement as this one would have been a fabricated claim; and a CC BY 3.0 Lac de Joux panorama, credited in the footer. `lucide-react` for small role icons only. Type is Instrument Serif / IBM Plex Sans / IBM Plex Mono, palette from German silver, blued screws, and one brass note reserved for what's still available.
+
+## Verification
+
+Rendered and inspected at 1440, 390 and 320px. Corrections made from what the screenshots showed, not from the DOM: the workshop grid was placing the five facts into a narrow column where they collided (fixed with explicit grid areas), the lineage plate overflowed the viewport by 48px at 390 (an inline wrapper not clipping its scaled image), figures were orphaning words, dead vertical space between sections, and the open-worked swatch first read as hazard tape. `dreative finalize` initially blocked the scroll trace for resolving only after the region had been scrolled past; retimed so it completes while the section is still in view, and re-verified the stages still light progressively (0 → 3 → 5 → 6 across a scroll) rather than all at once.
+
+`DREATIVE_CHECKS_PASSED` — commands only, no taste verdict. Zero console errors, no horizontal overflow at any width, reduced-motion resolves everything to its final state.
+
+One thing I'd flag: the Met photograph keeps its light museum ground inside the near-black band. I cropped it tighter, but it is still a bright plate on dark — deliberate as a mounted specimen, worth your eye.
+
+Implementation complete; human taste verdict: awaiting user review. Please look at the rendered desktop and 390px views, and specifically the two moving parts — the power-path trace and the plate separate/assemble toggle.

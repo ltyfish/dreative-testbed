@@ -1,0 +1,58 @@
+{
+  "round": "202608181141",
+  "archivedAt": "2026-08-18T13:04:44.259Z",
+  "scenarios": [
+    "caliber-movement"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "caliber-movement__with__202608181141",
+      "code": 0,
+      "minutes": 24.4,
+      "timedOut": false,
+      "reads": {
+        "skillFilesRead": {},
+        "toolCalls": {
+          "Bash": 56,
+          "Read": 27,
+          "Write": 2,
+          "Skill": 1
+        }
+      }
+    },
+    {
+      "runName": "caliber-movement__without__202608181141",
+      "code": 0,
+      "minutes": 3.9,
+      "timedOut": false,
+      "reads": {
+        "skillFilesRead": {},
+        "toolCalls": {
+          "Bash": 4,
+          "Write": 2,
+          "Edit": 1
+        }
+      }
+    }
+  ],
+  "runs": [
+    {
+      "runName": "caliber-movement__without__202608181141",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "caliber-movement__with__202608181141",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

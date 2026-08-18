@@ -20,12 +20,13 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
+| caliber-movement | 1 | 0 | 0 |
 | civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **13** | **8** | **1** |
+| **Total** | **14** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -584,3 +585,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** personally this looks nice and clean, ik is claude, same verdict as last time, love the follow the theme design and colur scheme
 
 **Summary:** worst thing about the winner is lack of animation, unique design, nice interactivity, and stuff, tho still btr than design A in all. best thing about loser still its simplicity ig, its good with the theme recognitiona nd creativitiy
+
+## caliber-movement — 2026-08-18
+
+- with:    `caliber-movement__with__202608181141`
+- without: `caliber-movement__without__202608181141`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | control |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** oo quite clean, no too bad for recommended, its nice, minimalistic but have uniquie animation and design, with elements that actually stand out and have its own unique animation, interactions are meaningful and images arer nicely spourced and fitted where it fades in into other eklements, not too shabby. good highlights and genuinelly smooth, clean minimalistic animation throughout the page when u scroll like design A. tho some feedback from my personal taste, hero page elment not proportionate and not even, soem sections still can be represented cleaner and simplier instead of all text n table like with elements, image,s graph, unqiue designs, cards, a cl;eaner designed and polished table etcc.. tho i have to say, i see some text cramped and not aligned properly, some images not fit centered too like the one on the workshop, and is design is a little controversial + the sourced one not as good and making that section ugly eventhough is genuinly not bad. theres unique design but its a little opff, like the four plates section, when hover looks right, when not hoverd it looks weired and not really 3d like but still genuinely cool and creative
+
+**Feedback on the control:** smooth,clean, professional, nothing can go wrong, minimalsitic, no images, plain but still decent, nothing fascinating just a standard ai generated website now
+
+**Summary:** worst thing about the winner is the spaces, is not really aligned properly, centering and sources of images can be improved but i do see some unique designs and good images too, elements and unqiue designs execution can aslo be improve visually since is sometimes doesnt "look" right due to alignment etc.., best thing about loser is its spacing ig, and i do prefer design A colour scheme, and its scroll animation is sooo much smoother and clean, tho personal preference, do hope dreative also have unique scroll animation instead of normal highly used once like design A, but design A clean scroll animation and its elements appearing genuinely not badd too, can adapt for dreative 

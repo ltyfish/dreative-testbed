@@ -1,0 +1,22 @@
+{
+  "scenario": "caliber-movement",
+  "judgedAt": "2026-08-18T13:04:37.055Z",
+  "runs": {
+    "with": "caliber-movement__with__202608181141",
+    "without": "caliber-movement__without__202608181141"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "with",
+    "craft": "without",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "without": "smooth,clean, professional, nothing can go wrong, minimalsitic, no images, plain but still decent, nothing fascinating just a standard ai generated website now",
+    "with": "oo quite clean, no too bad for recommended, its nice, minimalistic but have uniquie animation and design, with elements that actually stand out and have its own unique animation, interactions are meaningful and images arer nicely spourced and fitted where it fades in into other eklements, not too shabby. good highlights and genuinelly smooth, clean minimalistic animation throughout the page when u scroll like design A. tho some feedback from my personal taste, hero page elment not proportionate and not even, soem sections still can be represented cleaner and simplier instead of all text n table like with elements, image,s graph, unqiue designs, cards, a cl;eaner designed and polished table etcc.. tho i have to say, i see some text cramped and not aligned properly, some images not fit centered too like the one on the workshop, and is design is a little controversial + the sourced one not as good and making that section ugly eventhough is genuinly not bad. theres unique design but its a little opff, like the four plates section, when hover looks right, when not hoverd it looks weired and not really 3d like but still genuinely cool and creative"
+  },
+  "summary": "worst thing about the winner is the spaces, is not really aligned properly, centering and sources of images can be improved but i do see some unique designs and good images too, elements and unqiue designs execution can aslo be improve visually since is sometimes doesnt \"look\" right due to alignment etc.., best thing about loser is its spacing ig, and i do prefer design A colour scheme, and its scroll animation is sooo much smoother and clean, tho personal preference, do hope dreative also have unique scroll animation instead of normal highly used once like design A, but design A clean scroll animation and its elements appearing genuinely not badd too, can adapt for dreative "
+}

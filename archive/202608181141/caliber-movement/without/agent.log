@@ -1,0 +1,54 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608181141
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by reading the existing content.
+  → Bash
+
+  → Bash
+Content read. Now building the page — App.jsx first.
+  → Bash
+Heredoc hit a line-ending issue; using the Write tool instead.
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608181141\src\App.jsx
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608181141\src\styles.css
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608181141\src\styles.css
+
+  → Bash
+Build succeeds. Here's what I built.
+
+**Structure** (the order a collector actually reads in):
+1. **Masthead** — sticky, hairline-ruled: house name, caliber, section nav, a quiet "Reserve" link.
+2. **Hero** — "Caliber 08" at display scale, the run-of-200 line as lede, the 72-hour sentence as body, two actions, then a five-cell figures strip (72 h · 2.5 Hz · 214 · 62 h · 200) that turns the abstract claim into numbers before any scrolling.
+3. **01 — How the energy travels** — the six stages as a numbered chain, in the given order, each with a dot on the rule, its detail at reading measure, and its figure pulled into a right-hand monospace column so the numbers form their own scannable spine.
+4. **02 — Four layers, front to back** — the four layers with thickness set in mono and a bar drawn to relative scale (against the 1.4mm main plate), so the stack reads as a physical object.
+5. **03 — Specification** — all ten rows, two columns, dot leaders, values in mono.
+6. **04 — Three finishes** — three cards with exact CHF price, delivery date, remaining allocation, plus a gauge of remaining-against-200. "Choose this finish" selects it and scrolls to the form; the card then shows as selected.
+7. **05 — The workshop** — the five facts as numbered editorial notes in serif, including the run of 200 and the indefinite servicing commitment.
+8. **06 — Reserve** — the form (select/name/email, all labels intact) with a live summary line of the chosen finish, price, and date. The non-binding/no-payment statement sits beside it, before submitting. Confirmation names the finish, price, email and delivery date, and repeats that nothing is binding.
+9. **Footer** — enquiries mailto, the three link labels, copyright.
+
+**Look**: near-black ground with a faint warm bloom behind the title, warm off-white text, brass accent used only for figures and the selected state, steel-cool nothing else. Old-style serif for headings and workshop prose, mono for every number (the page's numbers are the product), sans for UI. Hairline rules instead of boxes; one 14px fade-up on scroll, disabled under `prefers-reduced-motion`.
+
+All required content is preserved verbatim, including stage order, layer order, and every spec row. Nothing committed.

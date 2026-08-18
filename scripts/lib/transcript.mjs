@@ -13,6 +13,35 @@
 /** File-path-bearing arguments, in the order tools actually use them. */
 const PATH_KEYS = ['file_path', 'path', 'notebook_path', 'pattern']
 
+// A builder told to prefer Bash reads files with `cat`, not with Read. The first
+// instrumented round (202608181141) recorded 27 Reads — every one a screenshot — and 56
+// Bash calls, six of which cat'd skill files. `skillFilesRead` came out empty and read as
+// "the skill never loaded". It had loaded; the parser was watching the wrong tool.
+//
+// Two rules keep the Bash scan honest:
+//   - only content-reading utilities count. `wc -l skills/*.md` and `ls references/` are
+//     surveys; counting them would have reported motion.md as read when it was not.
+//   - globs never count. A path containing `*` names a set, not a file that was opened.
+const SKILL_DIRS = 'references|exemplars|skills|frameworks|systems|schemas|agents'
+const READING_UTIL = /(^|[|;&(]|\s)(cat|bat|head|tail|less|more|sed|awk|grep|rg)\s/
+const SKILL_FILE = new RegExp(
+  String.raw`(?:^|[\s'"=\/])((?:${SKILL_DIRS})\/[A-Za-z0-9_.-]+\.(?:md|txt|ya?ml|json)|SKILL\.md|PLAN\.md|llms\.txt)`,
+  'g',
+)
+
+/** Skill-relative paths a Bash command actually opened. Empty for surveys and globs. */
+function skillPathsFromCommand(cmd) {
+  if (typeof cmd !== 'string' || !cmd) return []
+  const norm = cmd.replace(/\\/g, '/')
+  if (!/skills\/dreative/i.test(norm)) return []
+  if (!READING_UTIL.test(norm)) return []
+  const out = new Set()
+  for (const m of norm.matchAll(SKILL_FILE)) {
+    if (!m[1].includes('*') && !m[1].includes('?')) out.add(m[1])
+  }
+  return [...out]
+}
+
 function pathFromInput(input) {
   if (!input || typeof input !== 'object') return null
   for (const key of PATH_KEYS) {
@@ -52,9 +81,15 @@ export function createTranscript() {
         if (block.type === 'tool_use') {
           toolCounts.set(block.name, (toolCounts.get(block.name) ?? 0) + 1)
           const p = pathFromInput(block.input)
+          const hits = new Set()
           const rel = skillRelativePath(p)
-          if (rel) skillReads.set(rel, (skillReads.get(rel) ?? 0) + 1)
-          note(`\n  → ${block.name}${p ? ` ${p}` : ''}\n`)
+          if (rel) hits.add(rel)
+          if (block.name === 'Bash') for (const r of skillPathsFromCommand(block.input?.command)) hits.add(r)
+          for (const r of hits) skillReads.set(r, (skillReads.get(r) ?? 0) + 1)
+          const shown = p || [...hits].join(' ')
+          note(`
+  → ${block.name}${shown ? ` ${shown}` : ''}
+`)
         }
       }
     }
