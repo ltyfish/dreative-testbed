@@ -26,6 +26,7 @@ import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { runHealth } from './lib/health.mjs'
+import { createTranscript } from './lib/transcript.mjs'
 import { ROOT, RUNS, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
 function arg(name, fallback) {
@@ -127,7 +128,10 @@ const ALLOWED_TOOLS = [
 
 function agentCommand(prompt) {
   if (AGENT === 'claude') {
-    const args = ['-p', prompt]
+    // stream-json is what makes the transcript answer "which skill files did it open?".
+    // Without it `claude -p` prints only the final assistant message, so every archived
+    // agent.log has zero tool calls in it — see lib/transcript.mjs.
+    const args = ['-p', prompt, '--output-format', 'stream-json', '--verbose']
     if (YOLO) args.push('--permission-mode', 'bypassPermissions')
     else args.push('--permission-mode', 'acceptEdits', '--allowedTools', ...ALLOWED_TOOLS)
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
@@ -161,13 +165,16 @@ function runSession({ runName, runDir, prompt }) {
     const { cmd, args } = agentCommand(prompt)
     const started = Date.now()
     const logStream = fs.createWriteStream(path.join(runDir, 'agent.log'))
+    const rawStream = fs.createWriteStream(path.join(runDir, 'agent.jsonl'))
+    const transcript = createTranscript()
     logStream.write(`$ ${cmd} (${AGENT}${MODEL && MODEL !== true ? `, ${MODEL}` : ''})\n\n${prompt}\n\n---\n\n`)
 
     log(`[${runName}] session started`)
     const child = spawn(cmd, args, { cwd: runDir, shell: false })
 
     const watch = (d) => {
-      logStream.write(d)
+      rawStream.write(d)
+      logStream.write(transcript.write(d))
       if (!limitHit && LIMIT_RE.test(String(d))) {
         limitHit = true
         log(`[${runName}] provider usage limit reached — no further sessions will be started`)
@@ -188,17 +195,26 @@ function runSession({ runName, runDir, prompt }) {
 
     child.on('close', (code) => {
       clearTimeout(killer)
+      logStream.write(transcript.end())
       logStream.end()
+      rawStream.end()
+      const reads = transcript.summary()
+      if (reads) {
+        fs.writeFileSync(path.join(runDir, 'reads.json'), JSON.stringify(reads, null, 2))
+        const opened = Object.keys(reads.skillFilesRead)
+        log(`[${runName}] skill files opened: ${opened.length ? opened.join(', ') : 'NONE'}`)
+      }
       const mins = ((Date.now() - started) / 60_000).toFixed(1)
       log(
         `[${runName}] session finished in ${mins}m (exit ${code})${timedOut ? ' — KILLED AT CAP, duration is a floor not a measurement' : ''}`,
       )
-      resolve({ runName, code, minutes: Number(mins), timedOut })
+      resolve({ runName, code, minutes: Number(mins), timedOut, reads })
     })
 
     child.on('error', (err) => {
       clearTimeout(killer)
       logStream.end()
+      rawStream.end()
       log(`[${runName}] failed to launch ${cmd}: ${err.message}`)
       resolve({ runName, code: -1, error: err.message })
     })
