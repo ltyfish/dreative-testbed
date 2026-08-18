@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Run a full A/B round end to end with no manual prompting.
 //
-//   node scripts/run-all.mjs                       # all 5 scenarios, both arms = 10 sessions
+//   node scripts/run-all.mjs                       # all 6 scenarios, both arms = 12 sessions
 //   node scripts/run-all.mjs 3                     # 3 scenarios picked at random = 6 sessions
 //   node scripts/run-all.mjs 2 showcase            # …in the Showcase direction
 //   node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs

@@ -49,7 +49,7 @@ node scripts/run-all.mjs --no-archive            # do not write to archive/
 ```
 
 Both a bare number (how many scenarios) and a bare direction word work positionally, so a
-round is one short command. Anything you do not state falls back to: all five scenarios,
+round is one short command. Anything you do not state falls back to: all six scenarios,
 the Recommended direction, `claude`, concurrency 3.
 
 **Direction matters.** Dreative normally blocks on the user choosing Recommended,
@@ -140,7 +140,7 @@ The skill itself is deliberately **not** committed here: the `with` arm has to t
 version of Dreative you are working on now, and a committed copy would silently test a stale
 one. Everything else — scenarios, verdicts, and the whole archive — travels with the repo.
 
-## The five scenarios
+## The six scenarios
 
 | Scenario | Field | What it tests |
 |---|---|---|
@@ -149,11 +149,22 @@ one. Everything else — scenarios, verdicts, and the whole archive — travels 
 | `editorial-longform` | Publishing | Typography and reading comfort, almost no interface |
 | `devtool-docs` | Developer tooling | Utility under density, scannable API tables |
 | `civic-clinic` | Public service | **Restraint** — spectacle is the wrong answer here |
+| `caliber-movement` | Luxury hardware | **Ambition** — a static page is the wrong answer here |
+
+The last two are the poles, and they are the reason the set is worth running.
 
 `civic-clinic` is the honesty check. It is a free walk-in clinic used by stressed people on
 old phones, so a good redesign is calmer and faster than the baseline. If Dreative reaches
 for scroll choreography and cinematic drama there, that is a real finding about the skill,
 and you will only see it because the scenario was built to expose it.
+
+`caliber-movement` is the opposite check, added 2026-08-17 because twenty-two blind pairs
+had all been run on briefs where restraint was correct — so the record said nothing about
+whether the skill can build the ambitious thing at all. The subject is a watch movement:
+spatial (four stacked plates, 3.8mm deep) and temporal (a six-stage power path that is
+literally energy moving through a machine), sold to people who expect to be shown it. A
+calm page of cards and a spec table is a legitimate failure. Neither brief names motion,
+3D, or scroll work, because naming them would test compliance instead of judgement.
 
 Each scenario's `scenario.json` holds the brief and the preservation contract — the content
 and behaviour that are product requirements rather than design opinions.

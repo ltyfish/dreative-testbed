@@ -1,0 +1,17 @@
+{
+  "product": "Aubry & Vent — Caliber 08",
+  "field": "Luxury hardware · mechanical horology",
+  "designChallenge": "Ambition. This is the pole opposite civic-clinic, and it exists because twenty-two blind pairs have all been run on briefs where restraint was the right answer, so nothing in the record says whether the skill can build the ambitious thing at all. The subject is spatial (four stacked plates, 3.8mm deep) and temporal (a six-stage power path that is literally a sequence of energy moving), sold to collectors who expect to be shown the object. A calm, well-set page of cards and a spec table is a legitimate failure here: it would be a competent brochure for a thing whose entire appeal is how it moves and how it is made. What to read off it: does either arm build a mechanism that shows the movement working — layer separation, the power path traced, the escapement running, the finish under changing light — or do both ship a static page with a nicer typeface? The brief deliberately does not ask for motion, 3D, or scroll work; naming them would test compliance instead of judgement.",
+  "prompt": "This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. It is currently plain and reads like a spec sheet. Redesign the site so it does justice to the object.",
+  "preserve": [
+    "The six stages of the power path, in the order energy travels through them, each with its detail line and its figure",
+    "The four physical layers with their thicknesses and notes",
+    "Every row of the specification list",
+    "All three finishes with their exact CHF prices, delivery dates, and remaining allocation",
+    "The five workshop facts, including the run of 200 and the indefinite servicing commitment",
+    "The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date",
+    "The statement that reservations are not binding and no payment is taken"
+  ],
+  "baseline": "content-only",
+  "promptContentOnly": "This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page."
+}
