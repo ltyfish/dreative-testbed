@@ -20,12 +20,12 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| civic-clinic | 4 | 1 | 0 |
+| civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
-| devtool-docs | 2 | 3 | 1 |
+| devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **11** | **8** | **1** |
+| **Total** | **13** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -542,3 +542,45 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** quite smooth and clean, it like how it uses cards to highlight and make sure user cna follow properly, clean animation minimilastic, tho loses bencause of the detail and interaction
 
 **Summary:** slightly better, the worst thing about the winner is lack of outsource, icons, animations, assets, pacing and use of elements to highlight or demonstrate text heacvy content. best thing about loser is clean minimialstic overused animations but generally easier to pace and follow content, tbh whenever i say this, is when i just first look, and i jujst feel like is clean and makes me wanna learn, if its too text heavy with nothing summarized, i usually dont like it
+
+## civic-clinic — 2026-08-17
+
+- with:    `civic-clinic__with__202608171141`
+- without: `civic-clinic__without__202608171141`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | Tie |
+| Craft | Tie |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** ooo this sint that bad, it uses graph, icons, borders and is genuine not  overly text heavy and not pleasant for the ai, is a really good improvement, animations are smooth and clean for its theme, good colour scheme, good highlighting using bar chat etc, genuine not too bad, has some subjective opinions on some design like abr chart doesnt really execute nicely and som stuff could be further simplified for user experience like interactive cards/table, slideshow etc. it does look a little ai done but not really slop compared to design A
+
+**Feedback on the control:** urm same verdict, at the point ik what claude control can do, clean minimilastic, ai slop, boring static, simplified etc
+
+**Summary:** worst thing about winner is lack of animation, really amazing factor abt the website, and some stuff couild be even more simplified, nicer, easier, less ai slop, but its definitely better than design A in all of this worst thigns. best thing about lsoer is still simplification tho not as detailed as design B
+
+## devtool-docs — 2026-08-17
+
+- with:    `devtool-docs__with__202608171141`
+- without: `devtool-docs__without__202608171141`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** oo this isnt bad, is definitely a improvement, i kept its details, and improve visual and add collaspible for ux and stuff, genuine nicer, cool colour scheme that is unique too. tho i have some personal suggestions as i see more potential compared to design A, where like it can look more like the theme in terms of cli cards, andinteractions can have more cool effects tho it is meaningful, and overall animation still lacking a little. no images which i see that is agent reasoning. i would give cradt and pacing to this cause its genuine good pacing for the amount of detail
+
+**Feedback on the control:** personally this looks nice and clean, ik is claude, same verdict as last time, love the follow the theme design and colur scheme
+
+**Summary:** worst thing about the winner is lack of animation, unique design, nice interactivity, and stuff, tho still btr than design A in all. best thing about loser still its simplicity ig, its good with the theme recognitiona nd creativitiy

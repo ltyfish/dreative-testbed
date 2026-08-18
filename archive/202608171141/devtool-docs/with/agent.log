@@ -1,0 +1,50 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/devtool-docs__with__202608171141
+
+This is the documentation homepage for Quill, an open-source markdown build tool. Design and build it so it is genuinely distinctive and worth shipping.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- On-page navigation to every major section of the page, however you choose to present it
+- All four install methods with their exact commands, switchable, with a working copy button
+- The quickstart code block exactly as written
+- All six configuration keys with their type, default, and description
+- All four commands with their descriptions and every flag
+- All three error codes with their messages and fixes
+- The four footer links
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Built and verified. `npm run build` succeeds.
+
+## Build brief
+
+**Concept — ink on paper.** Quill turns a directory of manuscript into a directory of pages, so the page is set as a printed technical document: warm uncoated stock, iron-gall blue-black for links and matched files, vermilion for correction marks (section numerals, excluded files, `strict`), moss for successful output. Structure comes from 1px rules, not from a grid of cards. JetBrains Mono carries everything the machine says; IBM Plex Sans carries the prose.
+
+**Sections, in order:** sticky bar with scroll-spy nav → hero → 01 Install → 02 Quickstart → 03 Configuration → 04 Commands → 05 When it fails → footer.
+
+**Signature component — the config studio (03).** All six keys are rendered as an editable `quill.config.js`: real text fields, editable/removable glob chips, a `strict` switch, a `concurrency` stepper. Beside it, a real resolver (a small glob→regex matcher) recomputes the build live against a sample project: which files matched, which pattern excluded each one, what lands in `dist/`, and a status line that flips from *built 5 files — 1 warning* to *build failed — 1 warning treated as an error* when `strict` goes true. Type, default and description sit in aligned columns next to each key. It's the product doing its job, not a chart about the product.
+
+**Continuity.** That same sample project is the hero figure (`./` → `dist/`, 7 files in, 5 out), then the studio's live subject, and the source of the warning the errors band explains. It changes role and state rather than repeating.
+
+**The one break in the paper field** is section 05 on near-black — that's what the terminal actually looks like. Three error rows, each code + literal message on the first read, `fix` expanded below; all open by default and collapsible.
+
+**Motion.** One hover grammar across the route: the surface darkens one step, border darkens, 120/180ms. Focus rings on everything, one regional entrance (14px, 340ms, triggered against the top of the viewport, never on the first screen), tab-underline transition, file rows settling in when a glob changes, `prefers-reduced-motion` honoured.
+
+**Mobile (390px) is authored, not stacked:** the in/out figure turns vertical with the arrow rotated, install tabs go 2×2 with a full-width 44px copy button, config rows drop to a flowed layout with metadata beneath, the nav becomes a masked scroll rail, the GitHub button and version chip are dropped from the bar.
+
+**Requirements preserved:** nav to all six sections; four install methods with exact commands, switchable, working copy button; quickstart block verbatim; six config keys with type/default/description; four commands with descriptions and every flag; three error codes with messages and fixes; four footer links.
+
+## Verified
+Rendered in Chromium at 1440×900 and 390×844 — full-page and per-section captures, tab switching, copy, config editing (added `notes/**`, toggled `strict`), error expansion. Zero horizontal overflow at both widths; no console errors except headless clipboard permission, which is a harness artefact.
+
+Two things worth flagging: outsourced material is limited to the Lucide icon set and two self-hosted open fonts — I deliberately used no photography, since a hero image on a CLI docs page is the fabricated-prop trap and the file listing is the honest picture of what this tool does. And I did not run `dreative finalize`; it isn't installed in this project, so the checks above are what I ran directly.
+
+Implementation complete; human taste verdict: awaiting user review. Worth looking at the desktop full page, the config studio while editing a glob, and 390px.

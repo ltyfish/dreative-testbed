@@ -1,0 +1,41 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__without__202608171141
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. Design and build that website.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the opening hours for every day of the week
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`npm run build` succeeds. Nothing committed.
+
+**The page, in order** — sequenced by what a patient standing on the sidewalk needs to know, soonest first:
+
+1. **Emergency notice** — full-width red band pinned above everything, with a tap-to-call 911 button. It can't be scrolled past or mistaken for decoration.
+2. **Sticky header** — clinic name, jump links, and the clinic phone always visible.
+3. **Hero** — "Open now for walk-ins" as a live green status chip with the 19:30 cutoff, then the promise headline, then two actions (directions / call) and three assurance pills.
+4. **What we never ask you for** — the three assurances as a solid green three-up panel, the only large block of saturated colour on the page, so "no insurance" and "no immigration status questions" read as an institutional commitment rather than fine print.
+5. **Opening hours** — all seven days in a tabular list with today's row highlighted and badged (computed from the real date), alongside the late-arrival note.
+6. **What we can help with** — all six services as cards with `Who` / `Cost` label pairs, costs set in green so scanning for "Free" is one glance.
+7. **Getting here** — address at display size, then the four transit/access lines as separate cards.
+8. **Languages** — the seven languages as chips, with the interpreter line as its own bordered call-out and a dial button.
+9. **Booking** — kept last on purpose, since walk-ins are the primary path; framed as "only needed for dental and some counselling."
+10. **Footer** — funding line, the three secondary links, and a final 911 reminder.
+
+**Design choices:** warm paper background with a serif body face and sans headings/data — closer to a public-health notice than a startup landing page. One green accent reserved for status, cost, and calls to action; red used only for 911. Type scales fluidly, hit targets are ≥44px, focus rings are visible, and `prefers-reduced-motion` kills the status pulse. All content collapses to single column below 60rem.
+
+All facts, phone numbers, `data-day`/`data-service` attributes, and the form's state behaviour are unchanged.

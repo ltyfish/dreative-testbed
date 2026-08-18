@@ -1,0 +1,22 @@
+{
+  "scenario": "civic-clinic",
+  "judgedAt": "2026-08-17T12:12:50.279Z",
+  "runs": {
+    "with": "civic-clinic__with__202608171141",
+    "without": "civic-clinic__without__202608171141"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "Tie",
+    "craft": "Tie",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "without": "urm same verdict, at the point ik what claude control can do, clean minimilastic, ai slop, boring static, simplified etc",
+    "with": "ooo this sint that bad, it uses graph, icons, borders and is genuine not  overly text heavy and not pleasant for the ai, is a really good improvement, animations are smooth and clean for its theme, good colour scheme, good highlighting using bar chat etc, genuine not too bad, has some subjective opinions on some design like abr chart doesnt really execute nicely and som stuff could be further simplified for user experience like interactive cards/table, slideshow etc. it does look a little ai done but not really slop compared to design A"
+  },
+  "summary": "worst thing about winner is lack of animation, really amazing factor abt the website, and some stuff couild be even more simplified, nicer, easier, less ai slop, but its definitely better than design A in all of this worst thigns. best thing about lsoer is still simplification tho not as detailed as design B"
+}

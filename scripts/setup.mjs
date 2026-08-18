@@ -75,19 +75,27 @@ note(chromiumOk, 'playwright chromium', chromiumOk ? '' : 'run: npx playwright i
 // of Dreative you are currently working on, and a stale committed copy would silently test
 // last month's skill. It is installed from a local Dreative checkout or from npm.
 
-if (!skillInstalled() && !CHECK_ONLY) {
+// An already-present copy is NOT a reason to skip: `install-skill` is an exact sync, so
+// reinstalling from a local build is cheap and is the only thing that guarantees the "with"
+// arm tests the working tree. Skipping on presence let a pre-strip skill survive three setup
+// runs and would have measured last week's rulebook.
+if (!CHECK_ONLY) {
   const local = SKILL_FROM ? path.resolve(ROOT, SKILL_FROM) : path.resolve(ROOT, '..', 'Dreative')
   const cli = path.join(local, 'dist', 'cli', 'index.js')
   if (fs.existsSync(cli)) {
     console.log(`Installing the skill from ${local}…`)
     run('node', [JSON.stringify(cli), 'install-skill', '--skills', 'all', '--claude'])
     run('node', [JSON.stringify(cli), 'install-skill', '--skills', 'all', '--codex'])
-  } else if (has('dreative')) {
+  } else if (!skillInstalled() && has('dreative')) {
+    // Only fill a gap from npm — never overwrite an existing copy with a published version
+    // that is probably older than whatever put it there.
     console.log('Installing the skill from the globally installed dreative CLI…')
     run('dreative', ['install-skill', '--skills', 'all', '--claude'])
     run('dreative', ['install-skill', '--skills', 'all', '--codex'])
-  } else {
+  } else if (!skillInstalled()) {
     console.log('No local Dreative build and no global dreative CLI found.')
+  } else {
+    console.log(`No local Dreative build at ${local} — keeping the skill already installed.`)
   }
 }
 note(

@@ -1,0 +1,48 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/civic-clinic__with__202608171141
+
+This is the website for Eastside Community Health, a free walk-in clinic. Patients use it to find out whether they can be seen today, what it costs, and how to get there. Design and build that website.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- Today's walk-in status and the opening hours for every day of the week
+- The address, phone number, and transit directions
+- All six services with their eligibility and cost lines
+- The 'no insurance required' and 'no immigration status questions' assurances, kept prominent
+- The language-support list and the interpreter phone line
+- The emergency notice directing chest pain and severe bleeding to call 911
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+Done. `npm run build` succeeds, and `dreative finalize` printed `DREATIVE_CHECKS_PASSED`.
+
+## Build brief
+
+**Concept — "the front desk."** The page is ordered the way a person asks at the door: *can I be seen today → will you turn me away → what can you treat → how do I get there → will anyone understand me → do I need to book.* Sections: 911 strip, masthead, live status, assurances, services, getting here, languages, booking, footer.
+
+**Signature component — the week bar with a live now-line.** All seven days plotted against a shared 7:00–21:00 axis, so the shape of the week (long Mon–Thu, short Fri, half-day Sat, closed Sun) reads in one glance, with every time also printed. Today's column is outlined and carries a `NOW` marker at the real current time.
+
+The status headline is **derived, not hardcoded**: it computes open / registration-closed / opens-later / closed-today from the clock and the hours table, using the clinic's own stated rule that registration closes 30 minutes before the doors. During Monday opening hours it reads exactly *"Open now for walk-ins — Last patient accepted at 19:30 today."* At other times it says the true thing instead. A fact line (`Today, Monday · 8:00–20:00 · registration until 19:30`) is present in **every** state so the required hours are never inferred from the headline. Colour carries the state: green open, amber registration-closed, slate closed.
+
+**Visual system.** Warm recycled-paper ground, deep ink-green, one signal red reserved entirely for the 911 notice — green never decorates, it means open/free/go. Bricolage Grotesque for the few things read from across a room, Public Sans (the US civic interface face) for everything else, tabular figures throughout since the page is mostly times. Icons from Lucide (ISC), sized by role. No photography: this clinic is fictional, so stock exteriors or a map of 1140 East Barrow Street would be a fabricated claim rather than a placeholder — that's a deliberate omission, not a skipped hunt.
+
+**Other decisions.** Services are split by the only axis that changes what you do next — five walk-in, one book-ahead — as a ledger with cost right-aligned, not a table of prose or a six-card grid. The assurances are the page's one full-bleed break, set at 40px on saturated green. Mobile replaces the seven-column plot with seven rows rather than shrinking it.
+
+**Motion.** Interaction baseline everywhere (hover, focus-visible, press, one grammar); bars grow on load, the registration-window rule fills, regions enter against the top of the viewport, once. Reduced motion verified: 0 sections left hidden.
+
+## Verified
+- Build passes; zero console/page errors at 1440 / 390 / 320; no horizontal overflow at any width.
+- Booking journey exercised end to end — select, fill, submit, confirmation message renders with the real name and number.
+- Open, registration-closed, and Sunday-closed states all captured and inspected at desktop; open state also at 390px.
+- Corrections made during the loop: section left edges were misaligned between bands (services/visit indented ~70px further than languages/booking) — unified to one content column; the fact line stranded a leading `·` on wrap at both desktop and 390px; the `NOW` label collided with the day label when the time sat low on the axis; "Getting here" was competing with the address for scale.
+
+One session note unrelated to this work: the **claude.ai Google Drive** connector needs authorizing in your claude.ai connector settings before its tools can be used — I can't run that flow here.
+
+Implementation complete; human taste verdict: awaiting user review. Please look at the rendered desktop and 390px views and the status panel during and outside opening hours.
