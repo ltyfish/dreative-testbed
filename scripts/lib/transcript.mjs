@@ -51,6 +51,30 @@ function pathFromInput(input) {
   return null
 }
 
+/**
+ * Every tool call in a recorded stream, as one compact JSON line each.
+ *
+ * `runs/` is gitignored and `agent.jsonl` runs to ~11MB a session, so neither survives a
+ * round being archived — which meant that when this parser was fixed on 2026-08-18, the
+ * only reason the round could be re-derived at all was that `runs/` happened to still be
+ * on the same machine. Anything already archived was unrecoverable. A distilled call log
+ * is ~130KB and keeps a round answerable by a parser that does not exist yet.
+ */
+export function distillToolCalls(buf) {
+  const out = []
+  for (const line of String(buf).split('\n')) {
+    const trimmed = line.trim()
+    if (!trimmed.startsWith('{')) continue
+    let ev
+    try { ev = JSON.parse(trimmed) } catch { continue }
+    if (ev?.type !== 'assistant') continue
+    for (const block of ev.message?.content ?? []) {
+      if (block.type === 'tool_use') out.push(JSON.stringify({ tool: block.name, input: block.input }))
+    }
+  }
+  return out.length ? `${out.join('\n')}\n` : ''
+}
+
 /** `…/skills/dreative/references/MEDIA_SOURCES.md` -> `references/MEDIA_SOURCES.md`. */
 export function skillRelativePath(p) {
   if (typeof p !== 'string') return null

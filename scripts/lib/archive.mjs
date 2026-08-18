@@ -10,6 +10,7 @@ import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { ROOT, RUNS, readScenario } from './scaffold.mjs'
+import { distillToolCalls } from './transcript.mjs'
 
 export const ARCHIVE = path.join(ROOT, 'archive')
 
@@ -62,7 +63,7 @@ export function archiveRun(runName, roundDir, log = console.log) {
   // Sources: what the agent actually produced, readable without building anything.
   const src = path.join(runDir, 'src')
   if (fs.existsSync(src)) fs.cpSync(src, path.join(dest, 'src'), { recursive: true })
-  for (const file of ['index.html', 'BRIEF.md', 'run.json', 'build-error.log']) {
+  for (const file of ['index.html', 'BRIEF.md', 'run.json', 'build-error.log', 'reads.json']) {
     const from = path.join(runDir, file)
     if (fs.existsSync(from)) fs.cpSync(from, path.join(dest, file))
   }
@@ -78,6 +79,15 @@ export function archiveRun(runName, roundDir, log = console.log) {
     const lines = fs.readFileSync(agentLog, 'utf8').split('\n')
     const tail = lines.length > AGENT_LOG_TAIL ? [`… ${lines.length - AGENT_LOG_TAIL} earlier lines trimmed …`, ...lines.slice(-AGENT_LOG_TAIL)] : lines
     fs.writeFileSync(path.join(dest, 'agent.log'), tail.join('\n'), 'utf8')
+  }
+
+  // agent.log is a trimmed tail and agent.jsonl is ~11MB, so neither can answer a question
+  // asked later. The distilled call log can, at ~130KB — and on 2026-08-18 a round survived
+  // a parser fix only because `runs/` happened to still be on the same machine.
+  const agentJsonl = path.join(runDir, 'agent.jsonl')
+  if (fs.existsSync(agentJsonl)) {
+    const calls = distillToolCalls(fs.readFileSync(agentJsonl, 'utf8'))
+    if (calls) fs.writeFileSync(path.join(dest, 'tool-calls.jsonl'), calls, 'utf8')
   }
 
   let site = { ok: false, error: 'not built' }
