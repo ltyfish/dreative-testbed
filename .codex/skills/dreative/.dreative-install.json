@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "codex",
-  "installedAt": "2026-08-18T13:19:38.733Z",
+  "installedAt": "2026-08-19T12:52:02.111Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -30,12 +30,12 @@
     "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "a5fe3a5d3c8122a9acb31cb69d53803686d509867cc9d85d3f7574dcd70b9856",
     "PLAN.md": "6d9ffff25a0f0ef13e4da2cb56671d6a12afb44237ba171cf5ee8d69168767d5",
-    "references/ASSET_PIPELINES.md": "f3a71f3e433924d42cb8163f3186edb693f144bc3ac1cd6a001310bf407d234b",
+    "references/ASSET_PIPELINES.md": "1d0f211fc3b09cf611c329160606e73af3a5ab0f19fedaa315f2e890f3d3e020",
     "references/CREATIVE_DIRECTION.md": "4f8a28cddc5e9318dff4743feab4baad9e0c77995a9f2dfbb7fb9c16751bca8b",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
     "references/DOGFOOD_LESSONS.md": "84e23b6b4c8cbeff7fa016784da22bfe8e662c8d558e58b245161f7123aa964a",
     "references/EVALUATION_HANDOFF.md": "cfc12f44ad4452e62d9f5ea4be5a239f82ca33472b9990962ced8531a971997c",
-    "references/MEDIA_SOURCES.md": "16ecb86f42f825b66b4d552d3a57316071da71f0608539a10d02f64aa3f01a9c",
+    "references/MEDIA_SOURCES.md": "f64afc01561c90b764aea8dbcadedcf048da502a302d7691c9387867872c8d10",
     "references/REFERENCE_ADOPTION.md": "7f30039b337b1a5df0c9830aca598f178d83397a21d07f9a7dec206b34360eae",
     "references/SHOWCASE.md": "e3a5c0faea543a57efad73346f39ffbd54c0ffcaa6f016fc7ea98a7fe0599767",
     "references/SKILL_CONTRACT.md": "3ab7acb5232c98e443cbc71b7c719f186ea38b885490c44e86c4f4b0aa3f10a3",
@@ -44,7 +44,7 @@
     "schemas/experience-map.schema.json": "853c09f5a8dcfc14285907a59f34f5c7bb9ded38da644afe563ea68b5c8edef4",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
     "schemas/showcase-mechanism.schema.json": "1220f6b2b2b079c66ab792d19d97551c29234976caf7faa034e3cd6016bbbc58",
-    "SKILL.md": "4a522bd40a403054f22f0d213fc5a27c0e9b7781548dedc95c53679474ec4979",
+    "SKILL.md": "bc5cb452c76ae23b742b4c1b3eea59aedfdfa454051b57b4ac7565bda86e4ad2",
     "skills/3d.md": "b5001d55e7357b568d017eeaf51c47a90790f79e9af97c04996c6c8ea2a6c21d",
     "skills/cinematic.md": "f567b238636227bf55ee8febba0bdc68c846dd4a80bde49bb0b9606d4a56e1bc",
     "skills/experimental.md": "18e5dfc0086baa1ac4db6b3456db3b34df2eeec4a623e52e8cffe6a217fc85c5",
@@ -62,5 +62,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "ab010a3236f4d91ae12f7d630c215ada2babe4a5d396f25977dc72364c791f45"
+  "manifestHash": "7c1193db5ebe17bcaaecac829fd400ca9b6e92119555794a6180d0b6eb4b23c0"
 }
