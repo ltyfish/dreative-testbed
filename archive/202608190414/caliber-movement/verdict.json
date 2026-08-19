@@ -1,0 +1,22 @@
+{
+  "scenario": "caliber-movement",
+  "judgedAt": "2026-08-19T05:42:44.676Z",
+  "runs": {
+    "with": "caliber-movement__with__202608190414",
+    "without": "caliber-movement__without__202608190414"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "with",
+    "craft": "Tie",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "without": "same verdict as previous, smooth, clean, minimal, no images or anyhthing, those professional website with minimal animation ands tuff, but it has become such a common website design",
+    "with": "i have alot to say for this, first hero page, it executing and design props instead of using image, third part props, third party desins, render, frames etc, it looks like it creates it self which look damn ugly and not realistic, i cant relate it to anything. but the section aft the hero section, is veryu nice, it has really nicely done scroll animation, and it is unqiue too, highlighting the facts too as u scroll too, tho the thing looks abit weired and ugly, but its scroll animation and meaning is there, i wish it cna outsource to use and then replicate and desiign/infuse with its creativity like scroll aniamtion, transitioning etc instead of always choosing to create, it would look unprofessional and unrealistic, i do se the resememblence of a clock in this section but still, not as nice. the section aft this, the design is a little weired, like its good as u hover and it highlights effects and text, but the desing/images it use is weired, u can see urself, idk what is the square like thing suppose to represent. the sepification section, it could be represented and design better for user experience, rn its just like a generic table. the rest is not too bad, it is ahs meaningful interactivty, nice images sourced and quite decent desing, they dont have unique animations but have minimalistic ones, tho some text are a little hard to read since they all use somewhat the same font, font type and stuff, not much highlighting especially with icons, do wish it uses more explicit designs like nice tables, cards, slideshow or anything beaytifylly creative to tailor to ux than just putting it on text. the colour scheme i odnt really like but is personal preference. overall quite decent ig, is like a tie between the prev version because it has more meaningful unqiue interaction b ut execution not what i hope, especially it trying to create its own prop etc"
+  },
+  "summary": "worst thing about winner is ugly execution, some images/design are not easily understandable, animations i would say pretty good as recommended, urm some content can be design more tailor for ux and more unqiue and helpful. best thing about the loser is colour scheme ig. urm do wanna point out that dreative one usually only trhat certain scorell animation/transitiion, would bne nicer to have unique and different once like creative transtioning from different sections like zoom out or blend all those ambitious once"
+}

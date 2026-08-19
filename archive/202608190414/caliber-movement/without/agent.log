@@ -1,0 +1,62 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608190414
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by reading the existing content and project setup.
+  → Bash
+
+  → Bash
+Now I'll build the page. First the fonts in `index.html`:
+  → Bash
+
+  → Bash
+Heredoc tripped on the content; I'll use the Write tool instead.
+  → Write C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608190414/src/App.jsx
+
+  → Write C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608190414/src/styles.css
+
+  → Bash
+Build passes; the python tweak didn't run (no python), so I'll apply those two CSS fixes with Edit.
+  → Edit C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608190414/src/styles.css
+
+  → Edit C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608190414/src/styles.css
+
+  → Bash
+`npm run build` succeeds. Nothing committed.
+
+## What I built
+
+**Structure and order** — the page follows how a collector actually evaluates a movement: what it is → how it works → how it's built → what it measures → who makes it → what it costs → reserve.
+
+1. **Hero** — maker line, `Caliber 08` at display scale, the run-of-200 sentence, the 72-hour sentence, and a four-figure strip (72 h / 2.5 Hz / 214 / 200) that puts the headline numbers above the fold.
+2. **01 Power path** — the six stages as a numbered vertical sequence on a literal rail with a node per stage, so the order reads as energy travelling, not a list. Detail line in the middle column, figure set in mono and brass hard right, which turns the six figures into a scannable column of their own.
+3. **02 Construction** — the four layers front-to-back, each with its thickness in mono and a bar scaled to that thickness against the thickest (1.4mm main plate), so relative mass is visible at a glance. Notes preserved verbatim.
+4. **03 Specification** — all ten rows, two ruled columns, labels in sans and values in mono right-aligned so the numbers line up.
+5. **04 Workshop** — the five facts set large in serif, numbered and ruled. Given them room rather than shrinking them to fine print — the run of 200 and the indefinite servicing promise are purchase arguments.
+6. **05 Finishes** — three cards, price at display size with CHF as a superscript mono tag, delivery and remaining allocation as a labelled meta block. Each card has a **Choose this finish** button that sets the finish and scrolls to the form.
+7. **06 Reservation** — the not-binding statement sits beside the form, not below it. The form keeps its select/name/email and gains a live summary line echoing the chosen finish, price and delivery date before submit. The confirmation names all three, plus a restated no-payment line.
+8. **Footer** — copyright, enquiries mail link, the three secondary links.
+
+**Look** — near-black graphite with a brass accent and a cool steel-toned neutral text ramp; Spectral for language, IBM Plex Mono for anything the workshop would have measured, Inter for UI. Hairline rules everywhere and a single content column width, so the page reads like a technical document rather than a marketing page. Motion is restrained: section-level reveal on scroll, hover states on stages/layers/cards, all disabled under `prefers-reduced-motion`.
+
+Content is unchanged — every stage, layer, spec row, price, date, allocation and workshop fact is preserved as given, in the required order. Also added a skip link, focus-visible outlines, and responsive collapses at 900px and 560px.

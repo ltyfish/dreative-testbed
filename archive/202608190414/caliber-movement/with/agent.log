@@ -1,0 +1,287 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__with__202608190414
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by invoking the Dreative skill, since this work is exactly what it covers.
+  → Skill
+I'll start by inspecting the repository.
+  → Bash
+
+  → Bash
+
+  → Bash PLAN.md references/CREATIVE_DIRECTION.md skills/motion.md skills/ux.md skills/mobile.md skills/refined.md references/MEDIA_SOURCES.md
+
+  → Bash references/CREATIVE_DIRECTION.md exemplars/SLOP.md
+
+  → Bash exemplars/PRINCIPLES.md exemplars/MATERIALS.md
+
+  → Bash PLAN.md
+
+  → Bash skills/motion.md skills/ux.md skills/mobile.md skills/refined.md skills/interaction.md
+
+  → Bash references/MEDIA_SOURCES.md
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Network is available. Sourcing real imagery now.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\Le_Brassus_-_02.jpg
+
+  → Read C:\Users\lty\dvwork\Le_Brassus_-_06.jpg
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Sourced a CC0 photograph of Le Brassus (Vallée de Joux) and installed Lucide. Now building.
+  → Bash
+
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608190414\src\App.jsx
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608190414\src\styles.css
+Now the fonts and a build check.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash references/VISUAL_REFINEMENT.md
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-00.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-01.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-02.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-04.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-05.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-06.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-07.png
+
+  → Read C:\Users\lty\dvwork\shots\a-desktop-08.png
+
+  → Read C:\Users\lty\dvwork\shots\a-mobile-00.png
+
+  → Read C:\Users\lty\dvwork\shots\a-mobile-02.png
+Found real defects — sticky schematic broken on mobile, a text collision in the drawing, clipped label, and dead space. Correcting.
+  → Bash
+
+  → Bash
+
+  → Bash
+Now the CSS corrections.
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\b-mobile-02.png
+
+  → Read C:\Users\lty\dvwork\shots\b-desktop-06.png
+
+  → Read C:\Users\lty\dvwork\shots\b-desktop-07.png
+
+  → Read C:\Users\lty\dvwork\shots\b-desktop-08.png
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\j-desktop-record.png
+
+  → Bash
+Found a real bug: the confirmation panel rendered invisible. Fixing.
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\j-desktop-record.png
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\j-desktop-layer.png
+
+  → Read C:\Users\lty\dvwork\shots\b-desktop-00.png
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\c-desktop-00.png
+
+  → Read C:\Users\lty\dvwork\shots\c-desktop-05.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\n320-layers.png
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\n320-reserve.png
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\d-mobile-05.png
+
+  → Read C:\Users\lty\dvwork\shots\j-mobile-record.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Three real blockers from the smoke: microtype below the readability floor, a text collision under the mobile sticky pane, and the schematic not distinguishing its first two stages. Fixing all three.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+The section needs a continuous progress signal anyway — I'll make the trace advance fractionally with scroll rather than snapping between six states.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\f-desktop-03.png
+
+  → Read C:\Users\lty\dvwork\shots\j-desktop-chosen.png
+
+  → Bash
+A React re-render was wiping the reveal class off the selected finish card, making it vanish. Fixing the reveal to use an attribute React doesn't own.
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\dvwork\shots\g-mobile-06.png
+
+  → Read C:\Users\lty\dvwork\shots\g-mobile-08.png
+
+  → Bash
+
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__with__202608190414\.dreative\context.json
+
+  → Bash
+
+  → Bash
+Built and verified. `npm run build` succeeds; nothing committed.
+
+## What I built
+
+**Concept** — The movement is a path energy travels through in a fixed order, so the page is a **specimen sheet of the plate**. The same drawing appears twice and evolves: an unlit outline with dimension callouts and 27 located jewels in the hero, then lit and populated in a dark band where the power path is traced through it.
+
+**Build brief**
+- *Experience arc*: orient (hero) → demonstrate (power path, the peak) → construct (four layers) → rest (spec sheet) → prove (workshop) → decide (finishes + reservation)
+- *Signature component*: a drawn SVG plan of Caliber 08 — barrel, centre/third/fourth wheels, escapement, balance with its four inertia weights — with the six stages located where the parts actually sit. It is a schematic, not fabricated photorealism, and not a chart about the product.
+- *Signature behaviour*: the trace advances **fractionally with scroll**, so energy flows from the coiled mainspring to the hands rather than snapping between six states. The escapement stage shows the 2.5 Hz beat. Full keyboard parity (arrow stepping), hover and focus overrides.
+- *Second peak*: the four layers shown edge-on and to scale — 0.9 + 1.4 + 0.8 + 0.7 is exactly the stated 3.8 mm height — exploding on hover/focus with its note lighting.
+- *Type/colour*: Instrument Serif + IBM Plex Sans + Plex Mono for every figure. Warm German-silver paper against one cool steel band; gilt reserved for energy and allocation only.
+- *Media*: one sourced **CC0 photograph of Le Brassus, Vallée de Joux** (Wikimedia, Shev123), credited in the caption; Lucide marks on the workshop facts. Allocation is drawn as 200 ticks, 77 gilt, with the selected finish's share picked out.
+- *Mobile*: schematic sticks in a bounded frame above the stage list; spec sheet becomes two columns of stacked pairs; finish cards become a single rail. Verified at 390 and 320 px.
+
+All preserved content is intact, including the confirmation naming finish, price and delivery date, and the non-binding statement.
+
+## Defects found and corrected in the rendered page
+- Confirmation panel rendered **invisible** — the reveal observer never saw it because it mounts on child state.
+- The **selected finish card vanished** — React re-render wiped the reveal class; reveals now use an attribute React doesn't own.
+- Sticky schematic **didn't stick on mobile** (sticky child of a single-row grid item).
+- Callout text **colliding with the drawing**; "27 jewels" clipped by the viewBox.
+- Global `scroll-behavior: smooth` was animating every programmatic scroll and fighting the scroll-linked trace; replaced with `scroll-margin-top` on anchor targets.
+- Horizontal overflow and a wrapped title bar at 320 px; microtype below the readability floor; spec-sheet column rules mismatched; five workshop facts as an even card row (now 2 + a spanning lead + 2).
+
+## Verification
+`dreative finalize --codex --profile recommended --visual-smoke-url http://localhost:4173/` prints **`DREATIVE_CHECKS_PASSED`** — desktop 1440, 390, 320, and 390-reduced-motion all pass, interaction baseline 8/8, no console errors, no overflow, no text collisions.
+
+One note I'd rather state than bury: the workshop photograph is atmospheric and clearly credited, but there is **no photograph of Caliber 08 itself** — none exists to source, and I chose a drawing over inventing one. If real product photography or a render becomes available, the hero and the workshop band are where it belongs.
+
+Implementation complete; human taste verdict: awaiting user review. Please look at the rendered desktop and 390px views, and scroll the power-path band to see the trace advance.

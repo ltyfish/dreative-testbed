@@ -20,13 +20,13 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| caliber-movement | 1 | 0 | 0 |
+| caliber-movement | 2 | 0 | 0 |
 | civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **14** | **8** | **1** |
+| **Total** | **15** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -606,3 +606,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** smooth,clean, professional, nothing can go wrong, minimalsitic, no images, plain but still decent, nothing fascinating just a standard ai generated website now
 
 **Summary:** worst thing about the winner is the spaces, is not really aligned properly, centering and sources of images can be improved but i do see some unique designs and good images too, elements and unqiue designs execution can aslo be improve visually since is sometimes doesnt "look" right due to alignment etc.., best thing about loser is its spacing ig, and i do prefer design A colour scheme, and its scroll animation is sooo much smoother and clean, tho personal preference, do hope dreative also have unique scroll animation instead of normal highly used once like design A, but design A clean scroll animation and its elements appearing genuinely not badd too, can adapt for dreative 
+
+## caliber-movement — 2026-08-19
+
+- with:    `caliber-movement__with__202608190414`
+- without: `caliber-movement__without__202608190414`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | Tie |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** i have alot to say for this, first hero page, it executing and design props instead of using image, third part props, third party desins, render, frames etc, it looks like it creates it self which look damn ugly and not realistic, i cant relate it to anything. but the section aft the hero section, is veryu nice, it has really nicely done scroll animation, and it is unqiue too, highlighting the facts too as u scroll too, tho the thing looks abit weired and ugly, but its scroll animation and meaning is there, i wish it cna outsource to use and then replicate and desiign/infuse with its creativity like scroll aniamtion, transitioning etc instead of always choosing to create, it would look unprofessional and unrealistic, i do se the resememblence of a clock in this section but still, not as nice. the section aft this, the design is a little weired, like its good as u hover and it highlights effects and text, but the desing/images it use is weired, u can see urself, idk what is the square like thing suppose to represent. the sepification section, it could be represented and design better for user experience, rn its just like a generic table. the rest is not too bad, it is ahs meaningful interactivty, nice images sourced and quite decent desing, they dont have unique animations but have minimalistic ones, tho some text are a little hard to read since they all use somewhat the same font, font type and stuff, not much highlighting especially with icons, do wish it uses more explicit designs like nice tables, cards, slideshow or anything beaytifylly creative to tailor to ux than just putting it on text. the colour scheme i odnt really like but is personal preference. overall quite decent ig, is like a tie between the prev version because it has more meaningful unqiue interaction b ut execution not what i hope, especially it trying to create its own prop etc
+
+**Feedback on the control:** same verdict as previous, smooth, clean, minimal, no images or anyhthing, those professional website with minimal animation ands tuff, but it has become such a common website design
+
+**Summary:** worst thing about winner is ugly execution, some images/design are not easily understandable, animations i would say pretty good as recommended, urm some content can be design more tailor for ux and more unqiue and helpful. best thing about the loser is colour scheme ig. urm do wanna point out that dreative one usually only trhat certain scorell animation/transitiion, would bne nicer to have unique and different once like creative transtioning from different sections like zoom out or blend all those ambitious once
