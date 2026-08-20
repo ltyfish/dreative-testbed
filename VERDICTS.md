@@ -20,13 +20,13 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| caliber-movement | 3 | 0 | 0 |
+| caliber-movement | 4 | 0 | 0 |
 | civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **16** | **8** | **1** |
+| **Total** | **17** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -648,3 +648,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** same remark is before, its ececuting of the caliber iss ugly tho. ya jsut clean, minimal, professional, but not as nice as design A
 
 **Summary:** worst thing about winner, is concerning that it used svg and nt sourced real models/render wit photo and stuff, i thought it would nvr fall back. best thing about the loser is probably the smooth animation i guess, but not as good as design A
+
+## caliber-movement — 2026-08-20
+
+- with:    `caliber-movement__with__202608201159`
+- without: `caliber-movement__without__202608201159`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** still abit concerning, it still uses  svg and didnt source. and i also kinda feel like previous design was way btr, this doesnt have imkagery or anything,its mainly svg and almost everything svg, which looks kinda unprofessional. ther eis unique animation where like it feels like its powering due to text vibration but thats all, not much transition too. some section can be done btw like the four layers, nice interactivity but lack nicer design, looks sought of like design A for this seciton. and i feel it drop back to ugly table with specification and data where it could display nicer with btr representation/unique creative ones lke slide show, animating cards, revealing etc.. some section pure plane too, just bold text n stuff. and it uses alot of the same svg just diferent colour, no imagers, no outsourced seen, nothing much unqiue, transitioning or animation
+
+**Feedback on the control:** same remark as last verdict, plain, boring, minimalistic, nothing much, tho it kinda executed wrong not gonna lie, is not visually working for soem seciton
+
+**Summary:** i would give design B the winner solely because design A sucks, but B needs alot of improvements, i see alot of loop holes, worst thing is it is falling back to svg and using it extensively, transitioning is barely, not much unique design and animation, plain tables etc, and i just see alot fo potential for design B but it fails to meet my expectations. best thign about loser is urm, is slightly less simplier looking at first glance i guess

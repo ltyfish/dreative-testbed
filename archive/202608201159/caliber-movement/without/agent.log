@@ -1,0 +1,55 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608201159
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by reading the existing content.
+  → Bash
+
+  → Bash
+Now I'll build the page. Starting with `App.jsx`.
+  → Bash
+Heredoc got mangled by the shell; I'll use the Write tool instead.
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608201159\src\App.jsx
+Now the stylesheet.
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608201159\src\styles.css
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608201159\src\styles.css
+
+  → Bash
+Built and verified — `npm run build` succeeds, nothing committed.
+
+**The page, in order:**
+
+1. **Sticky bar** — wordmark, section nav, Reserve link.
+2. **Hero** — the escape-wheel sentence as the headline, the run-of-200 line under it, and four figures (72 h / 2.5 Hz / 214 / 200) on a hairline rule. Behind it, a hand-drawn SVG plate mark: concentric circles, 60 index ticks, six jewel dots, rotating once every ~4½ minutes (stopped under `prefers-reduced-motion`).
+3. **01 · How the energy travels** — the six stages as a vertical rail with a blued-steel gradient line and a node per stage that fills as it scrolls into view. Name + detail on the left, the figure set apart on the right against a rule. Order is untouched.
+4. **02 · Four layers, front to back** — the four plates drawn *to scale* as a sticky stack whose band heights are proportional to 0.9 / 1.4 / 0.8 / 0.7mm and sum to the caliber's 3.8mm height (labelled as such). Hovering a band or its note links the two.
+5. **03 · Specification** — all ten rows, two columns, dotted leaders, tabular figures.
+6. **04 · Three finishes** — three panels with description, CHF price, delivery date in brass, and remaining allocation as a count plus a bar scaled against the largest. "Select this finish" writes straight into the reservation form's select.
+7. **05 · The workshop** — the five facts, numbered, on a slightly lifted panel.
+8. **06 · Reserve** — the non-binding/no-payment statement beside the form. The form carries a live summary line of the chosen finish, price and delivery date; the confirmation names all three plus the buyer's name and email.
+9. **Footer** — copyright, enquiries address, the three links.
+
+**Visual system:** near-black graphite with German-silver ink, hairline rules throughout, blued steel as the only active colour (rail, nodes, selected finish, focus) and brass reserved for dates and jewels. Serif for language and figures, a tight uppercase grotesque for labels and data.
+
+Every required fact is preserved verbatim — the six stages in energy order, the four layers with thicknesses and notes, all ten spec rows, all three prices/dates/allocations, all five workshop facts, the form and its confirmation, and the non-binding statement.
