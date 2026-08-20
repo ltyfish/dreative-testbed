@@ -20,13 +20,13 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| caliber-movement | 2 | 0 | 0 |
+| caliber-movement | 3 | 0 | 0 |
 | civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **15** | **8** | **1** |
+| **Total** | **16** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -627,3 +627,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** same verdict as previous, smooth, clean, minimal, no images or anyhthing, those professional website with minimal animation ands tuff, but it has become such a common website design
 
 **Summary:** worst thing about winner is ugly execution, some images/design are not easily understandable, animations i would say pretty good as recommended, urm some content can be design more tailor for ux and more unqiue and helpful. best thing about the loser is colour scheme ig. urm do wanna point out that dreative one usually only trhat certain scorell animation/transitiion, would bne nicer to have unique and different once like creative transtioning from different sections like zoom out or blend all those ambitious once
+
+## caliber-movement — 2026-08-20
+
+- with:    `caliber-movement__with__202608200434`
+- without: `caliber-movement__without__202608200434`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** wooo so nice, however, i think it fell back to doing svg instead of sourcing,rendering and stuff, so thats a problem. its genuinely clean and professional, not much transition but not bad for recommended, the icons, images are well sourced and sued, interactions are meanigful like when u choose finishes, it highlights chosen andadd into the required field, and  images are nicely souirced, table looks nicer, one of the section where is 3d blocks, looks wrongly placed but still ok. minimal design but smooth tho, quite unique and interesting, tho it creating svg is concerning
+
+**Feedback on the control:** same remark is before, its ececuting of the caliber iss ugly tho. ya jsut clean, minimal, professional, but not as nice as design A
+
+**Summary:** worst thing about winner, is concerning that it used svg and nt sourced real models/render wit photo and stuff, i thought it would nvr fall back. best thing about the loser is probably the smooth animation i guess, but not as good as design A

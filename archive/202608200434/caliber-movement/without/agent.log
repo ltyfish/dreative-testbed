@@ -1,0 +1,55 @@
+$ claude (claude)
+
+Work in the project at C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/caliber-movement__without__202608200434
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by reading the project files.
+  → Bash
+
+  → Bash
+Now I'll design and build. Plan: a dark, instrument-like page — hero → power path (energy flow, 6 stages) → layer stack (thicknesses drawn to scale, sums to the 3.8mm spec height) → specification → finishes → workshop → reservation.
+  → Bash
+Heredoc got mangled by the shell; using Write instead.
+  → Write C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/caliber-movement__without__202608200434/src/App.jsx
+Now the stylesheet and the font links.
+  → Write C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/caliber-movement__without__202608200434/src/styles.css
+
+  → Bash
+Built. `npm run build` succeeds (dist emitted, no warnings).
+
+**What I decided**
+
+The page is ordered the way a collector actually evaluates a movement: what it is → how it works → how it's built → what it measures → what it costs → who makes it → reserve.
+
+1. **Sticky header** — maker, reference, section nav, standing Reserve link, so the buying action is never more than one click away during a long read.
+2. **Hero** — name, the run-of-200 line, the 72-hour lede, four headline figures in a hairline grid, and an SVG balance wheel that oscillates (stilled under `prefers-reduced-motion`). It's the one image on the page and it's the part of the movement you'd actually watch.
+3. **01 Power path** — the six stages as a numbered ledger in energy order, each row: index, name, detail line, and its figure set right in mono. Hovering lights a brass rail down the row.
+4. **02 Construction** — the four layers front-to-back, each with its thickness bar drawn to scale against the thickest (1.4mm main plate), so the stack visibly sums to the 3.8mm spec height. Hover/focus marks the active layer.
+5. **03 Specification** — all ten rows as a two-column datasheet with dotted leaders, labels in serif, values in mono.
+6. **04 Finishes** — three cards with exact CHF prices, delivery dates, and remaining allocation, plus an allocation bar that makes 12-of-run read as scarce against 41. "Choose this finish" sets the form selection and scrolls to it, so the card and the form aren't two disconnected decisions.
+7. **05 Workshop** — the five facts in a grid; the indefinite-servicing commitment takes the full-width final cell on its own, since it's the one that matters most at this price.
+8. **06 Reserve** — the not-binding/no-payment statement sits in the section header, above the form rather than buried under it. A live mono summary line restates the chosen finish, price, delivery, and remaining allocation before you submit. The confirmation names all three.
+9. **Footer** — enquiries mail, the three link labels, copyright.
+
+**Language:** near-black ground with a faint brass wash, Newsreader serif for prose, IBM Plex Mono for anything measured — the split does the work of distinguishing claim from figure. Brass is used only for indices, figures, and the reserve action.
+
+Content is unchanged: same stage order, same layer order, all ten spec rows, all three finishes with exact prices/dates/allocations, all five workshop facts. I added `mm` to each layer (the same number as its `thickness` string) purely to draw the bars, and kept every `data-stage` / `data-layer` / `data-config` hook. Nothing committed.

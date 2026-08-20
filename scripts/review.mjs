@@ -69,21 +69,21 @@ function sweepCleared() {
 
 function loadPairs() {
   if (!fs.existsSync(RUNS)) return []
-  const runs = fs
+  const live = fs
     .readdirSync(RUNS)
     .filter((d) => {
       const dir = path.join(RUNS, d)
       return fs.statSync(dir).isDirectory() && fs.existsSync(path.join(dir, 'run.json'))
     })
     .map((d) => ({ dir: d, meta: readJson(path.join(RUNS, d, 'run.json'), null) }))
-    .filter((r) => r.meta && fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png')))
+    .filter((r) => r.meta)
     // A round that has been archived is done, whether or not Windows let go of its
     // directories. The marker is what retires it — leftover folders must never reappear
     // as something still waiting to be scored.
     .filter((r) => !clearedRounds().includes(r.meta.seq))
 
   const byScenario = new Map()
-  for (const r of runs) {
+  for (const r of live) {
     if (!byScenario.has(r.meta.scenario)) byScenario.set(r.meta.scenario, [])
     byScenario.get(r.meta.scenario).push(r)
   }
@@ -93,13 +93,18 @@ function loadPairs() {
     // Both sides must come from the same round. Taking the newest of each arm
     // independently silently pairs this round's "with" against a previous round's
     // "without" whenever one arm is missing — a comparison of two different experiments.
-    const rounds = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()
-    const seq = rounds.find(
-      (s) => list.some((r) => r.meta.seq === s && r.meta.arm === 'with') && list.some((r) => r.meta.seq === s && r.meta.arm === 'without'),
-    )
+    //
+    // And only ever the newest round for this scenario. Searching backwards for the newest
+    // round that happens to be fully captured meant a cancelled run did not leave the
+    // scenario empty: it quietly re-served a pair from weeks ago, under that older round's
+    // number, as if it were what you had just run. A round you interrupted has nothing to
+    // judge — say nothing rather than answer with the wrong round.
+    const seq = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()[0]
     if (!seq) continue
-    const withArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'with')
-    const withoutArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'without')
+    const captured = (r) => fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png'))
+    const withArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'with' && captured(r))
+    const withoutArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'without' && captured(r))
+    if (!withArm || !withoutArm) continue
 
     const assignments = readJson(ASSIGN_FILE, {})
     const key = `${scenario}::${withArm.dir}::${withoutArm.dir}`

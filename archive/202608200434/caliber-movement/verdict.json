@@ -1,0 +1,22 @@
+{
+  "scenario": "caliber-movement",
+  "judgedAt": "2026-08-20T05:49:18.377Z",
+  "runs": {
+    "with": "caliber-movement__with__202608200434",
+    "without": "caliber-movement__without__202608200434"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "with",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "with": "wooo so nice, however, i think it fell back to doing svg instead of sourcing,rendering and stuff, so thats a problem. its genuinely clean and professional, not much transition but not bad for recommended, the icons, images are well sourced and sued, interactions are meanigful like when u choose finishes, it highlights chosen andadd into the required field, and  images are nicely souirced, table looks nicer, one of the section where is 3d blocks, looks wrongly placed but still ok. minimal design but smooth tho, quite unique and interesting, tho it creating svg is concerning",
+    "without": "same remark is before, its ececuting of the caliber iss ugly tho. ya jsut clean, minimal, professional, but not as nice as design A"
+  },
+  "summary": "worst thing about winner, is concerning that it used svg and nt sourced real models/render wit photo and stuff, i thought it would nvr fall back. best thing about the loser is probably the smooth animation i guess, but not as good as design A"
+}

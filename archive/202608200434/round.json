@@ -1,0 +1,71 @@
+{
+  "round": "202608200434",
+  "archivedAt": "2026-08-20T05:58:34.184Z",
+  "scenarios": [
+    "caliber-movement"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "arms": [
+    "with",
+    "without"
+  ],
+  "sessions": [
+    {
+      "runName": "caliber-movement__with__202608200434",
+      "code": 0,
+      "minutes": 26.5,
+      "timedOut": false,
+      "reads": {
+        "skillFilesRead": {
+          "exemplars/MATERIALS.md": 1,
+          "exemplars/PRINCIPLES.md": 1,
+          "exemplars/SLOP.md": 1,
+          "references/CREATIVE_DIRECTION.md": 1,
+          "references/MEDIA_SOURCES.md": 1,
+          "references/VISUAL_REFINEMENT.md": 1,
+          "skills/3d.md": 1,
+          "skills/interaction.md": 1,
+          "skills/mobile.md": 1,
+          "skills/motion.md": 1,
+          "skills/refined.md": 1,
+          "skills/ux.md": 1
+        },
+        "toolCalls": {
+          "Bash": 54,
+          "Read": 25,
+          "Write": 2,
+          "Skill": 1,
+          "Edit": 1
+        }
+      }
+    },
+    {
+      "runName": "caliber-movement__without__202608200434",
+      "code": 0,
+      "minutes": 5,
+      "timedOut": false,
+      "reads": {
+        "skillFilesRead": {},
+        "toolCalls": {
+          "Bash": 4,
+          "Write": 2
+        }
+      }
+    }
+  ],
+  "runs": [
+    {
+      "runName": "caliber-movement__with__202608200434",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "caliber-movement__without__202608200434",
+      "ok": true,
+      "site": true
+    }
+  ]
+}
