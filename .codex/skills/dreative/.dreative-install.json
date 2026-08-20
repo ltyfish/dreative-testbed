@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "codex",
-  "installedAt": "2026-08-20T04:33:13.277Z",
+  "installedAt": "2026-08-20T11:46:39.379Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -23,14 +23,14 @@
     "exemplars/PRINCIPLES.md": "a91610dd5861017b91930215ed15ec9b8ee1e46da79538aab9b51eca7b6bf335",
     "exemplars/README.md": "55913bba8816a39c27ac9a0b706792f1f0db4f17bec80a26510ca07b8e138786",
     "exemplars/SLOP.md": "c8b5f6579cedbf840b227e5fbc51081d51e0af46ceb16ea02f5fbdee4c607c06",
-    "frameworks/nextjs.md": "71e3be2691576c2eece3c03430d07a7a28bfa7dce36d094a67661ed0cb19dca3",
-    "frameworks/react-vite.md": "36d0ac84cbcb408588e27f6c47e2731edebdcc1965b4268d5015c61a5f7bd225",
-    "frameworks/styling.md": "7edbcb063e426e307a879decdaeebe98af493b4e323556ab2e76da6cabe3a1c4",
-    "frameworks/sveltekit.md": "96e134e62454d2aac31da16bc8a4c6c8cb02f9c586ac7b2f7847bcf653a82f0c",
-    "frameworks/vue-nuxt.md": "38544b0e1f3f8917c0e832502567b8820ebbc06a9f5ccd51789387f99044be0a",
+    "frameworks/nextjs.md": "7b555b5d9d0e409a2a8833a43b48a9062f6c6f7b8a5966601ccbcea49d1e7c50",
+    "frameworks/react-vite.md": "2f62116954dd44036d360ecd768636f0b26c2f80759ab393f91379a9430d4605",
+    "frameworks/styling.md": "da3b685ad7dfa19fade81f1b4fb152181b0159fbf435e16520a1c08c799405cd",
+    "frameworks/sveltekit.md": "684e49573f3c6b128358a2c02cb3b49dfefb494dd4f583f0c49888c5a224d78d",
+    "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "a5fe3a5d3c8122a9acb31cb69d53803686d509867cc9d85d3f7574dcd70b9856",
     "PLAN.md": "6d9ffff25a0f0ef13e4da2cb56671d6a12afb44237ba171cf5ee8d69168767d5",
-    "references/ASSET_PIPELINES.md": "1d0f211fc3b09cf611c329160606e73af3a5ab0f19fedaa315f2e890f3d3e020",
+    "references/ASSET_PIPELINES.md": "2996014a6018a0be08124904625d4b4294442417b5cafc85bb23e8d56b07fe8b",
     "references/CREATIVE_DIRECTION.md": "4f8a28cddc5e9318dff4743feab4baad9e0c77995a9f2dfbb7fb9c16751bca8b",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
     "references/DOGFOOD_LESSONS.md": "84e23b6b4c8cbeff7fa016784da22bfe8e662c8d558e58b245161f7123aa964a",
@@ -44,7 +44,7 @@
     "schemas/experience-map.schema.json": "853c09f5a8dcfc14285907a59f34f5c7bb9ded38da644afe563ea68b5c8edef4",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
     "schemas/showcase-mechanism.schema.json": "1220f6b2b2b079c66ab792d19d97551c29234976caf7faa034e3cd6016bbbc58",
-    "SKILL.md": "bc5cb452c76ae23b742b4c1b3eea59aedfdfa454051b57b4ac7565bda86e4ad2",
+    "SKILL.md": "d164bdbbd46de0d0148922664693438714294cd120984a51ab504e27f193dacc",
     "skills/3d.md": "b5001d55e7357b568d017eeaf51c47a90790f79e9af97c04996c6c8ea2a6c21d",
     "skills/cinematic.md": "f567b238636227bf55ee8febba0bdc68c846dd4a80bde49bb0b9606d4a56e1bc",
     "skills/experimental.md": "18e5dfc0086baa1ac4db6b3456db3b34df2eeec4a623e52e8cffe6a217fc85c5",
@@ -62,5 +62,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "644a1cbbca5acf24faee71aa92d1674e0b82829cdb70a7a5993f72f6e9f56106"
+  "manifestHash": "2d957153152c61cd78a88258dfcd2bb74cb3b695c626507f7a775f1b7e85340f"
 }
