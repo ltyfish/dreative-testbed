@@ -51,7 +51,13 @@ function roundSummary(round) {
   const info = readJson(path.join(ARCHIVE, round, 'round.json'), {})
   const scenarios = (info.scenarios ?? []).map((scenario) => {
     const dir = path.join(ARCHIVE, round, scenario)
-    const arms = ['with', 'without'].map((arm) => {
+    // Whatever was archived, in a stable order: the two arms first, then any repeats.
+    // Hard-coding ['with','without'] hid every extra run of a variance round.
+    const order = (name) => (name === 'with' ? 0 : name === 'without' ? 1 : 2)
+    const names = (fs.existsSync(dir) ? fs.readdirSync(dir) : [])
+      .filter((f) => fs.statSync(path.join(dir, f)).isDirectory())
+      .sort((a, b) => order(a) - order(b) || a.localeCompare(b))
+    const arms = (names.length ? names : ['with', 'without']).map((arm) => {
       const armDir = path.join(dir, arm)
       return {
         arm,
@@ -155,7 +161,8 @@ function roundPage(round) {
   const armCol = (scenario, a) => {
     const base = `/f/${encodeURIComponent(round)}/${encodeURIComponent(scenario)}/${a.arm}`
     if (!a.exists) return `<div class="col"><span class="tag">${a.arm} — not archived</span></div>`
-    const label = a.arm === 'with' ? 'WITH Dreative' : 'CONTROL — no skill'
+    const base_label = a.meta?.arm === 'without' || a.arm === 'without' ? 'CONTROL — no skill' : 'WITH Dreative'
+    const label = a.meta?.label ? `${base_label} · ${String(a.meta.label).toUpperCase()}` : base_label
     const links = [
       a.site ? `<a class="btn" href="/site/${encodeURIComponent(round)}/${encodeURIComponent(scenario)}/${a.arm}/" target="_blank" rel="noopener">Open site ↗</a>` : '',
       a.log ? `<a class="btn" href="${base}/agent.log" target="_blank" rel="noopener">Transcript</a>` : '',

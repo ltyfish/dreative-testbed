@@ -57,7 +57,10 @@ export function archiveRun(runName, roundDir, log = console.log) {
   const meta = readJson(path.join(runDir, 'run.json'))
   if (!meta) return { runName, ok: false, error: 'no run.json' }
 
-  const dest = path.join(roundDir, meta.scenario, meta.arm)
+  // Repeats of one arm (--repeat N) are different runs and must not share a folder.
+  // Keyed on the arm alone, r2 overwrote r1 and the round archived one design where
+  // two were built.
+  const dest = path.join(roundDir, meta.scenario, meta.label ? `${meta.arm}__${meta.label}` : meta.arm)
   fs.mkdirSync(dest, { recursive: true })
 
   // Sources: what the agent actually produced, readable without building anything.

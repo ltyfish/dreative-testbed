@@ -2,11 +2,11 @@
   "scenario": "caliber-movement",
   "arm": "with",
   "seq": "202608220534",
-  "label": "r2",
+  "label": "r1",
   "direction": "recommended",
   "product": "Aubry & Vent — Caliber 08",
   "field": "Luxury hardware · mechanical horology",
-  "runName": "caliber-movement__with__202608220534__r2",
-  "site": false,
-  "archivedAt": "2026-08-22T05:51:49.689Z"
+  "runName": "caliber-movement__with__202608220534__r1",
+  "site": true,
+  "archivedAt": "2026-08-22T09:44:07.652Z"
 }

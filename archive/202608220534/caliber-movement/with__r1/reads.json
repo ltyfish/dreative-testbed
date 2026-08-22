@@ -1,0 +1,19 @@
+{
+  "skillFilesRead": {
+    "exemplars/MATERIALS.md": 2,
+    "exemplars/PRINCIPLES.md": 2,
+    "exemplars/SLOP.md": 2,
+    "PLAN.md": 1,
+    "references/CREATIVE_DIRECTION.md": 2,
+    "references/MEDIA_SOURCES.md": 1,
+    "skills/3d.md": 2,
+    "skills/motion.md": 2
+  },
+  "toolCalls": {
+    "Bash": 25,
+    "Edit": 11,
+    "Read": 6,
+    "Write": 4,
+    "Skill": 1
+  }
+}
