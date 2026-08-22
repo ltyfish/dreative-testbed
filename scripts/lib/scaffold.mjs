@@ -124,6 +124,13 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
     }
     const agents = path.join(ROOT, 'AGENTS.md')
     if (fs.existsSync(agents)) fs.cpSync(agents, path.join(runDir, 'AGENTS.md'))
+
+    // Enforce the read-once rule the skill only states. See scripts/hooks/read-once.mjs
+    // for why this is a harness instrument rather than shipped behaviour. It guards paths
+    // under skills/dreative only, so it is inert for anything the run legitimately reads.
+    const settings = { hooks: { PreToolUse: [{ matcher: 'Read', hooks: [{ type: 'command', command: `node "${path.join(ROOT, 'scripts', 'hooks', 'read-once.mjs').replace(/\\/g, '/')}"` }] }] } }
+    fs.mkdirSync(path.join(runDir, '.claude'), { recursive: true })
+    fs.writeFileSync(path.join(runDir, '.claude', 'settings.json'), JSON.stringify(settings, null, 2), 'utf8')
   }
 
   const prompt = buildPrompt(meta, arm, runDir, direction)
