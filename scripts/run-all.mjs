@@ -7,6 +7,7 @@
 //   node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs
 //   node scripts/run-all.mjs --concurrency 2 --model opus
 //   node scripts/run-all.mjs --agent codex
+//   node scripts/run-all.mjs --scenarios caliber-movement --arms with --repeat 2
 //
 // For each scenario and each arm it scaffolds an isolated project, spawns a headless
 // agent session with the brief already written, waits for all of them, then builds and
@@ -41,7 +42,7 @@ const ALL_SCENARIOS = listScenarios()
 
 // Bare positional arguments, so a round is one short command: a number is how many
 // scenarios to run (chosen at random), a word is the direction.
-const VALUE_FLAGS = ['--agent', '--model', '--concurrency', '--timeout', '--arms', '--scenarios', '--direction', '--port']
+const VALUE_FLAGS = ['--agent', '--model', '--concurrency', '--timeout', '--arms', '--scenarios', '--direction', '--port', '--repeat']
 const tokens = process.argv.slice(2)
 const positional = tokens.filter((a, i) => !a.startsWith('--') && !VALUE_FLAGS.includes(tokens[i - 1]))
 const COUNT = positional.map(Number).find((n) => Number.isInteger(n) && n > 0) ?? null
@@ -57,6 +58,14 @@ const MODEL = arg('model', null)
 const CONCURRENCY = Number(arg('concurrency', 3))
 const TIMEOUT_MIN = Number(arg('timeout', 25))
 const ARMS = String(arg('arms', 'with,without')).split(',')
+// A variance check runs the SAME input more than once, so any difference between the
+// repeats is a property of the run rather than of the skill. Repeats are extra sessions
+// inside one round, tagged r1/r2/…, which is what lets variance.mjs diff them.
+const REPEAT = Number(arg('repeat', 1))
+if (!Number.isInteger(REPEAT) || REPEAT < 1) {
+  console.error('--repeat must be a positive integer')
+  process.exit(1)
+}
 const SKIP_CAPTURE = arg('no-capture', false)
 const SKIP_ARCHIVE = arg('no-archive', false)
 const YOLO = !arg('no-yolo', false)
@@ -242,11 +251,13 @@ const jobs = []
 
 for (const scenario of SCENARIOS) {
   for (const arm of ARMS) {
-    try {
-      jobs.push(scaffoldRun({ scenario, arm, seq: roundStamp, direction }))
-    } catch (err) {
-      console.error(`could not scaffold ${scenario}/${arm}: ${err.message}`)
-      process.exit(1)
+    for (let rep = 1; rep <= REPEAT; rep++) {
+      try {
+        jobs.push(scaffoldRun({ scenario, arm, seq: roundStamp, direction, label: REPEAT > 1 ? `r${rep}` : undefined }))
+      } catch (err) {
+        console.error(`could not scaffold ${scenario}/${arm}: ${err.message}`)
+        process.exit(1)
+      }
     }
   }
 }
@@ -256,7 +267,7 @@ console.log(`  agent        ${AGENT}${MODEL && MODEL !== true ? ` (${MODEL})` : 
 console.log(`  permissions  ${YOLO ? 'FULL BYPASS + network (default; --no-yolo to scope)' : 'acceptEdits + scoped tools + network'}`)
 console.log(`  direction    ${direction ?? 'unstated (the skill will fall back to Recommended)'}${requested === 'random' ? ' (picked at random)' : ''}`)
 console.log(`  scenarios    ${SCENARIOS.join(', ')}${COUNT !== null ? ` (${COUNT} picked at random)` : ''}`)
-console.log(`  arms         ${ARMS.join(', ')}`)
+console.log(`  arms         ${ARMS.join(', ')}${REPEAT > 1 ? `  ×${REPEAT} repeats of the same input` : ''}`)
 console.log(`  sessions     ${jobs.length}, ${CONCURRENCY} at a time, ${TIMEOUT_MIN}m cap each`)
 console.log(`  runs         ${path.relative(ROOT, RUNS)}/\n`)
 console.log("Nothing to paste. Progress goes to each run's agent.log.\n")
@@ -324,6 +335,7 @@ const roundMeta = {
   direction,
   scenarios: SCENARIOS,
   arms: ARMS,
+  repeat: REPEAT,
   sessions,
 }
 
@@ -334,6 +346,12 @@ fs.writeFileSync(path.join(RUNS, `round-${roundStamp}.json`), JSON.stringify(rou
 // runs/ is disposable and gitignored. The archive is the copy that gets committed and
 // survives a pull on another machine, so it happens now, while node_modules is still
 // linked and the sites can still be built.
+
+if (REPEAT > 1) {
+  console.log(`
+This was a ×${REPEAT} variance round. Compare what the repeats read:
+  node scripts/variance.mjs`)
+}
 
 if (!SKIP_ARCHIVE) {
   console.log('\nArchiving round…')

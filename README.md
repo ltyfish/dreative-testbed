@@ -44,9 +44,24 @@ node scripts/run-all.mjs --model opus            # default: your CLI default
 node scripts/run-all.mjs --agent codex           # default claude
 node scripts/run-all.mjs --timeout 40            # minutes per session, default 25
 node scripts/run-all.mjs --arms with             # re-run one arm only
+node scripts/run-all.mjs --repeat 2              # same input twice — variance check
 node scripts/run-all.mjs --no-yolo               # scoped permissions instead of full bypass
 node scripts/run-all.mjs --no-archive            # do not write to archive/
 ```
+
+### Variance check
+
+`--repeat N` runs the same scenario N times inside one round, tagged `r1`, `r2`, …
+Nothing differs between the repeats, so anything that does differ is a property of the
+run and not of the skill. Skip the control — it has no skill installed and reads nothing:
+
+```sh
+node scripts/run-all.mjs --scenarios caliber-movement --arms with --repeat 2
+node scripts/variance.mjs
+```
+
+`variance.mjs` tables what each repeat opened and says whether read selection was stable.
+If it was not, a single round's read count is not evidence for anything.
 
 Both a bare number (how many scenarios) and a bare direction word work positionally, so a
 round is one short command. Anything you do not state falls back to: all six scenarios,
