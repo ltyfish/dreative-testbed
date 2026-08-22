@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "claude",
-  "installedAt": "2026-08-22T10:34:22.130Z",
+  "installedAt": "2026-08-22T11:01:25.884Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -50,7 +50,7 @@
     "skills/immersive.md": "3c0660f73c4860896e37133b24c60dd399608f010d7fc04163655ae76e416976",
     "skills/interaction.md": "1e91a77dffb302461ce876295b112bb5beba8c4557008879725eab49d7e8f01a",
     "skills/learning.md": "ade5f33fa6b1cde36f8e4fc3b037e1d3cc1a75aaa64b1ff03d415fa07916afb3",
-    "skills/media.md": "9685fc57c25bed03456960270b92cab2275c7b19920762ed63365323fcd7f887",
+    "skills/media.md": "579be0cb221c32a3e2be4b7997a79f2c1fded362ce974d87657ee9b790a2bc7b",
     "skills/mobile.md": "ca95fda08187934003180165fdbc16d3f028a6761906d2bb390627304eff1292",
     "skills/motion.md": "e6e0cf9903ffaf9d9d72a2a4a217f9d343cb77435c23a2b908442c9a1729796c",
     "skills/refined.md": "7d148a655dbf52e24618a8cd9991d6ba4fe9ec8b812a96ef3af9a7618e757918",
@@ -61,5 +61,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "9ba88758ab3a7a747ec90717cc177fd2f3085f0849205dad9bd5ec1cf4d61e1e"
+  "manifestHash": "5850e661c6590a375232443180828a43ae95c6bc987fdf569558e84de19d91ef"
 }
