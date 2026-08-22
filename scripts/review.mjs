@@ -171,12 +171,17 @@ function loadSolos(pairs) {
   const solos = []
   for (const [scenario, list] of byScenario) {
     if (blinded.has(scenario)) continue
-    const seq = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()[0]
+    // Not just the newest round. `--repeat 1` run twice makes two rounds of one run each
+    // — the same experiment split in half — and taking only the newest silently hid the
+    // first half. Everything still in runs/ is live work by definition: a finished round
+    // is archived and cleared, so nothing stale can surface here. There is no verdict on
+    // this page and every column names its own round, so there is nothing to confuse.
     // A run whose build broke has no screenshot, but it is still the most informative
     // thing in the round — hiding it is how a session that was killed mid-edit silently
     // disappears from the only page anyone opens.
-    const runs = list.filter((r) => r.meta.seq === seq && !used.has(r.dir) && (isCaptured(r) || buildFailure(r.dir)))
+    const runs = list.filter((r) => !used.has(r.dir) && (isCaptured(r) || buildFailure(r.dir)))
     if (!runs.length) continue
+    const seq = [...new Set(runs.map((r) => r.meta.seq))].sort().reverse()[0]
     let info = {}
     try {
       info = readScenario(scenario)
@@ -196,7 +201,15 @@ function loadSolos(pairs) {
 }
 
 /** r1 / r2 for a variance round, otherwise which arm it was. */
-const runLabel = (run) => (run.meta.label ? String(run.meta.label).toUpperCase() : run.meta.arm === 'with' ? 'WITH DREATIVE' : 'CONTROL')
+/**
+ * r1/r2 inside one round; otherwise the round itself, because when a view spans rounds
+ * that is what actually differs between the columns. Falls back to the arm.
+ */
+const runLabel = (run, spansRounds) => {
+  if (spansRounds) return run.meta.label ? `${run.meta.seq} · ${String(run.meta.label).toUpperCase()}` : String(run.meta.seq)
+  if (run.meta.label) return String(run.meta.label).toUpperCase()
+  return run.meta.arm === 'with' ? 'WITH DREATIVE' : 'CONTROL'
+}
 
 function buildFailure(runDir) {
   const p = path.join(RUNS, runDir, 'build-error.log')
@@ -573,11 +586,12 @@ function tabStrip(pairs, solos, current) {
  * criteria are written as with-vs-control questions and do not mean anything here.
  */
 function viewPage(pairs, solos, view) {
+  const spansRounds = new Set(view.runs.map((r) => r.meta.seq)).size > 1
   const cols = view.runs
     .map(
       (run) => `<div class="col">
       <div class="tagrow">
-        <span class="tag">${esc(runLabel(run))}</span>
+        <span class="tag">${esc(runLabel(run, spansRounds))}</span>
         ${buildFailure(run.dir) ? '' : `<a class="livebtn" href="/liverun/${encodeURIComponent(run.dir)}" target="_blank" rel="noopener">Open live ↗</a>`}
       </div>
       ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
@@ -598,11 +612,14 @@ function viewPage(pairs, solos, view) {
     )
     .join('')
 
-  const repeats = view.runs.length > 1 && view.runs.every((r) => r.meta.label)
+  // Repeats of one input, whether they came from one `--repeat 2` round or from
+  // `--repeat 1` run twice. Both are the same experiment and read the same way.
+  const repeats = view.runs.length > 1 && (spansRounds || view.runs.every((r) => r.meta.label))
+  const rounds = [...new Set(view.runs.map((r) => r.meta.seq))].sort()
 
   return `<!doctype html><meta charset="utf-8"><title>View — ${esc(view.scenario)}</title><style>${STYLE}</style>
 <header>
-  <div><h1>View only <span class="sub">· round ${esc(view.seq)}</span></h1>
+  <div><h1>View only <span class="sub">· ${rounds.length > 1 ? `rounds ${esc(rounds.join(' + '))}` : `round ${esc(view.seq)}`}</span></h1>
     <div class="sub">Not a blind comparison — there is nothing here to score against. ${
       ARCHIVE_PORT ? `Past rounds: <a href="http://127.0.0.1:${ARCHIVE_PORT}" target="_blank" rel="noopener">archive ↗</a>` : ''
     }</div></div>
@@ -617,7 +634,9 @@ function viewPage(pairs, solos, view) {
     <h3>${repeats ? `${view.runs.length} repeats of the same input` : `${view.runs.length} run(s), no control to compare against`}</h3>
     <p>${
       repeats
-        ? 'Same scenario, same direction, same skill — the only variable is the run itself. What differs between these is variance, not a design decision. Compare what each one read: <code>node scripts/variance.mjs</code>'
+        ? `Same scenario, same direction, same skill — the only variable is the run itself. What differs between these is variance, not a design decision.${
+            spansRounds ? ' They came from separate rounds, which is the same experiment split in half.' : ''
+          } Compare what each one read: <code>node scripts/variance.mjs${spansRounds ? ` ${rounds.join(' ')}` : ''}</code>`
         : 'This round was run with one arm, so the six criteria — all of them written as with-versus-control questions — do not apply. Nothing is saved from this page.'
     }</p>
   </div>

@@ -14,37 +14,77 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { RUNS } from './lib/scaffold.mjs'
 
-const wanted = process.argv[2]
+const wanted = process.argv.slice(2).filter((a) => /^\d+$/.test(a))
 const rounds = fs
   .readdirSync(RUNS)
   .filter((f) => /^round-\d+\.json$/.test(f))
   .sort()
-const file = wanted ? `round-${wanted}.json` : rounds.at(-1)
 
-if (!file || !fs.existsSync(path.join(RUNS, file))) {
-  console.error(wanted ? `no such round: ${wanted}` : 'no rounds in runs/ yet')
-  process.exit(1)
+const load = (id) => {
+  const file = path.join(RUNS, `round-${id}.json`)
+  if (!fs.existsSync(file)) {
+    console.error(`no such round: ${id}`)
+    process.exit(1)
+  }
+  return JSON.parse(fs.readFileSync(file, 'utf8'))
 }
 
-const meta = JSON.parse(fs.readFileSync(path.join(RUNS, file), 'utf8'))
+const withSessions = (m) => (m.sessions ?? []).filter((s) => s.reads && s.runName.includes('__with__'))
+
+// A round that has been archived and cleared is retired. Walking into one would compare
+// this experiment against a superseded skill, which is exactly the mistake this script
+// exists to catch. Name it explicitly on the command line if you really want it.
+const clearedFile = path.join(RUNS, '.cleared-rounds.json')
+const cleared = new Set(fs.existsSync(clearedFile) ? JSON.parse(fs.readFileSync(clearedFile, 'utf8')) : [])
+
+// `--repeat 2` puts both runs in one round, but running `--repeat 1` twice makes two
+// rounds of one run each -- the same experiment, split in half. Walk back through the
+// live rounds until there are two comparable runs rather than reporting nothing.
+let metas
+if (wanted.length) {
+  metas = wanted.map(load)
+} else {
+  metas = []
+  for (const f of [...rounds].reverse()) {
+    const m = JSON.parse(fs.readFileSync(path.join(RUNS, f), 'utf8'))
+    if (cleared.has(String(m.round))) break
+    metas.unshift(m)
+    if (metas.reduce((n, x) => n + withSessions(x).length, 0) >= 2) break
+  }
+}
+if (!metas.length) {
+  console.error('no rounds in runs/ yet')
+  process.exit(1)
+}
+const meta = metas[metas.length - 1]
+const spansRounds = metas.length > 1
+
 // Only the "with" arm is comparable: the control has no skill installed, so its read
 // count is always zero and putting it in the table would fake a difference.
-const sessions = meta.sessions.filter((s) => s.reads && s.runName.includes('__with__'))
+const sessions = metas.flatMap((m) => withSessions(m).map((s) => ({ ...s, round: m.round })))
 
 if (sessions.length < 2) {
-  console.error(`round ${meta.round} has ${sessions.length} "with" session(s) to compare — nothing to compare`)
+  console.error(`${metas.map((m) => m.round).join(', ')} — only ${sessions.length} "with" session(s), nothing to compare`)
   console.error('Run a variance round:  node scripts/run-all.mjs --scenarios <name> --arms with --repeat 2')
   process.exit(1)
 }
 
-// caliber-movement__with__202608221530__r2  ->  r2
-const short = (name) => name.split('__').filter((p) => p !== meta.round).slice(2).join('__') || name.split('__')[1]
+// caliber-movement__with__<round>__r2 -> r2. When the comparison spans rounds the round
+// is what differs between the columns, so that is what the column is named.
+const short = (s) => {
+  const tail = s.runName.split('__').filter((p) => p !== s.round).slice(2).join('__')
+  if (spansRounds) return tail ? `${s.round}/${tail}` : String(s.round)
+  return tail || s.runName.split('__')[1]
+}
 const files = [...new Set(sessions.flatMap((s) => Object.keys(s.reads.skillFilesRead)))].sort()
 const col = Math.max(28, ...files.map((f) => f.length + 2))
 const pad = (s, n) => String(s).padEnd(n)
 
-console.log(`\nRound ${meta.round} · ${meta.direction ?? 'no direction'} · ${sessions.length} sessions\n`)
-console.log(pad('skill file', col) + sessions.map((s) => pad(short(s.runName), 16)).join(''))
+const heading = spansRounds ? `Rounds ${metas.map((m) => m.round).join(' + ')}` : `Round ${meta.round}`
+console.log(`\n${heading} · ${meta.direction ?? 'no direction'} · ${sessions.length} sessions`)
+if (spansRounds) console.log('Separate rounds, same input — compared as one experiment.')
+console.log()
+console.log(pad('skill file', col) + sessions.map((s) => pad(short(s), 16)).join(''))
 console.log('-'.repeat(col + sessions.length * 16))
 
 for (const f of files) {
