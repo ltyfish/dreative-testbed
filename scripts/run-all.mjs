@@ -318,7 +318,7 @@ if (SKIP_CAPTURE) {
   // Building and photographing an untouched seed produces five identical screenshots of
   // the starting point. Skip them — the health check already recorded why.
   const toCapture = jobs.map((j) => j.runName).filter((name) => !runHealth(name).untouched)
-  const shots = await captureMany(toCapture, 4173, log)
+  const shots = await captureMany(toCapture, 4173, log, direction ?? 'recommended')
   const broken = shots.filter((s) => !s.ok)
   if (broken.length) {
     console.log(`\n${broken.length} run(s) failed to build or capture:`)

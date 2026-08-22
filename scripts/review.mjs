@@ -15,6 +15,7 @@ import path from 'node:path'
 import { archiveRound, findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
 import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture.mjs'
 import { pairHealth } from './lib/health.mjs'
+import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
 import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
@@ -214,6 +215,18 @@ const runLabel = (run, spansRounds) => {
 function buildFailure(runDir) {
   const p = path.join(RUNS, runDir, 'build-error.log')
   return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null
+}
+
+// Dreative's own visual-smoke measurement, run by the harness against both arms after the
+// build. Shown because "nothing on this route moves" is the finding the eye keeps missing
+// in a still, and a screenshot cannot show it by construction. It is identical in kind for
+// both arms and names neither, so the review stays blind.
+function smokeNote(runDir) {
+  const smoke = readSmoke(path.join(RUNS, runDir))
+  if (!smoke) return null
+  if (smoke.ok === null) return { kind: 'warn', text: `Visual smoke could not run — ${smoke.error}` }
+  if (smoke.ok) return { kind: 'ok', text: `Visual smoke passed · ${smoke.checks.length} checks at ${smoke.profile}` }
+  return { kind: 'fail', text: `Visual smoke blocked · ${smoke.blockers.join(' · ')}` }
 }
 
 function captureWarnings(runDir) {
@@ -596,6 +609,7 @@ function viewPage(pairs, solos, view) {
       </div>
       ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
       ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
+      ${smokeNote(run.dir) ? `<div class="${smokeNote(run.dir).kind === 'fail' ? 'fail' : 'warn'}">${esc(smokeNote(run.dir).text)}</div>` : ''}
       ${!isCaptured(run) ? '' : `
       <div class="lbl">Desktop · 1440</div>
       <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="${esc(run.dir)} desktop">

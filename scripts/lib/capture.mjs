@@ -5,6 +5,7 @@ import fs from 'node:fs'
 import net from 'node:net'
 import path from 'node:path'
 import { RUNS } from './scaffold.mjs'
+import { measureSmoke, smokeAvailable, smokeUnavailableReason, writeSmoke } from './smoke.mjs'
 
 /**
  * Reserve a port the OS says is actually free.
@@ -88,7 +89,7 @@ export const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
 ]
 
-export async function captureRun(runName, port, log = console.log) {
+export async function captureRun(runName, port, log = console.log, profile = 'recommended') {
   const runDir = path.join(RUNS, runName)
   if (!fs.existsSync(runDir)) throw new Error(`no such run: ${runName}`)
 
@@ -215,6 +216,27 @@ export async function captureRun(runName, port, log = console.log) {
     }
 
     await browser.close()
+
+    // Measured here because the preview server is already up; a second build-and-serve
+    // cycle per run is pure cost. A blocked result is a finding about the run, so it is
+    // recorded rather than thrown — only a broken harness is reported as an error.
+    if (!smokeAvailable()) {
+      log(`[${runName}] visual smoke SKIPPED — ${smokeUnavailableReason()}`)
+    } else {
+      try {
+        const smoke = await measureSmoke(base, profile)
+        writeSmoke(runDir, { profile, ...smoke })
+        log(
+          smoke.ok
+            ? `[${runName}] visual smoke passed (${smoke.checks.length} checks)`
+            : `[${runName}] visual smoke BLOCKED: ${smoke.blockers.join(' | ')}`,
+        )
+      } catch (err) {
+        log(`[${runName}] visual smoke errored: ${err.message}`)
+        writeSmoke(runDir, { profile, ok: null, error: err.message, blockers: [], advisories: [], checks: [] })
+      }
+    }
+
     if (warnings.length) {
       fs.writeFileSync(path.join(runDir, '.captures', 'warnings.txt'), warnings.join('\n'), 'utf8')
     }
@@ -230,9 +252,9 @@ export async function captureRun(runName, port, log = console.log) {
   }
 }
 
-export async function captureMany(runNames, startPort = 4173, log = console.log) {
+export async function captureMany(runNames, startPort = 4173, log = console.log, profile = 'recommended') {
   const results = []
   let port = startPort
-  for (const name of runNames) results.push(await captureRun(name, port++, log))
+  for (const name of runNames) results.push(await captureRun(name, port++, log, profile))
   return results
 }
