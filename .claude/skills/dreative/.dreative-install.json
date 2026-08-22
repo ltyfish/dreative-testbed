@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "claude",
-  "installedAt": "2026-08-22T11:14:39.849Z",
+  "installedAt": "2026-08-22T18:15:56.717Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -43,7 +43,7 @@
     "schemas/experience-map.schema.json": "853c09f5a8dcfc14285907a59f34f5c7bb9ded38da644afe563ea68b5c8edef4",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
     "schemas/showcase-mechanism.schema.json": "1220f6b2b2b079c66ab792d19d97551c29234976caf7faa034e3cd6016bbbc58",
-    "SKILL.md": "db00afcd8c86294d08cc879bb8b420375b88ab7c04a3b2640e53bee3a820f314",
+    "SKILL.md": "2bb79db33b90fd7105ecec3c84eecc87feb044e7e527577bc2645001166524f9",
     "skills/3d.md": "b5001d55e7357b568d017eeaf51c47a90790f79e9af97c04996c6c8ea2a6c21d",
     "skills/cinematic.md": "f567b238636227bf55ee8febba0bdc68c846dd4a80bde49bb0b9606d4a56e1bc",
     "skills/experimental.md": "18e5dfc0086baa1ac4db6b3456db3b34df2eeec4a623e52e8cffe6a217fc85c5",
@@ -61,5 +61,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "7eff090145776565fee16af8f9d4db58828936c199a8c8f484c550d350bb09b6"
+  "manifestHash": "d7352f851d19c443501a6a93964abbc90b0d1d46351a10d33c78fb7924e887d6"
 }
