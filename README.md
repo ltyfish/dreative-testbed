@@ -63,6 +63,11 @@ node scripts/variance.mjs
 `variance.mjs` tables what each repeat opened and says whether read selection was stable.
 If it was not, a single round's read count is not evidence for anything.
 
+The repeats are viewable in `review.mjs` too. With no control to compare against there is
+nothing to score, so that scenario opens in a **view-only** tab: both runs side by side,
+screenshots and live previews, no criteria and no verdict. Reset still archives them.
+A scenario whose blind pair is still unscored hides its extra runs until the pair is judged.
+
 Both a bare number (how many scenarios) and a bare direction word work positionally, so a
 round is one short command. Anything you do not state falls back to: all six scenarios,
 the Recommended direction, `claude`, concurrency 3.

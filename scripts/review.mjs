@@ -67,9 +67,9 @@ function sweepCleared() {
   return swept
 }
 
-function loadPairs() {
+function liveRuns() {
   if (!fs.existsSync(RUNS)) return []
-  const live = fs
+  return fs
     .readdirSync(RUNS)
     .filter((d) => {
       const dir = path.join(RUNS, d)
@@ -81,7 +81,12 @@ function loadPairs() {
     // directories. The marker is what retires it — leftover folders must never reappear
     // as something still waiting to be scored.
     .filter((r) => !clearedRounds().includes(r.meta.seq))
+}
 
+const isCaptured = (r) => fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png'))
+
+function loadPairs() {
+  const live = liveRuns()
   const byScenario = new Map()
   for (const r of live) {
     if (!byScenario.has(r.meta.scenario)) byScenario.set(r.meta.scenario, [])
@@ -101,7 +106,7 @@ function loadPairs() {
     // judge — say nothing rather than answer with the wrong round.
     const seq = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()[0]
     if (!seq) continue
-    const captured = (r) => fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png'))
+    const captured = isCaptured
     const withArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'with' && captured(r))
     const withoutArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'without' && captured(r))
     if (!withArm || !withoutArm) continue
@@ -141,6 +146,54 @@ function loadPairs() {
   }
   return pairs.sort((a, b) => a.scenario.localeCompare(b.scenario))
 }
+
+/**
+ * Captured runs the blind pair does not cover: a one-armed round (`--arms with`) and the
+ * extra repeats of a variance round (`--repeat N`). There is nothing to compare them
+ * against, so they are shown rather than scored — no criteria, no verdict, no reveal.
+ * Without this a variance round is invisible here and the only way to see what it built
+ * is to open the PNGs off disk.
+ *
+ * A scenario whose pair is still unscored is skipped: its repeats are the same designs
+ * built twice, and putting an arm-labelled twin next to an unjudged blind pair would
+ * give the answer away. Once the pair is scored the blind is spent and they appear.
+ */
+function loadSolos(pairs) {
+  const used = new Set(pairs.flatMap((p) => [p.A.dir, p.B.dir]))
+  const blinded = new Set(pairs.filter((p) => !p.scored && p.health.judgeable).map((p) => p.scenario))
+
+  const byScenario = new Map()
+  for (const r of liveRuns()) {
+    if (!byScenario.has(r.meta.scenario)) byScenario.set(r.meta.scenario, [])
+    byScenario.get(r.meta.scenario).push(r)
+  }
+
+  const solos = []
+  for (const [scenario, list] of byScenario) {
+    if (blinded.has(scenario)) continue
+    const seq = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()[0]
+    const runs = list.filter((r) => r.meta.seq === seq && isCaptured(r) && !used.has(r.dir))
+    if (!runs.length) continue
+    let info = {}
+    try {
+      info = readScenario(scenario)
+    } catch {
+      /* scenario folder may have been renamed */
+    }
+    solos.push({
+      scenario,
+      seq,
+      runs: runs.sort((a, b) => a.dir.localeCompare(b.dir)),
+      product: info.product ?? scenario,
+      field: info.field ?? '',
+      challenge: info.designChallenge ?? '',
+    })
+  }
+  return solos.sort((a, b) => a.scenario.localeCompare(b.scenario))
+}
+
+/** r1 / r2 for a variance round, otherwise which arm it was. */
+const runLabel = (run) => (run.meta.label ? String(run.meta.label).toUpperCase() : run.meta.arm === 'with' ? 'WITH DREATIVE' : 'CONTROL')
 
 function buildFailure(runDir) {
   const p = path.join(RUNS, runDir, 'build-error.log')
@@ -371,7 +424,10 @@ ${rows}
 
 function resetRound() {
   const pairs = loadPairs()
-  if (!pairs.length) throw new Error('there is nothing in runs/ to archive')
+  // View-only runs are part of the round and cost the same to produce. Archiving the pairs
+  // and deleting runs/ around them threw a variance round away unarchived.
+  const solos = loadSolos(pairs)
+  if (!pairs.length && !solos.length) throw new Error('there is nothing in runs/ to archive')
 
   // Live previews hold the run directories open on Windows; a delete under them fails.
   stopAllLive()
@@ -381,6 +437,10 @@ function resetRound() {
     const round = p.A.meta.seq
     if (!byRound.has(round)) byRound.set(round, [])
     byRound.get(round).push(p.A.dir, p.B.dir)
+  }
+  for (const s of solos) {
+    if (!byRound.has(s.seq)) byRound.set(s.seq, [])
+    byRound.get(s.seq).push(...s.runs.map((r) => r.dir))
   }
 
   const archived = []
@@ -486,21 +546,108 @@ button:disabled{opacity:.4;cursor:not-allowed}
 #reveal.show{display:block}
 code{background:#0b0d12;padding:2px 6px;border-radius:4px;font-size:12.5px}
 .empty{color:var(--mut);padding:40px 0;text-align:center}
+.grid.multi{grid-template-columns:repeat(auto-fit,minmax(430px,1fr))}
+.tab.view{border-style:dashed}
+.note{border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:22px;background:var(--card)}
+.note h3{margin:0 0 6px;font-size:14px}
+.note p{margin:0;color:var(--mut);font-size:13.5px}
 `
 
-function page(pairs, active) {
-  const pair = pairs.find((p) => p.scenario === active) ?? pairs[0]
-  const tabs = pairs
+function tabStrip(pairs, solos, current) {
+  const pairTabs = pairs.map(
+    (p) =>
+      `<a class="tab${current === `s:${p.scenario}` ? ' on' : ''}${p.scored ? ' done' : ''}${p.health.judgeable ? '' : ' dead'}" href="/?s=${encodeURIComponent(p.scenario)}">${esc(p.scenario)}${!p.health.judgeable ? ' ✕' : p.scored ? ' ✓' : ''}</a>`,
+  )
+  const soloTabs = solos.map(
+    (v) =>
+      `<a class="tab view${current === `v:${v.scenario}` ? ' on' : ''}" href="/?v=${encodeURIComponent(v.scenario)}" title="view only — nothing to compare against">${esc(v.scenario)} · ${v.runs.length} run${v.runs.length > 1 ? 's' : ''}</a>`,
+  )
+  return [...pairTabs, ...soloTabs].join('')
+}
+
+/**
+ * A round with nothing to compare: shown side by side, with no scoring UI at all. The
+ * criteria are written as with-vs-control questions and do not mean anything here.
+ */
+function viewPage(pairs, solos, view) {
+  const cols = view.runs
     .map(
-      (p) =>
-        `<a class="tab${p.scenario === pair?.scenario ? ' on' : ''}${p.scored ? ' done' : ''}${p.health.judgeable ? '' : ' dead'}" href="/?s=${encodeURIComponent(p.scenario)}">${esc(p.scenario)}${!p.health.judgeable ? ' ✕' : p.scored ? ' ✓' : ''}</a>`,
+      (run) => `<div class="col">
+      <div class="tagrow">
+        <span class="tag">${esc(runLabel(run))}</span>
+        <a class="livebtn" href="/liverun/${encodeURIComponent(run.dir)}" target="_blank" rel="noopener">Open live ↗</a>
+      </div>
+      ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
+      ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
+      <div class="lbl">Desktop · 1440</div>
+      <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="${esc(run.dir)} desktop">
+      ${
+        fs.existsSync(path.join(RUNS, run.dir, '.captures', 'desktop-dark.png'))
+          ? `<div class="lbl">Desktop · 1440 · dark scheme</div>
+             <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop-dark.png" alt="${esc(run.dir)} desktop dark">`
+          : ''
+      }
+      <div class="lbl">Mobile · 390</div>
+      <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="${esc(run.dir)} mobile">
+      <div class="lbl" style="text-transform:none;letter-spacing:0"><code>${esc(run.dir)}</code></div>
+    </div>`,
     )
     .join('')
+
+  const repeats = view.runs.length > 1 && view.runs.every((r) => r.meta.label)
+
+  return `<!doctype html><meta charset="utf-8"><title>View — ${esc(view.scenario)}</title><style>${STYLE}</style>
+<header>
+  <div><h1>View only <span class="sub">· round ${esc(view.seq)}</span></h1>
+    <div class="sub">Not a blind comparison — there is nothing here to score against. ${
+      ARCHIVE_PORT ? `Past rounds: <a href="http://127.0.0.1:${ARCHIVE_PORT}" target="_blank" rel="noopener">archive ↗</a>` : ''
+    }</div></div>
+  <nav class="tabs">${tabStrip(pairs, solos, `v:${view.scenario}`)}<button class="tab reset" id="resetTop" title="Archive this round and clear runs/">Reset round</button></nav>
+</header>
+<main>
+  <div class="brief">
+    <h2>${esc(view.product)}</h2>
+    <p><strong>${esc(view.field)}</strong>${view.challenge ? ' — ' + esc(view.challenge) : ''}</p>
+  </div>
+  <div class="note">
+    <h3>${repeats ? `${view.runs.length} repeats of the same input` : `${view.runs.length} run(s), no control to compare against`}</h3>
+    <p>${
+      repeats
+        ? 'Same scenario, same direction, same skill — the only variable is the run itself. What differs between these is variance, not a design decision. Compare what each one read: <code>node scripts/variance.mjs</code>'
+        : 'This round was run with one arm, so the six criteria — all of them written as with-versus-control questions — do not apply. Nothing is saved from this page.'
+    }</p>
+  </div>
+  <div class="grid${view.runs.length > 2 ? ' multi' : ''}">${cols}</div>
+</main>
+<script>
+const UNSCORED = ${JSON.stringify(pairs.filter((p) => p.health.judgeable && !p.scored).map((p) => p.scenario))};
+async function resetRound(btn) {
+  const warn = UNSCORED.length
+    ? 'These are still unscored:\n\n  ' + UNSCORED.join('\n  ') + '\n\nArchive anyway and clear runs/?'
+    : 'Archive this round and clear runs/?\n\nEvery design, screenshot, transcript and verdict is copied into archive/ first.';
+  if (!confirm(warn)) return;
+  btn.disabled = true; btn.textContent = 'Archiving…';
+  const res = await fetch('/api/reset', { method: 'POST' });
+  if (!res.ok) { alert('Reset failed — nothing was deleted:\n\n' + await res.text()); btn.disabled = false; btn.textContent = 'Reset round'; return; }
+  const out = await res.json();
+  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).');
+  location.href = '/';
+}
+document.getElementById('resetTop').addEventListener('click', (e) => resetRound(e.currentTarget));
+</script>`
+}
+
+function page(pairs, solos, active, viewName) {
+  const view = solos.find((v) => v.scenario === viewName)
+  if (view) return viewPage(pairs, solos, view)
+  const pair = pairs.find((p) => p.scenario === active) ?? pairs[0]
+  if (!pair && solos.length) return viewPage(pairs, solos, solos[0])
+  const tabs = tabStrip(pairs, solos, `s:${pair?.scenario}`)
 
   if (!pair) {
     return `<!doctype html><meta charset="utf-8"><title>Review</title><style>${STYLE}</style>
     <header><h1>Blind review</h1><div class="sub">Nothing waiting to be scored.</div></header>
-    <main><p class="empty">No captured pairs in <code>runs/</code>.<br><br>Run a round:<br><code>node scripts/run-all.mjs --scenarios civic-clinic,coffee-roaster</code>${
+    <main><p class="empty">Nothing captured in <code>runs/</code>.<br><br>Run a round:<br><code>node scripts/run-all.mjs --scenarios civic-clinic,coffee-roaster</code>${
       ARCHIVE_PORT ? `<br><br>Everything already judged is in the <a href="http://127.0.0.1:${ARCHIVE_PORT}">archive ↗</a>` : ''
     }</p></main>`
   }
@@ -710,6 +857,24 @@ const server = http.createServer(async (req, res) => {
     return
   }
 
+  // A view-only run is addressed by directory rather than by side letter: there is no
+  // pair, so there is no A/B to hide behind, and nothing to unblind.
+  if (req.method === 'GET' && url.pathname.startsWith('/liverun/')) {
+    const [, , dir] = url.pathname.split('/').map(decodeURIComponent)
+    const known = loadSolos(loadPairs()).some((v) => v.runs.some((r) => r.dir === dir))
+    if (!known) {
+      res.writeHead(404).end('not found')
+      return
+    }
+    try {
+      const port = await startLive(dir)
+      res.writeHead(302, { location: `http://127.0.0.1:${port}/` }).end()
+    } catch (err) {
+      res.writeHead(500).end(`could not start live preview: ${err.message}`)
+    }
+    return
+  }
+
   if (req.method === 'POST' && url.pathname === '/api/reset') {
     try {
       const out = resetRound()
@@ -746,7 +911,8 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === 'GET' && (url.pathname === '/' || url.pathname === '/index.html')) {
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' })
-    res.end(page(loadPairs(), url.searchParams.get('s')))
+    const livePairs = loadPairs()
+    res.end(page(livePairs, loadSolos(livePairs), url.searchParams.get('s'), url.searchParams.get('v')))
     return
   }
 
@@ -755,6 +921,7 @@ const server = http.createServer(async (req, res) => {
 
 const swept = sweepCleared()
 const pairs = loadPairs()
+const solos = loadSolos(pairs)
 await startArchiveViewer()
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\nBlind review ready:  http://127.0.0.1:${PORT}`)
@@ -764,6 +931,10 @@ server.listen(PORT, '127.0.0.1', () => {
   console.log(`${pairs.length} scenario pair(s) captured: ${pairs.map((p) => p.scenario).join(', ') || 'none yet'}`)
   const bad = pairs.filter((p) => !p.health.judgeable)
   if (bad.length) console.log(`${bad.length} pair(s) NOT judgeable (a side never got built): ${bad.map((p) => p.scenario).join(', ')}`)
-  if (!pairs.length) console.log('Run a round first:  node scripts/run-all.mjs')
+  if (solos.length) {
+    const runs = solos.reduce((n, v) => n + v.runs.length, 0)
+    console.log(`${runs} run(s) with nothing to compare against, shown view-only: ${solos.map((v) => v.scenario).join(', ')}`)
+  }
+  if (!pairs.length && !solos.length) console.log('Run a round first:  node scripts/run-all.mjs')
   console.log('\nCtrl+C to stop.\n')
 })
