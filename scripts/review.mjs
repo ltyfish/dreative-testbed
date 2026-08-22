@@ -172,7 +172,10 @@ function loadSolos(pairs) {
   for (const [scenario, list] of byScenario) {
     if (blinded.has(scenario)) continue
     const seq = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()[0]
-    const runs = list.filter((r) => r.meta.seq === seq && isCaptured(r) && !used.has(r.dir))
+    // A run whose build broke has no screenshot, but it is still the most informative
+    // thing in the round — hiding it is how a session that was killed mid-edit silently
+    // disappears from the only page anyone opens.
+    const runs = list.filter((r) => r.meta.seq === seq && !used.has(r.dir) && (isCaptured(r) || buildFailure(r.dir)))
     if (!runs.length) continue
     let info = {}
     try {
@@ -575,10 +578,11 @@ function viewPage(pairs, solos, view) {
       (run) => `<div class="col">
       <div class="tagrow">
         <span class="tag">${esc(runLabel(run))}</span>
-        <a class="livebtn" href="/liverun/${encodeURIComponent(run.dir)}" target="_blank" rel="noopener">Open live ↗</a>
+        ${buildFailure(run.dir) ? '' : `<a class="livebtn" href="/liverun/${encodeURIComponent(run.dir)}" target="_blank" rel="noopener">Open live ↗</a>`}
       </div>
       ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
       ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
+      ${!isCaptured(run) ? '' : `
       <div class="lbl">Desktop · 1440</div>
       <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="${esc(run.dir)} desktop">
       ${
@@ -588,7 +592,7 @@ function viewPage(pairs, solos, view) {
           : ''
       }
       <div class="lbl">Mobile · 390</div>
-      <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="${esc(run.dir)} mobile">
+      <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="${esc(run.dir)} mobile">`}
       <div class="lbl" style="text-transform:none;letter-spacing:0"><code>${esc(run.dir)}</code></div>
     </div>`,
     )
