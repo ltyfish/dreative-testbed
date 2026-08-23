@@ -23,12 +23,15 @@ export function readScenario(name) {
  * difference in output is attributable to the skill rather than to the wording.
  */
 export function buildPrompt(meta, arm, runDir, direction) {
-  // Dreative normally blocks on the user choosing a direction. Unattended there is nobody
-  // to ask, so the agent quietly falls back to Recommended and the round silently tests a
-  // direction you did not pick. Stating it up front makes the round honest.
+  // Dreative blocks twice on the user: the direction, then the configuration. Unattended
+  // there is nobody to ask, so the agent either stalls or quietly falls back and the round
+  // silently tests settings you did not pick. Both are neutralised here rather than in the
+  // skill: waiting for a reply is correct product behaviour, and a real user is the case
+  // the skill is actually for. This is a property of the harness, so it belongs to the
+  // harness. The control never sees these gates, and the line costs it nothing.
   const directionLine =
     arm === 'with' && direction
-      ? ` Build the ${direction} direction; treat this message as the user's explicit choice of direction, and do not stop to ask for confirmation of it.`
+      ? ` Build the ${direction} direction; treat this message as the user's explicit choice of direction and settings. Nobody is available to answer during this session, so take the recommended configuration and build — do not pause for any confirmation.`
       : ''
 
   const skillLine =

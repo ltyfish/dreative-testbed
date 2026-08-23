@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "codex",
-  "installedAt": "2026-08-23T09:59:44.846Z",
+  "installedAt": "2026-08-23T10:26:02.213Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -28,7 +28,7 @@
     "frameworks/sveltekit.md": "684e49573f3c6b128358a2c02cb3b49dfefb494dd4f583f0c49888c5a224d78d",
     "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "a5fe3a5d3c8122a9acb31cb69d53803686d509867cc9d85d3f7574dcd70b9856",
-    "PLAN.md": "380353c8c1b7eca5ba1dbf64ae9c4bf08ee17c2672c9b28a83054d7e43504689",
+    "PLAN.md": "cdfbf2d54af94fd24bff2989a5a4e59c9cb951700baaa6a67dd42f8c9b96ae03",
     "references/ASSET_PIPELINES.md": "c770ea25b685a92bc6cd1b912dfabdfbd92eeefe4d7389ecff4d5b28f3dab8e6",
     "references/CREATIVE_DIRECTION.md": "4f8a28cddc5e9318dff4743feab4baad9e0c77995a9f2dfbb7fb9c16751bca8b",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
@@ -42,7 +42,7 @@
     "schemas/experience-map.schema.json": "853c09f5a8dcfc14285907a59f34f5c7bb9ded38da644afe563ea68b5c8edef4",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
     "schemas/showcase-mechanism.schema.json": "1220f6b2b2b079c66ab792d19d97551c29234976caf7faa034e3cd6016bbbc58",
-    "SKILL.md": "a91c7c722b22ec2f7e9a101bea078243687b3f5b407b2ac33ec48f381a1c652c",
+    "SKILL.md": "33a16ea9d74e762c00f0550448d12dd2572ebfab39f374ad344e000169731ec7",
     "skills/3d.md": "b5001d55e7357b568d017eeaf51c47a90790f79e9af97c04996c6c8ea2a6c21d",
     "skills/cinematic.md": "f567b238636227bf55ee8febba0bdc68c846dd4a80bde49bb0b9606d4a56e1bc",
     "skills/experimental.md": "18e5dfc0086baa1ac4db6b3456db3b34df2eeec4a623e52e8cffe6a217fc85c5",
@@ -60,5 +60,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "3d508dc0f084b6b354ac01249dd2518ed976dfa5ac08f02c26abe959daf57427"
+  "manifestHash": "a1167901d4f5ad9fc1ecfaec8000a5d35dde13ba7bb38dccc3fb1ff4b7077700"
 }
