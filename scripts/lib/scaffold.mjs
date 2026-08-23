@@ -128,7 +128,10 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
     // Enforce the read-once rule the skill only states. See scripts/hooks/read-once.mjs
     // for why this is a harness instrument rather than shipped behaviour. It guards paths
     // under skills/dreative only, so it is inert for anything the run legitimately reads.
-    const settings = { hooks: { PreToolUse: [{ matcher: 'Read', hooks: [{ type: 'command', command: `node "${path.join(ROOT, 'scripts', 'hooks', 'read-once.mjs').replace(/\\/g, '/')}"` }] }] } }
+    // Read *and* Bash: this builder opens most skill files with `cat`, so a Read-only
+    // matcher guarded the minority path and the hook had no observable effect at all.
+    const hookCommand = `node "${path.join(ROOT, 'scripts', 'hooks', 'read-once.mjs').replace(/\\/g, '/')}"`
+    const settings = { hooks: { PreToolUse: [{ matcher: 'Read|Bash', hooks: [{ type: 'command', command: hookCommand }] }] } }
     fs.mkdirSync(path.join(runDir, '.claude'), { recursive: true })
     fs.writeFileSync(path.join(runDir, '.claude', 'settings.json'), JSON.stringify(settings, null, 2), 'utf8')
   }

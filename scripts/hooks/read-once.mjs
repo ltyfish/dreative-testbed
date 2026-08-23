@@ -39,10 +39,19 @@ try {
   process.exit(0)
 }
 
-const file = input?.tool_input?.file_path
+// Both ways this builder reads. It runs under a Bash-preferred harness and opens most
+// skill files with `cat`, so a hook matching only tool_input.file_path guards the minority
+// path — run 202608230810 made 58 Bash calls against 23 Reads. Bash commands are matched on
+// the same content-reading utilities reads.json counts, and never on a glob or a `wc`,
+// which are surveys rather than reads.
+const READER = /(?:^|[|;&]\s*)(?:cat|head|tail|sed|less|more)\b[^|;&]*?([^\s'"|;&]*skills\/dreative\/[^\s'"|;&]+)/i
+const direct = input?.tool_input?.file_path
+const command = typeof input?.tool_input?.command === 'string' ? input.tool_input.command : ''
+const file = direct || command.replace(/\\/g, '/').match(READER)?.[1]
 if (!file) process.exit(0)
 
 const normalised = file.replace(/\\/g, '/')
+if (/[*?]/.test(normalised)) process.exit(0)
 if (!/skills\/dreative\//i.test(normalised)) process.exit(0)
 
 // Keyed on the path below the skill root, so the two installed copies (.claude and
