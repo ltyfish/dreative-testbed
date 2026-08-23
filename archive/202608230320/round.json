@@ -1,0 +1,19 @@
+{
+  "round": "202608230320",
+  "archivedAt": "2026-08-23T08:07:33.820Z",
+  "scenarios": [
+    "caliber-movement"
+  ],
+  "runs": [
+    {
+      "runName": "caliber-movement__without__202608230320",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "caliber-movement__with__202608230320",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

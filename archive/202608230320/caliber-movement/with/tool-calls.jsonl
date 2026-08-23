@@ -1,0 +1,2 @@
+{"tool":"Skill","input":{"skill":"dreative"}}
+{"tool":"Bash","input":{"command":"cd \"C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__with__202608230320\" && ls -a && cat package.json && ls src && wc -l src/App.jsx src/styles.css && ls .dreative 2>/dev/null"}}

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "packageVersion": "1.5.3",
   "target": "codex",
-  "installedAt": "2026-08-23T08:06:09.187Z",
+  "installedAt": "2026-08-23T09:01:36.977Z",
   "selectedSkills": [
     "3d",
     "cinematic",
@@ -29,7 +29,7 @@
     "frameworks/vue-nuxt.md": "978d9a5f3c831483b182b5fdad52d5cdf9ca83880efaf2adf754088511b9939a",
     "llms.txt": "a5fe3a5d3c8122a9acb31cb69d53803686d509867cc9d85d3f7574dcd70b9856",
     "PLAN.md": "e7ecfec48534ca8bbf1154fb0457964ef015eb9e17ab6f1669bd89a98992b82e",
-    "references/ASSET_PIPELINES.md": "b7861efbd4a848eefea70e82b05eea10d514902ab31a7e4e1e3d34dbcc109cdc",
+    "references/ASSET_PIPELINES.md": "4f6b5b3c2b8d4a1044e5fe0243c36b5b0de0961b941364efdb04c1d09534839f",
     "references/CREATIVE_DIRECTION.md": "4f8a28cddc5e9318dff4743feab4baad9e0c77995a9f2dfbb7fb9c16751bca8b",
     "references/CREATIVE_EXECUTION.md": "b4b393365da07e0f4e1e37c25a1ed599975a648fdbc252b00a7afbb84a63d49a",
     "references/DOGFOOD_LESSONS.md": "1e78c86fa9eb4058f39bb87a6b1fe710cb97a5be5cba75e7f47a9e578adf84f3",
@@ -43,7 +43,7 @@
     "schemas/experience-map.schema.json": "853c09f5a8dcfc14285907a59f34f5c7bb9ded38da644afe563ea68b5c8edef4",
     "schemas/project-context.schema.json": "c504c7945fd5d6ae95d05eda888186835662e2ecc247fa5abc1955e344927217",
     "schemas/showcase-mechanism.schema.json": "1220f6b2b2b079c66ab792d19d97551c29234976caf7faa034e3cd6016bbbc58",
-    "SKILL.md": "2bb79db33b90fd7105ecec3c84eecc87feb044e7e527577bc2645001166524f9",
+    "SKILL.md": "2cac8faf9ccf408188b210153a94c2a267251d5ebb5f6f2f09af0dc630ab76c0",
     "skills/3d.md": "b5001d55e7357b568d017eeaf51c47a90790f79e9af97c04996c6c8ea2a6c21d",
     "skills/cinematic.md": "f567b238636227bf55ee8febba0bdc68c846dd4a80bde49bb0b9606d4a56e1bc",
     "skills/experimental.md": "18e5dfc0086baa1ac4db6b3456db3b34df2eeec4a623e52e8cffe6a217fc85c5",
@@ -61,5 +61,5 @@
     "systems/NATIVE_FOUNDATIONS.md": "5f521cf621fe4c403349d0d9da4f730824f327ea8f4fb5eca925bdca6badf0d8",
     "systems/runtime.js": "ef01e9061deb328e9e60b020b1a71c3053d7c546fea5de93050b5feb26ce055f"
   },
-  "manifestHash": "88e957156b0ade7e9cfae0f48667f4d11d8247ec14fd51ca2c4d3b586aa5958c"
+  "manifestHash": "7d21a3237909e7f4034a0c73a748bfd94fedafdc0505ae2ec1fe4c6b0b75691a"
 }

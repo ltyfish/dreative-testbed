@@ -1,0 +1,20 @@
+{
+  "profile": "recommended",
+  "ok": false,
+  "blockers": [
+    "nothing on this route moves: 10 regions were sampled entering, centred, and leaving the viewport and none changed state. Recommended requires at least one authored motion."
+  ],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 8 of 8 interactive elements respond to hover or focus",
+    "motion: 0 of 10 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 9 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 10 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 8 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 8 viewport samples"
+  ]
+}
