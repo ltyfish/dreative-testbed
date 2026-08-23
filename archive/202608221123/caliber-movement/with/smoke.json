@@ -1,0 +1,23 @@
+{
+  "profile": "recommended",
+  "ok": false,
+  "blockers": [
+    "desktop: consecutive near-empty viewport samples detected",
+    "reveals fire after the reader has scrolled past them in beat-band, path: content already on screen while the region is centred is still in its approach state, and only resolves once the region has left. Trigger against the top of the viewport, not the bottom.",
+    "mobile-390: consecutive near-empty viewport samples detected",
+    "mobile-390-reduced: consecutive near-empty viewport samples detected"
+  ],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 0 of 0 interactive elements respond to hover or focus",
+    "motion: 3 of 9 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 8 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 9 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 8 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 8 viewport samples"
+  ]
+}

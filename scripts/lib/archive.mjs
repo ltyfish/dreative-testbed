@@ -66,7 +66,9 @@ export function archiveRun(runName, roundDir, log = console.log) {
   // Sources: what the agent actually produced, readable without building anything.
   const src = path.join(runDir, 'src')
   if (fs.existsSync(src)) fs.cpSync(src, path.join(dest, 'src'), { recursive: true })
-  for (const file of ['index.html', 'BRIEF.md', 'run.json', 'build-error.log', 'reads.json']) {
+  // smoke.json is the per-run visual-smoke measurement; it only exists in runs/, so leaving
+  // it out of the copy threw the measurement away at reset.
+  for (const file of ['index.html', 'BRIEF.md', 'run.json', 'build-error.log', 'reads.json', 'smoke.json']) {
     const from = path.join(runDir, file)
     if (fs.existsSync(from)) fs.cpSync(from, path.join(dest, file))
   }
