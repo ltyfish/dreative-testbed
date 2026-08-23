@@ -46,7 +46,7 @@ node scripts/run-all.mjs --timeout 40            # minutes per session, default 
 node scripts/run-all.mjs --arms with             # re-run one arm only
 node scripts/run-all.mjs --repeat 2              # same input twice — variance check
 node scripts/run-all.mjs --no-yolo               # scoped permissions instead of full bypass
-node scripts/run-all.mjs --no-archive            # do not write to archive/
+node scripts/run-all.mjs --archive               # archive at round end, for a round you will not score
 ```
 
 ### Variance check
@@ -116,8 +116,11 @@ instead of appearing as an unexplained white rectangle.
 ## The archive
 
 `runs/` is disposable and gitignored — it holds `node_modules` junctions, absolute paths and
-half-built state, none of which survives a pull on another machine. At the end of every
-round, each run is copied into `archive/<round>/<scenario>/<arm>/`, which **is** committed:
+half-built state, none of which survives a pull on another machine. **Reset round** in
+`review.mjs` copies each run into `archive/<round>/<scenario>/<arm>/`, which **is** committed,
+and only then clears `runs/`. Archiving and retiring a round are one action deliberately: a
+round that was archived but left in `runs/` looks exactly like live work to every other
+script. A round you know you will not score can be archived early with `--archive`.
 
 ```
 archive/202608081241/
@@ -228,7 +231,7 @@ _template/           shared Vite skeleton every run is built from
 runs/                one isolated real project per run, plus verdicts/ (gitignored)
 archive/<round>/     committed record: sources, screenshots, verdicts, dependency-free sites
 scripts/setup.mjs    prepare a fresh machine, or --check an existing one
-scripts/run-all.mjs  orchestrator: scaffold → sessions → capture → archive
+scripts/run-all.mjs  orchestrator: scaffold → sessions → capture
 scripts/review.mjs   blind review server
 scripts/archive.mjs  archive browser, works on a bare clone
 scripts/new-run.mjs  scaffold a single run by hand

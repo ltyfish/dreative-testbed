@@ -67,7 +67,11 @@ if (!Number.isInteger(REPEAT) || REPEAT < 1) {
   process.exit(1)
 }
 const SKIP_CAPTURE = arg('no-capture', false)
-const SKIP_ARCHIVE = arg('no-archive', false)
+// Archiving belongs to Reset, not to the end of a round: a round archived here but never
+// reset stayed in runs/ looking like live work, and review has no way to tell the two apart.
+// One command puts a round away. `--archive` is the escape hatch for a round you know you
+// will not score, since runs/ is gitignored and would otherwise be the only copy.
+const ARCHIVE_NOW = arg('archive', false)
 const YOLO = !arg('no-yolo', false)
 const DIRECTION = arg('direction', POSITIONAL_DIRECTION ?? 'recommended')
 
@@ -344,8 +348,10 @@ fs.writeFileSync(path.join(RUNS, `round-${roundStamp}.json`), JSON.stringify(rou
 // ---------------------------------------------------------------- archive
 //
 // runs/ is disposable and gitignored. The archive is the copy that gets committed and
-// survives a pull on another machine, so it happens now, while node_modules is still
-// linked and the sites can still be built.
+// survives a pull on another machine — but it is written by Reset, once the round has been
+// scored, so that "archived" and "finished with" mean the same thing. Reset archives before
+// it deletes anything, and node_modules is still linked at that point, so the portable
+// sites still build.
 
 if (REPEAT > 1) {
   console.log(`
@@ -353,10 +359,12 @@ This was a ×${REPEAT} variance round. Compare what the repeats read:
   node scripts/variance.mjs`)
 }
 
-if (!SKIP_ARCHIVE) {
+if (ARCHIVE_NOW) {
   console.log('\nArchiving round…')
   const { roundDir } = archiveRound({ round: roundStamp, runNames: jobs.map((j) => j.runName), meta: roundMeta, log })
   console.log(`Archived to ${path.relative(ROOT, roundDir)}/ — commit it to keep this round.`)
+} else {
+  console.log(`\nThis round is in runs/ only, which is gitignored. Reset in review.mjs archives it.`)
 }
 
 console.log(`\nRound complete. Now judge it:\n\n  node scripts/review.mjs\n`)
