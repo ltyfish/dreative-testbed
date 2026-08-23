@@ -456,7 +456,6 @@ function resetRound() {
   // View-only runs are part of the round and cost the same to produce. Archiving the pairs
   // and deleting runs/ around them threw a variance round away unarchived.
   const solos = loadSolos(pairs)
-  if (!pairs.length && !solos.length) throw new Error('there is nothing in runs/ to archive')
 
   // Live previews hold the run directories open on Windows; a delete under them fails.
   stopAllLive()
@@ -471,6 +470,27 @@ function resetRound() {
     if (!byRound.has(s.seq)) byRound.set(s.seq, [])
     byRound.get(s.seq).push(...s.runs.map((r) => r.dir))
   }
+
+  // A session that died before writing anything leaves a directory with no capture and no
+  // build failure, so it lands in no pair and no solo — and Reset, which owns retiring a
+  // round, could never reach it. Both `202608230320` runs sat in runs/ that way and
+  // survived a reset of the round after them: invisible to review, immortal to the only
+  // thing that clears runs/. Everything carrying a run.json belongs to some round, so
+  // sweep by directory rather than by what made it onto the review page. `archiveRun`
+  // records a dead run as ok:false instead of throwing, so an empty one is archived as the
+  // evidence it is and then removed.
+  const claimed = new Set([...byRound.values()].flat())
+  for (const dir of fs.readdirSync(RUNS)) {
+    if (claimed.has(dir) || !fs.statSync(path.join(RUNS, dir)).isDirectory()) continue
+    const meta = readJson(path.join(RUNS, dir, 'run.json'), null)
+    if (!meta?.seq || clearedRounds().includes(meta.seq)) continue
+    if (!byRound.has(meta.seq)) byRound.set(meta.seq, [])
+    byRound.get(meta.seq).push(dir)
+  }
+
+  // Checked after the sweep, not before it: runs/ holding nothing but dead sessions is the
+  // case that most needs clearing, and testing pairs and solos first refused it.
+  if (!byRound.size) throw new Error('there is nothing in runs/ to archive')
 
   const archived = []
   for (const [round, runNames] of byRound) {

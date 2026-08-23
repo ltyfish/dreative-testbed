@@ -5,6 +5,24 @@ more reliable mobile fallback than live simulation. Never invent an available
 tool. Confirm the executable, source assets, output rights, and target browser
 support first.
 
+## The subject is sourced, never manufactured
+
+Everything below is production — resizing, encoding, packing, exporting. None of
+it decides what is in the frame, and that decision is the one that fails. When a
+page shows a physical thing, that thing arrives as real material: a photograph,
+a frame, a scan, a render of an actual model. A gradient, a dot pattern, or a
+stack of CSS layers standing in for a surface is not a cheaper version of the
+material — it is a different, worse thing, and it reads that way at full size
+next to a price.
+
+This holds hardest exactly where it is most tempting: the small tile, the
+swatch, the thumbnail in a card. Small does not mean it can be drawn. If a
+sourced view of a variant exists, or can be sourced, the tile shows it. Whenever
+no material for a surface exists and none can be sourced, say so and choose a
+form that does not require it — a named description, a detail crop of the shared
+subject, a typographic treatment — rather than inventing the surface. Naming the
+gap is a real answer here; drawing over it is not.
+
 ## Responsive image set with Sharp
 
 ```js
@@ -58,16 +76,45 @@ Before runtime integration:
 The 3D fallback must preserve the product view or explanation, not merely show a
 generic gradient.
 
-## Sourced material as motion substrate — worked example
+## Sourced material as motion substrate
 
 The rotating can, the assembling photograph, the process that runs as you
-scroll. None of these are motion techniques applied to a page; each one is a
-*set of real frames* plus a progress value. The material and the motion are the
-same decision, which is why this file is routed at the moment you decide what
-the focal thing is, not after you have decided to produce frames.
+scroll. None of these are motion techniques applied to a page; each one is real
+material plus a progress value. The material and the motion are the same
+decision, which is why this file is routed at the moment you decide what the
+focal thing is, not after you have decided to produce frames.
 
-The failure this replaces is building the subject in SVG because no single
-photograph of it existed.
+This is the moving case of the sourcing rule above: the answer to "no single
+photograph shows this" is still real material, driven, rather than a constructed
+subject.
+
+The failure worth naming is not a low motion count. It is material that arrives
+sourced, resized, credited — and then sits in an `<img>` doing nothing, while
+the page's motion is a fade-up applied to a `querySelectorAll` list. Six
+photographs treated that way are six decorations. One photograph that carries
+the explanation is the page.
+
+### Decide what this material can be made to do
+
+What you have decides what is reachable, and nothing here is a default. A
+coherent set of views of one object can be scrubbed. A single photograph can be
+crossed, cropped along a path, displaced by depth, held while the frame moves
+through it, masked into type, split and reassembled, or lit differently as the
+section progresses. A clip can be sampled, slowed, or windowed. Two states of
+the same object can trade places. The same material supports different answers
+in different sections, and the right one is usually specific to the subject —
+what this thing does when it runs, what a buyer is trying to see, what part of
+it is worth holding still while everything else moves.
+
+Those are the obvious ones, which means the good answer is often not among them.
+Treat the list as evidence that the space is wide, not as a menu. What separates
+craft from effect is that the material underneath is real and the form was
+chosen for this subject — not that a particular technique was used.
+
+The frame sequence below is worked end to end because it is the most
+mechanically involved and the easiest to get wrong, not because it is the
+answer. Read it for how progress drives material; take the same idea to whatever
+form the subject actually wants.
 
 **1 — Get the frames.** Probe for the tool; never assume one either way, in
 either direction. This file cannot know what is installed where it runs, and a
@@ -85,9 +132,17 @@ something unrelated. Probe `magick`, never `convert`.
 What to expect rather than rely on: `sharp` installs cleanly from npm
 everywhere it has been tried, and `ffmpeg` is common but far from universal —
 the 2026-08-19 reference machine had neither it nor `blender`, `cwebp` or
-ImageMagick. So a set of real still photographs is always a route you can take,
-and a decode or a render is the branch you take after the probe comes back
-positive, never before.
+ImageMagick. So a decode or a render is the branch you take after the probe
+comes back positive, never before.
+
+The other half of the question is the material, and it fails more often than the
+tooling does. A scrubbed sequence needs a coherent set of views *of the same
+object*, and for a specific or one-off subject that set frequently does not
+exist and cannot be sourced — what is available is a handful of real
+photographs of related things. That is not a dead end and it is not a licence to
+construct the subject; it is the point where the form has to change. Drive one
+photograph instead of scrubbing thirty, and choose which of the forms above the
+material actually supports.
 
 ```bash
 # reliable: a sourced set of real views, resized and re-encoded with sharp
@@ -143,12 +198,11 @@ function onProgress(p) {                    // p is 0..1 for the section
 Reduced motion gets one authored still, not a switched-off section. Mobile gets
 the shorter set or the still, chosen deliberately.
 
-**The same substrate, other forms.** A sourced set is not only a turntable:
-photographs that assemble into a grid and scatter, a specimen crossfading
-through states, a depth map from one real photo driving parallax or
-displacement, a real macro clip masked into type. What makes any of these read
-as craft rather than effect is that the material underneath is real — the
-creativity is in what you do to it, not in manufacturing it.
+**The mechanism, not the recipe.** Preload, one progress value, one index into
+material, redraw only on change. That is the whole of it, and it is the same
+whether the index picks a frame, a crop, a depth offset, a mask position, or a
+blend between two real states. Having built it once for a sequence, build it for
+whatever the subject wanted instead.
 
 ## Acceptance
 
@@ -156,3 +210,12 @@ Record only durable asset paths and roles in `.dreative/context.json`. Validate
 dimensions, codec/format, missing-asset behavior, mobile selection, loading
 order, and visual match to the intended section. Delete intermediate exports
 from the shipped client bundle.
+
+Those checks are all mechanical, and a drawn stand-in passes every one of them.
+So check the material too, and treat this one as a blocker: every surface a
+buyer is choosing between shows sourced material. A CSS or SVG stand-in for a
+physical finish, colourway, or texture ships only when the gap was named and no
+material could be sourced — never as the default because the tile was small.
+Before shipping any drawn surface, list what is already in the asset directory:
+the run that failed this had the photograph on disk and painted a gradient
+anyway.
