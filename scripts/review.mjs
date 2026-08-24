@@ -782,15 +782,15 @@ function page(pairs, solos, active, viewName) {
       </div>
       ${warn ? `<div class="warn">Capture warning — ${esc(warn)}</div>` : ''}
       <div class="lbl">Desktop · 1440</div>
-      <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="Design ${letter} desktop">
+      <img class="shot" src="/blindshot/${encodeURIComponent(pair.scenario)}/${letter}/desktop.png" alt="Design ${letter} desktop">
       ${
         fs.existsSync(path.join(RUNS, run.dir, '.captures', 'desktop-dark.png'))
           ? `<div class="lbl">Desktop · 1440 · dark scheme <span style="text-transform:none;letter-spacing:0">(this design declares a dark mode)</span></div>
-             <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop-dark.png" alt="Design ${letter} desktop dark">`
+             <img class="shot" src="/blindshot/${encodeURIComponent(pair.scenario)}/${letter}/desktop-dark.png" alt="Design ${letter} desktop dark">`
           : ''
       }
       <div class="lbl">Mobile · 390</div>
-      <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="Design ${letter} mobile">
+      <img class="shot mob" src="/blindshot/${encodeURIComponent(pair.scenario)}/${letter}/mobile.png" alt="Design ${letter} mobile">
       <div class="lbl">Your feedback on Design ${letter}</div>
       <textarea id="notes${letter}" placeholder="What works, what is wrong, what you would send back. This gets filed against whichever arm it turns out to be."></textarea>
     </div>`
@@ -915,6 +915,27 @@ const server = http.createServer(async (req, res) => {
     }
     res.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' })
     fs.createReadStream(p).pipe(res)
+    return
+  }
+
+  // Screenshots for a blind pair, addressed by side letter. `/shot/<run-dir>/…` names the
+  // arm in the URL, and a reviewer who opens devtools or hovers an image then knows which
+  // build is which before scoring — which matters more now that a round can be two skill
+  // versions the reviewer chose themselves, rather than skill versus control.
+  if (req.method === 'GET' && url.pathname.startsWith('/blindshot/')) {
+    const [, , scenarioName, letter, file] = url.pathname.split('/').map(decodeURIComponent)
+    const pair = loadPairs().find((x) => x.scenario === scenarioName)
+    if (!pair || (letter !== 'A' && letter !== 'B') || !/^[\w.-]+\.png$/.test(file)) {
+      res.writeHead(404).end('not found')
+      return
+    }
+    const shot = path.join(RUNS, pair[letter].dir, '.captures', file)
+    if (!shot.startsWith(RUNS) || !fs.existsSync(shot)) {
+      res.writeHead(404).end('not found')
+      return
+    }
+    res.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' })
+    fs.createReadStream(shot).pipe(res)
     return
   }
 
