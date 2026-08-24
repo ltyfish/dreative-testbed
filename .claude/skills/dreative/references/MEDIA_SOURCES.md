@@ -31,6 +31,129 @@ Record the real URL or file path, the licence, and the rights status. Final
 smoke resolves local files and requests remote URLs, so an invented source fails
 rather than passing quietly.
 
+## The ladder, and what drawing is actually for
+
+Rank the material before choosing a form, and take the highest rung the subject
+and the licence allow:
+
+1. **A photograph of the thing, or of its real analogue** — including a set of
+   views, which is motion material rather than an illustration.
+2. **A licensed model, or frames rendered from one.** Keyless and verified
+   sources for both are listed above; for a physical product this rung is
+   usually right and is rarely the one chosen.
+3. **Real surface material** — a photographed or scanned texture, a PBR set, an
+   HDRI. Poly Haven and ambientCG are CC0 and need no key.
+4. **Drawn construction** — CSS, SVG, canvas geometry standing in for a physical
+   thing. This is the fallback. Reaching it means rungs 1–3 were searched and
+   came back empty, and that is a sentence you should be able to write.
+
+The rungs are not interchangeable, and the reason is physical. Real material
+carries texture, grain, depth of field, the way light falls across a surface and
+changes as it moves. Drawn geometry carries none of that: flat fills, invented
+colour, edges that are too clean, gradients standing in for light. That is what
+"cheap" and "unreal" mean when a reviewer says them — not that the drawing was
+badly made, but that nothing in it was ever lit or photographed. Adding more
+paths does not fix it, and a build made mostly of authored vector reads that way
+however good each piece is.
+
+It also costs the page its motion. Material is what there is to animate: a
+sequence to scrub, a surface to relight, a crop to travel through, depth to
+displace, a real state to trade for another. A flat vector gives you position,
+scale and opacity — which is why routes built out of it come back described as
+having no transitions and nothing happening between sections, however many
+elements move.
+
+**Drawing is for notation, and it is good at that job.** Diagrams, callouts,
+annotation and measurement over a photograph, charts, icons, marks, typographic
+and graphic devices — none of these are pretending to be material, and there is
+no limit on them. Icons in particular are the most reliable visual material
+available to you (see *Icons*). The line is not vector versus raster, it is
+whether the drawn thing is standing in for something physical that exists in the
+world and could have been sourced.
+
+**When you do land on rung 4**, say so rather than shipping it as if it were a
+choice, and make the fallback carry real material where it can: a photographed
+texture as the fill, real colour sampled from the subject rather than invented,
+one honest flat treatment instead of a fake-dimensional one. A drawn thing that
+admits it is drawn is far better than one that fails at looking real. And it
+does not take the focal moment on its own — see *Where it lands is the same
+decision*.
+
+## Decide what the material does, while you are still searching
+
+Sourced, resized, credited — and then sitting in an `<img>` doing nothing, while
+the page's motion is a fade applied to a `querySelectorAll` list. Six
+photographs treated that way are six decorations. One photograph that carries
+the explanation is the page.
+
+Decide this here rather than after the search, because it changes what you look
+for. Twelve views of one subject are motion material; one view is an
+illustration. A set you cannot assemble is a form you cannot choose, and finding
+that out after the section is written is how a route ends up fading rectangles.
+
+What you have decides what is reachable, and nothing here is a default. A
+coherent set of views of one object can be scrubbed. A single photograph can be
+crossed, cropped along a path, displaced by depth, held while the frame moves
+through it, masked into type, split and reassembled, or lit differently as a
+section progresses. A clip can be sampled, slowed, or windowed. Two real states
+can trade places. The right answer is usually specific to the subject — what
+this thing does when it runs, what a buyer is trying to see, what is worth
+holding still while everything else moves.
+
+Those are the obvious ones, which means the good answer is often not among them.
+The list is evidence the space is wide, not a menu. What separates craft from
+effect is that the material is real and the form was chosen for this subject.
+
+**Material availability fails more often than tooling.** A scrubbed sequence
+needs a coherent set of views *of the same object*, and for a one-off subject
+that set often cannot be sourced — what exists is a few real photographs of
+related things. That is where the form changes, not where the subject gets
+constructed: drive one photograph instead of scrubbing thirty.
+
+### Where it lands is the same decision
+
+A photograph in a secondary slot, under a section whose focal element you drew,
+is a page made of drawings with photographs attached. That is what "it's all
+SVG" means when a reviewer says it about a build that sourced five real images:
+not that the sourcing failed, but that the sourced material never got the
+position that the eye actually goes to.
+
+So place it before you fill around it. The real material takes the focal moment
+of the section it belongs to, at a size and crop where its subject can be read —
+and if what you are drawing would outrank it, the two are the wrong way round.
+Check it on the rendered page, not in the markup: at the first screenshot, name
+what the eye lands on in each section and whether that thing is real. A crop
+that reads at 1440 and loses the subject at 390 is decoration on a phone.
+
+The failure has a reliable tell: an authored figure sitting where the section's
+argument is, with the sourced set relegated to a strip, a card grid, or a
+below-fold gallery. Drawn material is a companion to real material — the
+diagram, the callout, the annotation over the photograph — and it is very good
+at that job. It just does not get the seat.
+
+### The mechanism is one engine
+
+Preload, one authored value, one index into material, redraw only on change —
+the same whether the index picks a frame, a crop, a depth offset, a mask
+position, or a blend between two real states.
+
+```js
+const imgs = manifest.map(src => Object.assign(new Image(), { src }));
+await Promise.all(imgs.map(i => i.decode().catch(() => {})));
+
+function onProgress(p) {                    // p is 0..1 for the section
+  const i = Math.min(imgs.length - 1, Math.round(p * (imgs.length - 1)));
+  if (i !== current) { current = i; ctx.drawImage(imgs[i], 0, 0, w, h); }
+}
+```
+
+`p` is any authored value, and its source is a design decision too: scroll
+position, a click-advanced step, a drag, a timer, playback time. A section the
+reader controls reads differently from one that runs at them. Drive it from the
+same value as everything else in the section — `../skills/motion.md` on why
+independent triggers drift. Reduced motion gets one authored still, not a
+switched-off section; mobile gets the shorter set or the still, deliberately.
+
 ## The open web is the source; this file is a shortlist
 
 Nothing here is a whitelist. You can fetch any page and any file on the open
@@ -140,8 +263,7 @@ conclude that a real object is out of reach.
   procedural geometry for realistic physical subjects, which is the case the
   contract asks you to evaluate.
 
-Route production work — optimisation, baking, fallback sequences — through
-`ASSET_PIPELINES.md`.
+Optimisation, baking and fallback sequences are *Producing the files*, below.
 
 ## Type
 
@@ -202,7 +324,13 @@ Sourcing did not fail. You searched for the wrong noun.
   first for that reason.
 - **Take a set, not a picture.** Twelve frames of one subject are motion
   material; one frame is an illustration. Decide this while searching, because
-  it changes what you search for — see `ASSET_PIPELINES.md`.
+  it changes what you search for — see *Decide what the material does*, above.
+
+This holds hardest where it is most tempting: the small tile, the swatch, the
+thumbnail in a card. Small does not mean it can be drawn. Where no material
+exists and none can be sourced, say so and choose a form that does not need it —
+a named description, a detail crop of the shared subject, a typographic
+treatment. Naming the gap is a real answer; drawing over it is not.
 
 A drawn schematic is a companion to real material, never a substitute for it.
 Calling the output a diagram does not settle the question — the build that
@@ -212,6 +340,66 @@ exactly the decision this section exists to prevent, and had a defensible
 argument for it. If the analogue is photographable and you drew instead, that is
 the failure, whatever the drawing is called. Draw the diagram as well, once the
 real material is on the page.
+
+## Producing the files
+
+Probe before assuming, in either direction. **On Windows `convert` is the
+filesystem utility, not ImageMagick** — it answers `command -v` and then does
+something unrelated. Probe `magick`.
+
+```bash
+command -v blender ffmpeg cwebp magick
+node -e "try{require.resolve('sharp');console.log('sharp ok')}catch{console.log('no sharp')}"
+```
+
+`sharp` installs from npm everywhere it has been tried; `ffmpeg` is common but
+not universal. A decode or a render is the branch you take *after* a positive
+probe. On a negative probe, recommend the install in one line rather than
+working around it silently, then carry on with the photographic route in the
+same session — do not block on the answer.
+
+```js
+import sharp from "sharp";
+for (const width of [640, 1280, 1920]) {
+  await sharp("source/product.png")
+    .resize({ width, withoutEnlargement: true })
+    .avif({ quality: 58 })
+    .toFile(`public/media/product-${width}.avif`);
+}
+```
+
+```bash
+ffmpeg -i source/film.mov -vf "scale='min(1920,iw)':-2" -c:v libvpx-vp9 -crf 34 -b:v 0 -an public/media/film.webm
+ffmpeg -i source/film.mov -vf "thumbnail,scale=1600:-2" -frames:v 1 public/media/film-poster.jpg
+ffmpeg -i source/turntable.mov -vf "fps=12,scale=1280:-2" public/media/seq/frame-%04d.webp
+blender -b movement.blend -P turntable.py -- --frames 36 --out frames/
+```
+
+Keep originals outside the client bundle, preserve the licence record, verify
+crops at desktop and 390px, and add a WebP/JPEG fallback where the browser
+matrix needs one. A frame set is a hero-sized payload: emit a 640px derivative
+and a half-length mobile set from the same pass, write an explicit manifest, and
+check first, middle, and last frame by eye. Never run an unbounded sequence.
+Transparent video needs an opaque poster before you rely on alpha support.
+
+Depth, normal, and displacement maps come from licensed project material and
+stay linear where the shader expects data rather than colour; check banding at
+the real crop.
+
+**Model to glTF:** strip hidden geometry and unused materials, apply transforms
+with an intentional origin and real-world scale, bake what need not stay
+dynamic, export only required animations, run a validator and an optimizer
+(`gltf-transform`, `gltfpack`) when available, measure decoded texture memory
+and draw calls on a real phone, and produce a poster or frame-sequence fallback
+from the same camera. That fallback preserves the product view, not a gradient.
+
+Record durable asset paths and roles in `.dreative/context.json`, and delete
+intermediate exports from the shipped bundle. Validating dimensions, format,
+missing-asset behaviour, mobile selection and loading order is mechanical, and
+a drawn stand-in passes every one of those checks — so check the material too.
+Before shipping any drawn surface, list what is already in the asset directory:
+the usual version of this failure is a build that sourced the right photograph,
+resized it, and then drew the tile by hand anyway.
 
 ## When nothing fits
 
