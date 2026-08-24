@@ -49,6 +49,41 @@ node scripts/run-all.mjs --no-yolo               # scoped permissions instead of
 node scripts/run-all.mjs --archive               # archive at round end, for a round you will not score
 ```
 
+### Dreative against Dreative
+
+The default round is skill versus control. To compare two Dreative builds instead — a
+direction against another direction, a local skill edit against the installed one, or the
+same input twice head to head — give both arms the skill:
+
+```sh
+node scripts/run-all.mjs --scenarios caliber-movement \
+  --arms with-a,with-b --direction-a showcase --direction-b recommended
+```
+
+Any arm named `with-<name>` gets the skill installed and its own `--direction-<name>`,
+falling back to `--direction` when you do not name one. The review is blind exactly as
+before, and the reveal names the arms rather than "Dreative" and "control".
+
+Such a round is deliberately **left out of the scoreboard**: it cannot say whether the
+skill helps, only which of two Dreative variants is better. The verdict block is written
+to `VERDICTS.md` in full, with the arm names in place of `with`/`without`.
+
+### One arm now, the other later
+
+A round is the unit that gets paired, archived and scored, so a second arm run hours later
+has to join the *same* round rather than open its own. `--round` does that:
+
+```sh
+node scripts/run-all.mjs --scenarios caliber-movement --arms with-a --direction-a showcase
+# … the round number is printed at the top; when you have budget again:
+node scripts/run-all.mjs --round 202608241142 --scenarios caliber-movement --arms with-b
+```
+
+Until the second arm exists the first shows up in `review.mjs` as a view-only tab, since
+there is nothing to compare it against. **Do not reset the round in between** — reset
+archives and clears `runs/`, and a cleared arm cannot be paired with anything. `--round`
+refuses a round that is no longer in `runs/` rather than building half a comparison.
+
 ### Variance check
 
 `--repeat N` runs the same scenario N times inside one round, tagged `r1`, `r2`, …

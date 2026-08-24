@@ -19,7 +19,10 @@ export function vaultDir() {
 function winnerWord(overall) {
   if (overall === 'with') return 'Dreative'
   if (overall === 'without') return 'control'
-  return 'Tie'
+  if (overall === 'Tie' || !overall) return 'Tie'
+  // A Dreative-vs-Dreative round: the winner is an arm name, and calling it "Dreative"
+  // would file a variant comparison as evidence about the skill itself.
+  return `arm ${overall}`
 }
 
 /** Append one verdict line to the vault CHANGELOG. Returns the file written, or null. */
@@ -31,7 +34,7 @@ export function recordVerdict(record) {
 
   const day = record.judgedAt.slice(0, 10)
   const heading = `## ${day}`
-  const round = (record.runs.with.split('__').pop() || '').trim()
+  const round = ((Object.values(record.runs)[0] ?? '').split('__').pop() || '').trim()
   const losses = Object.entries(record.criteria)
     .filter(([, v]) => v === 'without')
     .map(([k]) => k)

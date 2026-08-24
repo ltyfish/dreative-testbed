@@ -7,6 +7,24 @@ import url from 'node:url'
 export const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..', '..')
 export const RUNS = path.join(ROOT, 'runs')
 
+/**
+ * Which arms carry the skill. `with` is the original single Dreative arm; `with-<name>`
+ * is one side of a Dreative-vs-Dreative round, where both sides have the skill and the
+ * variable under test is something else — the direction, a local skill edit, or plain
+ * run-to-run variance. Anything else is a control.
+ */
+export function isSkillArm(arm) {
+  return arm === 'with' || String(arm).startsWith('with-')
+}
+
+/** Human name for an arm. Used everywhere an arm is revealed, never before. */
+export function armTitle(arm) {
+  if (arm === 'without') return 'CONTROL — no skill'
+  if (arm === 'with') return 'WITH Dreative'
+  if (isSkillArm(arm)) return `DREATIVE ${String(arm).slice(5).toUpperCase()}`
+  return String(arm).toUpperCase()
+}
+
 export function listScenarios() {
   return fs
     .readdirSync(path.join(ROOT, 'scenarios'))
@@ -30,12 +48,12 @@ export function buildPrompt(meta, arm, runDir, direction) {
   // the skill is actually for. This is a property of the harness, so it belongs to the
   // harness. The control never sees these gates, and the line costs it nothing.
   const directionLine =
-    arm === 'with' && direction
+    isSkillArm(arm) && direction
       ? ` Build the ${direction} direction; treat this message as the user's explicit choice of direction and settings. Nobody is available to answer during this session, so take the recommended configuration and build — do not pause for any confirmation.`
       : ''
 
   const skillLine =
-    arm === 'with'
+    isSkillArm(arm)
       ? `Use the Dreative skill for this work. It is installed in this project.${directionLine}`
       : 'Do not use any design skill, framework, or checklist beyond your own judgement.'
 
@@ -119,8 +137,8 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
     }
   }
 
-  // The skill goes into the "with" arm only. A control containing skill files is not a control.
-  if (arm === 'with') {
+  // The skill goes into skill arms only. A control containing skill files is not a control.
+  if (isSkillArm(arm)) {
     for (const dir of ['.claude', '.codex']) {
       const src = path.join(ROOT, dir)
       if (fs.existsSync(src)) fs.cpSync(src, path.join(runDir, dir), { recursive: true })
@@ -149,7 +167,7 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
         arm,
         seq: index,
         label: label ?? null,
-        direction: arm === 'with' ? (direction ?? null) : null,
+        direction: isSkillArm(arm) ? (direction ?? null) : null,
         product: meta.product,
         field: meta.field,
       },

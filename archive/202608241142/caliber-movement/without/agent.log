@@ -1,0 +1,52 @@
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/caliber-movement__without__202608241142
+
+This is the product page for Caliber 08, a mechanical watch movement made by Aubry & Vent in a run of 200. It is bought by collectors who care about how a movement is built and how it runs, and who will spend real time on this page before reserving one. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The six stages of the power path, in the order energy travels through them, each with its detail line and its figure
+- The four physical layers with their thicknesses and notes
+- Every row of the specification list
+- All three finishes with their exact CHF prices, delivery dates, and remaining allocation
+- The five workshop facts, including the run of 200 and the indefinite servicing commitment
+- The reservation form and its confirmation, which must name the chosen finish, its price, and its delivery date
+- The statement that reservations are not binding and no payment is taken
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by reading the project files.
+  → Bash
+
+  → Bash
+Now I'll build the page. Design direction: a dark, instrument-grade page — German-silver greys, a warm brass accent, serif display for names and a tabular mono for every figure, with the power path drawn as an actual traversal and the layers drawn to scale.
+  → Bash
+Heredoc quoting tripped; I'll write the file directly.
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608241142\src\App.jsx
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\caliber-movement__without__202608241142\src\styles.css
+
+  → Bash
+`npm run build` succeeds. Here's what I built.
+
+**Structure and order** — the page follows how a collector actually evaluates a movement: what it is → how it works → how it's built → what it measures → who makes it → what it costs → reserve.
+
+1. **Hero** — name, the run-of-200 line, the 72-hour sentence, and four key figures on a ruled strip. A scroll-driven SVG balance wheel with a breathing hairspring sits beside it (turns with scroll, the way the real one is driven).
+2. **01 Power path** — the six stages as a vertical rail with nodes that light brass as each stage enters view. Name and detail on the left, the figure set apart in brass on a rule to the right, so the numbers are scannable independently of the prose.
+3. **02 Construction** — the four layers as a row of plates, each with a **bar drawn to true relative thickness** (0.9 / 1.4 / 0.8 / 0.7 against the 1.4mm main plate), bottom-aligned so the four read as a stack and animating up in order.
+4. **03 Specification** — sticky heading beside a ruled two-column list, all ten rows, values in tabular mono with a brass underline on hover.
+5. **04 Workshop** — the five facts as a hairline grid of large serif statements, each one given its own field rather than buried in a bullet list.
+6. **05 Finishes** — three cards, price large in mono, delivery and remaining allocation as a labelled fact pair, plus a gauge bar comparing remaining allocation. Choosing one selects it (brass border) and scrolls to the form with the select pre-filled.
+7. **06 Reserve** — a bordered card: the not-binding/no-payment statement on the left, the form on the right, with a live echo of finish · price · delivery under the button. The confirmation replaces the form and names the finish, price, and delivery date.
+8. **Footer** — copyright, enquiries mail, and the three links.
+
+**Language** — near-black grounds, German-silver greys, one brass accent used only for figures and live state; Cormorant Garamond for names, Inter for prose, IBM Plex Mono tabular for every number so figures align down the page. Hairline rules everywhere instead of boxes and shadows.
+
+Reveals are IntersectionObserver-driven and fully neutralised under `prefers-reduced-motion`. Responsive down through 1080 / 860 / 620px. Nothing committed.

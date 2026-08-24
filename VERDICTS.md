@@ -20,13 +20,13 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
-| caliber-movement | 4 | 0 | 0 |
+| caliber-movement | 5 | 0 | 0 |
 | civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **17** | **8** | **1** |
+| **Total** | **18** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -669,3 +669,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** same remark as last verdict, plain, boring, minimalistic, nothing much, tho it kinda executed wrong not gonna lie, is not visually working for soem seciton
 
 **Summary:** i would give design B the winner solely because design A sucks, but B needs alot of improvements, i see alot of loop holes, worst thing is it is falling back to svg and using it extensively, transitioning is barely, not much unique design and animation, plain tables etc, and i just see alot fo potential for design B but it fails to meet my expectations. best thign about loser is urm, is slightly less simplier looking at first glance i guess
+
+## caliber-movement — 2026-08-24
+
+- with:    `caliber-movement__with__202608241142`
+- without: `caliber-movement__without__202608241142`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** well im just gonna feedback and ignore design A, because its a genuine bug/misuse of dreative, like i do get the use of svg, but holy almost everything is made of svg, ok maybe i exagerate a little, but most is make of svg, not saying is bad but is genuinely ugly, unprofessional and doenst look real, thats why i tend to avoid self crete, soem are nice like interactive layers, but others are just meanignless and ugly, complex svg for no reason, is not whether svg execute while is whether dreative even source and use actual real phtots, images, frames, models etc. well i can see the vision adn the artistic direction of this website, is still very bad executed, the pacing is fine and all tho soe scroll animationms are non exeistent, soem animated components are not pleasant to the eye,  soem iamges and text are misaligned and ugly cropped, no smooth transition between sections just normal fade in and out, some sections are ugly and just look plain anmdboring without any direction.
+
+**Feedback on the control:** i believe  no matter how many test i run, ill still hjave the same feedback, boring, plain, overused, no need compare dreative since thrat is the clear winner
+
+**Summary:** worst thing about winner is legit, using alot of wrongly executed svg, and those execution are poor where animations arent good, pleasent, misaligned, too fast and ugly, looks unrealistic and unprofessional, not sourced or real. some section feel plain while other has iamges misaligned and has no clear art direction, overused of svg and sourced images arent neccessary the greatest and kinda ugly, i want it to literally search web and apply. best thign about design A is ig the cleaniness, tho thats a bad thing too, nothing special

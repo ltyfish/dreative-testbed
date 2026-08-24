@@ -12,6 +12,7 @@ import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
 import { ARCHIVE, listRounds, readJson } from './lib/archive.mjs'
+import { armTitle } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4322
 // The archive is usually opened from the review page, and a new tab with no link back is a
@@ -161,7 +162,7 @@ function roundPage(round) {
   const armCol = (scenario, a) => {
     const base = `/f/${encodeURIComponent(round)}/${encodeURIComponent(scenario)}/${a.arm}`
     if (!a.exists) return `<div class="col"><span class="tag">${a.arm} — not archived</span></div>`
-    const base_label = a.meta?.arm === 'without' || a.arm === 'without' ? 'CONTROL — no skill' : 'WITH Dreative'
+    const base_label = armTitle(a.meta?.arm ?? a.arm)
     const label = a.meta?.label ? `${base_label} · ${String(a.meta.label).toUpperCase()}` : base_label
     const links = [
       a.site ? `<a class="btn" href="/site/${encodeURIComponent(round)}/${encodeURIComponent(scenario)}/${a.arm}/" target="_blank" rel="noopener">Open site ↗</a>` : '',
@@ -184,15 +185,23 @@ function roundPage(round) {
   const body = scenarios
     .map((s) => {
       const v = s.verdict
-      const cell = (val) => (val === 'with' ? '<span class="win-with">WITH Dreative</span>' : val === 'without' ? '<span class="win-without">control</span>' : esc(val ?? '—'))
+      const cell = (val) =>
+        val === 'with'
+          ? '<span class="win-with">WITH Dreative</span>'
+          : val === 'without'
+            ? '<span class="win-without">control</span>'
+            : val && val !== 'Tie' && val !== '—'
+              ? `<span class="win-with">${esc(armTitle(val))}</span>`
+              : esc(val ?? '—')
       const verdictHtml = v
         ? `<table>
             <tr><th>Criterion</th><th>Winner</th></tr>
             ${Object.entries(v.criteria ?? {}).map(([k, val]) => `<tr><td>${esc(k)}</td><td>${cell(val)}</td></tr>`).join('')}
             <tr><td><strong>Overall</strong></td><td>${cell(v.overall)}</td></tr>
           </table>
-          <p class="sub" style="margin-top:10px"><strong>On the Dreative build:</strong> ${esc(v.feedback?.with || '—')}</p>
-          <p class="sub"><strong>On the control:</strong> ${esc(v.feedback?.without || '—')}</p>
+          ${Object.entries(v.feedback ?? {})
+            .map(([arm, text]) => `<p class="sub" style="margin-top:10px"><strong>On ${esc(armTitle(arm))}:</strong> ${esc(text || '—')}</p>`)
+            .join('')}
           <p class="sub"><strong>Summary:</strong> ${esc(v.summary || '—')}</p>`
         : `<p class="sub">Not scored. Run <code>node scripts/review.mjs</code> while this round is still in <code>runs/</code>.</p>`
       return `<div class="card">

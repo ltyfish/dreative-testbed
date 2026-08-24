@@ -1,0 +1,22 @@
+{
+  "scenario": "caliber-movement",
+  "judgedAt": "2026-08-24T13:00:13.289Z",
+  "runs": {
+    "with": "caliber-movement__with__202608241142",
+    "without": "caliber-movement__without__202608241142"
+  },
+  "criteria": {
+    "distinct": "with",
+    "fit": "with",
+    "hierarchy": "with",
+    "craft": "with",
+    "mobile": "Tie",
+    "restraint": "with"
+  },
+  "overall": "with",
+  "feedback": {
+    "without": "i believe  no matter how many test i run, ill still hjave the same feedback, boring, plain, overused, no need compare dreative since thrat is the clear winner",
+    "with": "well im just gonna feedback and ignore design A, because its a genuine bug/misuse of dreative, like i do get the use of svg, but holy almost everything is made of svg, ok maybe i exagerate a little, but most is make of svg, not saying is bad but is genuinely ugly, unprofessional and doenst look real, thats why i tend to avoid self crete, soem are nice like interactive layers, but others are just meanignless and ugly, complex svg for no reason, is not whether svg execute while is whether dreative even source and use actual real phtots, images, frames, models etc. well i can see the vision adn the artistic direction of this website, is still very bad executed, the pacing is fine and all tho soe scroll animationms are non exeistent, soem animated components are not pleasant to the eye,  soem iamges and text are misaligned and ugly cropped, no smooth transition between sections just normal fade in and out, some sections are ugly and just look plain anmdboring without any direction."
+  },
+  "summary": "worst thing about winner is legit, using alot of wrongly executed svg, and those execution are poor where animations arent good, pleasent, misaligned, too fast and ugly, looks unrealistic and unprofessional, not sourced or real. some section feel plain while other has iamges misaligned and has no clear art direction, overused of svg and sourced images arent neccessary the greatest and kinda ugly, i want it to literally search web and apply. best thign about design A is ig the cleaniness, tho thats a bad thing too, nothing special"
+}

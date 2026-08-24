@@ -77,14 +77,18 @@ export function runHealth(runName) {
   }
 }
 
-/** A pair is only judgeable when both sides are. One broken arm invalidates the comparison. */
-export function pairHealth(withRun, withoutRun) {
-  const a = runHealth(withRun)
-  const b = runHealth(withoutRun)
+/**
+ * A pair is only judgeable when both sides are. One broken arm invalidates the comparison.
+ * Keyed by arm name rather than by "with"/"without", because a Dreative-vs-Dreative round
+ * has neither.
+ */
+export function pairHealth(runA, runB, armA = 'with', armB = 'without') {
+  const a = runHealth(runA)
+  const b = runHealth(runB)
   return {
     ok: a.ok && b.ok,
     judgeable: !a.fatal && !b.fatal,
-    with: a,
-    without: b,
+    [armA]: a,
+    [armB]: b,
   }
 }

@@ -17,7 +17,7 @@ import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture
 import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
-import { ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
+import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
 const VERDICT_DIR = path.join(RUNS, 'verdicts')
@@ -107,19 +107,27 @@ function loadPairs() {
     // judge — say nothing rather than answer with the wrong round.
     const seq = [...new Set(list.map((r) => r.meta.seq))].sort().reverse()[0]
     if (!seq) continue
+    // The pair is whichever two arms this round actually ran. It is usually with-vs-control,
+    // but a round can also put two Dreative arms against each other (--arms with-a,with-b),
+    // and then there is no "with" run to look for. Anything other than exactly two captured
+    // arms is not a comparison and falls through to the solo view.
     const captured = isCaptured
-    const withArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'with' && captured(r))
-    const withoutArm = list.find((r) => r.meta.seq === seq && r.meta.arm === 'without' && captured(r))
-    if (!withArm || !withoutArm) continue
+    const inRound = list.filter((r) => r.meta.seq === seq && captured(r))
+    const armNames = [...new Set(inRound.map((r) => r.meta.arm))].sort()
+    if (armNames.length !== 2) continue
+    const firstArm = inRound.find((r) => r.meta.arm === armNames[0])
+    const secondArm = inRound.find((r) => r.meta.arm === armNames[1])
+    if (!firstArm || !secondArm) continue
 
     const assignments = readJson(ASSIGN_FILE, {})
-    const key = `${scenario}::${withArm.dir}::${withoutArm.dir}`
+    const key = `${scenario}::${firstArm.dir}::${secondArm.dir}`
     if (!assignments[key]) {
-      assignments[key] = Math.random() < 0.5 ? 'with-is-A' : 'without-is-A'
+      assignments[key] = Math.random() < 0.5 ? 'first-is-A' : 'second-is-A'
       fs.mkdirSync(RUNS, { recursive: true })
       fs.writeFileSync(ASSIGN_FILE, JSON.stringify(assignments, null, 2), 'utf8')
     }
-    const withIsA = assignments[key] === 'with-is-A'
+    // Older assignment files spoke of the with arm; it is the same choice under both names.
+    const firstIsA = assignments[key] === 'first-is-A' || assignments[key] === 'with-is-A'
 
     let info = {}
     try {
@@ -134,15 +142,16 @@ function loadPairs() {
       product: info.product ?? scenario,
       field: info.field ?? '',
       challenge: info.designChallenge ?? '',
-      A: withIsA ? withArm : withoutArm,
-      B: withIsA ? withoutArm : withArm,
+      A: firstIsA ? firstArm : secondArm,
+      B: firstIsA ? secondArm : firstArm,
       // A verdict counts only if it judged *these* two runs. Keying it on the scenario
       // alone carried last round's tick onto this round's untouched pair.
       scored: (() => {
         const prev = readJson(path.join(VERDICT_DIR, `${scenario}.json`), null)
-        return Boolean(prev && prev.runs?.with === withArm.dir && prev.runs?.without === withoutArm.dir)
+        const judged = new Set(Object.values(prev?.runs ?? {}))
+        return judged.size === 2 && judged.has(firstArm.dir) && judged.has(secondArm.dir)
       })(),
-      health: pairHealth(withArm.dir, withoutArm.dir),
+      health: pairHealth(firstArm.dir, secondArm.dir, firstArm.meta.arm, secondArm.meta.arm),
     })
   }
   return pairs.sort((a, b) => a.scenario.localeCompare(b.scenario))
@@ -209,7 +218,7 @@ function loadSolos(pairs) {
 const runLabel = (run, spansRounds) => {
   if (spansRounds) return run.meta.label ? `${run.meta.seq} · ${String(run.meta.label).toUpperCase()}` : String(run.meta.seq)
   if (run.meta.label) return String(run.meta.label).toUpperCase()
-  return run.meta.arm === 'with' ? 'WITH DREATIVE' : 'CONTROL'
+  return armTitle(run.meta.arm).toUpperCase()
 }
 
 function buildFailure(runDir) {
@@ -392,7 +401,9 @@ function saveVerdict(body) {
   const record = {
     scenario: body.scenario,
     judgedAt: new Date().toISOString(),
-    runs: { with: pair.A.meta.arm === 'with' ? pair.A.dir : pair.B.dir, without: pair.A.meta.arm === 'without' ? pair.A.dir : pair.B.dir },
+    // Keyed by arm name, so a Dreative-vs-Dreative verdict records which two arms it judged
+    // rather than pretending one of them was a control.
+    runs: { [armOf('A')]: pair.A.dir, [armOf('B')]: pair.B.dir },
     criteria: Object.fromEntries(CRITERIA.map(([k]) => [k, resolve(body.picks?.[k])])),
     overall: resolve(body.picks?.overall),
     feedback: {
@@ -404,24 +415,33 @@ function saveVerdict(body) {
 
   fs.writeFileSync(path.join(VERDICT_DIR, `${body.scenario}.json`), JSON.stringify(record, null, 2), 'utf8')
 
-  const label = (v) => (v === 'with' ? 'WITH Dreative' : v === 'without' ? 'control' : v)
+  const label = (v) => (v === 'with' ? 'WITH Dreative' : v === 'without' ? 'control' : v === 'Tie' || v === '—' ? v : armTitle(v))
   const rows = [...CRITERIA.map(([k, name]) => [name, record.criteria[k]]), ['**Overall**', record.overall]]
     .map(([name, v]) => `| ${name} | ${label(v)} |`)
     .join('\n')
 
+  // The scoreboard is a with-versus-control tally and reads these lines to build itself, so
+  // a Dreative-vs-Dreative round must not name its arms "with" and "without": its arm lines
+  // do not match, its winner is not a scoreboard value, and it is left out of the count. It
+  // is still a full verdict record — it just answers a different question.
+  const armWidth = Math.max(...Object.keys(record.runs).map((a) => a.length)) + 1
+  const armLines = Object.entries(record.runs)
+    .map(([arm, dir]) => `- ${`${arm}:`.padEnd(armWidth + 1)} \`${dir}\``)
+    .join('\n')
+  const feedback = Object.entries(record.feedback)
+    .map(([arm, text]) => `**Feedback on ${arm === 'with' ? 'the Dreative build' : arm === 'without' ? 'the control' : armTitle(arm)}:** ${text || '—'}`)
+    .join('\n\n')
+
   const block = `
 ## ${body.scenario} — ${record.judgedAt.slice(0, 10)}
 
-- with:    \`${record.runs.with}\`
-- without: \`${record.runs.without}\`
+${armLines}
 
 | Criterion | Winner |
 |---|---|
 ${rows}
 
-**Feedback on the Dreative build:** ${record.feedback.with || '—'}
-
-**Feedback on the control:** ${record.feedback.without || '—'}
+${feedback}
 
 **Summary:** ${record.summary || '—'}
 `
@@ -430,7 +450,7 @@ ${rows}
 
   // Put the verdict next to the designs it judges, so the archived round carries its own
   // result instead of relying on gitignored runs/ or on VERDICTS.md being read in order.
-  const roundDir = findRoundForRun(record.runs.with) ?? findRoundForRun(record.runs.without)
+  const roundDir = Object.values(record.runs).map(findRoundForRun).find(Boolean)
   if (roundDir) syncVerdict(body.scenario, roundDir)
 
   // Project memory lives outside this repo and used to be updated by hand, which is how a
@@ -866,13 +886,14 @@ document.getElementById('submit').addEventListener('click', async () => {
   if (!res.ok) { alert('Save failed: ' + await res.text()); return; }
   const rec = await res.json();
 
-  const pretty = (a) => a === 'with' ? 'WITH Dreative' : 'WITHOUT Dreative (control)';
+  const pretty = (a) => a === 'with' ? 'WITH Dreative' : a === 'without' ? 'WITHOUT Dreative (control)' : 'Dreative — arm ' + a.slice(5).toUpperCase();
   document.getElementById('ra').textContent = pretty(rec.armA);
   document.getElementById('rb').textContent = pretty(rec.armB);
   document.getElementById('conclusion').textContent =
-    rec.overall === 'Tie' ? 'Tie. On this scenario the skill produced no visible advantage.'
+    rec.overall === 'Tie' ? 'Tie. On this scenario the two arms produced no visible difference.'
     : rec.overall === 'with' ? 'The Dreative build won. One real data point in its favour.'
-    : 'The control won. The skill made this worse — the most useful result you can get.';
+    : rec.overall === 'without' ? 'The control won. The skill made this worse — the most useful result you can get.'
+    : pretty(rec.overall) + ' won. Both arms had the skill, so this says nothing about whether the skill helps — only which variant is better.';
   document.getElementById('reveal').classList.add('show');
   document.getElementById('submit').disabled = true;
   document.getElementById('reveal').scrollIntoView({ behavior: 'smooth' });
