@@ -16,3 +16,7 @@ runs/*
 # them. If a later round genuinely needs the Experience Map and Showcase contract
 # archived, copy them in `archiveRun` (scripts/lib/archive.mjs) and unignore them here.
 # Not speculatively — an unread file is cost, not evidence.
+
+# Skill trees extracted from the code repo for a --skill-<arm> comparison. Reproducible
+# from git at any time, so they are cache, not evidence.
+scratch/skill-*/

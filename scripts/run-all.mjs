@@ -24,6 +24,16 @@
 // Do not reset the round in review.mjs until every arm has run: reset archives and clears
 // runs/, and a cleared arm cannot be paired with anything.
 //
+// To test a skill edit rather than a setting, give one arm an older tree. --skill-<name>
+// takes a directory, or git:<ref> to extract skill/dreative from the code repository at
+// that commit (DREATIVE_REPO overrides the default ../Dreative):
+//
+//   node scripts/run-all.mjs --scenarios caliber-movement --arms with-a,with-b \
+//     --skill-a git:HEAD --skill-b git:a59ee84
+//
+// Both arms then get the same direction and the same brief, so the only difference is the
+// skill itself — which is the comparison a direction A/B cannot make.
+//
 // For each scenario and each arm it scaffolds an isolated project, spawns a headless
 // agent session with the brief already written, waits for all of them, then builds and
 // screenshots every result. Nothing is pasted by hand, so the only variable between the
@@ -36,7 +46,7 @@
 //
 // Afterwards: node scripts/review.mjs  ·  browse past rounds: node scripts/archive.mjs
 
-import { spawn } from 'node:child_process'
+import { execFileSync, spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
@@ -150,6 +160,58 @@ function directionFor(armName) {
   return value
 }
 const ARM_DIRECTION = Object.fromEntries(ARMS.map((a) => [a, directionFor(a)]))
+
+// A skill tree per arm. `git:<ref>` is extracted from the code repository into scratch/,
+// which is why an old skill can be run without checking anything out or disturbing the
+// working tree. A plain path is used as it is.
+const CODE_REPO = process.env.DREATIVE_REPO || path.resolve(ROOT, '..', 'Dreative')
+function skillTreeFor(armName) {
+  if (!isSkillArm(armName)) return null
+  const suffix = armName === 'with' ? null : armName.slice(5)
+  const raw = suffix ? (arg(`skill-${suffix}`, null) ?? arg(`skill-${armName}`, null)) : arg('skill', null)
+  if (raw === null || raw === true) return null
+  const spec = String(raw)
+  if (!spec.startsWith('git:')) {
+    const dir = path.resolve(spec)
+    if (!fs.existsSync(dir)) {
+      console.error(`--skill-${suffix ?? ''}: no such directory: ${dir}`)
+      process.exit(1)
+    }
+    return { dir, label: spec }
+  }
+  const ref = spec.slice(4)
+  if (!fs.existsSync(path.join(CODE_REPO, '.git'))) {
+    console.error(`--skill-${suffix ?? ''} ${spec}: no git repository at ${CODE_REPO}`)
+    console.error('Set DREATIVE_REPO to the code project, or pass a directory instead.')
+    process.exit(1)
+  }
+  let sha
+  try {
+    sha = execFileSync('git', ['-C', CODE_REPO, 'rev-parse', '--short', ref], { encoding: 'utf8' }).trim()
+  } catch {
+    console.error(`--skill-${suffix ?? ''} ${spec}: ${ref} is not a commit in ${CODE_REPO}`)
+    process.exit(1)
+  }
+  const dir = path.join(ROOT, 'scratch', `skill-${sha}`)
+  if (!fs.existsSync(path.join(dir, 'SKILL.md'))) {
+    fs.rmSync(dir, { recursive: true, force: true })
+    fs.mkdirSync(dir, { recursive: true })
+    // Pure git: list the tree at that commit and write each blob out. tar on Windows reads
+    // a C: path as a remote host, and this needs no external archiver at all.
+    const files = execFileSync('git', ['-C', CODE_REPO, 'ls-tree', '-r', '--name-only', sha, '--', 'skill/dreative'], { encoding: 'utf8' })
+      .split(String.fromCharCode(10))
+      .map((line) => line.trim())
+      .filter(Boolean)
+    for (const file of files) {
+      const rel = file.slice('skill/dreative/'.length)
+      const dest = path.join(dir, rel)
+      fs.mkdirSync(path.dirname(dest), { recursive: true })
+      fs.writeFileSync(dest, execFileSync('git', ['-C', CODE_REPO, 'show', sha + ':' + file], { maxBuffer: 1 << 28 }))
+    }
+  }
+  return { dir, label: `git:${sha}` }
+}
+const ARM_SKILL = Object.fromEntries(ARMS.map((a) => [a, skillTreeFor(a)]))
 
 const stamp = () => new Date().toISOString().slice(11, 19)
 const log = (msg) => console.log(`${stamp()} ${msg}`)
@@ -322,7 +384,17 @@ for (const scenario of SCENARIOS) {
   for (const arm of ARMS) {
     for (let rep = 1; rep <= REPEAT; rep++) {
       try {
-        jobs.push(scaffoldRun({ scenario, arm, seq: roundStamp, direction: ARM_DIRECTION[arm], label: REPEAT > 1 ? `r${rep}` : undefined }))
+        jobs.push(
+          scaffoldRun({
+            scenario,
+            arm,
+            seq: roundStamp,
+            direction: ARM_DIRECTION[arm],
+            skillTree: ARM_SKILL[arm]?.dir ?? null,
+            skillLabel: ARM_SKILL[arm]?.label ?? null,
+            label: REPEAT > 1 ? `r${rep}` : undefined,
+          }),
+        )
       } catch (err) {
         console.error(`could not scaffold ${scenario}/${arm}: ${err.message}`)
         if (/already exists/.test(err.message)) {
@@ -346,6 +418,10 @@ const directionLine =
 console.log(`  direction    ${directionLine}`)
 console.log(`  scenarios    ${SCENARIOS.join(', ')}${COUNT !== null ? ` (${COUNT} picked at random)` : ''}`)
 console.log(`  arms         ${ARMS.join(', ')}${skillArms.length > 1 ? '  (Dreative vs Dreative — no control in this round)' : ''}${REPEAT > 1 ? `  ×${REPEAT} repeats of the same input` : ''}`)
+if (Object.values(ARM_SKILL).some(Boolean)) {
+  const shown = ARMS.filter(isSkillArm).map((a) => `${a}=${ARM_SKILL[a]?.label ?? 'installed'}`)
+  console.log(`  skill        ${shown.join(', ')}`)
+}
 console.log(`  sessions     ${jobs.length}, ${CONCURRENCY} at a time, ${TIMEOUT_MIN}m cap each`)
 console.log(`  runs         ${path.relative(ROOT, RUNS)}/\n`)
 console.log("Nothing to paste. Progress goes to each run's agent.log.\n")
@@ -419,6 +495,7 @@ const roundMeta = {
   model: MODEL && MODEL !== true ? String(MODEL) : null,
   yolo: Boolean(YOLO),
   direction,
+  skills: { ...(previousMeta?.skills ?? {}), ...Object.fromEntries(ARMS.filter(isSkillArm).map((a) => [a, ARM_SKILL[a]?.label ?? 'installed'])) },
   scenarios: [...new Set([...(previousMeta?.scenarios ?? []), ...SCENARIOS])],
   // A resumed round is still one round: its arms and sessions are the union of every
   // command that wrote into it, or the record describes only the arm you ran last.

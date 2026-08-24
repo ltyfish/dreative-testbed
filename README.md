@@ -64,6 +64,24 @@ Any arm named `with-<name>` gets the skill installed and its own `--direction-<n
 falling back to `--direction` when you do not name one. The review is blind exactly as
 before, and the reveal names the arms rather than "Dreative" and "control".
 
+**To test a skill edit rather than a setting, give each arm its own skill tree.** Otherwise
+both arms install whatever is in the testbed root and the only thing left to vary is a
+setting — which answers a different question than "did this change do anything":
+
+```sh
+node scripts/run-all.mjs --scenarios caliber-movement \
+  --arms with-a,with-b --skill-a git:HEAD --skill-b git:a59ee84 --timeout 40
+```
+
+`--skill-<name>` takes a directory containing the skill, or `git:<ref>` to read
+`skill/dreative` out of the code repository at that commit. The tree is extracted into
+`scratch/skill-<sha>/` with `git ls-tree` and `git show` — nothing is checked out and the
+code project's working tree is never touched, so an old skill can be run while you keep
+editing the current one. Set `DREATIVE_REPO` if the code project is not at `../Dreative`.
+Each run records which tree it got in `run.json`, and the round header prints them.
+
+With both arms on the same direction and the same brief, the skill is the only difference.
+
 Such a round is deliberately **left out of the scoreboard**: it cannot say whether the
 skill helps, only which of two Dreative variants is better. The verdict block is written
 to `VERDICTS.md` in full, with the arm names in place of `with`/`without`.

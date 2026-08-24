@@ -77,8 +77,28 @@ ${meta.preserve.map((p) => `- ${p}`).join('\n')}
 When you are done, make sure \`npm run build\` succeeds. Do not commit anything.`
 }
 
+/**
+ * Replace the installed skill in a scaffolded run with a specific tree.
+ *
+ * Both arms of a Dreative-vs-Dreative round otherwise install whatever is in the testbed
+ * root, which makes the only available variable the direction — and a direction A/B does
+ * not answer "did this edit change anything". Pointing one arm at an older tree does.
+ */
+function useSkillTree(runDir, treeDir) {
+  const src = fs.existsSync(path.join(treeDir, 'SKILL.md')) ? treeDir : path.join(treeDir, 'dreative')
+  if (!fs.existsSync(path.join(src, 'SKILL.md'))) {
+    throw new Error(`no SKILL.md under ${treeDir} — expected a dreative skill directory`)
+  }
+  for (const host of ['.claude', '.codex']) {
+    const dest = path.join(runDir, host, 'skills', 'dreative')
+    if (!fs.existsSync(path.join(runDir, host))) continue
+    fs.rmSync(dest, { recursive: true, force: true })
+    fs.cpSync(src, dest, { recursive: true })
+  }
+}
+
 /** Create an isolated, real Vite project for one scenario and one arm. */
-export function scaffoldRun({ scenario, arm, label, seq, direction }) {
+export function scaffoldRun({ scenario, arm, label, seq, direction, skillTree, skillLabel }) {
   const scenarioDir = path.join(ROOT, 'scenarios', scenario)
   const meta = readScenario(scenario)
 
@@ -145,6 +165,7 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
     }
     const agents = path.join(ROOT, 'AGENTS.md')
     if (fs.existsSync(agents)) fs.cpSync(agents, path.join(runDir, 'AGENTS.md'))
+    if (skillTree) useSkillTree(runDir, skillTree)
 
     // Enforce the read-once rule the skill only states. See scripts/hooks/read-once.mjs
     // for why this is a harness instrument rather than shipped behaviour. It guards paths
@@ -168,6 +189,8 @@ export function scaffoldRun({ scenario, arm, label, seq, direction }) {
         seq: index,
         label: label ?? null,
         direction: isSkillArm(arm) ? (direction ?? null) : null,
+        // Which skill this arm ran, so a verdict cannot be attributed to the wrong build.
+        skill: isSkillArm(arm) ? (skillLabel ?? 'installed') : null,
         product: meta.product,
         field: meta.field,
       },
