@@ -52,6 +52,7 @@ import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { runHealth } from './lib/health.mjs'
+import { writeMaterialSummary } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
 import { ROOT, RUNS, isSkillArm, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
@@ -331,11 +332,21 @@ function runSession({ runName, runDir, prompt }) {
         const opened = Object.keys(reads.skillFilesRead)
         log(`[${runName}] skill files opened: ${opened.length ? opened.join(', ') : 'NONE'}`)
       }
+      // What shipped, materially. An instrument, not a gate — it blocks nothing and advises
+      // nothing. Recorded because visual smoke passed `202608262140` with no blockers while
+      // the page had nothing on it that could be driven, and no existing record held that.
+      let material = null
+      try {
+        material = writeMaterialSummary(runDir)
+        if (material) log(`[${runName}] material: ${material.verdict}`)
+      } catch (err) {
+        log(`[${runName}] material summary failed: ${err.message}`)
+      }
       const mins = ((Date.now() - started) / 60_000).toFixed(1)
       log(
         `[${runName}] session finished in ${mins}m (exit ${code})${timedOut ? ' — KILLED AT CAP, duration is a floor not a measurement' : ''}`,
       )
-      resolve({ runName, code, minutes: Number(mins), timedOut, reads })
+      resolve({ runName, code, minutes: Number(mins), timedOut, reads, material })
     })
 
     child.on('error', (err) => {
