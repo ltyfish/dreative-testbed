@@ -171,3 +171,193 @@ export function writeMaterialSummary(runDir) {
   if (summary) fs.writeFileSync(path.join(runDir, 'material.json'), JSON.stringify(summary, null, 2))
   return summary
 }
+
+// ---------------------------------------------------------------------------
+// Continuity. Added 2026-08-29 after `caliber-movement__with-a__202608271135`,
+// which passed everything above: 19 sourced, credited photographs, no drawn props,
+// `indexesIntoMaterial: true` — and six *different* watches indexed as six stages of one
+// movement, three different objects sold as three finishes of one caliber, all of it
+// shipped at whatever colour temperature its archive happened to use.
+//
+// So the count was satisfied and the set was not one thing. Neither half of that is
+// visible above, because both questions are about the *relationship between* the shipped
+// images rather than about any one of them. These two measurements are cheap proxies:
+//
+//   - one credit per image means one source per image, which for a set meant to read as
+//     one subject is the whole failure showing up in the attribution line;
+//   - a wide colour-temperature spread across the shipped rasters means separately
+//     sourced material shipped untreated, whatever else was done to it.
+//
+// Proxies, not findings. A legitimately mixed set — an archive piece, a reportage strip, a
+// page whose subject genuinely is many objects — reads "wide" here and is right to. This
+// stays an instrument: it records, it blocks nothing, it advises nothing.
+
+const CREDIT_LINE =
+  /(?:^|\n)[^\n]*?\b(?:CC[ -]?(?:BY|0)|public domain|courtesy of|photo(?:graph)?(?: by)?|©|unsplash|pexels|wikimedia|commons\.wikimedia|flickr|nasa|noaa|usgs|esa|rijksmuseum|smithsonian|auckland museum|internet archive)\b[^\n]*/gi
+
+const CREDIT_NOISE = /^[\s#*\->|`]+|[\s*|`]+$/g
+
+const NON_SOURCE_HOST =
+  /fonts\.|googleapis|gstatic|jsdelivr|unpkg|cdnjs|localhost|127\.0\.0\.1|schema\.org|w3\.org|npmjs|react|vitejs/
+
+/**
+ * Distinct attributions across everything the run ships or records. Reads the shipped
+ * source and any markdown beside it (`CREDITS.md`, the asset commitment), because a credit
+ * lives in whichever of those the build chose.
+ */
+function creditSpread(runDir, shipped) {
+  let text = readSource(runDir)
+  for (const file of shipped) {
+    if (!/\.(md|txt)$/i.test(file)) continue
+    try {
+      text += `\n${fs.readFileSync(path.join(runDir, file), 'utf8')}`
+    } catch {}
+  }
+  const lines = new Set()
+  const domains = new Set()
+  for (const match of text.match(CREDIT_LINE) || []) {
+    const line = match.replace(/\s+/g, ' ').replace(CREDIT_NOISE, '').trim()
+    if (line.length > 6 && line.length < 300) lines.add(line.toLowerCase())
+  }
+  for (const m of text.matchAll(/https?:\/\/([^/\s")'\]]+)/g)) {
+    const host = m[1].toLowerCase().replace(/^www\./, '')
+    if (NON_SOURCE_HOST.test(host)) continue
+    domains.add(host)
+  }
+  return { distinctCredits: lines.size, distinctSourceDomains: domains.size }
+}
+
+const MAX_MEASURED = 28
+const MAX_BYTES = 6_000_000
+
+/**
+ * Mean colour temperature and luminance per shipped raster, measured by decoding each file
+ * in Chromium — the testbed already has it for capture, and nothing else here can read a
+ * webp. Returns null rather than throwing when the browser is unavailable: this is an
+ * instrument, and a missing measurement is a missing measurement, not a failed run.
+ */
+export async function imageSetSpread(runDir) {
+  const shipped = walk(runDir).filter((f) => !f.startsWith('.') && RASTER.test(f))
+  const files = shipped
+    .filter((f) => {
+      try {
+        return fs.statSync(path.join(runDir, f)).size <= MAX_BYTES
+      } catch {
+        return false
+      }
+    })
+    .slice(0, MAX_MEASURED)
+  if (files.length < 2) return null
+
+  let chromium
+  try {
+    ;({ chromium } = await import('playwright'))
+  } catch {
+    return null
+  }
+  let browser
+  try {
+    browser = await chromium.launch()
+    const page = await browser.newPage()
+    await page.goto('about:blank')
+    const measured = []
+    for (const file of files) {
+      const ext = path.extname(file).slice(1).toLowerCase()
+      const mime = ext === 'jpg' ? 'jpeg' : ext
+      const data = `data:image/${mime};base64,${fs.readFileSync(path.join(runDir, file)).toString('base64')}`
+      const stat = await page.evaluate(async (src) => {
+        const img = new Image()
+        img.src = src
+        try {
+          await img.decode()
+        } catch {
+          return null
+        }
+        const n = 32
+        const c = document.createElement('canvas')
+        c.width = n
+        c.height = n
+        const ctx = c.getContext('2d', { willReadFrequently: true })
+        ctx.drawImage(img, 0, 0, n, n)
+        const { data: px } = ctx.getImageData(0, 0, n, n)
+        let r = 0
+        let g = 0
+        let b = 0
+        for (let i = 0; i < px.length; i += 4) {
+          r += px[i]
+          g += px[i + 1]
+          b += px[i + 2]
+        }
+        const count = px.length / 4
+        return { r: r / count, g: g / count, b: b / count }
+      }, data).catch(() => null)
+      if (!stat) continue
+      // Warm-cool proxy in [-1, 1]. Not a colour temperature in kelvin and not trying to be;
+      // it only has to separate brass from steel.
+      const warmth = (stat.r - stat.b) / Math.max(1, stat.r + stat.b)
+      const luma = (0.2126 * stat.r + 0.7152 * stat.g + 0.0722 * stat.b) / 255
+      measured.push({ file, warmth: round(warmth), luma: round(luma) })
+    }
+    if (measured.length < 2) return null
+    const warmths = measured.map((m) => m.warmth)
+    const lumas = measured.map((m) => m.luma)
+    return {
+      measured: measured.length,
+      ofShipped: shipped.length,
+      warmthSpread: round(Math.max(...warmths) - Math.min(...warmths)),
+      warmthStdDev: round(stdDev(warmths)),
+      lumaSpread: round(Math.max(...lumas) - Math.min(...lumas)),
+      coldest: measured.reduce((a, b) => (b.warmth < a.warmth ? b : a)).file,
+      warmest: measured.reduce((a, b) => (b.warmth > a.warmth ? b : a)).file,
+    }
+  } catch {
+    return null
+  } finally {
+    await browser?.close().catch(() => {})
+  }
+}
+
+function round(n) {
+  return Math.round(n * 1000) / 1000
+}
+
+function stdDev(values) {
+  const mean = values.reduce((a, b) => a + b, 0) / values.length
+  return Math.sqrt(values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length)
+}
+
+/**
+ * Merge the continuity signal into an already-written `material.json`. Separate from
+ * `writeMaterialSummary` because it needs a browser, and that one stays synchronous and
+ * dependency-free so a launch failure still gets a record.
+ */
+export async function addContinuitySignal(runDir) {
+  const file = path.join(runDir, 'material.json')
+  if (!fs.existsSync(file)) return null
+  const summary = JSON.parse(fs.readFileSync(file, 'utf8'))
+  const shipped = walk(runDir).filter((f) => !f.startsWith('.'))
+  const credits = creditSpread(runDir, shipped)
+  const colour = await imageSetSpread(runDir)
+  const perImage =
+    summary.shippedRasters > 0 ? round(credits.distinctCredits / summary.shippedRasters) : 0
+  summary.continuity = {
+    ...credits,
+    creditsPerShippedRaster: perImage,
+    colour,
+    note: continuityNote(credits, perImage, colour),
+  }
+  fs.writeFileSync(file, JSON.stringify(summary, null, 2))
+  return summary.continuity
+}
+
+function continuityNote(credits, perImage, colour) {
+  const parts = []
+  if (credits.distinctCredits === 0) parts.push('no attributions found')
+  else if (perImage >= 0.6)
+    parts.push(`about one credit per shipped image (${credits.distinctCredits})`)
+  else parts.push(`${credits.distinctCredits} attributions across the shipped set`)
+  if (!colour) parts.push('colour not measured')
+  else if (colour.warmthSpread >= 0.25) parts.push(`wide warmth spread (${colour.warmthSpread})`)
+  else parts.push(`warmth spread ${colour.warmthSpread}`)
+  return `${parts.join('; ')} — proxies for one-source-per-slot and untreated mixed material, not findings`
+}

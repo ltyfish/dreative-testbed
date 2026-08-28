@@ -52,7 +52,7 @@ import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { runHealth } from './lib/health.mjs'
-import { writeMaterialSummary } from './lib/material.mjs'
+import { writeMaterialSummary, addContinuitySignal } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
 import { ROOT, RUNS, isSkillArm, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
@@ -321,7 +321,7 @@ function runSession({ runName, runDir, prompt }) {
       TIMEOUT_MIN * 60_000,
     )
 
-    child.on('close', (code) => {
+    child.on('close', async (code) => {
       clearTimeout(killer)
       logStream.write(transcript.end())
       logStream.end()
@@ -339,6 +339,12 @@ function runSession({ runName, runDir, prompt }) {
       try {
         material = writeMaterialSummary(runDir)
         if (material) log(`[${runName}] material: ${material.verdict}`)
+        // Whether the set is one thing, and whether it was treated into one. Needs a browser
+        // to decode webp, so it runs after the synchronous record is already on disk.
+        if (material) {
+          const continuity = await addContinuitySignal(runDir)
+          if (continuity) log(`[${runName}] continuity: ${continuity.note}`)
+        }
       } catch (err) {
         log(`[${runName}] material summary failed: ${err.message}`)
       }
