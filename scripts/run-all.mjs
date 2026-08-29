@@ -344,6 +344,8 @@ function runSession({ runName, runDir, prompt }) {
         if (material) {
           const continuity = await addContinuitySignal(runDir)
           if (continuity) log(`[${runName}] continuity: ${continuity.note}`)
+          const sections = JSON.parse(fs.readFileSync(path.join(runDir, 'material.json'), 'utf8')).sectionCoverage
+          if (sections) log(`[${runName}] sections: ${sections.note}`)
         }
       } catch (err) {
         log(`[${runName}] material summary failed: ${err.message}`)

@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import http from 'node:http'
 
 // What shipped, materially — recorded per run alongside reads.json.
 //
@@ -173,6 +174,126 @@ export function writeMaterialSummary(runDir) {
 }
 
 // ---------------------------------------------------------------------------
+// Where the budget went. Added 2026-08-29 after `caliber-movement__with-a__202608290421`,
+// which passed every signal above — 60 frames of one subject, canvas-driven, one shoot —
+// and shipped **120 frames plus three photographs**. Its layers section is drawn bars, its
+// specification is a dotted-leader table, its finishes are three cards. One funded moment
+// above seven unfunded sections is invisible to every count that came before this one,
+// because all of them ask what shipped and none asks *where it landed*.
+//
+// Measured on the rendered page, not on the source. The first version of this walked
+// `<section>` in the JSX and read `202608262140` as 0 of 7 while it shipped 25 rasters —
+// its images render through a child component, so the literal reference is never inside
+// the section. A misleading zero is worse than no signal, so this serves the built tree
+// and asks the browser what is actually inside each section.
+//
+// Records, blocks nothing, advises nothing. A page with a section held by type alone is a
+// legitimate page and reads as `text` here; the finding is a *run* of them under a peak.
+//
+// `drawn` is deliberately narrow — a large inline SVG or a real `<table>`. A section built out
+// of styled divs and definition lists reads as `text`, which is the honest answer: nothing is
+// holding it either way.
+
+const MIN_SIDE = 110
+
+/** Static server over the built tree, so the page renders as it shipped. */
+function serveDir(root) {
+  const types = {
+    '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript',
+    '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml',
+    '.webp': 'image/webp', '.avif': 'image/avif', '.png': 'image/png',
+    '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webm': 'video/webm',
+    '.mp4': 'video/mp4', '.woff2': 'font/woff2', '.glb': 'model/gltf-binary',
+  }
+  return new Promise((resolve) => {
+    const server = http.createServer((req, res) => {
+      const rel = decodeURIComponent(req.url.split('?')[0])
+      let file = path.join(root, rel === '/' ? 'index.html' : rel)
+      if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+        file = path.join(root, 'index.html')
+      }
+      if (!fs.existsSync(file)) { res.writeHead(404); res.end(); return }
+      res.writeHead(200, { 'content-type': types[path.extname(file).toLowerCase()] || 'application/octet-stream' })
+      fs.createReadStream(file).pipe(res)
+    })
+    server.listen(0, '127.0.0.1', () => resolve({ server, port: server.address().port }))
+  })
+}
+
+/**
+ * One row per rendered `<section>`: what visibly holds it. `media` beats `drawn` beats
+ * `text` — a section with a photograph and a table is held by the photograph.
+ */
+export async function measureSections(runDir) {
+  const root = fs.existsSync(path.join(runDir, 'dist', 'index.html'))
+    ? path.join(runDir, 'dist')
+    : runDir
+  if (!fs.existsSync(path.join(root, 'index.html'))) return null
+
+  let chromium
+  try {
+    ;({ chromium } = await import('playwright'))
+  } catch {
+    return null
+  }
+
+  let browser
+  let handle
+  try {
+    handle = await serveDir(root)
+    browser = await chromium.launch()
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
+    await page.goto(`http://127.0.0.1:${handle.port}/`, { waitUntil: 'networkidle', timeout: 30_000 })
+    // Reveal-on-scroll sections have to be reached before they hold anything.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 700) {
+        window.scrollTo(0, y)
+        await new Promise((r) => setTimeout(r, 90))
+      }
+      window.scrollTo(0, 0)
+    })
+    await page.waitForTimeout(700)
+
+    const sections = await page.evaluate((minSide) => {
+      const big = (el) => el.clientWidth >= minSide && el.clientHeight >= minSide
+      const all = [...document.querySelectorAll('section')]
+      const top = all.filter((s) => !all.some((o) => o !== s && o.contains(s)))
+      return top.map((s, i) => {
+        const label =
+          s.querySelector('h1,h2,h3,h4')?.textContent?.replace(/\s+/g, ' ').trim().slice(0, 60) ||
+          s.getAttribute('id') ||
+          `section ${i + 1}`
+        const media = [...s.querySelectorAll('img,video,canvas,picture')].some(big)
+        const bg = [...s.querySelectorAll('*')].some((el) => {
+          if (!big(el)) return false
+          const v = getComputedStyle(el).backgroundImage
+          return v && v !== 'none' && /url\(/.test(v) && !/^url\(["']?data:image\/svg/.test(v)
+        })
+        const drawn =
+          [...s.querySelectorAll('svg')].some(big) || s.querySelector('table') !== null
+        return { label, held: media || bg ? 'media' : drawn ? 'drawn' : 'text' }
+      })
+    }, MIN_SIDE)
+
+    if (!sections.length) return null
+    const count = (kind) => sections.filter((s) => s.held === kind).length
+    return {
+      sections: sections.length,
+      heldByMedia: count('media'),
+      heldByDrawn: count('drawn'),
+      heldByText: count('text'),
+      rows: sections.map((s) => `${s.label} — ${s.held}`),
+      note: `${count('media')} of ${sections.length} rendered sections hold real media; ${count('drawn')} drawn, ${count('text')} type only`,
+    }
+  } catch {
+    return null
+  } finally {
+    await browser?.close().catch(() => {})
+    handle?.server.close()
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Continuity. Added 2026-08-29 after `caliber-movement__with-a__202608271135`,
 // which passed everything above: 19 sourced, credited photographs, no drawn props,
 // `indexesIntoMaterial: true` — and six *different* watches indexed as six stages of one
@@ -338,6 +459,8 @@ export async function addContinuitySignal(runDir) {
   const shipped = walk(runDir).filter((f) => !f.startsWith('.'))
   const credits = creditSpread(runDir, shipped)
   const colour = await imageSetSpread(runDir)
+  // Where the budget landed, not just how much of it there was.
+  summary.sectionCoverage = await measureSections(runDir)
   const perImage =
     summary.shippedRasters > 0 ? round(credits.distinctCredits / summary.shippedRasters) : 0
   summary.continuity = {
