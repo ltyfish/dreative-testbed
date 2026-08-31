@@ -203,8 +203,19 @@ drop it; nothing else refers to it.
 ## Working across two machines
 
 ```sh
-git pull
-node scripts/setup.mjs
+git checkout measure-visual-smoke-per-run && git pull
+cd ../Dreative && git checkout fix-motion-floor-sampling && git pull && npm run build
+cd ../dreative-testbed && node scripts/setup.mjs --skill-from ../Dreative
+```
+
+**Check out the branch in the code repo, not just here.** Dreative's `main` is 114 commits
+behind the working branch and still on 0.5.4, and it is what a fresh clone gives you. Nothing
+errors if you skip this: `--skill-<arm> git:HEAD` resolves against whatever branch the code
+repo is on, so the round runs happily against a months-old skill and the result looks like a
+verdict on the current one. One line proves you are clear:
+
+```sh
+grep -c "Look at forty" ../Dreative/skill/dreative/references/MEDIA_SOURCES.md   # 1, not 0
 ```
 
 `setup.mjs` installs dependencies, installs the Chromium build Playwright uses (it lives
@@ -214,7 +225,11 @@ prints what is still missing. `--check` verifies without changing anything.
 
 The skill itself is deliberately **not** committed here: the `with` arm has to test whatever
 version of Dreative you are working on now, and a committed copy would silently test a stale
-one. Everything else — scenarios, verdicts, and the whole archive — travels with the repo.
+one. It was tracked anyway until 2026-08-30, by which point the committed tree predated
+`MOTION_MATERIAL.md` entirely — so a fresh clone now has no `.claude/` or `.codex/` at all and
+`run-all.mjs` refuses to start until `setup.mjs` installs one. That refusal is the guard, not a
+broken checkout. Everything else — scenarios, verdicts, and the whole archive — travels with
+the repo.
 
 ## The seven scenarios
 
