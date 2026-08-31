@@ -20,3 +20,11 @@ runs/*
 # Skill trees extracted from the code repo for a --skill-<arm> comparison. Reproducible
 # from git at any time, so they are cache, not evidence.
 scratch/skill-*/
+
+# The installed skill. Deliberately not committed: the `with` arm has to test whatever version
+# of Dreative you are working on now, and a committed copy silently tests a stale one — the
+# tracked copy had drifted about a month behind before this rule existed (2026-08-30).
+# `setup.mjs --skill-from ../Dreative` installs it, and `run-all.mjs` refuses to start without
+# it, so a fresh clone cannot accidentally run against nothing.
+.claude/
+.codex/
