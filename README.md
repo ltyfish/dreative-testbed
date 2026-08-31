@@ -216,7 +216,7 @@ The skill itself is deliberately **not** committed here: the `with` arm has to t
 version of Dreative you are working on now, and a committed copy would silently test a stale
 one. Everything else — scenarios, verdicts, and the whole archive — travels with the repo.
 
-## The six scenarios
+## The seven scenarios
 
 | Scenario | Field | What it tests |
 |---|---|---|
@@ -226,6 +226,7 @@ one. Everything else — scenarios, verdicts, and the whole archive — travels 
 | `devtool-docs` | Developer tooling | Utility under density, scannable API tables |
 | `civic-clinic` | Public service | **Restraint** — spectacle is the wrong answer here |
 | `caliber-movement` | Luxury hardware | **Ambition** — a static page is the wrong answer here |
+| `apparel-leggings` | DTC apparel | **The ordinary domain** — nothing can hide behind an unfamiliar object |
 
 The last two are the poles, and they are the reason the set is worth running.
 
@@ -242,8 +243,20 @@ literally energy moving through a machine), sold to people who expect to be show
 calm page of cards and a spec table is a legitimate failure. Neither brief names motion,
 3D, or scroll work, because naming them would test compliance instead of judgement.
 
+`apparel-leggings` was added 2026-08-30 because `caliber-movement` turned out to be a poor
+instrument for judging *imagery*: almost nobody can tell a correct photograph of a watch
+movement from a wrong one, which is how a clip of a tourbillon survived three rounds while the
+copy described a lever escapement. Everybody knows what leggings look like. Material is also
+abundant here rather than scarce — garment photography, fabric texture and movement footage are
+all easy to reach, and the free video libraries are strongest on exactly this subject — so a
+thin page cannot blame the archive. The standing risk is convergence, because generic activewear
+stock is the easiest thing on the internet to find and the least worth shipping.
+
 Each scenario's `scenario.json` holds the brief and the preservation contract — the content
-and behaviour that are product requirements rather than design opinions.
+and behaviour that are product requirements rather than design opinions. A scenario with
+`"baseline": "content-only"` ships `content.jsx` instead of `App.jsx` and an empty stylesheet,
+so the page has to be designed rather than reordered — see `BASELINES.md`. `caliber-movement`
+and `apparel-leggings` are both content-only.
 
 ## Rules that keep the result meaningful
 
@@ -264,6 +277,28 @@ and behaviour that are product requirements rather than design opinions.
 - **Ties everywhere** — elaborate machinery producing no visible effect, which is the risk
   the enforcement-heavy design always carried.
 
+### Before you score, check the instruments
+
+Some questions are answerable from the run directory in seconds, and they tell you whether the
+change under test fired **at all**. A page can look fine and still prove that nothing landed.
+
+```sh
+d=$(ls -dt runs/<scenario>__* | head -1)
+
+grep -c "position: sticky" $d/src/*.css          # did anything persist across a section?
+node -e "console.log(require('./$d/material.json').continuity)"   # credits, domains, warmth spread
+node -e "console.log(require('./$d/../round-<seq>.json').sessions[0].reads.skillFilesRead)"
+```
+
+Reference points from the rounds so far: `202608300433` shipped 58 rasters behind **10 credits
+across 2 domains**; `202608300842` shipped 199 behind **24 across 3** after the contact-sheet
+change, which is what a wide search looks like. `warmthSpread` was 0.517 and 0.53 in those two
+and **0.011** in the one round whose imagery read as a single shoot — above roughly 0.25 means
+mixed material that was never graded. Both of those rounds scored **zero** `position: sticky`
+and never opened `systems/NATIVE_FOUNDATIONS.md`, which is why nothing carried across a section
+boundary. Do not read ambition off the motion count or off `sectionCoverage`; both have been
+satisfied by pages that were rejected on sight.
+
 ## Keeping the skill current
 
 The `with` arm is only meaningful if the installed skill is the one you are testing:
@@ -279,7 +314,8 @@ node ../Dreative/dist/cli/index.js install-skill --skills all --codex
 ## Layout
 
 ```
-scenarios/<name>/    baseline App.jsx, styles.css, scenario.json (brief + preservation contract)
+scenarios/<name>/    scenario.json (brief + preservation contract), App.jsx + styles.css,
+                     and content.jsx for a content-only baseline
 _template/           shared Vite skeleton every run is built from
 runs/                one isolated real project per run, plus verdicts/ (gitignored)
 archive/<round>/     committed record: sources, screenshots, verdicts, dependency-free sites
