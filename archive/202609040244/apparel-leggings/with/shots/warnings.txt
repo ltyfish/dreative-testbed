@@ -1,0 +1,2 @@
+desktop: 1 block(s) were still invisible when photographed — a scroll reveal that never fired. Judge this one from the live preview, not the still.
+mobile: 1 block(s) were still invisible when photographed — a scroll reveal that never fired. Judge this one from the live preview, not the still.

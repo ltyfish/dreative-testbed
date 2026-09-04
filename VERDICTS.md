@@ -20,13 +20,14 @@ limit hit.
 
 | Scenario | With Dreative | Without | Tie |
 |---|---|---|---|
+| apparel-leggings | 1 | 0 | 0 |
 | caliber-movement | 5 | 0 | 0 |
 | civic-clinic | 5 | 1 | 0 |
 | coffee-roaster | 2 | 3 | 0 |
 | devtool-docs | 3 | 3 | 1 |
 | editorial-longform | 2 | 0 | 0 |
 | saas-analytics | 1 | 1 | 0 |
-| **Total** | **18** | **8** | **1** |
+| **Total** | **19** | **8** | **1** |
 
 ## Notes across rounds
 
@@ -690,3 +691,24 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** i believe  no matter how many test i run, ill still hjave the same feedback, boring, plain, overused, no need compare dreative since thrat is the clear winner
 
 **Summary:** worst thing about winner is legit, using alot of wrongly executed svg, and those execution are poor where animations arent good, pleasent, misaligned, too fast and ugly, looks unrealistic and unprofessional, not sourced or real. some section feel plain while other has iamges misaligned and has no clear art direction, overused of svg and sourced images arent neccessary the greatest and kinda ugly, i want it to literally search web and apply. best thign about design A is ig the cleaniness, tho thats a bad thing too, nothing special
+
+## apparel-leggings — 2026-09-04
+
+- with:     `apparel-leggings__with__202609040244`
+- without:  `apparel-leggings__without__202609040244`
+
+| Criterion | Winner |
+|---|---|
+| Distinctiveness | WITH Dreative |
+| Fit to the product | WITH Dreative |
+| Hierarchy and pacing | WITH Dreative |
+| Craft | WITH Dreative |
+| Mobile | Tie |
+| Restraint | WITH Dreative |
+| **Overall** | WITH Dreative |
+
+**Feedback on the Dreative build:** this is nice, but still not what i really want, importantly, the transitioning is not bizzare and what i anticpate, like fully immersive and goes with the user flow,  the design is nice, interactivity is meaningful, and scroll is nice ig not as cool tho, theres only like one image editing with stretch etc, i expected more from using of images/videos etc,and vidoes was absent. other than that, when i view on laptop, theres alot fo space around but i think i can ignore that
+
+**Feedback on the control:** this is plain and boring, nromal claude design
+
+**Summary:** i mean i dont see much improvement from previous run, theres no point comparing with claude anymore, cause dreative win, but dreative have alot of flaws and alot of things i wish it haad, like video rendering, eidting, use of it, motion design with video like props moving idk, scroll animation nicer , with use of image editing or video too, then have better transition etc, and this fking thing i dont understand, so we need to make a easy scenario like just a normal ecommerce

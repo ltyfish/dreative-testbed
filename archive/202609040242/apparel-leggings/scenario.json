@@ -1,0 +1,18 @@
+{
+  "product": "Halfmoon — the Contour legging",
+  "field": "Direct-to-consumer apparel · activewear",
+  "designChallenge": "The ordinary domain, chosen deliberately as the opposite of caliber-movement. Everybody already knows what leggings look like, so nothing can hide behind an unfamiliar object: a reader can tell instantly whether the imagery is right, whether the garment shown is the one being described, and whether the page feels like a place or like six stacked bands. Material is abundant here rather than scarce — garment photography, fabric texture, and movement footage are all easy to reach, and the free video libraries are strongest on exactly this subject — so a page that comes back thin cannot blame the archive. What to read off it: does the route flow, with sections that hand off to each other and something that carries across, or does it resolve into independent reveal-on-scroll blocks; do the size chart and the fabric specification find a form other than a table; and is the sourced imagery treated into one world or shipped as a set of unrelated rectangles. Convergence is the standing risk in this category, because generic activewear stock is the easiest thing on the internet to find and the least worth shipping.",
+  "prompt": "This is the product page for the Contour legging, the one garment made by Halfmoon, a small activewear label. It is bought by people who have been disappointed by leggings before — sheer fabric, a waistband that rolls, a size chart that lied — and who will read carefully before buying. Redesign the site so it does justice to the garment.",
+  "baseline": "content-only",
+  "promptContentOnly": "This is the product page for the Contour legging, the one garment made by Halfmoon, a small activewear label. It is bought by people who have been disappointed by leggings before — sheer fabric, a waistband that rolls, a size chart that lied — and who will read carefully before buying. Design and build that page.",
+  "preserve": [
+    "All six colourways with their exact names, prices, and per-colourway stock state, including the two that are sold out and cannot be added to the bag",
+    "The full size chart — every size row with its waist, hip, and inseam measurements in centimetres",
+    "The three inseam lengths and which sizes each is offered in",
+    "The fit finder, which takes a height and a usual size and returns a recommendation, including its unsure state",
+    "Every fabric fact: the composition, the weight, the opacity test result, the four-way stretch claim, and the gusset construction",
+    "All three customer reviews with their names, their stated height and size, and their fit notes",
+    "The returns statement — 60 days, free return shipping, and that worn-and-washed returns are accepted",
+    "The add-to-bag flow and the bag summary, which must name the chosen colourway, size, inseam, and price"
+  ]
+}

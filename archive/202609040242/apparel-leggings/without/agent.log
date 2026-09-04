@@ -1,0 +1,24 @@
+$ claude (claude)
+
+Work in the project at C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/apparel-leggings__without__202609040242
+
+This is the product page for the Contour legging, the one garment made by Halfmoon, a small activewear label. It is bought by people who have been disappointed by leggings before — sheer fabric, a waistband that rolls, a size chart that lied — and who will read carefully before buying. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All six colourways with their exact names, prices, and per-colourway stock state, including the two that are sold out and cannot be added to the bag
+- The full size chart — every size row with its waist, hip, and inseam measurements in centimetres
+- The three inseam lengths and which sizes each is offered in
+- The fit finder, which takes a height and a usual size and returns a recommendation, including its unsure state
+- Every fabric fact: the composition, the weight, the opacity test result, the four-way stretch claim, and the gusset construction
+- All three customer reviews with their names, their stated height and size, and their fit notes
+- The returns statement — 60 days, free return shipping, and that worn-and-washed returns are accepted
+- The add-to-bag flow and the bag summary, which must name the chosen colourway, size, inseam, and price
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+

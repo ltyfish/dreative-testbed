@@ -1,0 +1,19 @@
+{
+  "round": "202609040242",
+  "archivedAt": "2026-09-04T03:40:19.983Z",
+  "scenarios": [
+    "apparel-leggings"
+  ],
+  "runs": [
+    {
+      "runName": "apparel-leggings__without__202609040242",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "apparel-leggings__with__202609040242",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

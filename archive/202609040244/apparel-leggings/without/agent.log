@@ -1,0 +1,50 @@
+$ claude (claude)
+
+Work in the project at C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/apparel-leggings__without__202609040244
+
+This is the product page for the Contour legging, the one garment made by Halfmoon, a small activewear label. It is bought by people who have been disappointed by leggings before — sheer fabric, a waistband that rolls, a size chart that lied — and who will read carefully before buying. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Do not use any design skill, framework, or checklist beyond your own judgement.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All six colourways with their exact names, prices, and per-colourway stock state, including the two that are sold out and cannot be added to the bag
+- The full size chart — every size row with its waist, hip, and inseam measurements in centimetres
+- The three inseam lengths and which sizes each is offered in
+- The fit finder, which takes a height and a usual size and returns a recommendation, including its unsure state
+- Every fabric fact: the composition, the weight, the opacity test result, the four-way stretch claim, and the gusset construction
+- All three customer reviews with their names, their stated height and size, and their fit notes
+- The returns statement — 60 days, free return shipping, and that worn-and-washed returns are accepted
+- The add-to-bag flow and the bag summary, which must name the chosen colourway, size, inseam, and price
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by reading the project.
+  → Bash
+
+  → Bash
+Now I'll write the page.
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\apparel-leggings__without__202609040244\src\App.jsx
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\apparel-leggings__without__202609040244\src\styles.css
+
+  → Bash
+Build succeeds. Nothing committed.
+
+**The page, in order:** sticky header (wordmark, section links, the returns promise as a standing line) → buy section → fabric → sizing → reviews → returns → footer.
+
+**Buy section.** A sticky product figure on the left, built entirely in CSS — a knit-textured panel with a waistband band and a flatlock centre seam — that changes colour with the selected colourway, since there are no photographs. On the right, the panel: name, lede, then colourway → inseam → size, in that order because the length constrains which sizes exist. Colourways are swatch cards with the real colour, the price, and sold-out state shown as a dashed, struck-through, non-selectable card (Oat and Dried Plum). Sizes are a chip grid; each inseam's offered range is printed on its row *and* enforced — picking "24 inch, short" strikes out 2XL and 3XL, and clears an already-chosen size that the length doesn't come in. That's the one behavioural addition; every displayed fact is unchanged, the add-to-bag condition is unchanged, and the bag summary still names colourway, size, inseam, and price.
+
+**Fabric** is five numbered cells in one bordered grid — composition, weight, opacity test, four-way stretch, gusset — each with its own heading so a careful reader can find the one they came for. Headed "Why it does not go sheer," since that's the doubt the page exists to answer.
+
+**Sizing** puts the full eight-row chart (waist, hip, inseam, all in cm) beside a sticky fit finder. The finder's recommendation gets a "Use this selection" button that applies the size and inseam to the buy panel and scrolls back to it; the unsure state stays plain text pointing at the chart. The chart row for the currently selected size is highlighted, so the two halves talk to each other.
+
+**Reviews** keep the height-and-size line as the caption under each name — that's the load-bearing part for this buyer. **Returns** closes with the full statement plus the three terms as pills.
+
+Warm paper background, serif headings against a sans UI, deep-moss accent — restrained enough that the six colourways are the only saturated things on the page. Responsive down to one column at 900px; sticky elements release there.
