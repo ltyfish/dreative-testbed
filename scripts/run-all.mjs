@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Run a full A/B round end to end with no manual prompting.
 //
-//   node scripts/run-all.mjs                       # all 6 scenarios, both arms = 12 sessions
+//   node scripts/run-all.mjs                       # all 7 scenarios, one skill arm each
 //   node scripts/run-all.mjs 3                     # 3 scenarios picked at random = 6 sessions
 //   node scripts/run-all.mjs 2 showcase            # …in the Showcase direction
 //   node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs
@@ -86,7 +86,11 @@ const AGENT = String(arg('agent', 'claude'))
 const MODEL = arg('model', null)
 const CONCURRENCY = Number(arg('concurrency', 3))
 const TIMEOUT_MIN = Number(arg('timeout', 25))
-const ARMS = String(arg('arms', 'with,without')).split(',').map((a) => a.trim()).filter(Boolean)
+// The control arm is retired (2026-09-04): 19-8 with the last six rounds unanimous, and the
+// user's call that comparing against plain Claude is settled. A round now defaults to one skill
+// arm; pass --arms with,without explicitly to bring the control back, or --arms with-a,with-b for
+// Dreative against Dreative. See VERDICTS.md, notes across rounds.
+const ARMS = String(arg('arms', 'with')).split(',').map((a) => a.trim()).filter(Boolean)
 for (const armName of ARMS) {
   if (armName !== 'without' && !isSkillArm(armName)) {
     console.error(`unknown arm: ${armName}`)

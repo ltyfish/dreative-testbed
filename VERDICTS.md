@@ -55,6 +55,41 @@ limit hit.
   so they had already played by the time the section was on screen. A motion check that
   only asks whether state changed will pass this.
 
+- **2026-09-04, the control arm is retired.** Nineteen wins to eight with the last six rounds
+  unanimous, and the user's own words on `202609040244`: *"theres no point comparing with claude
+  anymore, cause dreative win"*. A control arm now costs half a round to re-prove a settled
+  result. Rounds are single-arm, or Dreative against Dreative with `--arms with-a,with-b`. The
+  scoreboard above is frozen at what it was — later rounds are recorded as notes here, not as
+  verdict blocks, because there is no pair to score.
+- **2026-09-04, `storefront-ceramics__with-a__202609041003` — unscored, single arm, and the most
+  informative round so far.** It ran against the sourcing gate (`Dreative@1ec4c6f`) and ended on a
+  provider usage limit at 34.1m (exit 1) with visual smoke BLOCKED, so craft defects are only half
+  attributable. What is attributable is the sourcing: **82 candidates in `.scratch/cand` against 3
+  files the round before, 4 contact sheets against 0, 42 shipped derivatives across 21 subjects,
+  and every one of the nine products depicted** — the first round in this testbed's history where
+  the page showed the thing it was about. `apparel-leggings__with__202609040244` had built an
+  entire product page from two CC0 texture maps and a shader, and never showed the garment.
+- **The same round exposed the next stage, which is why it was worth more than a verdict.** Its
+  `package.json` dependencies were `react` and `react-dom` and nothing else; all motion was one
+  `IntersectionObserver` setting opacity and translateY, six uses, over 42 files pixel-identical
+  to their downloads apart from dimensions. `warmthSpread` 0.39 against 0.011 in the one round
+  whose imagery read as a single shoot. Sourcing was fixed and nothing downstream of it moved —
+  the material arrived and was placed, not worked. `Dreative@c5053c8` gates that stage too, and
+  is unmeasured.
+- **Prose in a file the builder read has now failed four times.** That round opened `motion.md`,
+  `MOTION_MATERIAL.md` and `NATIVE_FOUNDATIONS.md`, and `SKILL.md` already said *"a route whose
+  entire seam vocabulary is an IntersectionObserver has not chosen at all"*. It shipped exactly
+  that. The two changes that have moved behaviour were both preconditions with an observable
+  artefact, not better sentences. Read a round's failure against that distinction before
+  proposing new wording.
+
+- **2026-09-04, a second ceramics session () was killed at the provider limit while
+  building a contact sheet that included **mixkit footage frames**, one frame per clip — the
+  "a clip becomes a candidate by giving up one frame" mechanic firing as intended. The complete
+  run () mentions video nowhere in its log. So "no video shipped" is at least
+  partly a session-limit artefact, not a settled decline, and the video framing should not be
+  judged until a ceramics round finishes without being cut off. Both runs are in  only.
+
 ---
 
 <!-- paste verdict records below this line -->
