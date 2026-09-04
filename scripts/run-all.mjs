@@ -355,10 +355,34 @@ function runSession({ runName, runDir, prompt }) {
         log(`[${runName}] material summary failed: ${err.message}`)
       }
       const mins = ((Date.now() - started) / 60_000).toFixed(1)
+      // A session the provider cut off is not a build that chose to stop. Three rounds in a row
+      // were killed mid-work by a usage limit and every one of them was read afterwards as if the
+      // agent had finished and made its choices — the missing refinement pass gets scored as bad
+      // craft, and an absent stage gets scored as an absent decision. Detect it here and say so
+      // everywhere the run is looked at.
+      let truncated = null
+      try {
+        const tail = fs.readFileSync(path.join(runDir, 'agent.log'), 'utf8').slice(-4000)
+        if (/hit your (session|usage) limit|usage limit reached|rate limit/i.test(tail)) truncated = 'provider limit'
+        else if (timedOut) truncated = 'killed at the time cap'
+      } catch {}
+      if (truncated) {
+        try {
+          const rj = path.join(runDir, 'run.json')
+          const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
+          fs.writeFileSync(rj, JSON.stringify({ ...meta, truncated }, null, 2))
+        } catch {}
+      }
       log(
         `[${runName}] session finished in ${mins}m (exit ${code})${timedOut ? ' — KILLED AT CAP, duration is a floor not a measurement' : ''}`,
       )
-      resolve({ runName, code, minutes: Number(mins), timedOut, reads, material })
+      if (truncated) {
+        log(
+          `[${runName}] TRUNCATED (${truncated}) — this build did not finish. Defects of craft, missing
+    stages and absent decisions are all unattributable here; do not score it against the skill.`,
+        )
+      }
+      resolve({ runName, code, minutes: Number(mins), timedOut, truncated, reads, material })
     })
 
     child.on('error', (err) => {
@@ -468,6 +492,16 @@ if (capped.length) {
   console.log(`\n${capped.length} session(s) hit the ${TIMEOUT_MIN}m cap and were killed mid-work:`)
   for (const c of capped) console.log(`  ${c.runName}`)
   console.log('Their builds are truncated and their durations are floors, not measurements.')
+}
+
+// A provider limit is the other way a build stops without deciding to, and it is the one that has
+// actually been costing rounds. Say it at the end too, where the verdict is about to be formed.
+const cut = sessions.filter((s) => s.truncated === 'provider limit')
+if (cut.length) {
+  console.log(`\n${cut.length} session(s) were CUT OFF BY THE PROVIDER mid-work:`)
+  for (const c of cut) console.log(`  ${c.runName}`)
+  console.log('These builds did not finish. Craft defects, missing stages and absent decisions in')
+  console.log('them are unattributable — they are not evidence about the skill. Re-run before scoring.')
 }
 
 // A session that ended without touching the seed is not a design. Say so here, loudly,
