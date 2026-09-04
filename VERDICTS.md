@@ -83,12 +83,12 @@ limit hit.
   artefact, not better sentences. Read a round's failure against that distinction before
   proposing new wording.
 
-- **2026-09-04, a second ceramics session () was killed at the provider limit while
-  building a contact sheet that included **mixkit footage frames**, one frame per clip — the
+- **2026-09-04, a second ceramics session (`202609041028`) was killed at the provider limit while
+  building a contact sheet that included mixkit footage frames**, one frame per clip — the
   "a clip becomes a candidate by giving up one frame" mechanic firing as intended. The complete
-  run () mentions video nowhere in its log. So "no video shipped" is at least
+  run (`202609041003`) mentions video nowhere in its log. So "no video shipped" is at least
   partly a session-limit artefact, not a settled decline, and the video framing should not be
-  judged until a ceramics round finishes without being cut off. Both runs are in  only.
+  judged until a ceramics round finishes without being cut off. Both runs are in `runs/` only.
 
 ---
 
