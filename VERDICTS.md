@@ -90,6 +90,23 @@ limit hit.
   partly a session-limit artefact, not a settled decline, and the video framing should not be
   judged until a ceramics round finishes without being cut off. Both runs are in `runs/` only.
 
+- **2026-09-05, `storefront-ceramics__with-a__202609041329` — the gate swap, and the reason runs
+  are now labelled truncated.** Under the treatment gate it installed `gsap` and `three`, searched
+  110 candidates, and pulled a Poly Haven HDRI — then shipped **two photographs** and generated all
+  nine products from hand-written `[radius, height]` profiles revolved by `THREE.LatheGeometry`.
+  The round before had 42 shipped derivatives and no driver at all. Each cleared the newest gate by
+  abandoning the previous one. The reviewer named it on sight without knowing the cause — *"so many
+  cups lined up identical"* — which is what one lathe profile recoloured necessarily produces, and
+  what nine real pots never would.
+- **The substitution has now appeared three times in three costumes**: drawn SVG (August), a shader
+  over one CC0 texture (`202609040244`), and generated 3D under a real HDRI (`202609041329`). What
+  to watch is not a technology. It is any route where the subject is **constructed** rather than
+  obtained, and each costume has looked more legitimate than the last.
+- **All three ceramics rounds were cut off by the provider mid-work.** `run-all` now stamps
+  `truncated` into `run.json` and says so in the closing summary. A truncated build's craft
+  defects, missing stages and absent decisions are unattributable — re-run rather than score, and
+  do not let a missing refinement pass enter the record as bad craft.
+
 ---
 
 <!-- paste verdict records below this line -->
