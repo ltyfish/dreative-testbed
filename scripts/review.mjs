@@ -1193,7 +1193,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const body = JSON.parse(raw)
       if (!answerGate(body.run, body.decision)) {
-        res.writeHead(409).end('that is not the run the gate is asking about — reload the page')
+        res.writeHead(409).end('Nothing is waiting on that answer any more — the round either moved on or exited. Reload the page.')
         return
       }
       res.writeHead(200, { 'content-type': 'application/json' })

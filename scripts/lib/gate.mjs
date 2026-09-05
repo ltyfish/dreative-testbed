@@ -116,10 +116,35 @@ function reject(runName) {
   }
 }
 
-/** The question currently on the table, for the review UI to render. Null when there is none. */
+/** Is the round that asked this question still running? */
+function askerAlive(state) {
+  if (!state?.pid) return false
+  try {
+    process.kill(state.pid, 0)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * The question currently on the table, for the review UI to render. Null when there is none.
+ *
+ * A question outlives the process that asked it whenever that process dies while waiting — a
+ * provider limit, a Ctrl-C, a reboot. Nothing then consumes the answer and nothing deletes the
+ * file, so the page kept showing "a round is waiting on you" for a round that had been dead for
+ * hours, with Keep and Throw-it-out buttons that could not do anything. That is worse than no
+ * gate: it asks for a decision that has no effect and gives no sign of it. So a question whose
+ * asker is gone, or one that has already been answered, is not pending — it is litter, and it
+ * gets cleared here.
+ */
 export function pendingGate() {
   const state = readJson(GATE_FILE)
   if (!state?.current) return null
+  if (state.answer || !askerAlive(state)) {
+    fs.rmSync(GATE_FILE, { force: true })
+    return null
+  }
   return state
 }
 
@@ -128,13 +153,19 @@ export function answerGate(runName, decision) {
   const state = readJson(GATE_FILE)
   if (!state?.current || state.current !== runName) return false
   if (decision !== 'keep' && decision !== 'reject') return false
+  // Answering a question nobody is listening to would report success and change nothing.
+  if (!askerAlive(state)) {
+    fs.rmSync(GATE_FILE, { force: true })
+    return false
+  }
   fs.writeFileSync(GATE_FILE, JSON.stringify({ ...state, answer: decision, answeredAt: new Date().toISOString() }, null, 2), 'utf8')
   return true
 }
 
 function publish(state) {
   fs.mkdirSync(RUNS, { recursive: true })
-  fs.writeFileSync(GATE_FILE, JSON.stringify(state, null, 2), 'utf8')
+  // Stamp who is asking, so a question can be told from litter. See pendingGate.
+  fs.writeFileSync(GATE_FILE, JSON.stringify({ ...state, pid: process.pid }, null, 2), 'utf8')
 }
 
 /** Wait for the browser to answer the question we just published. */
