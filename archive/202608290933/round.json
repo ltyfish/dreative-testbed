@@ -1,0 +1,73 @@
+{
+  "round": "202608290933",
+  "archivedAt": "2026-09-05T13:09:08.373Z",
+  "scenarios": [
+    "civic-clinic"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "skills": {
+    "with-a": "git:d995dd8"
+  },
+  "arms": [
+    "with-a"
+  ],
+  "repeat": 1,
+  "sessions": [
+    {
+      "runName": "civic-clinic__with-a__202608290933",
+      "code": 0,
+      "minutes": 26.3,
+      "timedOut": false,
+      "reads": {
+        "skillFilesRead": {
+          "exemplars/PRINCIPLES.md": 1,
+          "exemplars/SLOP.md": 1,
+          "PLAN.md": 2,
+          "references/CREATIVE_DIRECTION.md": 1,
+          "references/MEDIA_SOURCES.md": 3,
+          "references/MOTION_MATERIAL.md": 1,
+          "references/REFERENCE_ADOPTION.md": 1,
+          "references/VISUAL_REFINEMENT.md": 1,
+          "skills/interaction.md": 1,
+          "skills/mobile.md": 1,
+          "skills/motion.md": 1,
+          "skills/ux.md": 1
+        },
+        "toolCalls": {
+          "Bash": 52,
+          "Read": 17,
+          "Edit": 11,
+          "WebFetch": 5,
+          "Write": 4,
+          "Skill": 1,
+          "ToolSearch": 1
+        }
+      },
+      "material": {
+        "workingOriginals": 2,
+        "workingSequences": [],
+        "shippedRasters": 0,
+        "shippedVideo": [],
+        "shippedModels": [],
+        "frameSequences": [],
+        "drivers": [
+          "observer",
+          "rafLoop",
+          "cssTransition"
+        ],
+        "indexesIntoMaterial": false,
+        "verdict": "no external visual material shipped"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "runName": "civic-clinic__with-a__202608290933",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

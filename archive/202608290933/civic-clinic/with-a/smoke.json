@@ -1,0 +1,18 @@
+{
+  "profile": "recommended",
+  "ok": true,
+  "blockers": [],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 7 of 8 interactive elements respond to hover or focus",
+    "motion: 1 of 7 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 6 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 7 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 8 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 7 viewport samples"
+  ]
+}

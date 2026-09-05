@@ -1,0 +1,115 @@
+{
+  "round": "202609041003",
+  "archivedAt": "2026-09-05T13:10:00.381Z",
+  "scenarios": [
+    "storefront-ceramics"
+  ],
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "direction": "recommended",
+  "skills": {
+    "with-a": "git:1ec4c6f"
+  },
+  "arms": [
+    "with-a"
+  ],
+  "repeat": 1,
+  "sessions": [
+    {
+      "runName": "storefront-ceramics__with-a__202609041003",
+      "code": 1,
+      "minutes": 34.1,
+      "timedOut": false,
+      "reads": {
+        "skillFilesRead": {
+          "PLAN.md": 1,
+          "references/CREATIVE_DIRECTION.md": 1,
+          "references/MEDIA_SOURCES.md": 2,
+          "references/MOTION_MATERIAL.md": 1,
+          "references/VISUAL_REFINEMENT.md": 1,
+          "skills/motion.md": 1,
+          "systems/NATIVE_FOUNDATIONS.md": 1
+        },
+        "toolCalls": {
+          "Bash": 62,
+          "Read": 19,
+          "Write": 3,
+          "Skill": 1
+        }
+      },
+      "material": {
+        "workingOriginals": 461,
+        "workingSequences": [
+          {
+            "stem": ".scratch/cand/",
+            "frames": 82,
+            "first": 1,
+            "last": 155
+          },
+          {
+            "stem": ".scratch/norm/",
+            "frames": 82,
+            "first": 1,
+            "last": 82
+          },
+          {
+            "stem": ".scratch/s0/",
+            "frames": 21,
+            "first": 1,
+            "last": 21
+          },
+          {
+            "stem": ".scratch/s1/",
+            "frames": 21,
+            "first": 1,
+            "last": 21
+          },
+          {
+            "stem": ".scratch/s2/",
+            "frames": 21,
+            "first": 1,
+            "last": 21
+          },
+          {
+            "stem": ".scratch/s3/",
+            "frames": 19,
+            "first": 1,
+            "last": 19
+          },
+          {
+            "stem": ".scratch/seq/",
+            "frames": 82,
+            "first": 1,
+            "last": 82
+          },
+          {
+            "stem": ".scratch/seq2/",
+            "frames": 77,
+            "first": 0,
+            "last": 127
+          }
+        ],
+        "shippedRasters": 42,
+        "shippedVideo": [],
+        "shippedModels": [],
+        "frameSequences": [],
+        "drivers": [
+          "timeline",
+          "observer",
+          "rafLoop",
+          "cssTransition"
+        ],
+        "indexesIntoMaterial": false,
+        "verdict": "stills only, moved by reveal or transition"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "runName": "storefront-ceramics__with-a__202609041003",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

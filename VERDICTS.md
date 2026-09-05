@@ -764,3 +764,22 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **Feedback on the control:** this is plain and boring, nromal claude design
 
 **Summary:** i mean i dont see much improvement from previous run, theres no point comparing with claude anymore, cause dreative win, but dreative have alot of flaws and alot of things i wish it haad, like video rendering, eidting, use of it, motion design with video like props moving idk, scroll animation nicer , with use of image editing or video too, then have better transition etc, and this fking thing i dont understand, so we need to make a easy scenario like just a normal ecommerce
+
+## storefront-ceramics — 2026-09-05 — single arm
+
+- run:   `storefront-ceramics__with-a__202609051134`
+- arm:   with-a · direction recommended · skill git:111da09
+- NOTE:  this build was TRUNCATED (provider limit) and is not evidence about the skill
+
+| Axis | Score |
+|---|---|
+| Material | 4 / 5 |
+| Subject | 3 / 5 |
+| Motion | 1 / 5 |
+| Craft | 1 / 5 |
+| Structure and pacing | 1 / 5 |
+| **Overall** | 1 / 5 |
+
+**What is wrong with it:** well i dont know, it truncated + im pretty sure its a prototype, if it is right, i think which should like prototype one section or smth, cause its the whole page and it seems like is not being worked with, prototype or real work, it lacks motion, eidtig, genuine good desiign, transition, crazy stuff that i always mention what motion would do, scroll animation as graph is genuinely damn ugly too. well in general, everything needs to be penalized and is just terrible, u can go take a look and give a verdict urself http://127.0.0.1:57349/
+
+**What to keep:** nil

@@ -79,7 +79,8 @@ export function buildArgs(body) {
     args.push(suffix ? `--skill-${suffix}` : '--skill', raw)
   }
 
-  if (body.gate) args.push('--gate')
+  if (body.prototype) args.push('--prototype')
+  else if (body.gate) args.push('--gate')
   if (body.noYolo) args.push('--no-yolo')
 
   const model = String(body.model ?? '').trim()
@@ -181,7 +182,7 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
   const gate = pendingGate()
   const gatePanel = gate
     ? `<div class="panel" style="border-color:#3b82f6">
-        <h2 style="margin:0 0 6px;font-size:16px">A round is waiting on you</h2>
+        <h2 style="margin:0 0 6px;font-size:16px">${esc(gate.question || 'A round is waiting on you')}</h2>
         <p class="sub" style="margin:0 0 14px">It has built <code>${esc(gate.current)}</code> and stopped. Nothing else runs until you answer.</p>
         ${gate.briefing.truncated ? `<div class="fail">TRUNCATED — ${esc(gate.briefing.truncated)}. This build did not finish, so its defects and missing stages are unattributable. Reject it and re-run.</div>` : ''}
         ${
@@ -271,7 +272,11 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
       <label for="f-label">Label</label>
       <input id="f-label" placeholder="what this round is testing — you will read this in three months">
 
-      <label for="f-gate">Prototype gate</label>
+      <label for="f-proto">Prototype first</label>
+      <label class="sub" style="text-transform:none;letter-spacing:0">
+        <input type="checkbox" id="f-proto" checked style="width:auto"> build the signature moment first and stop — I decide before the page is built</label>
+
+      <label for="f-gate">Gate the finished build</label>
       <label class="sub" style="text-transform:none;letter-spacing:0">
         <input type="checkbox" id="f-gate" checked style="width:auto"> stop after each build and ask me here before it can be scored</label>
 
@@ -332,6 +337,7 @@ sel('go').addEventListener('click', async (e) => {
       model: sel('f-model').value,
       concurrency: Number(sel('f-conc').value),
       gate: sel('f-gate').checked,
+      prototype: sel('f-proto').checked,
       noYolo: sel('f-yolo').checked,
     }),
   });

@@ -1,0 +1,13 @@
+{
+  "scenario": "civic-clinic",
+  "arm": "with-a",
+  "seq": "202608290933",
+  "label": null,
+  "direction": "recommended",
+  "skill": "git:d995dd8",
+  "product": "Eastside Community Health",
+  "field": "Public service · healthcare access",
+  "runName": "civic-clinic__with-a__202608290933",
+  "site": true,
+  "archivedAt": "2026-09-05T13:09:08.372Z"
+}

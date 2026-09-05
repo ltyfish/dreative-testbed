@@ -1,0 +1,21 @@
+{
+  "profile": "recommended",
+  "ok": false,
+  "blockers": [
+    "reveals fire after the reader has scrolled past them in making: content already on screen while the region is centred is still in its approach state, and only resolves once the region has left. Trigger against the top of the viewport, not the bottom.",
+    "mobile-390-reduced: text collision detected during scroll: button.chip overlaps li#piece-bowl-deep, button.chip overlaps h3.piece__name, button.chip overlaps p.piece__spec, button.chip overlaps li#piece-vase, button.chip overlaps p.piece__care, p.shop__filternote overlaps li#piece-vase"
+  ],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 8 of 8 interactive elements respond to hover or focus",
+    "motion: 4 of 9 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 12 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 10 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 8 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 8 viewport samples"
+  ]
+}

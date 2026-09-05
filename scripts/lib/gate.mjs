@@ -19,8 +19,11 @@
 // point. Earlier this skipped itself without a TTY, which quietly turned --gate into a no-op
 // for exactly the people who asked for the gate to be on a screen.
 //
-// Note on what is possible: `claude -p` is one shot with no way back in, so the gate cannot
-// pause a session mid-build and let it carry on afterwards. It gates the finished artefact.
+// `gateRuns` gates finished builds. `gateOne` gates a single run mid-round, which is what a
+// two-phase prototype round uses: the session stops after the signature mechanism, this asks,
+// and the same session is resumed afterwards. An earlier version of this comment said a
+// mid-build gate was impossible because `claude -p` is one-shot. That was wrong — the CLI
+// takes `--session-id` and `--resume`, so a round can genuinely pause and carry on.
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -29,6 +32,7 @@ import { stdin, stdout } from 'node:process'
 import { RUNS } from './scaffold.mjs'
 import { freePort, killTree, spawnPreview } from './capture.mjs'
 import { readSmoke } from './smoke.mjs'
+import { bestLook } from './look.mjs'
 
 export const GATE_FILE = path.join(RUNS, '.gate.json')
 
@@ -47,7 +51,7 @@ const readJson = (p, fallback = null) => {
 export function gateBriefing(runName) {
   const runDir = path.join(RUNS, runName)
   const meta = readJson(path.join(runDir, 'run.json'), {})
-  const look = readJson(path.join(runDir, '.dreative', 'look', 'report.json'))
+  const look = bestLook(runDir)
   const smoke = readSmoke(runDir)
   return {
     run: runName,
@@ -56,6 +60,7 @@ export function gateBriefing(runName) {
     skill: meta.skill ?? null,
     truncated: meta.truncated ?? null,
     looked: Boolean(look),
+    lookedByBuilder: look ? look.byBuilder : null,
     broken: look ? look.broken : null,
     inert: look ? look.observed.filter((o) => /nothing changes across it/.test(o)) : null,
     smokeBlockers: smoke && smoke.ok === false ? smoke.blockers : null,
@@ -153,6 +158,51 @@ async function waitForBrowser(runName, log) {
  * @param runNames  runs to gate, in the order they should be shown
  * @param sessions  what run-all already learned while running them (truncation, mostly)
  */
+/**
+ * Ask about one run, serve it while the question is open, and return true to keep going.
+ *
+ * @param question  what is actually being decided — a prototype gate and a finished-build
+ *                  gate ask different things and conflating them cost a verdict already.
+ */
+export async function gateOne(runName, { question, keepWord = "y", log = console.log, port = 4500, remaining = [] } = {}) {
+  const interactive = Boolean(stdin.isTTY)
+  const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
+  const runDir = path.join(RUNS, runName)
+  const brief = gateBriefing(runName)
+  const chosen = await freePort(port)
+  const server = spawnPreview(runDir, chosen)
+  const url = `http://127.0.0.1:${chosen}/`
+
+  try {
+    if (interactive) {
+      printBriefing(brief)
+      console.log('')
+      console.log(`  Live:  ${url}`)
+      console.log('')
+      let answer = ''
+      while (!/^[yn]$/i.test(answer)) {
+        answer = (await rl.question(`  ${question}  [y/n]  `)).trim()
+        if (answer === '') answer = keepWord
+      }
+      return /^y$/i.test(answer)
+    }
+    publish({
+      current: runName,
+      url,
+      question,
+      remaining,
+      askedAt: new Date().toISOString(),
+      briefing: brief,
+      answer: null,
+    })
+    return await waitForBrowser(runName, log)
+  } finally {
+    killTree(server.pid)
+    rl?.close()
+    fs.rmSync(GATE_FILE, { force: true })
+  }
+}
+
 export async function gateRuns(runNames, sessions, log = console.log) {
   const interactive = Boolean(stdin.isTTY)
   const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
@@ -190,6 +240,7 @@ export async function gateRuns(runNames, sessions, log = console.log) {
             current: runName,
             url,
             remaining: runNames.slice(runNames.indexOf(runName) + 1),
+            question: 'Keep this prototype and score it?',
             askedAt: new Date().toISOString(),
             briefing: brief,
             answer: null,

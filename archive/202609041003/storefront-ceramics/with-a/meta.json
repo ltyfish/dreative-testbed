@@ -1,0 +1,13 @@
+{
+  "scenario": "storefront-ceramics",
+  "arm": "with-a",
+  "seq": "202609041003",
+  "label": null,
+  "direction": "recommended",
+  "skill": "git:1ec4c6f",
+  "product": "Kilnwork — a small ceramics shop",
+  "field": "Multi-product ecommerce · homeware",
+  "runName": "storefront-ceramics__with-a__202609041003",
+  "site": true,
+  "archivedAt": "2026-09-05T13:10:00.380Z"
+}

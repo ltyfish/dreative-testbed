@@ -12,6 +12,12 @@
 // round a name you will still understand in three months:
 //
 //   node scripts/run-all.mjs --scenarios storefront-ceramics --arms with-a --gate --label "eyes + look report"
+//
+// Two-phase: the session builds the signature mechanism, stops, you decide, and the SAME
+// session is resumed for the rest of the route. This is the gate that can save a round
+// rather than only report on a wasted one:
+//
+//   node scripts/run-all.mjs --scenarios storefront-ceramics --arms with-a --prototype
 //   node scripts/run-all.mjs --scenarios caliber-movement --arms with --repeat 2
 //
 // Dreative against Dreative, instead of against a control — both arms get the skill and the
@@ -58,11 +64,13 @@
 // Afterwards: node scripts/review.mjs  ·  browse past rounds: node scripts/archive.mjs
 
 import { execFileSync, spawn } from 'node:child_process'
+import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
-import { gateRuns } from './lib/gate.mjs'
+import { gateRuns, gateOne } from './lib/gate.mjs'
+import { CONTINUE_PHASE, PROTOTYPE_PHASE, RETRY_PHASE } from './lib/prototype.mjs'
 import { runHealth } from './lib/health.mjs'
 import { writeMaterialSummary, addContinuitySignal } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
@@ -126,6 +134,9 @@ if (!Number.isInteger(REPEAT) || REPEAT < 1) {
 const SKIP_CAPTURE = arg('no-capture', false)
 // Stop and look at each build before deciding to score it. See lib/gate.mjs.
 const GATE = arg('gate', false)
+// Two-phase: build the signature mechanism, stop, decide, then continue the SAME session.
+// See lib/prototype.mjs for why this is the gate that can actually save a round.
+const PROTOTYPE = arg('prototype', false)
 // A name for this round, so a verdict months later says what was being tested rather than
 // only which commit it ran. Shows up in run.json, the round record and the review UI.
 const ROUND_LABEL = arg('label', null)
@@ -280,12 +291,17 @@ const ALLOWED_TOOLS = [
   'Bash(curl:*)',
 ]
 
-function agentCommand(prompt, runDir) {
+function agentCommand(prompt, runDir, { sessionId = null, resume = false } = {}) {
   if (AGENT === 'claude') {
     // stream-json is what makes the transcript answer "which skill files did it open?".
     // Without it `claude -p` prints only the final assistant message, so every archived
     // agent.log has zero tool calls in it — see lib/transcript.mjs.
     const args = ['-p', prompt, '--output-format', 'stream-json', '--verbose']
+    // A two-phase round assigns the id up front so phase two can resume the same
+    // conversation with its context intact — phase two is the same session continuing,
+    // not a second agent reading the first one's files.
+    if (resume && sessionId) args.push('--resume', sessionId)
+    else if (sessionId) args.push('--session-id', sessionId)
     // The run carries its own .mcp.json (a browser, written for every arm — see
     // writeMcpConfig). A spawned `claude -p` inherits no servers from the user profile, and
     // --strict-mcp-config makes that explicit rather than accidental: every run gets exactly
@@ -316,18 +332,21 @@ function agentCommand(prompt, runDir) {
 const LIMIT_RE = /you'?ve hit your (session|usage) limit|(usage|rate) limit reached|credit balance is too low|quota exceeded/i
 let limitHit = false
 
-function runSession({ runName, runDir, prompt }) {
+function runSession({ runName, runDir, prompt, sessionId = null, resume = false, phase = null }) {
   if (limitHit) {
     log(`[${runName}] skipped — the account hit its usage limit earlier in this round`)
     return Promise.resolve({ runName, code: -2, skipped: true })
   }
   return new Promise((resolve) => {
-    const { cmd, args } = agentCommand(prompt, runDir)
+    const { cmd, args } = agentCommand(prompt, runDir, { sessionId, resume })
     const started = Date.now()
-    const logStream = fs.createWriteStream(path.join(runDir, 'agent.log'))
-    const rawStream = fs.createWriteStream(path.join(runDir, 'agent.jsonl'))
+    // Phase two appends: the transcript of a two-phase round is one story, and truncating
+    // here threw away the phase that chose the mechanism.
+    const mode = resume ? 'a' : 'w'
+    const logStream = fs.createWriteStream(path.join(runDir, 'agent.log'), { flags: mode })
+    const rawStream = fs.createWriteStream(path.join(runDir, 'agent.jsonl'), { flags: mode })
     const transcript = createTranscript()
-    logStream.write(`$ ${cmd} (${AGENT}${MODEL && MODEL !== true ? `, ${MODEL}` : ''})\n\n${prompt}\n\n---\n\n`)
+    logStream.write(`${phase ? `\n\n===== ${phase} =====\n\n` : ''}$ ${cmd} (${AGENT}${MODEL && MODEL !== true ? `, ${MODEL}` : ''})\n\n${prompt}\n\n---\n\n`)
 
     log(`[${runName}] session started`)
     const child = spawn(cmd, args, { cwd: runDir, shell: false })
@@ -504,7 +523,58 @@ console.log("Nothing to paste. Progress goes to each run's agent.log.\n")
 // ---------------------------------------------------------------- sessions
 
 const sessionStart = Date.now()
-const sessions = await pool(jobs, CONCURRENCY, runSession)
+
+// ---------------------------------------------------------------- two-phase
+//
+// A prototype round runs each job as: signature mechanism -> build it -> look at it -> your
+// decision -> the same session resumed for the rest of the route. It is sequential on
+// purpose: the gate asks one question at a time, and three sessions racing to ask you three
+// different questions is not a review, it is an interruption.
+async function runPrototypeJob(job) {
+  const sessionId = crypto.randomUUID()
+  const first = await runSession({
+    ...job,
+    prompt: `${job.prompt}\n${PROTOTYPE_PHASE}`,
+    sessionId,
+    phase: 'PHASE 1 — signature mechanism',
+  })
+  if (first.skipped || first.code === -1) return { ...first, phases: 1 }
+
+  log(`[${job.runName}] prototype built — capturing it so you can see it`)
+  await captureMany([job.runName], 4400, log, direction ?? 'recommended')
+
+  const keep = await gateOne(job.runName, {
+    question: 'Is this the moment this route is for? Build the rest of the page on it?',
+    log,
+  })
+  if (!keep) {
+    log(`[${job.runName}] prototype REJECTED — stopping this run here`)
+    try {
+      const rj = path.join(RUNS, job.runName, 'run.json')
+      const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
+      fs.writeFileSync(rj, JSON.stringify({ ...meta, rejected: new Date().toISOString(), rejectedAt: 'prototype' }, null, 2), 'utf8')
+    } catch {}
+    return { ...first, phases: 1, prototypeRejected: true }
+  }
+
+  const second = await runSession({
+    ...job,
+    prompt: CONTINUE_PHASE,
+    sessionId,
+    resume: true,
+    phase: 'PHASE 2 — the full route',
+  })
+  return {
+    ...second,
+    phases: 2,
+    minutes: Number(((first.minutes ?? 0) + (second.minutes ?? 0)).toFixed(1)),
+    truncated: second.truncated ?? first.truncated ?? null,
+  }
+}
+
+const sessions = PROTOTYPE
+  ? await pool(jobs, 1, runPrototypeJob)
+  : await pool(jobs, CONCURRENCY, runSession)
 const failed = sessions.filter((s) => s.code !== 0)
 
 console.log(`\nAll sessions done in ${((Date.now() - sessionStart) / 60_000).toFixed(1)}m.`)
@@ -569,7 +639,18 @@ if (SKIP_CAPTURE) {
 // ---------------------------------------------------------------- gate
 
 let kept = jobs.map((j) => j.runName)
-if (GATE) {
+// A prototype round already asked, mid-round, with the decision that mattered. Asking again
+// about the finished build is a different question and worth having — but only when the
+// round was not already gated at its prototype.
+if (PROTOTYPE) {
+  kept = kept.filter((name) => {
+    try {
+      return !JSON.parse(fs.readFileSync(path.join(RUNS, name, 'run.json'), 'utf8')).rejected
+    } catch {
+      return true
+    }
+  })
+} else if (GATE) {
   console.log('\nPrototype gate — look at each build, then keep it or throw it out.')
   kept = await gateRuns(kept, sessions, log)
   const rejected = jobs.length - kept.length

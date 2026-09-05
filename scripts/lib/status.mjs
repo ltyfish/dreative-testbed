@@ -13,6 +13,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { RUNS } from './scaffold.mjs'
+import { bestLook } from './look.mjs'
 
 // A session that has not written a byte to its log in this long is not thinking, it is gone.
 // Sessions do go quiet during a long tool call, so this is generous.
@@ -56,7 +57,7 @@ export function runStatuses() {
     const buildFailed = fs.existsSync(path.join(runDir, 'build-error.log'))
     // Written by `dreative look` — the shipped CLI command, not a harness script. A run with no
     // report is one where nothing rendered the build before the reviewer did.
-    const look = readJson(path.join(runDir, '.dreative', 'look', 'report.json'))
+    const look = bestLook(runDir)
     const smoke = readJson(path.join(runDir, 'smoke.json'))
     const verdict = readJson(path.join(RUNS, 'verdicts', `${meta.scenario}.json`))
     const styles = path.join(runDir, 'src', 'styles.css')
@@ -88,6 +89,7 @@ export function runStatuses() {
       broken: look ? look.broken.length : null,
       inertSections: look ? look.observed.filter((o) => /nothing changes across it/.test(o)).length : null,
       looked: Boolean(look),
+      lookedByBuilder: look ? look.byBuilder : null,
       smokeOk: smoke ? smoke.ok : null,
       scored: Boolean(verdict && (verdict.run === dir || Object.values(verdict.runs ?? {}).includes(dir))),
     })

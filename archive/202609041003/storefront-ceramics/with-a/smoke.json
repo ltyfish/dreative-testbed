@@ -1,0 +1,30 @@
+{
+  "profile": "recommended",
+  "ok": false,
+  "blockers": [
+    "desktop: sticky clipping risk: rule inside shelf-scroll (auto hidden auto hidden)",
+    "desktop: sticky clipping risk: shelf-line inside shelf-scroll (auto hidden auto hidden)",
+    "desktop: consecutive near-empty viewport samples detected",
+    "reveals fire after the reader has scrolled past them in firing: content already on screen while the region is centred is still in its approach state, and only resolves once the region has left. Trigger against the top of the viewport, not the bottom.",
+    "mobile-390: sticky clipping risk: rule inside shelf-scroll (auto hidden auto hidden)",
+    "mobile-390: sticky clipping risk: shelf-line inside shelf-scroll (auto hidden auto hidden)",
+    "mobile-390: consecutive near-empty viewport samples detected",
+    "mobile-320: sticky clipping risk: rule inside shelf-scroll (auto hidden auto hidden)",
+    "mobile-320: sticky clipping risk: shelf-line inside shelf-scroll (auto hidden auto hidden)",
+    "mobile-390-reduced: sticky clipping risk: rule inside shelf-scroll (auto hidden auto hidden)",
+    "mobile-390-reduced: sticky clipping risk: shelf-line inside shelf-scroll (auto hidden auto hidden)"
+  ],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 0 of 0 interactive elements respond to hover or focus",
+    "motion: 5 of 10 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 12 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 10 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 8 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 8 viewport samples"
+  ]
+}

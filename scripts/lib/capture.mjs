@@ -6,6 +6,7 @@ import net from 'node:net'
 import path from 'node:path'
 import { RUNS } from './scaffold.mjs'
 import { measureSmoke, smokeAvailable, smokeUnavailableReason, writeSmoke } from './smoke.mjs'
+import { builderLook, lookAvailable, measureLook } from './look.mjs'
 
 /**
  * Reserve a port the OS says is actually free.
@@ -234,6 +235,23 @@ export async function captureRun(runName, port, log = console.log, profile = 're
       } catch (err) {
         log(`[${runName}] visual smoke errored: ${err.message}`)
         writeSmoke(runDir, { profile, ok: null, error: err.message, blockers: [], advisories: [], checks: [] })
+      }
+    }
+
+    // The builder may or may not have looked. Measure it here either way, so the prototype
+    // gate and the review always have the numbers — see lib/look.mjs.
+    const own = builderLook(runDir)
+    if (own) {
+      log(`[${runName}] the builder ran dreative look itself: ${own.broken.length} broken`)
+    } else if (!lookAvailable()) {
+      log(`[${runName}] dreative look SKIPPED — no CLI build found`)
+    } else {
+      try {
+        const report = measureLook(base, runDir)
+        const inert = report.observed.filter((o) => /nothing changes across it/.test(o)).length
+        log(`[${runName}] look (harness pass): ${report.broken.length} broken, ${inert} inert section(s) — the builder did not run it`)
+      } catch (err) {
+        log(`[${runName}] dreative look errored: ${err.message}`)
       }
     }
 

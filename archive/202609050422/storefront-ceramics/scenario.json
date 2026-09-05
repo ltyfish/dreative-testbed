@@ -1,0 +1,18 @@
+{
+  "product": "Kilnwork — a small ceramics shop",
+  "field": "Multi-product ecommerce · homeware",
+  "designChallenge": "The most familiar shape on the web, chosen so the reviewer can judge it against a thousand stores they have already used. A storefront with nine products, a grid, a featured piece, and a bag — nothing unusual about the architecture, nothing unfamiliar about the objects, and no specialist domain to hide behind. Every failure is therefore legible on sight: a grid of nine identical rectangles is a grid of nine identical rectangles, and a reader knows immediately whether these look like real pots on a real surface or like a placeholder set. Material is the easiest it will ever be — studio ceramics, hands at a wheel, glaze, pouring, steam and clay are among the best-covered subjects in the free photo and video archives, and the objects can be shot, lit, and rendered from a licensed model if the archive disappoints. What to read off it: does the product grid do anything other than exist, and does moving between grid and product read as one place or as two pages; is the featured piece actually made of material or drawn; does anything cross a section boundary; and is footage present where the objects are being used, made, or poured, or was the search skipped in favour of something authored. Convergence is the standing risk: the default artisan-ceramics store is a beige serif grid, and it is the easiest page on this list to produce by reflex.",
+  "prompt": "This is the shop for Kilnwork, a two-person ceramics studio that makes nine pieces and sells them directly. Buyers are choosing between this and a supermarket mug at a tenth of the price, so the page has to make the difference visible rather than asserted. Redesign the site.",
+  "baseline": "content-only",
+  "promptContentOnly": "This is the shop for Kilnwork, a two-person ceramics studio that makes nine pieces and sells them directly. Buyers are choosing between this and a supermarket mug at a tenth of the price, so the page has to make the difference visible rather than asserted. Design and build that shop.",
+  "preserve": [
+    "All nine products with their exact names, prices, dimensions, capacity where stated, and stock state, including the two that are sold out and cannot be added to the bag",
+    "The three glazes with their names and the note that each fires differently and no two pieces match exactly",
+    "The per-product glaze availability — not every piece is offered in every glaze",
+    "The bag, which must name each line's product, glaze, quantity, and price, and show a running total",
+    "The care facts: dishwasher and microwave safety per piece, and that the unglazed foot will mark a soft surface",
+    "The making statement: thrown and fired in the studio, the firing schedule, and the six-week lead time on restocks",
+    "Both customer notes with their names and what they bought",
+    "The shipping and returns statement — free over 60, 30 days, and that breakage in transit is replaced"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "round": "202609051134",
+  "archivedAt": "2026-09-05T13:09:15.560Z",
+  "scenarios": [
+    "storefront-ceramics"
+  ],
+  "runs": [
+    {
+      "runName": "storefront-ceramics__with-a__202609041003",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "storefront-ceramics__with-a__202609041028",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "storefront-ceramics__with-a__202609041329",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "storefront-ceramics__with-a__202609050422",
+      "ok": true,
+      "site": true
+    },
+    {
+      "runName": "storefront-ceramics__with-a__202609051134",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

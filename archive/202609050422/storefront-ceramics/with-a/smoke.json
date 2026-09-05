@@ -1,0 +1,24 @@
+{
+  "profile": "recommended",
+  "ok": false,
+  "blockers": [
+    "desktop: meaningful text is below the readability floor: button (10.24px), button (10.24px), button (10.24px), button (10.56px), a (10.88px), a (10.88px), button (10.48px), button (10.48px)",
+    "desktop: consecutive near-empty viewport samples detected",
+    "mobile-390: meaningful text is below the readability floor: button (9.28px), button (9.28px), button (9.28px), button (10.56px), a (10.88px), a (10.88px), button (10.48px), button (10.48px)",
+    "mobile-320: meaningful text is below the readability floor: button (9.28px), button (9.28px), button (9.28px), button (10.56px), a (10.88px), a (10.88px), button (10.48px), button (10.48px)",
+    "mobile-390-reduced: meaningful text is below the readability floor: button (9.28px), button (9.28px), button (9.28px), button (10.56px), a (10.88px), a (10.88px), button (10.48px), button (10.48px)"
+  ],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 0 of 0 interactive elements respond to hover or focus",
+    "motion: 7 of 10 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 14 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 10 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 8 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 8 viewport samples"
+  ]
+}

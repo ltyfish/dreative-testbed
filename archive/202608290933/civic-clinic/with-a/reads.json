@@ -1,0 +1,25 @@
+{
+  "skillFilesRead": {
+    "exemplars/PRINCIPLES.md": 1,
+    "exemplars/SLOP.md": 1,
+    "PLAN.md": 2,
+    "references/CREATIVE_DIRECTION.md": 1,
+    "references/MEDIA_SOURCES.md": 3,
+    "references/MOTION_MATERIAL.md": 1,
+    "references/REFERENCE_ADOPTION.md": 1,
+    "references/VISUAL_REFINEMENT.md": 1,
+    "skills/interaction.md": 1,
+    "skills/mobile.md": 1,
+    "skills/motion.md": 1,
+    "skills/ux.md": 1
+  },
+  "toolCalls": {
+    "Bash": 52,
+    "Read": 17,
+    "Edit": 11,
+    "WebFetch": 5,
+    "Write": 4,
+    "Skill": 1,
+    "ToolSearch": 1
+  }
+}
