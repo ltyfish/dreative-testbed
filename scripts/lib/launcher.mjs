@@ -16,7 +16,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { LAUNCH_FILE, readLaunch, runStatuses } from './status.mjs'
 import { pendingGate } from './gate.mjs'
-import { ROOT, listScenarios } from './scaffold.mjs'
+import { ROOT, isSkillArm, listScenarios } from './scaffold.mjs'
 
 const esc = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
@@ -66,6 +66,9 @@ export function buildArgs(body) {
   // Which skill tree each arm runs. `git:<ref>` is the whole point of the field — it is how
   // an edit is tested against the tree that came before it.
   for (const arm of arms) {
+    // The control has no skill by definition, and `'without'.slice(5)` is 'ut' — which would
+    // look for a `skill_ut` field and quietly find nothing.
+    if (!isSkillArm(arm)) continue
     const suffix = arm === 'with' ? '' : arm.slice(5)
     const key = suffix ? `skill_${suffix}` : 'skill'
     const raw = String(body[key] ?? '').trim()
@@ -235,14 +238,18 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
         ${scenarios.map((s) => `<option value="${esc(s)}"${s === 'storefront-ceramics' ? ' selected' : ''}>${esc(s)}</option>`).join('')}
       </select>
 
-      <label for="f-arms">Arms</label>
-      <input id="f-arms" value="with-a" placeholder="with-a  ·  with-a,with-b  ·  with,without">
+      <label for="f-compare">Compare</label>
+      <select id="f-compare">
+        <option value="solo" selected>Dreative on its own — one build, scored on its own axes</option>
+        <option value="control">Dreative vs plain Claude — same brief, one arm without the skill</option>
+        <option value="versions">Dreative vs Dreative — two skill versions, blind</option>
+      </select>
 
-      <label for="f-skill-a">Skill for with-a</label>
-      <input id="f-skill-a" value="git:HEAD" placeholder="git:HEAD, git:&lt;sha&gt;, or a directory — blank uses what is installed">
+      <label for="f-skill-a">Dreative version</label>
+      <input id="f-skill-a" value="git:HEAD" placeholder="git:HEAD, git:&lt;sha&gt;, a branch, or a directory — blank uses what is installed">
 
-      <label for="f-skill-b">Skill for with-b</label>
-      <input id="f-skill-b" value="" placeholder="only needed for a Dreative-vs-Dreative round">
+      <label for="f-skill-b" id="l-skill-b">Compared against</label>
+      <input id="f-skill-b" value="" placeholder="the other version, e.g. git:e9638f5 — only for Dreative vs Dreative">
 
       <label for="f-dir">Direction</label>
       <select id="f-dir">${['recommended', 'efficient', 'showcase', 'random', 'none']
@@ -274,9 +281,13 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
     </div>
     <p style="margin-top:16px"><button id="go">Start round</button>
       <span class="sub" id="msg" style="margin-left:10px"></span></p>
+    <p class="sub"><strong>An arm is one side of the comparison</strong> — one agent session, on the
+      same scenario and the same brief, differing in exactly one thing. Two arms on one scenario is
+      a pair, and the review shows them side by side as A and B without telling you which is which
+      until you submit. One arm is not a comparison, so it is scored on its own axes instead.</p>
     <p class="sub">Every run is scaffolded with its own headless browser (Playwright MCP) and the
-      installed Dreative CLI, for every arm — the same tools a normal user's agent has. Nothing in
-      the brief tells it to use them.</p>
+      installed Dreative CLI, on every arm — the same tools a normal user's agent has. Nothing in
+      the brief mentions either; whether the agent uses them is the finding.</p>
   </div>
 
   <div class="panel">
@@ -287,17 +298,31 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
 <script>
 const GATE_RUN = ${JSON.stringify(gate?.current ?? null)};
 const sel = (id) => document.getElementById(id);
+// The second version only means anything in a version comparison; showing it the rest of the
+// time invited filling it in and quietly getting an arm nobody asked for.
+function syncCompare() {
+  const versions = sel('f-compare').value === 'versions';
+  for (const id of ['l-skill-b', 'f-skill-b']) sel(id).style.display = versions ? '' : 'none';
+}
+sel('f-compare').addEventListener('change', syncCompare);
+syncCompare();
 sel('go').addEventListener('click', async (e) => {
   const btn = e.currentTarget;
   const scen = [...sel('f-scen').selectedOptions].map((o) => o.value);
   if (!scen.length) { sel('msg').textContent = 'pick at least one scenario'; return; }
+  const mode = sel('f-compare').value;
+  const arms = mode === 'control' ? 'with-a,without' : mode === 'versions' ? 'with-a,with-b' : 'with-a';
+  if (mode === 'versions' && !sel('f-skill-b').value.trim()) {
+    sel('msg').textContent = 'a version comparison needs both versions';
+    return;
+  }
   btn.disabled = true; sel('msg').textContent = 'starting…';
   const res = await fetch('/api/run', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       scenarios: scen.join(','),
-      arms: sel('f-arms').value,
+      arms,
       skill_a: sel('f-skill-a').value,
       skill_b: sel('f-skill-b').value,
       direction: sel('f-dir').value,

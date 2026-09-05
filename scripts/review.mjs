@@ -871,16 +871,27 @@ document.getElementById('soloSubmit').addEventListener('click', async (e) => {
   saved.textContent = 'Saved to VERDICTS.md, runs/verdicts/' + out.scenario + '.json, and the vault changelog. Overall ' + (out.overall ?? '—') + '/5.';
 });
 const UNSCORED = ${JSON.stringify(pairs.filter((p) => p.health.judgeable && !p.scored).map((p) => p.scenario))};
+// Every escape below is doubled on purpose. This block sits inside a template literal, so a
+// single-backslash escape becomes a REAL newline in the served HTML — landing mid-string-
+// literal and throwing SyntaxError, which kills the whole inline script, not just this
+// function. (Spelled out the long way on purpose: the first draft of this very comment
+// wrote the escape literally and broke the page it was explaining.)
+// That is exactly what had happened: Reset on this page did nothing from the day it was
+// written, silently, because a dead script has no visible symptom. It survived because the
+// paired review page escapes correctly and was the page anyone used — until the control arm
+// was retired on 2026-09-04 and this became the only page a round is reviewed on.
 async function resetRound(btn) {
   const warn = UNSCORED.length
-    ? 'These are still unscored:\n\n  ' + UNSCORED.join('\n  ') + '\n\nArchive anyway and clear runs/?'
-    : 'Archive this round and clear runs/?\n\nEvery design, screenshot, transcript and verdict is copied into archive/ first.';
+    ? 'These are still unscored:\\n\\n  ' + UNSCORED.join('\\n  ') + '\\n\\nArchive anyway and clear runs/?'
+    : 'Archive this round and clear runs/?\\n\\nEvery design, screenshot, transcript and verdict is copied into archive/ first.';
   if (!confirm(warn)) return;
   btn.disabled = true; btn.textContent = 'Archiving…';
   const res = await fetch('/api/reset', { method: 'POST' });
-  if (!res.ok) { alert('Reset failed — nothing was deleted:\n\n' + await res.text()); btn.disabled = false; btn.textContent = 'Reset round'; return; }
+  if (!res.ok) { alert('Reset failed — nothing was deleted:\\n\\n' + await res.text()); btn.disabled = false; btn.textContent = 'Reset round'; return; }
   const out = await res.json();
-  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).');
+  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).'
+    + (out.stuck?.length ? '\\n\\nWindows would not release ' + out.stuck.length + ' folder(s) yet:\\n  ' + out.stuck.join('\\n  ')
+        + '\\n\\nThey are archived and retired — the review page ignores them.' : ''));
   location.href = '/';
 }
 document.getElementById('resetTop').addEventListener('click', (e) => resetRound(e.currentTarget));
