@@ -55,7 +55,7 @@ node scripts/run-all.mjs --label "what this tests"   # a name you will still und
 ### The prototype gate
 
 With `--gate`, the round stops after every build and shows you what is already known about
-it — whether it was truncated, what `npm run look` found, whether visual smoke blocked — then
+it — whether it was truncated, what `dreative look` found, whether visual smoke blocked — then
 serves it and asks:
 
 ```
@@ -67,122 +67,43 @@ offer it for scoring, so a build you already threw out cannot pick up a verdict 
 right answer for anything marked TRUNCATED is almost always `n`: a build the provider or the
 time cap ended mid-work is not evidence about the skill.
 
-The gate asks on stdin, so it only works from a terminal — a round started from the web UI
-does not gate.
+The gate asks wherever you are: on stdin from a terminal, and in the review UI at /status for a
+round started from the browser. Either way the round genuinely blocks until you answer.
 
-### Seeing the page (`npm run look`)
+### What a run has, and why
 
-Every scaffolded run gets `look.mjs`, and the brief tells **both arms** about it in identical
-words. It builds the project, renders it at 1440 and 390, writes screenshot tiles to `.look/`,
-and prints two lists:
+The rule is one line: **a run should have what a normal user has, and nothing else.**
 
-- **BROKEN** — output that is invalid however you feel about it: a viewport-sized hole, text
-  under 12px, sideways scroll, an image that never loaded, a reveal that never fired.
-- **OBSERVED** — neutral fact: what changes across each section on scroll, what does not, what
-  responds to a pointer. Not defects, no thresholds, nothing to hit.
+That cuts both ways, and both directions have bitten. Until 2026-09-05 a session had **no way
+to render its own output** — `~/.claude.json` carries no MCP servers, a spawned `claude -p`
+inherits none, and the scaffolded project had no browser. `202609050422` searched the
+filesystem for `chrome.exe`, found no way in, and shipped a page it had never seen, while the
+skill told it to inspect the rendered result at roughly twenty separate points. The harness was
+*less* capable than the thing it was standing in for, which produced defects no real user would
+ever have seen and then read them as design decisions.
 
-This exists because until 2026-09-05 a session in this harness had **no way to render its own
-output**. `202609050422` searched the filesystem for `chrome.exe`, found no way in, and shipped
-a page it had never seen — while the skill instructed it to inspect the rendered result at
-roughly twenty separate points. Those were instructions with no hands. A browser is an
-environment capability like network access, so it goes to every arm, for the same reason
-WebSearch does.
+The first fix over-corrected the other way: a harness-written `npm run look` script, dropped
+into the run and named in the brief. That is teaching to the test — the exact thing `smoke.mjs`
+is kept out of the brief to avoid — because no real user has that script. It is gone.
 
-It is not a gate. Nothing fails a build, and the report says so on every run.
+What a run gets now, on both arms, arriving the way it arrives for a user:
 
-### Dreative against Dreative
+- **A browser.** `scaffoldRun` writes a `.mcp.json` per run carrying `@playwright/mcp`
+  (`--headless --isolated`, isolated because three sessions run at once), and the session is
+  started with `--mcp-config --strict-mcp-config`. Strict on purpose: every run gets exactly
+  that, whatever happens to be configured on the machine the round runs on. The agent finds
+  `mcp__playwright__browser_navigate`, `browser_take_screenshot`, `browser_hover` and the rest
+  in its tool list, the same as a user who installed the server.
+- **The Dreative CLI**, including `dreative look --url <preview>` — render at 1440 and 390,
+  screenshot tiles, and a report split into **BROKEN** (invalid output however you feel about
+  it) and **OBSERVED** (neutral fact — what changes across each section on scroll, what does
+  not, what responds to a pointer). It sets no exit code and blocks nothing. It is shipped
+  product, not fixture: a real user gets the identical command.
+- **WebSearch and WebFetch**, as before, so references can actually be sourced.
 
-The default round is skill versus control. To compare two Dreative builds instead — a
-direction against another direction, a local skill edit against the installed one, or the
-same input twice head to head — give both arms the skill:
-
-```sh
-node scripts/run-all.mjs --scenarios caliber-movement \
-  --arms with-a,with-b --direction-a showcase --direction-b recommended
-```
-
-Any arm named `with-<name>` gets the skill installed and its own `--direction-<name>`,
-falling back to `--direction` when you do not name one. The review is blind exactly as
-before, and the reveal names the arms rather than "Dreative" and "control".
-
-**To test a skill edit rather than a setting, give each arm its own skill tree.** Otherwise
-both arms install whatever is in the testbed root and the only thing left to vary is a
-setting — which answers a different question than "did this change do anything":
-
-```sh
-node scripts/run-all.mjs --scenarios caliber-movement \
-  --arms with-a,with-b --skill-a git:HEAD --skill-b git:a59ee84 --timeout 40
-```
-
-`--skill-<name>` takes a directory containing the skill, or `git:<ref>` to read
-`skill/dreative` out of the code repository at that commit. The tree is extracted into
-`scratch/skill-<sha>/` with `git ls-tree` and `git show` — nothing is checked out and the
-code project's working tree is never touched, so an old skill can be run while you keep
-editing the current one. Set `DREATIVE_REPO` if the code project is not at `../Dreative`.
-Each run records which tree it got in `run.json`, and the round header prints them.
-
-With both arms on the same direction and the same brief, the skill is the only difference.
-
-Such a round is deliberately **left out of the scoreboard**: it cannot say whether the
-skill helps, only which of two Dreative variants is better. The verdict block is written
-to `VERDICTS.md` in full, with the arm names in place of `with`/`without`.
-
-### One arm now, the other later
-
-A round is the unit that gets paired, archived and scored, so a second arm run hours later
-has to join the *same* round rather than open its own. `--round` does that:
-
-```sh
-node scripts/run-all.mjs --scenarios caliber-movement --arms with-a --direction-a showcase
-# … the round number is printed at the top; when you have budget again:
-node scripts/run-all.mjs --round 202608241142 --scenarios caliber-movement --arms with-b
-```
-
-Until the second arm exists the first shows up in `review.mjs` as a view-only tab, since
-there is nothing to compare it against. **Do not reset the round in between** — reset
-archives and clears `runs/`, and a cleared arm cannot be paired with anything. `--round`
-refuses a round that is no longer in `runs/` rather than building half a comparison.
-
-### Variance check
-
-`--repeat N` runs the same scenario N times inside one round, tagged `r1`, `r2`, …
-Nothing differs between the repeats, so anything that does differ is a property of the
-run and not of the skill. Skip the control — it has no skill installed and reads nothing:
-
-```sh
-node scripts/run-all.mjs --scenarios caliber-movement --arms with --repeat 2
-node scripts/variance.mjs
-```
-
-`variance.mjs` tables what each repeat opened and says whether read selection was stable.
-If it was not, a single round's read count is not evidence for anything.
-
-The repeats are viewable in `review.mjs` too. With no control to compare against there is
-nothing to score, so that scenario opens in a **view-only** tab: both runs side by side,
-screenshots and live previews, no criteria and no verdict. Reset still archives them.
-A scenario whose blind pair is still unscored hides its extra runs until the pair is judged.
-
-Both a bare number (how many scenarios) and a bare direction word work positionally, so a
-round is one short command. Anything you do not state falls back to: all six scenarios,
-the Recommended direction, `claude`, concurrency 3.
-
-**Direction matters.** Dreative normally blocks on the user choosing Recommended,
-Efficient, or Showcase. Unattended there is nobody to ask, so it falls back to Recommended
-and you end up scoring a direction you did not pick. Stating it makes the round honest;
-`random` picks one per round, and `none` reproduces the old implicit behaviour. Compare
-like with like — a Showcase round against a control is a different question from a
-Recommended round.
-
-**Permissions.** Sessions run with full bypass and network access by default, so agents can
-look up references and install what they need instead of stalling on a prompt nobody is
-there to answer. Both arms get the same access — a control that cannot look anything up is
-handicapped in a way the comparison would wrongly credit to the skill. `--no-yolo` swaps in
-`acceptEdits` plus a scoped tool allowlist (still with web access). These are real agents on
-your machine, even though each run directory is disposable.
-
-Each session's transcript is written to `runs/<run>/agent.log`. A round of ten at
-concurrency 3 takes roughly 30–45 minutes; you can walk away.
-
+**Nothing in the brief mentions any of it.** The skill routes to the inspection loop; the tool
+list carries the browser. Whether the agent uses either is the finding, and if the brief said
+"remember to look" the round would be measuring the brief.
 ## Status, and starting a round from the browser
 
 ```sh
@@ -193,7 +114,7 @@ node scripts/status.mjs --json
 
 Each run is `running`, `stalled`, `truncated`, `rejected`, `built`, `finished`, or `empty`,
 derived from what the round writes to disk as it goes — so it is right after a reboot, and
-right for a round somebody else started. Alongside the state it shows what `npm run look`
+right for a round somebody else started. Alongside the state it shows what `dreative look`
 found, whether smoke blocked, and whether a verdict has been recorded.
 
 The same thing lives at **http://127.0.0.1:4321/status** while `review.mjs` is running, with a
@@ -201,6 +122,18 @@ form to start a round: pick scenarios, arms, the skill tree per arm (`git:HEAD`,
 or a directory), direction, sessions each, time cap, and a label. It shells out to
 `run-all.mjs`, so there is one definition of what a round is. The page polls every 15 seconds
 and reloads itself when a run actually changes state.
+
+The form carries every flag a normal round takes — scenarios, arms, skill tree per arm,
+direction, sessions each, time cap, model, concurrency, label, permissions, and the gate.
+
+**The prototype gate works from the browser.** A round started here has no terminal, so
+instead of skipping itself the gate publishes its question to `runs/.gate.json` and blocks.
+`/status` then shows what is known about the build — truncation first, then what
+`dreative look` found, then whether smoke blocked — with a link to the running preview and
+Keep / Throw it out buttons. The round moves on when you answer, and waits up to six hours
+before keeping the build rather than losing the round. From a terminal it still prompts on
+stdin. Earlier it silently no-opped without a TTY, which turned `--gate` off for exactly the
+people who wanted it on a screen.
 
 ## Reviewing
 
@@ -418,7 +351,7 @@ scripts/status.mjs   is the round done? derived from disk, not remembered
 scripts/lib/gate.mjs      the prototype keep/throw-out prompt
 scripts/lib/status.mjs    run states, read from what the round leaves behind
 scripts/lib/launcher.mjs  the /status page and the round launcher
-_template/look.mjs   the eyes every run gets: render, tile, report BROKEN and OBSERVED
+runs/<run>/.mcp.json      the browser every run gets (written by scaffoldRun)
 scripts/archive.mjs  archive browser, works on a bare clone
 scripts/new-run.mjs  scaffold a single run by hand
 scripts/capture.mjs  recapture after a manual fix

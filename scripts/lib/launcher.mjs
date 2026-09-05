@@ -7,13 +7,15 @@
 // and a run directory that is still working looks exactly like one that died.
 //
 // The launcher shells out to run-all.mjs rather than reimplementing any of it, so there is
-// one code path for what a round is. --gate is deliberately NOT offered here: the gate asks
-// a question on stdin, and a round spawned from a web page has no terminal to answer in.
+// one code path for what a round is. Every flag the command takes for a normal round is on
+// the form, including --gate: a round with no terminal publishes its keep/reject question to
+// `.gate.json` and blocks until this page answers it (see gate.mjs).
 
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { LAUNCH_FILE, readLaunch, runStatuses } from './status.mjs'
+import { pendingGate } from './gate.mjs'
 import { ROOT, listScenarios } from './scaffold.mjs'
 
 const esc = (s) =>
@@ -73,6 +75,19 @@ export function buildArgs(body) {
     }
     args.push(suffix ? `--skill-${suffix}` : '--skill', raw)
   }
+
+  if (body.gate) args.push('--gate')
+  if (body.noYolo) args.push('--no-yolo')
+
+  const model = String(body.model ?? '').trim()
+  if (model) {
+    if (!/^[\w.:-]{1,60}$/.test(model)) throw new Error('model name looks wrong')
+    args.push('--model', model)
+  }
+
+  const concurrency = Number(body.concurrency ?? 3)
+  if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8) throw new Error('concurrency must be 1-8')
+  args.push('--concurrency', String(concurrency))
 
   const label = String(body.label ?? '').trim()
   if (label) {
@@ -140,7 +155,7 @@ function statusTable(rows) {
       if (r.truncated) bits.push(esc(r.truncated))
       if (r.buildFailed) bits.push('<strong>build failed</strong>')
       if (r.looked) bits.push(`${r.broken} broken · ${r.inertSections} inert section(s)`)
-      else if (r.state === 'built') bits.push('never ran <code>npm run look</code>')
+      else if (r.state === 'built') bits.push('never rendered its own build')
       if (r.smokeOk === false) bits.push('smoke blocked')
       if (r.scored) bits.push('<strong>scored</strong>')
       return (
@@ -159,6 +174,34 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
   const rows = runStatuses()
   const launch = readLaunch()
   const scenarios = listScenarios()
+
+  const gate = pendingGate()
+  const gatePanel = gate
+    ? `<div class="panel" style="border-color:#3b82f6">
+        <h2 style="margin:0 0 6px;font-size:16px">A round is waiting on you</h2>
+        <p class="sub" style="margin:0 0 14px">It has built <code>${esc(gate.current)}</code> and stopped. Nothing else runs until you answer.</p>
+        ${gate.briefing.truncated ? `<div class="fail">TRUNCATED — ${esc(gate.briefing.truncated)}. This build did not finish, so its defects and missing stages are unattributable. Reject it and re-run.</div>` : ''}
+        ${
+          gate.briefing.looked
+            ? gate.briefing.broken.length
+              ? `<div class="lbl">Broken (${gate.briefing.broken.length})</div><ul class="sub">${gate.briefing.broken
+                  .slice(0, 8)
+                  .map((b) => `<li>${esc(b)}</li>`)
+                  .join('')}</ul>`
+              : '<p class="sub">Nothing broken.</p>'
+            : '<p class="sub">Nothing rendered this build before you did.</p>'
+        }
+        ${gate.briefing.inert && gate.briefing.inert.length ? `<p class="sub">${gate.briefing.inert.length} section(s) with nothing happening across them.</p>` : ''}
+        ${gate.briefing.smokeBlockers ? `<div class="warn">visual smoke blocked: ${esc(gate.briefing.smokeBlockers.slice(0, 3).join(' | '))}</div>` : ''}
+        <p style="margin-top:14px"><a class="livebtn" href="${esc(gate.url)}" target="_blank" rel="noopener">Open the build ↗</a></p>
+        <p style="margin-top:14px">
+          <button id="gateKeep">Keep it</button>
+          <button id="gateReject" style="margin-left:8px">Throw it out</button>
+          <span class="sub" id="gateMsg" style="margin-left:10px"></span>
+        </p>
+        ${gate.remaining.length ? `<p class="sub">${gate.remaining.length} more run(s) after this one.</p>` : ''}
+      </div>`
+    : ''
 
   const launchNote = launch
     ? `<div class="note"><h3>${launch.alive ? 'A round is running now' : 'Last round started from here has exited'}</h3>
@@ -180,6 +223,7 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
   <div class="sub">Refreshes every 15 seconds. <a href="${reviewPath}">Review and score →</a></div></div>
 </header>
 <main>
+  ${gatePanel}
   ${launchNote}
   ${statusTable(rows)}
 
@@ -211,13 +255,28 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
       <label for="f-timeout">Time cap (min)</label>
       <input id="f-timeout" type="number" min="5" max="240" value="40">
 
+      <label for="f-model">Model</label>
+      <input id="f-model" placeholder="blank uses your CLI default — e.g. opus">
+
+      <label for="f-conc">Concurrency</label>
+      <input id="f-conc" type="number" min="1" max="8" value="3">
+
       <label for="f-label">Label</label>
       <input id="f-label" placeholder="what this round is testing — you will read this in three months">
+
+      <label for="f-gate">Prototype gate</label>
+      <label class="sub" style="text-transform:none;letter-spacing:0">
+        <input type="checkbox" id="f-gate" checked style="width:auto"> stop after each build and ask me here before it can be scored</label>
+
+      <label for="f-yolo">Permissions</label>
+      <label class="sub" style="text-transform:none;letter-spacing:0">
+        <input type="checkbox" id="f-yolo" style="width:auto"> scope tools instead of full bypass (slower, closer to a cautious user)</label>
     </div>
     <p style="margin-top:16px"><button id="go">Start round</button>
       <span class="sub" id="msg" style="margin-left:10px"></span></p>
-    <p class="sub">The prototype gate needs a terminal to ask its question in, so a round started here
-      does not gate. For that: <code>node scripts/run-all.mjs … --gate</code></p>
+    <p class="sub">Every run is scaffolded with its own headless browser (Playwright MCP) and the
+      installed Dreative CLI, for every arm — the same tools a normal user's agent has. Nothing in
+      the brief tells it to use them.</p>
   </div>
 
   <div class="panel">
@@ -226,6 +285,7 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
   </div>
 </main>
 <script>
+const GATE_RUN = ${JSON.stringify(gate?.current ?? null)};
 const sel = (id) => document.getElementById(id);
 sel('go').addEventListener('click', async (e) => {
   const btn = e.currentTarget;
@@ -244,6 +304,10 @@ sel('go').addEventListener('click', async (e) => {
       repeat: Number(sel('f-sessions').value),
       timeout: Number(sel('f-timeout').value),
       label: sel('f-label').value,
+      model: sel('f-model').value,
+      concurrency: Number(sel('f-conc').value),
+      gate: sel('f-gate').checked,
+      noYolo: sel('f-yolo').checked,
     }),
   });
   if (!res.ok) { sel('msg').textContent = await res.text(); btn.disabled = false; return; }
@@ -251,6 +315,22 @@ sel('go').addEventListener('click', async (e) => {
   sel('msg').textContent = 'started — pid ' + out.pid;
   setTimeout(() => location.reload(), 2500);
 });
+for (const [id, decision] of [['gateKeep', 'keep'], ['gateReject', 'reject']]) {
+  const btn = document.getElementById(id);
+  if (!btn) continue;
+  btn.addEventListener('click', async () => {
+    document.getElementById('gateKeep').disabled = true;
+    document.getElementById('gateReject').disabled = true;
+    document.getElementById('gateMsg').textContent = 'sending…';
+    const res = await fetch('/api/gate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ run: GATE_RUN, decision }),
+    });
+    document.getElementById('gateMsg').textContent = res.ok ? 'sent — the round is moving on' : await res.text();
+    setTimeout(() => location.reload(), 2000);
+  });
+}
 setInterval(async () => {
   const res = await fetch('/api/status');
   if (!res.ok) return;

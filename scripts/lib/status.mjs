@@ -54,7 +54,9 @@ export function runStatuses() {
 
     const captured = fs.existsSync(path.join(runDir, '.captures', 'desktop.png'))
     const buildFailed = fs.existsSync(path.join(runDir, 'build-error.log'))
-    const look = readJson(path.join(runDir, '.look', 'report.json'))
+    // Written by `dreative look` — the shipped CLI command, not a harness script. A run with no
+    // report is one where nothing rendered the build before the reviewer did.
+    const look = readJson(path.join(runDir, '.dreative', 'look', 'report.json'))
     const smoke = readJson(path.join(runDir, 'smoke.json'))
     const verdict = readJson(path.join(RUNS, 'verdicts', `${meta.scenario}.json`))
     const styles = path.join(runDir, 'src', 'styles.css')
@@ -140,7 +142,7 @@ export function formatStatus(rows = runStatuses(), launch = readLaunch()) {
     if (r.truncated) bits.push(r.truncated)
     if (r.buildFailed) bits.push('BUILD FAILED')
     if (r.looked) bits.push(`${r.broken} broken, ${r.inertSections} inert section(s)`)
-    else if (r.state === 'built') bits.push('never ran `npm run look`')
+    else if (r.state === 'built') bits.push('never rendered its own build')
     if (r.smokeOk === false) bits.push('smoke blocked')
     if (r.scored) bits.push('scored')
     out.push(`${ICON[r.state] ?? '·'} ${r.run.padEnd(w)}  ${r.state.padEnd(9)} ${bits.join(' · ')}`)

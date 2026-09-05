@@ -44,6 +44,12 @@
 // screenshots every result. Nothing is pasted by hand, so the only variable between the
 // two arms is whether the skill is installed.
 //
+// Tools: each run is scaffolded with its own `.mcp.json` carrying a headless Playwright MCP,
+// and the session is started with --mcp-config --strict-mcp-config so every run gets exactly
+// that, whatever is configured on this machine. Every arm gets it. Before 2026-09-06 runs had
+// no browser at all, which made the harness less capable than a normal user and produced
+// defects no real user would have seen.
+//
 // Permissions: sessions run with full bypass and network access, so an agent can fetch
 // references and install what it needs without stalling on a prompt nobody is there to
 // answer. Each run directory is disposable, but these are real agents on your machine —
@@ -263,21 +269,29 @@ const ALLOWED_TOOLS = [
   'Bash(npm run build)',
   'Bash(npm run dev)',
   'Bash(npm run preview)',
-  // Eyes. See buildPrompt in lib/scaffold.mjs — both arms get this, for the same reason
-  // both arms get WebSearch.
-  'Bash(npm run look)',
+  // Eyes: the browser MCP written into every run by writeMcpConfig, and the shipped CLI's
+  // own inspection command. Both arms, for the same reason both arms get WebSearch.
+  'mcp__playwright',
+  'Bash(npx dreative:*)',
+  'Bash(dreative:*)',
   'Bash(npm install:*)',
   'Bash(npx playwright:*)',
   'Bash(node:*)',
   'Bash(curl:*)',
 ]
 
-function agentCommand(prompt) {
+function agentCommand(prompt, runDir) {
   if (AGENT === 'claude') {
     // stream-json is what makes the transcript answer "which skill files did it open?".
     // Without it `claude -p` prints only the final assistant message, so every archived
     // agent.log has zero tool calls in it — see lib/transcript.mjs.
     const args = ['-p', prompt, '--output-format', 'stream-json', '--verbose']
+    // The run carries its own .mcp.json (a browser, written for every arm — see
+    // writeMcpConfig). A spawned `claude -p` inherits no servers from the user profile, and
+    // --strict-mcp-config makes that explicit rather than accidental: every run gets exactly
+    // the same tools, whatever is configured on the machine the round happens to run on.
+    const mcpFile = path.join(runDir, '.mcp.json')
+    if (fs.existsSync(mcpFile)) args.push('--mcp-config', mcpFile, '--strict-mcp-config')
     if (YOLO) args.push('--permission-mode', 'bypassPermissions')
     else args.push('--permission-mode', 'acceptEdits', '--allowedTools', ...ALLOWED_TOOLS)
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
@@ -308,7 +322,7 @@ function runSession({ runName, runDir, prompt }) {
     return Promise.resolve({ runName, code: -2, skipped: true })
   }
   return new Promise((resolve) => {
-    const { cmd, args } = agentCommand(prompt)
+    const { cmd, args } = agentCommand(prompt, runDir)
     const started = Date.now()
     const logStream = fs.createWriteStream(path.join(runDir, 'agent.log'))
     const rawStream = fs.createWriteStream(path.join(runDir, 'agent.jsonl'))

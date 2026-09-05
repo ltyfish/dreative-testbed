@@ -1,17 +1,23 @@
 // The prototype gate: look at what a round built before deciding to spend anything else on it.
 //
 // A round used to go straight from "sessions finished" to "go and score it", so a truncated
-// build, a page with a viewport-sized hole in it and a finished design all arrived at the
+// build, a page with a viewport-sized hole in it, and a finished design all arrived at the
 // review looking identical. On 2026-09-05 that cost a real verdict — a build killed at the
 // time cap, whose own smoke run had already returned ok:false, was opened cold and read as a
 // design decision. The instruments knew. Nothing put them in front of anyone first.
 //
 // So: pause here, print what is already known about each run, serve it, and ask. `n` marks
-// the run rejected in run.json — the review UI then shows it as rejected rather than
-// offering it for scoring, and no verdict can be attached to a build you already threw out.
+// the run rejected in run.json — the review UI then shows it as rejected rather than offering
+// it for scoring, and no verdict can be attached to a build you already threw out.
 //
 // This is a stop/continue decision, not a score. Rejecting costs nothing and is the right
 // answer for anything truncated: a build that did not finish is not evidence about the skill.
+//
+// It asks in whichever place you are. From a terminal it prompts on stdin. From a round
+// started in the review UI there is no terminal, so it publishes the question to `.gate.json`
+// and waits for the browser to answer — the round genuinely blocks either way, which is the
+// point. Earlier this skipped itself without a TTY, which quietly turned --gate into a no-op
+// for exactly the people who asked for the gate to be on a screen.
 //
 // Note on what is possible: `claude -p` is one shot with no way back in, so the gate cannot
 // pause a session mid-build and let it carry on afterwards. It gates the finished artefact.
@@ -24,21 +30,120 @@ import { RUNS } from './scaffold.mjs'
 import { freePort, killTree, spawnPreview } from './capture.mjs'
 import { readSmoke } from './smoke.mjs'
 
-function lookReport(runDir) {
-  const file = path.join(runDir, '.look', 'report.json')
-  if (!fs.existsSync(file)) return null
+export const GATE_FILE = path.join(RUNS, '.gate.json')
+
+/** Nobody is coming back to answer after this long; keep the build rather than lose the round. */
+const WAIT_LIMIT_MS = 6 * 60 * 60_000
+
+const readJson = (p, fallback = null) => {
   try {
-    return JSON.parse(fs.readFileSync(file, 'utf8'))
+    return JSON.parse(fs.readFileSync(p, 'utf8'))
   } catch {
-    return null
+    return fallback
   }
 }
 
-function meta(runDir) {
+/** What is known about a run before anyone looks at it. Shared by the terminal and the UI. */
+export function gateBriefing(runName) {
+  const runDir = path.join(RUNS, runName)
+  const meta = readJson(path.join(runDir, 'run.json'), {})
+  const look = readJson(path.join(runDir, '.dreative', 'look', 'report.json'))
+  const smoke = readSmoke(runDir)
+  return {
+    run: runName,
+    product: meta.product ?? null,
+    direction: meta.direction ?? null,
+    skill: meta.skill ?? null,
+    truncated: meta.truncated ?? null,
+    looked: Boolean(look),
+    broken: look ? look.broken : null,
+    inert: look ? look.observed.filter((o) => /nothing changes across it/.test(o)) : null,
+    smokeBlockers: smoke && smoke.ok === false ? smoke.blockers : null,
+  }
+}
+
+function printBriefing(brief) {
+  console.log('\n' + '='.repeat(78))
+  console.log(brief.run)
+  console.log('='.repeat(78))
+  console.log(`  ${brief.product ?? '?'} · ${brief.direction ?? 'unstated'} · skill ${brief.skill ?? '—'}`)
+
+  // Truncation first and on its own line. It is the single fact that most changes how
+  // everything below should be read, and it is the one that kept getting missed.
+  if (brief.truncated) {
+    console.log('')
+    console.log(`  x TRUNCATED — ${brief.truncated}. This build did not finish.`)
+    console.log('    Missing stages, craft defects and absent decisions here are unattributable.')
+    console.log('    The right answer is almost always n: re-run it rather than score it.')
+  }
+
+  if (brief.looked) {
+    console.log('')
+    if (brief.broken.length) {
+      console.log(`  BROKEN (${brief.broken.length}) — the builder could see these too:`)
+      for (const b of brief.broken.slice(0, 8)) console.log(`    x ${b}`)
+      if (brief.broken.length > 8) console.log(`    … and ${brief.broken.length - 8} more`)
+    } else {
+      console.log('  BROKEN — nothing.')
+    }
+    if (brief.inert.length) console.log(`  ${brief.inert.length} section(s) with nothing happening across them`)
+  } else {
+    console.log('\n  no look report — nothing rendered this build before you did.')
+  }
+
+  if (brief.smokeBlockers) {
+    console.log('')
+    console.log(`  visual smoke BLOCKED: ${brief.smokeBlockers.slice(0, 3).join(' | ')}`)
+  }
+}
+
+function reject(runName) {
+  const runDir = path.join(RUNS, runName)
+  const meta = readJson(path.join(runDir, 'run.json'), {})
   try {
-    return JSON.parse(fs.readFileSync(path.join(runDir, 'run.json'), 'utf8'))
+    fs.writeFileSync(
+      path.join(runDir, 'run.json'),
+      JSON.stringify({ ...meta, rejected: new Date().toISOString() }, null, 2),
+      'utf8',
+    )
   } catch {
-    return {}
+    /* the record is best-effort; the round must not die here */
+  }
+}
+
+/** The question currently on the table, for the review UI to render. Null when there is none. */
+export function pendingGate() {
+  const state = readJson(GATE_FILE)
+  if (!state?.current) return null
+  return state
+}
+
+/** The browser's answer. Returns false when it is not the question actually being asked. */
+export function answerGate(runName, decision) {
+  const state = readJson(GATE_FILE)
+  if (!state?.current || state.current !== runName) return false
+  if (decision !== 'keep' && decision !== 'reject') return false
+  fs.writeFileSync(GATE_FILE, JSON.stringify({ ...state, answer: decision, answeredAt: new Date().toISOString() }, null, 2), 'utf8')
+  return true
+}
+
+function publish(state) {
+  fs.mkdirSync(RUNS, { recursive: true })
+  fs.writeFileSync(GATE_FILE, JSON.stringify(state, null, 2), 'utf8')
+}
+
+/** Wait for the browser to answer the question we just published. */
+async function waitForBrowser(runName, log) {
+  const started = Date.now()
+  log(`[${runName}] waiting for a keep/reject decision in the review UI (/status)`)
+  for (;;) {
+    const state = readJson(GATE_FILE)
+    if (state?.current === runName && state.answer) return state.answer === 'keep'
+    if (Date.now() - started > WAIT_LIMIT_MS) {
+      log(`[${runName}] no decision after 6h — keeping it rather than losing the round`)
+      return true
+    }
+    await new Promise((r) => setTimeout(r, 2000))
   }
 }
 
@@ -49,93 +154,63 @@ function meta(runDir) {
  * @param sessions  what run-all already learned while running them (truncation, mostly)
  */
 export async function gateRuns(runNames, sessions, log = console.log) {
-  if (!stdin.isTTY) {
-    log('\n--gate needs a terminal to ask in; skipping the gate and keeping every run.')
-    return runNames
-  }
-
-  const rl = readline.createInterface({ input: stdin, output: stdout })
+  const interactive = Boolean(stdin.isTTY)
+  const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
   const kept = []
   let port = 4500
+
+  if (!interactive) {
+    log('\nNo terminal to ask in — publishing the gate to the review UI instead.')
+    log('Open http://127.0.0.1:4321/status and answer there. The round is waiting.')
+  }
 
   try {
     for (const runName of runNames) {
       const runDir = path.join(RUNS, runName)
-      const info = meta(runDir)
-      const session = sessions.find((s) => s.runName === runName)
-      const smoke = readSmoke(runDir)
-      const look = lookReport(runDir)
-
-      console.log('\n' + '='.repeat(78))
-      console.log(runName)
-      console.log('='.repeat(78))
-      console.log(`  ${info.product ?? '?'} · ${info.direction ?? 'unstated'} · skill ${info.skill ?? '—'}`)
-
-      // Truncation first and on its own line. It is the single fact that most changes how
-      // everything below should be read, and it is the one that kept getting missed.
-      if (info.truncated) {
-        console.log('')
-        console.log(`  ✕ TRUNCATED — ${info.truncated}. This build did not finish.`)
-        console.log('    Missing stages, craft defects and absent decisions here are unattributable.')
-        console.log('    The right answer is almost always n: re-run it rather than score it.')
-      } else if (session?.minutes) {
-        console.log(`  finished in ${session.minutes}m`)
-      }
-
-      if (look) {
-        console.log('')
-        if (look.broken.length) {
-          console.log(`  BROKEN (${look.broken.length}) — the builder saw these too:`)
-          for (const b of look.broken.slice(0, 8)) console.log(`    ✕ ${b}`)
-          if (look.broken.length > 8) console.log(`    … and ${look.broken.length - 8} more in .look/report.txt`)
-        } else {
-          console.log('  BROKEN — nothing.')
-        }
-        const inert = look.observed.filter((o) => /nothing changes across it/.test(o))
-        if (inert.length) console.log(`  ${inert.length} section(s) with nothing happening across them (see .look/report.txt)`)
-      } else {
-        console.log('\n  no .look report — the builder never ran `npm run look` on this one.')
-      }
-
-      if (smoke && smoke.ok === false) {
-        console.log('')
-        console.log(`  visual smoke BLOCKED: ${smoke.blockers.slice(0, 3).join(' | ')}`)
-      }
-
+      const brief = gateBriefing(runName)
       const chosen = await freePort(port++)
       const server = spawnPreview(runDir, chosen)
-      console.log('')
-      console.log(`  Live:  http://127.0.0.1:${chosen}/`)
-      console.log(`  Tiles: ${path.join(path.relative(process.cwd(), runDir), '.look')}`)
-      console.log('')
+      const url = `http://127.0.0.1:${chosen}/`
 
-      let answer = ''
+      let keep
       try {
-        while (!/^[yn]$/i.test(answer)) {
-          answer = (await rl.question('  Keep this prototype and score it?  [y/n]  ')).trim()
-          if (answer === '') answer = 'y'
+        if (interactive) {
+          printBriefing(brief)
+          console.log('')
+          console.log(`  Live:  ${url}`)
+          console.log('')
+          let answer = ''
+          while (!/^[yn]$/i.test(answer)) {
+            answer = (await rl.question('  Keep this prototype and score it?  [y/n]  ')).trim()
+            if (answer === '') answer = 'y'
+          }
+          keep = /^y$/i.test(answer)
+        } else {
+          publish({
+            current: runName,
+            url,
+            remaining: runNames.slice(runNames.indexOf(runName) + 1),
+            askedAt: new Date().toISOString(),
+            briefing: brief,
+            answer: null,
+          })
+          keep = await waitForBrowser(runName, log)
         }
       } finally {
         killTree(server.pid)
       }
 
-      const keep = /^y$/i.test(answer)
       if (keep) {
         kept.push(runName)
         log(`[${runName}] kept`)
       } else {
-        try {
-          fs.writeFileSync(
-            path.join(runDir, 'run.json'),
-            JSON.stringify({ ...info, rejected: new Date().toISOString() }, null, 2),
-            'utf8',
-          )
-        } catch {}
+        reject(runName)
         log(`[${runName}] REJECTED at the gate — it will not be offered for scoring`)
       }
     }
   } finally {
-    rl.close()
+    rl?.close()
+    fs.rmSync(GATE_FILE, { force: true })
   }
 
   return kept

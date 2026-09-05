@@ -65,34 +65,19 @@ export function buildPrompt(meta, arm, runDir, direction) {
     ? `\n\n\`src/App.jsx\` holds the required content and behaviour as unstyled markup in no meaningful order, and \`src/styles.css\` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.`
     : ''
 
-  // Eyes. Identical for every arm, and deliberately so: a browser is an environment
-  // capability like network access, not a skill advantage, and the same argument that puts
-  // WebSearch in both arms (see ALLOWED_TOOLS in run-all.mjs) puts this in both. Before
-  // 2026-09-05 a session had no way to render its own output — `202609050422` went looking
-  // for chrome.exe on the filesystem, failed, and shipped a page it had never seen — while
-  // the skill instructed it to inspect the rendered page at roughly twenty separate points.
-  // That was an instruction with no hands, and the rounds concluding "prose changes nothing"
-  // were partly measuring that. The wording below reports; it prescribes nothing.
-  const lookLine = `
-You can see the page. \`npm run look\` builds it, renders it at desktop 1440 and mobile 390,
-writes screenshot tiles to \`.look/\`, and prints what a browser can observe that source code
-cannot. Read the tiles — they are images, open them. Run it before you consider the work
-finished, and again after any change whose appearance you cannot predict.
-
-Its report has two parts and they are not the same kind of thing. BROKEN is output that is
-invalid however you feel about it — a viewport-sized hole, text too small to read, a page
-that scrolls sideways, an image that never loaded, a reveal that never fired. Fix those.
-OBSERVED is neutral fact about what the rendered page does, offered because you cannot
-otherwise know it: what changes across a scroll, what does not, what responds to a pointer.
-Observations are not defects and there is nothing to hit — decide for yourself what, if
-anything, they mean for this page.`
-
+  // Nothing here tells the agent how to look at its own work, and that is deliberate.
+  //
+  // It did briefly. A harness-written `npm run look` script was added on 2026-09-05 and named
+  // in the brief — which is exactly the "teaching to the test" that smoke.mjs is kept out of
+  // the brief to avoid. No real user has that script, so a round measuring it measured the
+  // fixture. The capability now arrives the two ways it reaches a real user: a browser MCP in
+  // the run (writeMcpConfig below), and `dreative look` in the shipped CLI. The agent finds
+  // both the way a user's agent does — in its tool list, and in the skill it was told to use.
   return `Work in the project at ${runDir.replace(/\\/g, '/')}
 
 ${brief}${baselineLine}
 
 ${skillLine}
-${lookLine}
 
 Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
 ${meta.preserve.map((p) => `- ${p}`).join('\n')}
@@ -118,6 +103,40 @@ function useSkillTree(runDir, treeDir) {
     fs.rmSync(dest, { recursive: true, force: true })
     fs.cpSync(src, dest, { recursive: true })
   }
+}
+
+/**
+ * The MCP servers a run gets, written where the agent discovers them by itself.
+ *
+ * A normal user installs a browser MCP and their agent finds it in its tool list. Until
+ * 2026-09-06 a testbed session had none — `~/.claude.json` carries no servers and a spawned
+ * `claude -p` inherits nothing — so every run was blind while the skill told it to inspect
+ * the rendered page at roughly twenty points. That made the harness *less* capable than the
+ * environment it is supposed to stand in for, which is the worse direction to be wrong in:
+ * it produces defects that no real user would ever see and reads them as design decisions.
+ *
+ * `@playwright/mcp` is the official Playwright server and the ordinary choice for a headless
+ * agent. `--headless` because nobody is watching, and `--isolated` because a round runs three
+ * sessions at once and a shared browser profile would have them fighting over one window.
+ *
+ * Written for EVERY arm, control included. It is environment, not skill — the same argument
+ * that gives both arms WebSearch (see ALLOWED_TOOLS in run-all.mjs). An instrument handed to
+ * one side would show up in the verdict as something the skill did.
+ */
+export function writeMcpConfig(runDir) {
+  const cli = path.join(ROOT, 'node_modules', '@playwright', 'mcp', 'cli.js')
+  if (!fs.existsSync(cli)) return null
+  const config = {
+    mcpServers: {
+      playwright: {
+        command: process.execPath,
+        args: [cli, '--headless', '--isolated', '--viewport-size', '1440,900'],
+      },
+    },
+  }
+  const file = path.join(runDir, '.mcp.json')
+  fs.writeFileSync(file, JSON.stringify(config, null, 2), 'utf8')
+  return file
 }
 
 /** Create an isolated, real Vite project for one scenario and one arm. */
@@ -200,6 +219,9 @@ export function scaffoldRun({ scenario, arm, label, seq, direction, skillTree, s
     fs.mkdirSync(path.join(runDir, '.claude'), { recursive: true })
     fs.writeFileSync(path.join(runDir, '.claude', 'settings.json'), JSON.stringify(settings, null, 2), 'utf8')
   }
+
+  // Both arms, always. See writeMcpConfig.
+  writeMcpConfig(runDir)
 
   const prompt = buildPrompt(meta, arm, runDir, direction)
   fs.writeFileSync(path.join(runDir, 'BRIEF.md'), `# Brief — ${meta.product} (${arm} Dreative)\n\n${prompt}\n`, 'utf8')

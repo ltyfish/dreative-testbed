@@ -19,6 +19,7 @@ import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
 import { roundLog, startRound, statusPage } from './lib/launcher.mjs'
 import { runStatuses } from './lib/status.mjs'
+import { answerGate } from './lib/gate.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
@@ -1172,6 +1173,24 @@ const server = http.createServer(async (req, res) => {
     lastFingerprint = fingerprint
     res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' })
     res.end(JSON.stringify({ runs: rows, log: roundLog(), changed }))
+    return
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/gate') {
+    let raw = ''
+    for await (const chunk of req) raw += chunk
+    try {
+      const body = JSON.parse(raw)
+      if (!answerGate(body.run, body.decision)) {
+        res.writeHead(409).end('that is not the run the gate is asking about — reload the page')
+        return
+      }
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify({ ok: true }))
+      console.log(`gate: ${body.decision} ${body.run}`)
+    } catch (err) {
+      res.writeHead(400).end(err.message)
+    }
     return
   }
 
