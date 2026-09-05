@@ -11,7 +11,8 @@
     "archive": "node scripts/archive.mjs",
     "new": "node scripts/new-run.mjs",
     "capture": "node scripts/capture.mjs",
-    "clean": "node -e \"fs.rmSync('runs',{recursive:true,force:true});fs.mkdirSync('runs');fs.writeFileSync('runs/.gitkeep','')\""
+    "clean": "node -e \"fs.rmSync('runs',{recursive:true,force:true});fs.mkdirSync('runs');fs.writeFileSync('runs/.gitkeep','')\"",
+    "status": "node scripts/status.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

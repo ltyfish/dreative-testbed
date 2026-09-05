@@ -7,6 +7,11 @@
 //   node scripts/run-all.mjs --scenarios civic-clinic,devtool-docs
 //   node scripts/run-all.mjs --concurrency 2 --model opus
 //   node scripts/run-all.mjs --agent codex
+//
+// Look at each build and keep or throw it out before anything gets scored, and give the
+// round a name you will still understand in three months:
+//
+//   node scripts/run-all.mjs --scenarios storefront-ceramics --arms with-a --gate --label "eyes + look report"
 //   node scripts/run-all.mjs --scenarios caliber-movement --arms with --repeat 2
 //
 // Dreative against Dreative, instead of against a control — both arms get the skill and the
@@ -51,6 +56,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
+import { gateRuns } from './lib/gate.mjs'
 import { runHealth } from './lib/health.mjs'
 import { writeMaterialSummary, addContinuitySignal } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
@@ -68,7 +74,7 @@ const ALL_SCENARIOS = listScenarios()
 
 // Bare positional arguments, so a round is one short command: a number is how many
 // scenarios to run (chosen at random), a word is the direction.
-const VALUE_FLAGS = ['--agent', '--model', '--concurrency', '--timeout', '--arms', '--scenarios', '--direction', '--port', '--repeat', '--round']
+const VALUE_FLAGS = ['--agent', '--model', '--concurrency', '--timeout', '--arms', '--scenarios', '--direction', '--port', '--repeat', '--round', '--label']
 const tokens = process.argv.slice(2)
 const isValueFlag = (t) => VALUE_FLAGS.includes(t) || String(t).startsWith('--direction-')
 // Per-arm direction flags take a value too, so their value must not be mistaken for the
@@ -112,6 +118,11 @@ if (!Number.isInteger(REPEAT) || REPEAT < 1) {
   process.exit(1)
 }
 const SKIP_CAPTURE = arg('no-capture', false)
+// Stop and look at each build before deciding to score it. See lib/gate.mjs.
+const GATE = arg('gate', false)
+// A name for this round, so a verdict months later says what was being tested rather than
+// only which commit it ran. Shows up in run.json, the round record and the review UI.
+const ROUND_LABEL = arg('label', null)
 // Archiving belongs to Reset, not to the end of a round: a round archived here but never
 // reset stayed in runs/ looking like live work, and review has no way to tell the two apart.
 // One command puts a round away. `--archive` is the escape hatch for a round you know you
@@ -252,6 +263,9 @@ const ALLOWED_TOOLS = [
   'Bash(npm run build)',
   'Bash(npm run dev)',
   'Bash(npm run preview)',
+  // Eyes. See buildPrompt in lib/scaffold.mjs — both arms get this, for the same reason
+  // both arms get WebSearch.
+  'Bash(npm run look)',
   'Bash(npm install:*)',
   'Bash(npx playwright:*)',
   'Bash(node:*)',
@@ -538,6 +552,18 @@ if (SKIP_CAPTURE) {
   }
 }
 
+// ---------------------------------------------------------------- gate
+
+let kept = jobs.map((j) => j.runName)
+if (GATE) {
+  console.log('\nPrototype gate — look at each build, then keep it or throw it out.')
+  kept = await gateRuns(kept, sessions, log)
+  const rejected = jobs.length - kept.length
+  if (rejected) {
+    console.log(`\n${rejected} run(s) rejected at the gate. They stay on disk but are not offered for scoring.`)
+  }
+}
+
 const previousMeta = (() => {
   try {
     return JSON.parse(fs.readFileSync(path.join(RUNS, `round-${roundStamp}.json`), 'utf8'))
@@ -548,6 +574,7 @@ const previousMeta = (() => {
 
 const roundMeta = {
   round: roundStamp,
+  label: ROUND_LABEL && ROUND_LABEL !== true ? String(ROUND_LABEL) : (previousMeta?.label ?? null),
   agent: AGENT,
   model: MODEL && MODEL !== true ? String(MODEL) : null,
   yolo: Boolean(YOLO),

@@ -15,7 +15,8 @@ most valuable output the testbed can produce.
 node scripts/setup.mjs           # once per machine: deps, chromium, skill, then verifies
 
 node scripts/run-all.mjs 2       # 2 scenarios picked at random × 2 arms, then screenshots
-node scripts/review.mjs          # blind review UI at http://127.0.0.1:4321
+node scripts/review.mjs          # review UI at http://127.0.0.1:4321  (start rounds at /status)
+node scripts/status.mjs          # is the round done? one line per run
 node scripts/archive.mjs         # every past round at http://127.0.0.1:4322
 ```
 
@@ -47,7 +48,47 @@ node scripts/run-all.mjs --arms with             # re-run one arm only
 node scripts/run-all.mjs --repeat 2              # same input twice — variance check
 node scripts/run-all.mjs --no-yolo               # scoped permissions instead of full bypass
 node scripts/run-all.mjs --archive               # archive at round end, for a round you will not score
+node scripts/run-all.mjs --gate                  # stop at each build and keep it or throw it out
+node scripts/run-all.mjs --label "what this tests"   # a name you will still understand in three months
 ```
+
+### The prototype gate
+
+With `--gate`, the round stops after every build and shows you what is already known about
+it — whether it was truncated, what `npm run look` found, whether visual smoke blocked — then
+serves it and asks:
+
+```
+  Keep this prototype and score it?  [y/n]
+```
+
+`n` writes `rejected` into that run's `run.json`. The review UI then labels it and will not
+offer it for scoring, so a build you already threw out cannot pick up a verdict later. The
+right answer for anything marked TRUNCATED is almost always `n`: a build the provider or the
+time cap ended mid-work is not evidence about the skill.
+
+The gate asks on stdin, so it only works from a terminal — a round started from the web UI
+does not gate.
+
+### Seeing the page (`npm run look`)
+
+Every scaffolded run gets `look.mjs`, and the brief tells **both arms** about it in identical
+words. It builds the project, renders it at 1440 and 390, writes screenshot tiles to `.look/`,
+and prints two lists:
+
+- **BROKEN** — output that is invalid however you feel about it: a viewport-sized hole, text
+  under 12px, sideways scroll, an image that never loaded, a reveal that never fired.
+- **OBSERVED** — neutral fact: what changes across each section on scroll, what does not, what
+  responds to a pointer. Not defects, no thresholds, nothing to hit.
+
+This exists because until 2026-09-05 a session in this harness had **no way to render its own
+output**. `202609050422` searched the filesystem for `chrome.exe`, found no way in, and shipped
+a page it had never seen — while the skill instructed it to inspect the rendered result at
+roughly twenty separate points. Those were instructions with no hands. A browser is an
+environment capability like network access, so it goes to every arm, for the same reason
+WebSearch does.
+
+It is not a gate. Nothing fails a build, and the report says so on every run.
 
 ### Dreative against Dreative
 
@@ -142,6 +183,25 @@ your machine, even though each run directory is disposable.
 Each session's transcript is written to `runs/<run>/agent.log`. A round of ten at
 concurrency 3 takes roughly 30–45 minutes; you can walk away.
 
+## Status, and starting a round from the browser
+
+```sh
+node scripts/status.mjs             # one line per run
+node scripts/status.mjs --watch     # …refreshed every 15s
+node scripts/status.mjs --json
+```
+
+Each run is `running`, `stalled`, `truncated`, `rejected`, `built`, `finished`, or `empty`,
+derived from what the round writes to disk as it goes — so it is right after a reboot, and
+right for a round somebody else started. Alongside the state it shows what `npm run look`
+found, whether smoke blocked, and whether a verdict has been recorded.
+
+The same thing lives at **http://127.0.0.1:4321/status** while `review.mjs` is running, with a
+form to start a round: pick scenarios, arms, the skill tree per arm (`git:HEAD`, `git:<sha>`,
+or a directory), direction, sessions each, time cap, and a label. It shells out to
+`run-all.mjs`, so there is one definition of what a round is. The page polls every 15 seconds
+and reloads itself when a run actually changes state.
+
 ## Reviewing
 
 `review.mjs` serves a blind comparison of every captured pair. Left/right is randomised
@@ -165,6 +225,23 @@ Submitting appends to `VERDICTS.md` and writes `runs/verdicts/<scenario>.json`. 
 failure is shown in place of the screenshots rather than hidden, because failing to build
 is a real result, and a page that rendered almost nothing is flagged with a capture warning
 instead of appearing as an unexplained white rectangle.
+
+### Single-arm rounds
+
+The control arm was retired on 2026-09-04, so most rounds now run one arm and have nothing
+to compare against. Those used to be view-only and **saved nothing at all**, which is how six
+separate complaints about the same defect accumulated in chat with no way to sort or count
+them. A one-arm round is now scored on its own axes — material, subject, motion, craft,
+structure — each 1-5, plus an overall, plus *what is wrong with it* and *what to keep*.
+
+They are scores, not gates: nothing reads them back into a build. They exist so that a flat
+line across rounds becomes visible as a flat line. Verdicts go to the same three places a
+paired verdict does — `VERDICTS.md`, `runs/verdicts/<scenario>.json`, and the vault changelog
+— and the block appended to `VERDICTS.md` deliberately does not match the shapes the
+with-versus-control scoreboard reads, so a solo round cannot land in a tally it is not part of.
+
+Runs that were **rejected at the prototype gate** or **truncated** are labelled as such in the
+review UI, so neither can quietly collect a verdict.
 
 ## The archive
 
@@ -335,8 +412,13 @@ _template/           shared Vite skeleton every run is built from
 runs/                one isolated real project per run, plus verdicts/ (gitignored)
 archive/<round>/     committed record: sources, screenshots, verdicts, dependency-free sites
 scripts/setup.mjs    prepare a fresh machine, or --check an existing one
-scripts/run-all.mjs  orchestrator: scaffold → sessions → capture
-scripts/review.mjs   blind review server
+scripts/run-all.mjs  orchestrator: scaffold → sessions → capture → optional gate
+scripts/review.mjs   review + scoring server, and /status to start rounds
+scripts/status.mjs   is the round done? derived from disk, not remembered
+scripts/lib/gate.mjs      the prototype keep/throw-out prompt
+scripts/lib/status.mjs    run states, read from what the round leaves behind
+scripts/lib/launcher.mjs  the /status page and the round launcher
+_template/look.mjs   the eyes every run gets: render, tile, report BROKEN and OBSERVED
 scripts/archive.mjs  archive browser, works on a bare clone
 scripts/new-run.mjs  scaffold a single run by hand
 scripts/capture.mjs  recapture after a manual fix

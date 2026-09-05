@@ -17,11 +17,16 @@ import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture
 import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
+import { roundLog, startRound, statusPage } from './lib/launcher.mjs'
+import { runStatuses } from './lib/status.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
 const VERDICT_DIR = path.join(RUNS, 'verdicts')
 const ASSIGN_FILE = path.join(RUNS, '.review-assignments.json')
+// Last seen run-state fingerprint, so /api/status can tell the page when something
+// actually moved rather than making it reload on a timer.
+let lastFingerprint = null
 const CLEARED_FILE = path.join(RUNS, '.cleared-rounds.json')
 
 const CRITERIA = [
@@ -31,6 +36,23 @@ const CRITERIA = [
   ['craft', 'Craft', 'Alignment, spacing consistency, type, contrast, edges. Count the defects — it is that mechanical.'],
   ['mobile', 'Mobile', 'Is 390px designed, or is it the desktop layout surviving? Check overflow, collisions, tiny tap targets.'],
   ['restraint', 'Restraint', 'For every visible effect, what is it for? Decoration doing no work counts against.'],
+]
+
+// Single-arm rounds get their own axes, because the six above are all written as
+// with-versus-control questions and a solo round has nothing to compare against. Until
+// 2026-09-05 that meant a one-arm round saved nothing at all — and since the control was
+// retired on 2026-09-04, one arm is how most rounds are now run. Verdicts on those lived
+// only in chat, which is how "tables and labels" accumulated six complaints and no
+// movement: nothing was written anywhere you could sort or count.
+//
+// Scored 1-5 rather than pass/fail. These are not gates and nothing reads them back into
+// a build; they exist so that a flat line across rounds becomes visible as a flat line.
+const SOLO_AXES = [
+  ['material', 'Material', 'Is the imagery sourced and real, of this subject, and treated into one set — or assembled from whatever was findable?'],
+  ['subject', 'Subject', 'Is the thing being sold actually shown, in the state a buyer cares about?'],
+  ['motion', 'Motion', 'Does anything move that carries meaning, or is it a page of stills with fades on them?'],
+  ['craft', 'Craft', 'Alignment, spacing, type, contrast, edges, and 390px. Count the defects — it is that mechanical.'],
+  ['structure', 'Structure and pacing', 'Squint until it blurs. Do you still see structure, or an even grey texture?'],
 ]
 
 const readJson = (p, fallback) => {
@@ -388,6 +410,89 @@ export function rebuildScoreboard() {
   if (updated !== text) fs.writeFileSync(file, updated, 'utf8')
 }
 
+/**
+ * A verdict on a round with nothing to compare against.
+ *
+ * Written to the same places a paired verdict goes — runs/verdicts/, VERDICTS.md, and the
+ * vault — so one place holds every judgement rather than the paired ones being recorded and
+ * the solo ones being typed into a chat window and lost. The block it appends deliberately
+ * does not match the with-versus-control shapes that rebuildScoreboard() reads, so a solo
+ * round cannot silently land in a tally it is not part of.
+ */
+function saveSoloVerdict(body) {
+  fs.mkdirSync(VERDICT_DIR, { recursive: true })
+  const solos = loadSolos(loadPairs())
+  const solo = solos.find((v) => v.scenario === body.scenario)
+  if (!solo) throw new Error('unknown scenario')
+
+  const runDir = body.run && solo.runs.some((r) => r.dir === body.run) ? body.run : solo.runs[0].dir
+  const run = solo.runs.find((r) => r.dir === runDir)
+  const score = (key) => {
+    const n = Number(body.scores?.[key] ?? (key === 'overall' ? body.overall : undefined))
+    return Number.isInteger(n) && n >= 1 && n <= 5 ? n : null
+  }
+
+  const record = {
+    kind: 'solo',
+    scenario: body.scenario,
+    judgedAt: new Date().toISOString(),
+    run: runDir,
+    arm: run?.meta?.arm ?? null,
+    direction: run?.meta?.direction ?? null,
+    skill: run?.meta?.skill ?? null,
+    round: run?.meta?.seq ?? solo.seq,
+    truncated: run?.meta?.truncated ?? null,
+    scores: Object.fromEntries(SOLO_AXES.map(([k]) => [k, score(k)])),
+    overall: score('overall'),
+    notes: body.notes ?? '',
+    keep: body.keep ?? '',
+  }
+
+  // Same filename a paired verdict uses, because archive.mjs and syncVerdict already key off
+  // `<scenario>.json` and a second naming scheme would quietly fall out of both. The round
+  // is inside the record, and VERDICTS.md keeps the history.
+  fs.writeFileSync(path.join(VERDICT_DIR, `${body.scenario}.json`), JSON.stringify(record, null, 2), 'utf8')
+
+  const show = (v) => (v === null ? '—' : `${v} / 5`)
+  const rows = [...SOLO_AXES.map(([k, name]) => [name, record.scores[k]]), ['**Overall**', record.overall]]
+    .map(([name, v]) => `| ${name} | ${show(v)} |`)
+    .join('\n')
+
+  const block = `
+## ${body.scenario} — ${record.judgedAt.slice(0, 10)} — single arm
+
+- run:   \`${record.run}\`
+- arm:   ${record.arm ?? '—'} · direction ${record.direction ?? '—'} · skill ${record.skill ?? '—'}
+${record.truncated ? `- NOTE:  this build was TRUNCATED (${record.truncated}) and is not evidence about the skill\n` : ''}
+| Axis | Score |
+|---|---|
+${rows}
+
+**What is wrong with it:** ${record.notes || '—'}
+
+**What to keep:** ${record.keep || '—'}
+`
+  fs.appendFileSync(path.join(ROOT, 'VERDICTS.md'), block, 'utf8')
+
+  const roundDir = findRoundForRun(record.run)
+  if (roundDir) {
+    try {
+      syncVerdict(body.scenario, roundDir)
+    } catch {
+      /* the round may not be archived yet; runs/verdicts is still the record */
+    }
+  }
+
+  try {
+    const written = recordVerdict(record)
+    if (written) console.log(`recorded verdict in ${written}`)
+  } catch (error) {
+    console.warn(`could not record verdict in the vault: ${error.message}`)
+  }
+
+  return record
+}
+
 function saveVerdict(body) {
   fs.mkdirSync(VERDICT_DIR, { recursive: true })
   const pairs = loadPairs()
@@ -647,6 +752,8 @@ function viewPage(pairs, solos, view) {
         <span class="tag">${esc(runLabel(run, spansRounds))}</span>
         ${buildFailure(run.dir) ? '' : `<a class="livebtn" href="/liverun/${encodeURIComponent(run.dir)}" target="_blank" rel="noopener">Open live ↗</a>`}
       </div>
+      ${run.meta.rejected ? '<div class="fail">Rejected at the prototype gate — kept on disk as a record, not for scoring</div>' : ''}
+      ${run.meta.truncated ? `<div class="fail">TRUNCATED (${esc(run.meta.truncated)}) — this build did not finish. Missing stages and craft defects here are unattributable.</div>` : ''}
       ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
       ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
       ${smokeNote(run.dir) ? `<div class="${smokeNote(run.dir).kind === 'fail' ? 'fail' : 'warn'}">${esc(smokeNote(run.dir).text)}</div>` : ''}
@@ -677,7 +784,7 @@ function viewPage(pairs, solos, view) {
     <div class="sub">Not a blind comparison — there is nothing here to score against. ${
       ARCHIVE_PORT ? `Past rounds: <a href="http://127.0.0.1:${ARCHIVE_PORT}" target="_blank" rel="noopener">archive ↗</a>` : ''
     }</div></div>
-  <nav class="tabs">${tabStrip(pairs, solos, `v:${view.scenario}`)}<button class="tab reset" id="resetTop" title="Archive this round and clear runs/">Reset round</button></nav>
+  <nav class="tabs"><a class="tab" href="/status">Status &amp; new round</a>${tabStrip(pairs, solos, `v:${view.scenario}`)}<button class="tab reset" id="resetTop" title="Archive this round and clear runs/">Reset round</button></nav>
 </header>
 <main>
   <div class="brief">
@@ -691,12 +798,77 @@ function viewPage(pairs, solos, view) {
         ? `Same scenario, same direction, same skill — the only variable is the run itself. What differs between these is variance, not a design decision.${
             spansRounds ? ' They came from separate rounds, which is the same experiment split in half.' : ''
           } Compare what each one read: <code>node scripts/variance.mjs${spansRounds ? ` ${rounds.join(' ')}` : ''}</code>`
-        : 'This round was run with one arm, so the six criteria — all of them written as with-versus-control questions — do not apply. Nothing is saved from this page.'
+        : 'This round was run with one arm, so the six blind criteria — all of them written as with-versus-control questions — do not apply. Score it on its own terms below; the verdict is saved.'
     }</p>
   </div>
   <div class="grid${view.runs.length > 2 ? ' multi' : ''}">${cols}</div>
+
+  <div class="panel">
+    <div class="lbl">Scoring ${view.runs.length > 1 ? '— pick which run this verdict is about' : ''}</div>
+    ${
+      view.runs.length > 1
+        ? `<p><select id="whichrun">${view.runs
+            .map((r) => `<option value="${esc(r.dir)}">${esc(r.dir)}</option>`)
+            .join('')}</select></p>`
+        : `<input type="hidden" id="whichrun" value="${esc(view.runs[0].dir)}">`
+    }
+    <table>
+      <tr><th style="width:44%">Axis</th><th>1 = absent · 5 = would ship it</th></tr>
+      ${SOLO_AXES.map(
+        ([key, name, why]) => `<tr>
+        <td><strong>${name}</strong><span class="why">${why}</span></td>
+        <td><div class="choices">${['1', '2', '3', '4', '5']
+          .map((v) => `<label class="pick"><input type="radio" name="${key}" value="${v}">${v}</label>`)
+          .join('')}</div></td></tr>`,
+      ).join('')}
+      <tr><td><strong>Overall</strong><span class="why">Would you put this in front of the client whose product it is?</span></td>
+      <td><div class="choices">${['1', '2', '3', '4', '5']
+        .map((v) => `<label class="pick"><input type="radio" name="overall" value="${v}">${v}</label>`)
+        .join('')}</div></td></tr>
+    </table>
+
+    <div class="lbl">What is wrong with it</div>
+    <textarea id="notes" placeholder="Concrete. &quot;Nine product photos from nine different shoots&quot; beats &quot;the images feel inconsistent&quot; — the first can be checked next round, the second cannot."></textarea>
+
+    <div class="lbl">What to keep</div>
+    <textarea id="keep" placeholder="Naming this is what stops the next round throwing it away to fix something else."></textarea>
+
+    <p style="margin-top:16px"><button id="soloSubmit">Save verdict</button></p>
+    <p class="sub" id="soloSaved" style="display:none"></p>
+  </div>
 </main>
 <script>
+const SCENARIO = ${JSON.stringify(view.scenario)};
+const AXES = ${JSON.stringify([...SOLO_AXES.map(([k]) => k), 'overall'])};
+document.getElementById('soloSubmit').addEventListener('click', async (e) => {
+  const btn = e.currentTarget;
+  const scores = {};
+  for (const k of AXES) {
+    const hit = document.querySelector('input[name="' + k + '"]:checked');
+    if (hit) scores[k] = Number(hit.value);
+  }
+  const missing = AXES.filter((k) => !(k in scores));
+  if (missing.length && !confirm('Not scored: ' + missing.join(', ') + '.\\n\\nSave anyway?')) return;
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const res = await fetch('/api/solo-verdict', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      scenario: SCENARIO,
+      run: document.getElementById('whichrun').value,
+      scores,
+      overall: scores.overall,
+      notes: document.getElementById('notes').value,
+      keep: document.getElementById('keep').value,
+    }),
+  });
+  if (!res.ok) { alert('Not saved:\\n\\n' + await res.text()); btn.disabled = false; btn.textContent = 'Save verdict'; return; }
+  const out = await res.json();
+  btn.textContent = 'Saved';
+  const saved = document.getElementById('soloSaved');
+  saved.style.display = 'block';
+  saved.textContent = 'Saved to VERDICTS.md, runs/verdicts/' + out.scenario + '.json, and the vault changelog. Overall ' + (out.overall ?? '—') + '/5.';
+});
 const UNSCORED = ${JSON.stringify(pairs.filter((p) => p.health.judgeable && !p.scored).map((p) => p.scenario))};
 async function resetRound(btn) {
   const warn = UNSCORED.length
@@ -981,6 +1153,52 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify(out))
     } catch (err) {
       res.writeHead(500).end(err.message)
+    }
+    return
+  }
+
+  if (req.method === 'GET' && url.pathname === '/status') {
+    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' })
+    res.end(statusPage({ style: STYLE }))
+    return
+  }
+
+  if (req.method === 'GET' && url.pathname === '/api/status') {
+    const rows = runStatuses()
+    // The page reloads itself when the shape of the round changes — a session finishing, a
+    // capture landing — but not on every poll, so a log you are reading does not jump.
+    const fingerprint = rows.map((r) => r.run + ':' + r.state).join('|')
+    const changed = lastFingerprint !== null && fingerprint !== lastFingerprint
+    lastFingerprint = fingerprint
+    res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' })
+    res.end(JSON.stringify({ runs: rows, log: roundLog(), changed }))
+    return
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/run') {
+    let raw = ''
+    for await (const chunk of req) raw += chunk
+    try {
+      const record = startRound(JSON.parse(raw))
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify(record))
+      console.log(`started round: ${record.command}`)
+    } catch (err) {
+      res.writeHead(400).end(err.message)
+    }
+    return
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/solo-verdict') {
+    let raw = ''
+    for await (const chunk of req) raw += chunk
+    try {
+      const record = saveSoloVerdict(JSON.parse(raw))
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify(record))
+      console.log(`saved solo verdict for ${record.scenario} (${record.run}): overall → ${record.overall ?? '—'}`)
+    } catch (err) {
+      res.writeHead(400).end(err.message)
     }
     return
   }

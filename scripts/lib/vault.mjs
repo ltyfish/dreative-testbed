@@ -34,6 +34,31 @@ export function recordVerdict(record) {
 
   const day = record.judgedAt.slice(0, 10)
   const heading = `## ${day}`
+
+  // A single-arm verdict has no winner and no criteria map — it is a set of scores on one
+  // build. Written as its own shape rather than forced through the with-versus-control
+  // wording, which would file "3/5 on motion" as though something had beaten something else.
+  if (record.kind === 'solo') {
+    const axes = Object.entries(record.scores ?? {})
+      .filter(([, v]) => v !== null && v !== undefined)
+      .map(([k, v]) => `${k} ${v}`)
+      .join(', ')
+    const soloLine =
+      `- Verdict — **${record.scenario}** round \`${record.round}\` (single arm, ${record.arm ?? '?'}, skill ${record.skill ?? '?'}): ` +
+      `overall **${record.overall ?? '—'}/5**${axes ? ` — ${axes}` : ''}${record.truncated ? ' — TRUNCATED, not evidence about the skill' : ''}. ` +
+      `Notes in the testbed's \`VERDICTS.md\`\n`
+    let soloText = fs.readFileSync(file, 'utf8')
+    if (soloText.includes(soloLine.trim())) return file
+    if (soloText.includes(heading)) {
+      const at = soloText.indexOf(heading) + heading.length
+      const nl = soloText.indexOf('\n', at)
+      soloText = `${soloText.slice(0, nl + 1)}\n${soloLine}${soloText.slice(nl + 1)}`
+    } else {
+      soloText = `${soloText.replace(/\s*$/, '')}\n\n${heading}\n\n${soloLine}`
+    }
+    fs.writeFileSync(file, soloText, 'utf8')
+    return file
+  }
   const round = ((Object.values(record.runs)[0] ?? '').split('__').pop() || '').trim()
   const losses = Object.entries(record.criteria)
     .filter(([, v]) => v === 'without')

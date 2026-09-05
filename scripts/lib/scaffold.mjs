@@ -65,11 +65,34 @@ export function buildPrompt(meta, arm, runDir, direction) {
     ? `\n\n\`src/App.jsx\` holds the required content and behaviour as unstyled markup in no meaningful order, and \`src/styles.css\` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.`
     : ''
 
+  // Eyes. Identical for every arm, and deliberately so: a browser is an environment
+  // capability like network access, not a skill advantage, and the same argument that puts
+  // WebSearch in both arms (see ALLOWED_TOOLS in run-all.mjs) puts this in both. Before
+  // 2026-09-05 a session had no way to render its own output — `202609050422` went looking
+  // for chrome.exe on the filesystem, failed, and shipped a page it had never seen — while
+  // the skill instructed it to inspect the rendered page at roughly twenty separate points.
+  // That was an instruction with no hands, and the rounds concluding "prose changes nothing"
+  // were partly measuring that. The wording below reports; it prescribes nothing.
+  const lookLine = `
+You can see the page. \`npm run look\` builds it, renders it at desktop 1440 and mobile 390,
+writes screenshot tiles to \`.look/\`, and prints what a browser can observe that source code
+cannot. Read the tiles — they are images, open them. Run it before you consider the work
+finished, and again after any change whose appearance you cannot predict.
+
+Its report has two parts and they are not the same kind of thing. BROKEN is output that is
+invalid however you feel about it — a viewport-sized hole, text too small to read, a page
+that scrolls sideways, an image that never loaded, a reveal that never fired. Fix those.
+OBSERVED is neutral fact about what the rendered page does, offered because you cannot
+otherwise know it: what changes across a scroll, what does not, what responds to a pointer.
+Observations are not defects and there is nothing to hit — decide for yourself what, if
+anything, they mean for this page.`
+
   return `Work in the project at ${runDir.replace(/\\/g, '/')}
 
 ${brief}${baselineLine}
 
 ${skillLine}
+${lookLine}
 
 Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
 ${meta.preserve.map((p) => `- ${p}`).join('\n')}
