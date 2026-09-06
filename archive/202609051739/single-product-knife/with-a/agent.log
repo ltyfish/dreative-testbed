@@ -1,0 +1,377 @@
+
+
+===== PHASE 1 — signature mechanism =====
+
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/single-product-knife__with-a__202609051739
+
+This is the page for the Kaji No.7, a chef's knife made by one smith and sold direct for £280. A buyer is deciding between this and a good factory knife at a fifth of the price, so the page has to make the difference visible rather than asserted. Design and build that page.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction and settings. Nobody is available to answer during this session, so take the recommended configuration and build — do not pause for any confirmation.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- The price, the two handle options with their price difference, and which is in stock
+- Every specification: blade length, total length, weight, steel, hardness, and the bevel angle
+- The making statement — one smith, the number made per month, and the current lead time
+- The care facts, including that the steel is not stainless and will patina, and must not go in a dishwasher
+- The sharpening service offer and what it costs after the first free year
+- Both owner notes with their names and how long they have had the knife
+- The returns statement — 30 days unused, and the lifetime guarantee against a failure of the maker's work
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+STOP AFTER THE SIGNATURE MOMENT. This session has two phases and you are in the first.
+
+Build only the one moment this route exists for — the thing the subject does that a static
+picture cannot show — at full intended fidelity, on a route that renders and can be scrolled.
+Its material must already be on disk and already treated before you write it. Do not build
+the other sections. Do not build a simplified version meant to be upgraded later: a
+placeholder here is precisely what this checkpoint exists to catch, and a placeholder that
+renders correctly never gets replaced.
+
+When it runs, stop and report: what the moment is, what material it moves, what drives it,
+and what you could not get. Then end your turn. Someone will look at it and decide whether
+the rest of the page gets built. Nothing you write after that report is used.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start by invoking the Dreative skill, as instructed.
+  → Skill
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → ToolSearch
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\.playwright-mcp\baseline-1440.png
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\baseline-1440.png
+
+  → Bash skills/motion.md references/MOTION_MATERIAL.md references/MEDIA_SOURCES.md skills/3d.md skills/media.md
+
+  → Bash skills/motion.md skills/3d.md
+
+  → Bash
+
+  → Bash references/MOTION_MATERIAL.md
+
+  → Bash
+
+  → Bash
+Use node instead of python.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Now build a contact sheet and look at it.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\sheet1.jpg
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\look_wide.jpg
+
+  → Read C:\Users\lty\AppData\Local\Temp\look_macro.jpg
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\look_m_rot.jpg
+
+  → Bash references/CREATIVE_EXECUTION.md
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\look_m2.jpg
+
+  → Read C:\Users\lty\AppData\Local\Temp\look_w2.jpg
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\cmp.jpg
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\cmp2.jpg
+Now producing the treated derivatives and verifying annotation coordinates against the real pixels.
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\lty\AppData\Local\Temp\mark.jpg
+Material is on disk, treated, and the annotation coordinates are verified against real pixels. Now building the moment.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\Approach.jsx
+Now the styles.
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\styles.css
+
+  → Bash
+Now wire App.jsx to render only the moment, preserving all content data for phase 2.
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\m-00.png
+
+  → Bash
+Adding the scrim layer that the copy needs.
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\styles.css
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\Approach.jsx
+Now capturing the moment at several points along the scroll.
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\m-35.png
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\m-60.png
+Good — the moment reads. Two real defects: the macro can't cover a full-bleed frame at the handoff scale, and the notes need a backing. Fixing both.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Now the CSS for the plate layout.
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\styles.css
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_console_messages
+
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\Approach.jsx
+
+  → Bash
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\src\Approach.jsx
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\p-00.png
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\p-62.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\q-58.png
+The softness at ×5.7 is my webp quality setting, not the source — 985 source pixels are being shown in 816. Re-encoding.
+  → Bash
+
+  → Bash
+Now adding the feathered emergence so the macro grows out of the wide rather than cutting to it.
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\r-55.png
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\r-66.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\r-100.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\s-100.png
+Now the 390px pass.
+  → mcp__playwright__browser_resize
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\mob-00.png
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\mob-100.png
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\mob-62.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\mob-fin.png
+
+  → mcp__playwright__browser_resize
+
+  → mcp__playwright__browser_run_code_unsafe
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\rm-full.png
+
+  → Bash
+
+  → mcp__playwright__browser_run_code_unsafe
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\single-product-knife__with-a__202609051739\rm2.png
+
+  → mcp__playwright__browser_run_code_unsafe
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_console_messages
+
+  → mcp__playwright__browser_evaluate
+The moment runs. Stopping here as instructed.
+
+---
+
+## The moment
+
+**"Go closer until the difference stops being a claim."**
+
+A buyer comparing £280 against £56 cannot tell them apart at the size a product photo is printed — a 345mm knife across 816px is four pixels per millimetre. Everything the price is actually buying (forge scale, a hand-ground bevel, the wandering line where hard core meets soft iron) lives below that threshold. So the route's one moment is the thing a photograph cannot do: the reader walks up to the blade. One scroll-driven camera travels **×1 → ×12** into the knife, crossing from a whole-blade frame into a real macro of *the same knife*, and stops on the grind line. A live `LIFE SIZE ×n` readout counts it.
+
+## What it moves
+
+Two real photographs, both of one Moritaka Hamono kurouchi gyuto, both by Frank Schulenburg, both CC BY-SA 4.0 from Wikimedia Commons — a whole-knife frame (5618×3160) and a macro of its heel (6000×4000). Same knife, same photographer, same session.
+
+Treated, not just resized: the macro is **mirrored and rotated −25°** so the blade sits on the same axis and orientation as the wide frame, then cropped, and both graded to one look (contrast, desaturation, colour split, vignette, unsharp) so stone and wood read as one shoot. Shipped as four webp derivatives (5000/2200 wide, 3400/1200 macro) plus `public/media/CREDITS.md` recording sources, licences, the exact ffmpeg treatment, and the registration constants.
+
+## What drives it
+
+One authored value in `src/blade.js`. Scroll progress → an eased exponent → a camera (a point in macro-normalised space plus a zoom). Everything reads from it:
+
+- The two layers' transforms, tied by a measured **5.0× gain** and a shared physical anchor — the bottom corner of the heel, present in both frames.
+- The handoff. The wide carries the picture to about ×4.4; then the macro **comes up through the middle of it** behind a radial mask that opens as it takes over, so the picture resolves rather than cuts. The threshold is set by resolution, not taste: below that scale the macro cannot fill the plate.
+- The plate itself, held at 816px — exactly what 5618px of source can honestly show at 6.5× — then opening to full bleed once the macro has pixels to spare.
+- Three annotations at coordinates I confirmed by drawing markers onto the shipped file and looking: the grind line, the forge scale, the machi. Each is placed by the same camera, so it stays on its feature at every zoom, flips to whichever side of its pin has room, and appears one at a time.
+
+Reduced motion gets an authored still at ×11.8, ordered claim → picture → label → price. On a phone the pin stays on the blade and its text moves to a caption under the band.
+
+## What I could not get
+
+- **The two frames have different grounds and different perspective.** Stone under the wide, wood under the macro; the bevel reads slightly wider in the macro because the camera was closer. I matched orientation, axis, anchor and grade, and timed the handoff to where the blade fills most of the frame — but it is a dissolve between two photographs, not one continuous optical move. No available source had both scales on one ground.
+- **The wide asset is 2.4MB.** At 6.5× it needs the pixels. It is preloaded and desktop-only (2200px on mobile), but it is heavy. A tiled zoom would halve it.
+- **At DPR 2 the wide will be soft through the handoff.** There is no more source; 5618px is what was photographed.
+- **No patina progression.** The strongest version of the £280 argument is the steel darkening over weeks — the page's own copy promises it. Two registered states of one blade do not exist in any free source I searched (Openverse across CC0/PD/BY/BY-SA, Wikimedia Commons across seven queries). The one candidate set was `by-nc-nd`, unusable commercially.
+- **No interaction baseline yet** — this phase has no controls to give hover, focus and press states to. That is phase 2's first job, not something to defer past it.
+
+Live at `http://127.0.0.1:4199/`; `npm run build` succeeds; console is clean apart from a pre-existing favicon 404. Nothing committed.

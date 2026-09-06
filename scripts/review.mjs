@@ -17,7 +17,7 @@ import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture
 import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
-import { roundLog, startRound, statusPage } from './lib/launcher.mjs'
+import { clearRoundLog, roundLog, startRound, statusPage } from './lib/launcher.mjs'
 import { runStatuses } from './lib/status.mjs'
 import { answerGate } from './lib/gate.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
@@ -287,7 +287,7 @@ async function startArchiveViewer() {
   // says is free, then prove the viewer answers on it before advertising it at all.
   const port = await freePort(4322)
   const args = [path.join(ROOT, 'scripts', 'archive.mjs'), '--port', String(port), '--review-port', String(PORT)]
-  const proc = spawn(process.execPath, args, { cwd: ROOT, stdio: 'ignore' })
+  const proc = spawn(process.execPath, args, { cwd: ROOT, stdio: 'ignore', windowsHide: true })
   let dead = false
   proc.on('error', () => {
     dead = true
@@ -319,7 +319,7 @@ async function startLive(runDir) {
   if (live.has(runDir)) return live.get(runDir).port
   const dir = path.join(RUNS, runDir)
   if (!fs.existsSync(path.join(dir, 'dist'))) {
-    const build = spawn('npm', ['run', 'build'], { cwd: dir, shell: true, stdio: 'ignore' })
+    const build = spawn('npm', ['run', 'build'], { cwd: dir, shell: true, stdio: 'ignore', windowsHide: true })
     await new Promise((r) => build.on('close', r))
   }
   const port = await freePort(0)
@@ -661,6 +661,13 @@ function resetRound() {
   }
   fs.rmSync(VERDICT_DIR, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 })
   fs.rmSync(ASSIGN_FILE, { force: true })
+  // The round is archived and runs/ is empty, so its log describes nothing that still
+  // exists. Leaving it made the next round's status page open on the last round's output.
+  try {
+    clearRoundLog()
+  } catch {
+    /* a round is running and owns the log — leave it alone */
+  }
 
   return { archived, removed, stuck }
 }
@@ -906,11 +913,17 @@ function page(pairs, solos, active, viewName) {
   const tabs = tabStrip(pairs, solos, `s:${pair?.scenario}`)
 
   if (!pair) {
+    // An empty runs/ is where a round starts, so the page that says "nothing here" has to
+    // offer the one action that follows. Printing a command to retype into a terminal is why
+    // the launcher already sitting on /status went unfound.
     return `<!doctype html><meta charset="utf-8"><title>Review</title><style>${STYLE}</style>
     <header><h1>Blind review</h1><div class="sub">Nothing waiting to be scored.</div></header>
-    <main><p class="empty">Nothing captured in <code>runs/</code>.<br><br>Run a round:<br><code>node scripts/run-all.mjs --scenarios civic-clinic,coffee-roaster</code>${
-      ARCHIVE_PORT ? `<br><br>Everything already judged is in the <a href="http://127.0.0.1:${ARCHIVE_PORT}">archive ↗</a>` : ''
-    }</p></main>`
+    <main><p class="empty">Nothing captured in <code>runs/</code>.<br><br>
+      <a class="livebtn" href="/status">Start a round →</a><br><br>
+      <span class="sub">Scenarios, versions, direction and the time cap are all on that page. From a terminal it is
+      <code>node scripts/run-all.mjs --scenarios civic-clinic,coffee-roaster</code>.</span>${
+        ARCHIVE_PORT ? `<br><br>Everything already judged is in the <a href="http://127.0.0.1:${ARCHIVE_PORT}">archive ↗</a>` : ''
+      }</p></main>`
   }
 
   // The round is over when every pair that can be judged has been. Say so, and offer the
@@ -1165,6 +1178,17 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify(out))
     } catch (err) {
       res.writeHead(500).end(err.message)
+    }
+    return
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/clear-log') {
+    try {
+      clearRoundLog()
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify({ ok: true }))
+    } catch (err) {
+      res.writeHead(409).end(err.message)
     }
     return
   }

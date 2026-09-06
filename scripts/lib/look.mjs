@@ -64,6 +64,7 @@ export function measureLook(url, runDir) {
     cwd: runDir,
     encoding: 'utf8',
     timeout: 10 * 60_000,
+    windowsHide: true,
   })
   if (result.status !== 0 && !fs.existsSync(path.join(out, 'report.json'))) {
     throw new Error((result.stderr || result.stdout || 'dreative look failed').split('\n').slice(-6).join(' '))

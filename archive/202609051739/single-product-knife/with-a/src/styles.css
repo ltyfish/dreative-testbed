@@ -1,0 +1,619 @@
+/* Kaji No.7 — signature moment.
+   Colours are taken from the photographs themselves: the ink of the forge
+   scale, the bone of the ho-wood handle, the warm brown of the board. */
+
+:root {
+  --ink: #0b0c0c;
+  --bone: #e9e3d6;
+  --bone-dim: #a8a294;
+  --steel: #8e948f;
+  --ember: #c07a3c;
+  --hair: rgb(233 227 214 / 0.16);
+  --display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  --sans: 'Helvetica Neue', Inter, system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--ember);
+  color: var(--ink);
+}
+
+/* ---- the track -------------------------------------------------------- */
+
+.approach {
+  position: relative;
+  height: 620vh;
+  background: var(--ink);
+}
+
+.approach[data-reduced='true'] {
+  height: auto;
+}
+
+.approach__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.approach[data-reduced='true'] .approach__stage {
+  position: static;
+  height: auto;
+  padding-bottom: 56px;
+}
+
+/* ---- the plate --------------------------------------------------------
+   Not a background: a held photographic plate, sized to exactly what the
+   source can carry at the magnification currently on screen. It opens out to
+   the full window once the macro frame has taken over and has pixels to
+   spare. */
+
+.approach__frame {
+  --plate-w: 60vw;
+  --plate-shift: 1;
+  --open: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--plate-w);
+  height: calc(var(--plate-w) * 9 / 16);
+  translate: calc(-50% + var(--plate-shift) * 15vw) -50%;
+  overflow: hidden;
+  background: #08090a;
+  box-shadow: 0 40px 120px -30px rgb(0 0 0 / 0.9), 0 0 0 1px var(--hair);
+}
+
+.approach[data-reduced='true'] .approach__frame {
+  position: relative;
+  top: auto;
+  left: auto;
+  translate: none;
+  margin: 40px auto 0;
+  width: min(92vw, 1180px);
+  height: calc(min(92vw, 1180px) * 9 / 16);
+}
+
+/* ---- the two photographs ---------------------------------------------- */
+
+.approach__layers {
+  position: absolute;
+  inset: 0;
+}
+
+.approach__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  display: block;
+}
+
+/* A scrim, not a wash: heavy only at the edges where a label has to be read,
+   and clear across the middle so the blade never sits under a filter. */
+.approach__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+        180deg,
+        rgb(8 9 10 / 0) 46%,
+        rgb(8 9 10 / calc(0.5 * var(--open))) 82%,
+        rgb(8 9 10 / calc(0.86 * var(--open))) 100%
+      )
+      no-repeat,
+    linear-gradient(
+        90deg,
+        rgb(8 9 10 / calc(0.6 * var(--open))) 0%,
+        rgb(8 9 10 / calc(0.18 * var(--open))) 34%,
+        rgb(8 9 10 / 0) 60%
+      )
+      no-repeat,
+    radial-gradient(130% 90% at 50% 46%, rgb(8 9 10 / 0) 46%, rgb(8 9 10 / 0.6) 100%);
+}
+
+/* ---- annotation ------------------------------------------------------- */
+
+.approach__notes {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+
+.note__pin,
+.note__body {
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.22, 0.7, 0.25, 1),
+    translate 560ms cubic-bezier(0.22, 0.7, 0.25, 1);
+}
+
+.note[data-shown='true'] .note__pin,
+.note[data-shown='true'] .note__body {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.note__pin {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--bone);
+  border-radius: 50%;
+  background: rgb(8 9 10 / 0.3);
+  box-shadow: 0 0 0 1px rgb(8 9 10 / 0.6), 0 0 14px 2px rgb(8 9 10 / 0.5);
+}
+
+.note[data-shown='true'] .note__pin {
+  animation: pin-settle 640ms cubic-bezier(0.22, 0.7, 0.25, 1) both;
+}
+
+@keyframes pin-settle {
+  from {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.note__body {
+  position: absolute;
+  width: 20ch;
+  display: block;
+  padding: 9px 12px 10px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  /* The label carries its own ground so it stays readable wherever on the
+     blade it lands — the bright ground bevel included. */
+  background: linear-gradient(180deg, rgb(8 9 10 / 0.86), rgb(8 9 10 / 0.74));
+  backdrop-filter: blur(3px) saturate(0.8);
+  border-left: 1px solid var(--ember);
+}
+
+.note[data-h='right'] .note__body {
+  left: 22px;
+  translate: -12px 0;
+}
+
+.note[data-h='left'] .note__body {
+  right: 22px;
+  text-align: right;
+  border-left: 0;
+  border-right: 1px solid var(--ember);
+  translate: 12px 0;
+}
+
+.note[data-v='down'] .note__body {
+  top: -12px;
+}
+
+.note[data-v='up'] .note__body {
+  bottom: -12px;
+}
+
+.note__label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 5px;
+}
+
+.note__text {
+  display: block;
+  color: var(--bone);
+}
+
+.approach__caption {
+  display: none;
+}
+
+/* ---- the magnification readout ---------------------------------------- */
+
+.approach__hud {
+  position: absolute;
+  z-index: 6;
+  left: clamp(20px, 3.2vw, 44px);
+  bottom: clamp(20px, 3.2vw, 44px);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--mono);
+  color: var(--bone-dim);
+  text-shadow: 0 1px 12px rgb(8 9 10 / 0.9);
+}
+
+.hud__key {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hud__value {
+  font-size: 1.2rem;
+  color: var(--bone);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- copy ------------------------------------------------------------- */
+
+.approach__copy {
+  position: absolute;
+  z-index: 6;
+  left: clamp(20px, 3.4vw, 52px);
+  top: 50%;
+  translate: 0 -50%;
+  max-width: min(30ch, 34vw);
+  transition: opacity 620ms ease, translate 900ms cubic-bezier(0.22, 0.7, 0.25, 1);
+}
+
+.approach__copy:not([data-beat='0']) {
+  opacity: 0;
+  translate: 0 calc(-50% - 20px);
+  pointer-events: none;
+}
+
+.approach__eyebrow {
+  margin: 0 0 20px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.approach__title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+.approach__title span {
+  display: block;
+}
+
+.approach__title span:last-child {
+  font-style: italic;
+  color: var(--steel);
+}
+
+.approach__lede {
+  margin: 24px 0 0;
+  max-width: 27ch;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--bone-dim);
+}
+
+.approach__cue {
+  margin: 36px 0 0;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.approach__cue::after {
+  content: '';
+  width: 52px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ember), transparent);
+  transform-origin: 0 50%;
+  animation: cue 2.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes cue {
+  0%,
+  100% {
+    transform: scaleX(0.3);
+    opacity: 0.3;
+  }
+  45% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.approach__payoff {
+  position: absolute;
+  z-index: 6;
+  left: clamp(20px, 3.4vw, 52px);
+  bottom: clamp(64px, 13vh, 128px);
+  margin: 0;
+  max-width: 34ch;
+  font-family: var(--display);
+  font-size: clamp(1rem, 1.25vw, 1.28rem);
+  line-height: 1.55;
+  color: var(--bone);
+  text-shadow: 0 1px 24px rgb(8 9 10 / 1), 0 1px 5px rgb(8 9 10 / 0.95);
+  transition: opacity 800ms ease, translate 1000ms cubic-bezier(0.22, 0.7, 0.25, 1);
+  opacity: 0;
+  translate: 0 18px;
+  pointer-events: none;
+}
+
+.approach__payoff span {
+  display: block;
+  margin-top: 14px;
+  color: var(--bone);
+  font-size: 1.16em;
+}
+
+.approach__payoff[data-beat='3'] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.approach__credit {
+  position: absolute;
+  z-index: 6;
+  right: clamp(20px, 3.2vw, 44px);
+  bottom: clamp(20px, 3.2vw, 44px);
+  margin: 0;
+  max-width: 42ch;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  line-height: 1.65;
+  letter-spacing: 0.03em;
+  color: rgb(200 194 180 / 0.72);
+  text-shadow: 0 1px 12px rgb(8 9 10 / 1), 0 1px 3px rgb(8 9 10 / 0.95);
+}
+
+/* Read by screen readers; the pictures carry empty alt because the camera is
+   decorative and this sentence is the content. */
+.approach__alt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- loading ---------------------------------------------------------- */
+
+.approach__loading {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--ember), transparent);
+  transition: opacity 500ms ease 200ms, scale 900ms cubic-bezier(0.22, 0.7, 0.25, 1);
+  scale: 0.15 1;
+}
+
+.approach__loading[data-ready='true'] {
+  opacity: 0;
+  scale: 1 1;
+}
+
+/* ---- reduced motion: an authored still -------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .approach__cue {
+    display: none;
+  }
+
+  /* The still is read top to bottom: the claim, the picture that settles it,
+     the label, the price. Nothing here is the animation switched off. */
+  .approach[data-reduced='true'] .approach__stage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .approach[data-reduced='true'] .approach__copy {
+    order: 1;
+  }
+
+  .approach[data-reduced='true'] .approach__frame {
+    order: 2;
+  }
+
+  .approach[data-reduced='true'] .approach__payoff {
+    order: 3;
+  }
+
+  .approach[data-reduced='true'] .approach__hud {
+    order: 4;
+  }
+
+  .approach[data-reduced='true'] .approach__credit {
+    order: 5;
+  }
+
+  .approach__copy:not([data-beat='0']),
+  .approach__payoff:not([data-beat='3']) {
+    opacity: 1;
+    translate: none;
+    pointer-events: auto;
+  }
+
+  .note[data-shown='true'] .note__pin {
+    animation: none;
+  }
+
+  .approach__copy,
+  .approach__payoff,
+  .approach__hud,
+  .approach__credit {
+    position: static;
+    translate: none;
+    opacity: 1;
+    max-width: 62ch;
+    margin: 26px auto 0;
+    padding-inline: clamp(20px, 4vw, 52px);
+    text-align: left;
+  }
+
+  .approach__copy {
+    margin-top: 40px;
+  }
+
+  .approach__hud {
+    justify-content: flex-start;
+  }
+}
+
+/* ---- mobile ----------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .approach {
+    height: 520vh;
+  }
+
+  .approach__frame {
+    top: 15vh;
+    left: 0;
+    translate: none;
+    width: 100vw;
+    height: 56.25vw;
+    box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.9);
+  }
+
+  .approach__copy {
+    top: auto;
+    bottom: clamp(72px, 16vh, 170px);
+    left: 20px;
+    right: 20px;
+    translate: none;
+    max-width: none;
+  }
+
+  .approach__copy:not([data-beat='0']) {
+    translate: 0 -18px;
+  }
+
+  .approach__title {
+    font-size: clamp(1.9rem, 8.4vw, 2.5rem);
+  }
+
+  .approach__lede {
+    max-width: 36ch;
+  }
+
+  .approach__payoff {
+    left: 20px;
+    right: 20px;
+    bottom: auto;
+    top: calc(15vh + 56.25vw + 148px);
+    max-width: none;
+    font-size: 1rem;
+  }
+
+  .approach__credit {
+    left: 20px;
+    right: 20px;
+    bottom: 16px;
+    text-align: left;
+    max-width: none;
+  }
+
+  .approach__hud {
+    left: 20px;
+    bottom: auto;
+    top: calc(15vh - 30px);
+  }
+
+  .note__body {
+    display: none;
+  }
+
+  .approach__caption {
+    display: block;
+    position: absolute;
+    z-index: 6;
+    left: 20px;
+    right: 20px;
+    top: calc(15vh + 56.25vw + 22px);
+    border-left: 1px solid var(--ember);
+    padding-left: 12px;
+    opacity: 0;
+    translate: 0 8px;
+    transition: opacity 400ms ease, translate 500ms cubic-bezier(0.22, 0.7, 0.25, 1);
+  }
+
+  .approach__caption[data-shown='true'] {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .approach__caption .note__text {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    max-width: 32ch;
+  }
+
+  .note[data-h='left'] .note__body,
+  .note[data-h='right'] .note__body {
+    left: auto;
+    right: 16px;
+    text-align: right;
+    border-left: 0;
+    border-right: 1px solid var(--ember);
+  }
+
+  .note[data-h='right'] .note__body {
+    left: 16px;
+    right: auto;
+    text-align: left;
+    border-right: 0;
+    border-left: 1px solid var(--ember);
+  }
+}

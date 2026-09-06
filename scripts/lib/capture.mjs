@@ -30,7 +30,7 @@ export function freePort(preferred) {
 export function killTree(pid) {
   if (!pid) return
   if (process.platform === 'win32') {
-    spawnSync('taskkill', ['/pid', String(pid), '/t', '/f'], { stdio: 'ignore' })
+    spawnSync('taskkill', ['/pid', String(pid), '/t', '/f'], { stdio: 'ignore', windowsHide: true })
     return
   }
   try {
@@ -57,9 +57,9 @@ export function spawnPreview(runDir, port) {
   const vite = path.join(runDir, 'node_modules', 'vite', 'bin', 'vite.js')
   if (!fs.existsSync(vite)) {
     // No local install to point at — fall back, and accept the wrapper.
-    return spawn('npm', ['run', 'preview', '--', '--port', String(port), '--strictPort'], { cwd: runDir, shell: true, stdio: 'ignore' })
+    return spawn('npm', ['run', 'preview', '--', '--port', String(port), '--strictPort'], { cwd: runDir, shell: true, stdio: 'ignore', windowsHide: true })
   }
-  return spawn(process.execPath, [vite, 'preview', '--port', String(port), '--strictPort'], { cwd: runDir, stdio: 'ignore' })
+  return spawn(process.execPath, [vite, 'preview', '--port', String(port), '--strictPort'], { cwd: runDir, stdio: 'ignore', windowsHide: true })
 }
 
 /**
@@ -71,6 +71,7 @@ export function killProcessesIn(runDir) {
   if (process.platform !== 'win32') return 0
   const probe = spawnSync('wmic', ['process', 'where', "name='node.exe'", 'get', 'ProcessId,CommandLine', '/format:csv'], {
     encoding: 'utf8',
+    windowsHide: true,
   })
   if (probe.status !== 0 || !probe.stdout) return 0
   const needle = path.resolve(runDir).toLowerCase()
@@ -95,7 +96,7 @@ export async function captureRun(runName, port, log = console.log, profile = 're
   if (!fs.existsSync(runDir)) throw new Error(`no such run: ${runName}`)
 
   log(`[${runName}] building…`)
-  const build = spawnSync('npm', ['run', 'build'], { cwd: runDir, shell: true, encoding: 'utf8' })
+  const build = spawnSync('npm', ['run', 'build'], { cwd: runDir, shell: true, encoding: 'utf8', windowsHide: true })
   if (build.status !== 0) {
     const tail = (build.stderr || build.stdout || '').split('\n').slice(-20).join('\n')
     fs.writeFileSync(path.join(runDir, 'build-error.log'), tail, 'utf8')

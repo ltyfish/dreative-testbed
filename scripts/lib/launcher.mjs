@@ -23,6 +23,8 @@ const esc = (s) =>
 
 const DIRECTIONS = ['recommended', 'efficient', 'showcase']
 
+const LOG_FILE = path.join(ROOT, 'runs', 'round.log')
+
 /**
  * Turn the form into an argv for run-all.mjs. Everything is validated against a fixed set —
  * this endpoint spawns a process, so nothing from the request reaches a shell, and `shell`
@@ -108,14 +110,19 @@ export function startRound(body) {
   if (running?.alive) throw new Error(`a round launched from here is still running (pid ${running.pid})`)
 
   const args = buildArgs(body)
-  const logFile = path.join(ROOT, 'runs', 'round.log')
+  const logFile = LOG_FILE
   fs.mkdirSync(path.dirname(logFile), { recursive: true })
-  const out = fs.openSync(logFile, 'a')
+  // A new round owns the log. Appending meant the panel opened on the tail of the *last*
+  // round — output that looked like this round's progress and never moved.
+  const out = fs.openSync(logFile, 'w')
 
   const child = spawn(process.execPath, args, {
     cwd: ROOT,
     detached: true,
     shell: false,
+    // Without this every child the round spawns (npm, wmic, taskkill, the agent CLI) opens
+    // its own console window, because a detached process has no console to inherit.
+    windowsHide: true,
     stdio: ['ignore', out, out],
   })
   child.unref()
@@ -132,10 +139,21 @@ export function startRound(body) {
 
 /** The last N lines of the launched round's log, so the page can show progress. */
 export function roundLog(lines = 40) {
-  const file = path.join(ROOT, 'runs', 'round.log')
-  if (!fs.existsSync(file)) return ''
-  const text = fs.readFileSync(file, 'utf8')
+  if (!fs.existsSync(LOG_FILE)) return ''
+  const text = fs.readFileSync(LOG_FILE, 'utf8')
   return text.split('\n').slice(-lines).join('\n')
+}
+
+/**
+ * Throw away the log and the record of the last launch. Called by Reset — a round that has
+ * been archived should not leave its output on the page describing runs/ that no longer
+ * exist — and available on its own, for a log left behind by a round that died.
+ */
+export function clearRoundLog() {
+  const running = readLaunch()
+  if (running?.alive) throw new Error(`the round from ${running.startedAt.slice(11, 19)} is still running (pid ${running.pid}) — it is writing this log`)
+  fs.rmSync(LOG_FILE, { force: true })
+  fs.rmSync(LAUNCH_FILE, { force: true })
 }
 
 // ------------------------------------------------------------------ the page
@@ -284,8 +302,8 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
       <label class="sub" style="text-transform:none;letter-spacing:0">
         <input type="checkbox" id="f-yolo" style="width:auto"> scope tools instead of full bypass (slower, closer to a cautious user)</label>
     </div>
-    <p style="margin-top:16px"><button id="go">Start round</button>
-      <span class="sub" id="msg" style="margin-left:10px"></span></p>
+    <p style="margin-top:16px"><button id="go"${launch?.alive ? ' disabled' : ''}>${launch?.alive ? 'Round running' : 'Start round'}</button>
+      <span class="sub" id="msg" style="margin-left:10px">${launch?.alive ? `pid ${launch.pid}, started ${esc(launch.startedAt.slice(11, 19))} — only one round at a time` : ''}</span></p>
     <p class="sub"><strong>An arm is one side of the comparison</strong> — one agent session, on the
       same scenario and the same brief, differing in exactly one thing. Two arms on one scenario is
       a pair, and the review shows them side by side as A and B without telling you which is which
@@ -296,8 +314,10 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
   </div>
 
   <div class="panel">
-    <div class="lbl">Round log</div>
-    <pre class="log" id="log">${esc(roundLog())}</pre>
+    <div class="lbl">Round log
+      <button id="clearLog" style="margin-left:10px;font-size:11px;padding:3px 8px"${launch?.alive ? ' disabled title="the running round is writing this"' : ''}>Clear</button>
+      <span class="sub" id="clearMsg" style="margin-left:8px"></span></div>
+    <pre class="log" id="log">${esc(roundLog()) || 'Nothing yet — this fills in once a round is started from here.'}</pre>
   </div>
 </main>
 <script>
@@ -321,7 +341,13 @@ sel('go').addEventListener('click', async (e) => {
     sel('msg').textContent = 'a version comparison needs both versions';
     return;
   }
-  btn.disabled = true; sel('msg').textContent = 'starting…';
+  // Starting takes a few seconds (a scaffold and an npm install per arm) and there is no
+  // output until then. Say so on the button itself: a button that only greys out reads as a
+  // page that did not register the click, and the second click was the bug.
+  btn.disabled = true;
+  btn.dataset.label = btn.textContent;
+  btn.textContent = 'Starting…';
+  sel('msg').textContent = 'scaffolding the run — this takes a few seconds, do not press again';
   const res = await fetch('/api/run', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -341,10 +367,24 @@ sel('go').addEventListener('click', async (e) => {
       noYolo: sel('f-yolo').checked,
     }),
   });
-  if (!res.ok) { sel('msg').textContent = await res.text(); btn.disabled = false; return; }
+  if (!res.ok) {
+    sel('msg').textContent = await res.text();
+    btn.disabled = false; btn.textContent = btn.dataset.label;
+    return;
+  }
   const out = await res.json();
-  sel('msg').textContent = 'started — pid ' + out.pid;
+  btn.textContent = 'Round running';
+  sel('msg').textContent = 'started — pid ' + out.pid + '. Progress appears in the round log below.';
   setTimeout(() => location.reload(), 2500);
+});
+const clear = sel('clearLog');
+clear?.addEventListener('click', async () => {
+  clear.disabled = true; sel('clearMsg').textContent = 'clearing…';
+  const res = await fetch('/api/clear-log', { method: 'POST' });
+  if (!res.ok) { sel('clearMsg').textContent = await res.text(); clear.disabled = false; return; }
+  sel('log').textContent = 'Nothing yet — this fills in once a round is started from here.';
+  sel('clearMsg').textContent = 'cleared';
+  setTimeout(() => location.reload(), 800);
 });
 for (const [id, decision] of [['gateKeep', 'keep'], ['gateReject', 'reject']]) {
   const btn = document.getElementById(id);

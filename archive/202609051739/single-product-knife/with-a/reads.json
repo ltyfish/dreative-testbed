@@ -1,0 +1,24 @@
+{
+  "skillFilesRead": {
+    "references/CREATIVE_EXECUTION.md": 1,
+    "references/MEDIA_SOURCES.md": 1,
+    "references/MOTION_MATERIAL.md": 2,
+    "skills/3d.md": 2,
+    "skills/media.md": 1,
+    "skills/motion.md": 2
+  },
+  "toolCalls": {
+    "Bash": 62,
+    "Read": 27,
+    "mcp__playwright__browser_evaluate": 17,
+    "mcp__playwright__browser_take_screenshot": 16,
+    "mcp__playwright__browser_navigate": 12,
+    "Write": 5,
+    "mcp__playwright__browser_run_code_unsafe": 3,
+    "Edit": 2,
+    "mcp__playwright__browser_console_messages": 2,
+    "mcp__playwright__browser_resize": 2,
+    "Skill": 1,
+    "ToolSearch": 1
+  }
+}

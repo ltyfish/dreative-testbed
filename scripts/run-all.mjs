@@ -349,7 +349,7 @@ function runSession({ runName, runDir, prompt, sessionId = null, resume = false,
     logStream.write(`${phase ? `\n\n===== ${phase} =====\n\n` : ''}$ ${cmd} (${AGENT}${MODEL && MODEL !== true ? `, ${MODEL}` : ''})\n\n${prompt}\n\n---\n\n`)
 
     log(`[${runName}] session started`)
-    const child = spawn(cmd, args, { cwd: runDir, shell: false })
+    const child = spawn(cmd, args, { cwd: runDir, shell: false, windowsHide: true })
 
     const watch = (d) => {
       rawStream.write(d)

@@ -40,7 +40,7 @@ function buildPortableSite(runDir, destDir) {
   const build = spawnSync(
     'npx',
     ['vite', 'build', '--base', './', '--outDir', '.archive-dist', '--emptyOutDir'],
-    { cwd: runDir, shell: true, encoding: 'utf8' },
+    { cwd: runDir, shell: true, encoding: 'utf8', windowsHide: true },
   )
   if (build.status !== 0 || !fs.existsSync(path.join(staging, 'index.html'))) {
     return { ok: false, error: (build.stderr || build.stdout || 'build failed').split('\n').slice(-20).join('\n') }

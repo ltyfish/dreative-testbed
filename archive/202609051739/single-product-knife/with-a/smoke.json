@@ -1,0 +1,23 @@
+{
+  "profile": "recommended",
+  "ok": false,
+  "blockers": [
+    "desktop: meaningful text is below the readability floor: p (9.92px), p (9.6px), p (8.96px)",
+    "mobile-390: meaningful text is below the readability floor: p (9.92px), p (9.6px), p (8.96px)",
+    "mobile-320: meaningful text is below the readability floor: p (9.92px), p (9.6px), p (8.96px)",
+    "mobile-390-reduced: meaningful text is below the readability floor: p (9.92px), p (8.96px)"
+  ],
+  "advisories": [],
+  "checks": [
+    "interaction baseline: 0 of 0 interactive elements respond to hover or focus",
+    "motion: 1 of 1 regions change state on approach",
+    "desktop 1440×900",
+    "desktop: 7 viewport samples",
+    "mobile-390 390×844",
+    "mobile-390: 6 viewport samples",
+    "mobile-320 320×720",
+    "mobile-320: 6 viewport samples",
+    "mobile-390-reduced 390×844",
+    "mobile-390-reduced: 3 viewport samples"
+  ]
+}
