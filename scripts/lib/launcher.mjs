@@ -81,8 +81,12 @@ export function buildArgs(body) {
     args.push(suffix ? `--skill-${suffix}` : '--skill', raw)
   }
 
+  // Both, when both are asked for. This was an else-if to match run-all's own else-if, so
+  // ticking "prototype first" silently dropped --gate and the finished page went straight
+  // into the review. Both ends of that are fixed; the flow is prototype -> continue -> the
+  // page is built -> keep or throw out -> review.
   if (body.prototype) args.push('--prototype')
-  else if (body.gate) args.push('--gate')
+  if (body.gate) args.push('--gate')
   if (body.noYolo) args.push('--no-yolo')
 
   const model = String(body.model ?? '').trim()

@@ -138,6 +138,33 @@ function askerAlive(state) {
  * asker is gone, or one that has already been answered, is not pending — it is litter, and it
  * gets cleared here.
  */
+/**
+ * Fill in a gate's stage, heading and button words when it was published without them.
+ *
+ * A round already running when these fields were added — or any gate written by an older
+ * version — carries only a question, and both gates then rendered as a bare "Keep it" with
+ * nothing saying which decision was on the table. The question itself says which it is.
+ */
+function withStage(gate) {
+  if (!gate) return gate
+  const stage = gate.stage ?? (/build the rest of the page/i.test(gate.question ?? '') ? 'prototype' : 'finished')
+  const proto = stage === 'prototype'
+  return {
+    ...gate,
+    stage,
+    heading:
+      gate.heading ??
+      (proto
+        ? 'Prototype gate · phase 1 of 2 — only the signature moment is built, the page is not'
+        : 'Finished-build gate · the page is built — this is the last stop before review'),
+    labels:
+      gate.labels ??
+      (proto
+        ? { keep: 'Continue — build the rest of the page', reject: 'Throw it out and stop this run' }
+        : { keep: 'Keep it — send it to review', reject: 'Throw it out' }),
+  }
+}
+
 export function pendingGate() {
   const state = readJson(GATE_FILE)
   if (!state?.current) return null
@@ -145,7 +172,7 @@ export function pendingGate() {
     fs.rmSync(GATE_FILE, { force: true })
     return null
   }
-  return state
+  return withStage(state)
 }
 
 /** The browser's answer. Returns false when it is not the question actually being asked. */

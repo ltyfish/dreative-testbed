@@ -18,7 +18,7 @@ import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
 import { clearRoundLog, roundLog, startRound, statusPage } from './lib/launcher.mjs'
-import { runStatuses } from './lib/status.mjs'
+import { readLaunch, runStatuses } from './lib/status.mjs'
 import { answerGate, pendingGate } from './lib/gate.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
@@ -105,26 +105,24 @@ function liveRuns() {
     // directories. The marker is what retires it — leftover folders must never reappear
     // as something still waiting to be scored.
     .filter((r) => !clearedRounds().includes(r.meta.seq))
-    // …and a round that has not finished is not ready to be scored. See stillBuilding.
-    .filter((r) => !stillBuilding(r.dir, r.meta))
+    // Marked, not hidden. See isUnbuilt.
+    .map((r) => ({ ...r, unbuilt: isUnbuilt(r.dir, r.meta) }))
 }
 
 /**
- * Is this run still being worked on?
+ * Is this run a prototype rather than a built page — phase 1 of 2, with the round paused?
  *
- * On 2026-09-06 a prototype was scored 1/5 as a finished shop. It was one phase of two: the
- * round was paused at its prototype gate, waiting for an answer that was never given, and the
- * review page offered the half-built page for scoring with nothing saying so. The verdict is
- * about a page that was never built.
+ * On 2026-09-06 a prototype was scored 1/5 as a finished shop, because the review showed it
+ * exactly like one. A prototype is worth opening and worth a verdict — stopping there to look
+ * is the whole point of the gate — so it stays in the review. What it must never do is arrive
+ * unlabelled: the score means something different, and the round is still waiting on an answer.
  *
- * Two ways to know. `builtAt` is stamped by run-all once a run's sessions are done, which is
- * the direct answer. Runs from before that stamp existed, and rounds killed before they could
- * write it, fall back to the log: a session whose agent.log is still growing is still working.
- * A stalled or dead run stays scoreable — its health banner already says what is wrong with it.
+ * `builtAt` is stamped by run-all when a run's sessions end, which is the direct answer. Runs
+ * from before that stamp, and rounds killed before writing it, fall back to the gate and the
+ * log: the run a gate is asking about, or one whose agent.log is still growing, is not built.
  */
-function stillBuilding(dir, meta) {
-  if (meta.rejected) return false
-  if (meta.builtAt) return false
+function isUnbuilt(dir, meta) {
+  if (meta.rejected || meta.builtAt) return false
   const gate = pendingGate()
   if (gate?.current === dir) return true
   return runStatuses().some((r) => r.run === dir && r.state === 'running')
@@ -466,6 +464,9 @@ function saveSoloVerdict(body) {
     skill: run?.meta?.skill ?? null,
     round: run?.meta?.seq ?? solo.seq,
     truncated: run?.meta?.truncated ?? null,
+    // A prototype scores on the same axes but does not mean the same thing, and in three
+    // months only this field will remember which it was.
+    phase: run?.unbuilt ? 'prototype' : 'built',
     scores: Object.fromEntries(SOLO_AXES.map(([k]) => [k, score(k)])),
     overall: score('overall'),
     notes: body.notes ?? '',
@@ -483,11 +484,11 @@ function saveSoloVerdict(body) {
     .join('\n')
 
   const block = `
-## ${body.scenario} — ${record.judgedAt.slice(0, 10)} — single arm
+## ${body.scenario} — ${record.judgedAt.slice(0, 10)} — single arm${record.phase === 'prototype' ? ' — PROTOTYPE (phase 1 of 2)' : ''}
 
 - run:   \`${record.run}\`
 - arm:   ${record.arm ?? '—'} · direction ${record.direction ?? '—'} · skill ${record.skill ?? '—'}
-${record.truncated ? `- NOTE:  this build was TRUNCATED (${record.truncated}) and is not evidence about the skill\n` : ''}
+${record.truncated ? `- NOTE:  this build was TRUNCATED (${record.truncated}) and is not evidence about the skill\n` : ''}${record.phase === 'prototype' ? '- NOTE:  scored at the prototype gate — only the signature moment existed, the page around it was never built\n' : ''}
 | Axis | Score |
 |---|---|
 ${rows}
@@ -601,6 +602,26 @@ ${feedback}
 // Nothing is deleted until the archive copy is on disk and verified.
 
 function resetRound() {
+  // Retiring a round that is still running loses it. The round keeps building into
+  // directories the review has already marked cleared, so whatever it produces after this
+  // can never appear for scoring — which is exactly what happened to clothing-shop
+  // 202609060421: reset while it was paused at its gate, so continuing it would have built a
+  // page into a round nothing would ever show.
+  const gate = pendingGate()
+  if (gate) {
+    throw new Error(
+      `A round is paused at a gate on ${gate.current} and is still running. Answer it on /status first — ` +
+        'continue it or throw it out — and reset once the round has ended. Resetting now would retire a round that is still working.',
+    )
+  }
+  const launch = readLaunch()
+  if (launch?.alive) {
+    throw new Error(
+      `The round launched at ${launch.startedAt.slice(11, 19)} is still running (pid ${launch.pid}). ` +
+        'Let it finish, or stop it, before archiving — anything it builds after a reset can never be scored.',
+    )
+  }
+
   const pairs = loadPairs()
   // View-only runs are part of the round and cost the same to produce. Archiving the pairs
   // and deleting runs/ around them threw a variance round away unarchived.
@@ -784,6 +805,13 @@ function viewPage(pairs, solos, view) {
         ${buildFailure(run.dir) ? '' : `<a class="livebtn" href="/liverun/${encodeURIComponent(run.dir)}" target="_blank" rel="noopener">Open live ↗</a>`}
       </div>
       ${run.meta.rejected ? '<div class="fail">Rejected at the prototype gate — kept on disk as a record, not for scoring</div>' : ''}
+      ${
+        run.unbuilt
+          ? `<div class="warn"><strong>PROTOTYPE — phase 1 of 2.</strong> Only the signature moment was built; the page around it has not been.
+             Worth opening and worth a verdict, but score it as a prototype: what is missing here is not yet a finding about the finished page.
+             The round is paused and <a href="/status">waiting for you to continue or throw it out</a>.</div>`
+          : ''
+      }
       ${run.meta.truncated ? `<div class="fail">TRUNCATED (${esc(run.meta.truncated)}) — this build did not finish. Missing stages and craft defects here are unattributable.</div>` : ''}
       ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
       ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
