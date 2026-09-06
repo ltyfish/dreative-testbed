@@ -13,7 +13,7 @@ import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
 import { archiveRound, findRoundForRun, listRounds, syncVerdict } from './lib/archive.mjs'
-import { freePort, killProcessesIn, killTree, spawnPreview } from './lib/capture.mjs'
+import { freePort, killProcessesIn, killTree, npmCommand, spawnPreview } from './lib/capture.mjs'
 import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
@@ -340,7 +340,8 @@ async function startLive(runDir) {
   if (live.has(runDir)) return live.get(runDir).port
   const dir = path.join(RUNS, runDir)
   if (!fs.existsSync(path.join(dir, 'dist'))) {
-    const build = spawn('npm', ['run', 'build'], { cwd: dir, shell: true, stdio: 'ignore', windowsHide: true })
+    const npm = npmCommand(['run', 'build'])
+    const build = spawn(npm.command, npm.args, { cwd: dir, shell: npm.shell, stdio: 'ignore', windowsHide: true })
     await new Promise((r) => build.on('close', r))
   }
   const port = await freePort(0)
@@ -660,7 +661,23 @@ function resetRound() {
 
   // Checked after the sweep, not before it: runs/ holding nothing but dead sessions is the
   // case that most needs clearing, and testing pairs and solos first refused it.
-  if (!byRound.size) throw new Error('there is nothing in runs/ to archive')
+  if (!byRound.size) {
+    // Everything left is already archived and retired, and only survives on disk because
+    // something held its directory open. Refusing here is what left `202609060421` showing
+    // in the UI with an uncleanable log for a day: the round was safely in `archive/`, the
+    // marker said so, and Reset still answered "there is nothing to archive" every time.
+    // Retire it properly instead — sweep again, then clear the log that describes it.
+    const swept = sweepCleared()
+    let cleanedLog = false
+    try {
+      clearRoundLog()
+      cleanedLog = true
+    } catch {
+      /* a round is running and owns the log — leave it alone */
+    }
+    if (!swept && !cleanedLog) throw new Error('there is nothing in runs/ to archive')
+    return { archived: [], removed: swept, stuck: [], alreadyArchived: true }
+  }
 
   const archived = []
   for (const [round, runNames] of byRound) {
@@ -817,7 +834,7 @@ function viewPage(pairs, solos, view) {
       ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
       ${smokeNote(run.dir) ? `<div class="${smokeNote(run.dir).kind === 'fail' ? 'fail' : 'warn'}">${esc(smokeNote(run.dir).text)}</div>` : ''}
       ${!isCaptured(run) ? '' : `
-      <div class="lbl">Desktop · 1440</div>
+      <div class="lbl">Desktop · 1440 · reduced-motion still</div>
       <img class="shot" src="/shot/${encodeURIComponent(run.dir)}/desktop.png" alt="${esc(run.dir)} desktop">
       ${
         fs.existsSync(path.join(RUNS, run.dir, '.captures', 'desktop-dark.png'))
@@ -826,7 +843,8 @@ function viewPage(pairs, solos, view) {
           : ''
       }
       <div class="lbl">Mobile · 390</div>
-      <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="${esc(run.dir)} mobile">`}
+      <img class="shot mob" src="/shot/${encodeURIComponent(run.dir)}/mobile.png" alt="${esc(run.dir)} mobile">
+      ${['desktop', 'mobile', 'reduced'].filter(p => fs.existsSync(path.join(RUNS, run.dir, '.captures', `${p}-motion.webm`))).map(p => `<div class="lbl">${p} · playback</div><video controls preload="metadata" style="width:100%;max-height:700px" src="/shot/${encodeURIComponent(run.dir)}/${p}-motion.webm"></video>`).join('')}`}
       <div class="lbl" style="text-transform:none;letter-spacing:0"><code>${esc(run.dir)}</code></div>
     </div>`,
     )
@@ -947,7 +965,7 @@ async function resetRound(btn) {
   const res = await fetch('/api/reset', { method: 'POST' });
   if (!res.ok) { alert('Reset failed — nothing was deleted:\\n\\n' + await res.text()); btn.disabled = false; btn.textContent = 'Reset round'; return; }
   const out = await res.json();
-  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).'
+  alert((out.alreadyArchived ? 'This round was already archived — cleared ' + out.removed + ' leftover folder(s) and its log.' : 'Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).')
     + (out.stuck?.length ? '\\n\\nWindows would not release ' + out.stuck.length + ' folder(s) yet:\\n  ' + out.stuck.join('\\n  ')
         + '\\n\\nThey are archived and retired — the review page ignores them.' : ''));
   location.href = '/';
@@ -1059,6 +1077,7 @@ function page(pairs, solos, active, viewName) {
       }
       <div class="lbl">Mobile · 390</div>
       <img class="shot mob" src="/blindshot/${encodeURIComponent(pair.scenario)}/${letter}/mobile.png" alt="Design ${letter} mobile">
+      ${['desktop', 'mobile', 'reduced'].filter(p => fs.existsSync(path.join(RUNS, run.dir, '.captures', `${p}-motion.webm`))).map(p => `<div class="lbl">${p} · playback</div><video controls preload="metadata" style="width:100%;max-height:700px" src="/blindshot/${encodeURIComponent(pair.scenario)}/${letter}/${p}-motion.webm"></video>`).join('')}
       <div class="lbl">Your feedback on Design ${letter}</div>
       <textarea id="notes${letter}" placeholder="What works, what is wrong, what you would send back. This gets filed against whichever arm it turns out to be."></textarea>
     </div>`
@@ -1126,7 +1145,7 @@ async function resetRound(btn) {
   const res = await fetch('/api/reset', { method: 'POST' });
   if (!res.ok) { alert('Reset failed — nothing was deleted:\\n\\n' + await res.text()); btn.disabled = false; btn.textContent = label; return; }
   const out = await res.json();
-  alert('Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).'
+  alert((out.alreadyArchived ? 'This round was already archived — cleared ' + out.removed + ' leftover folder(s) and its log.' : 'Archived round ' + out.archived.join(', ') + ' and cleared ' + out.removed + ' run(s).')
     + (out.stuck?.length ? '\\n\\nWindows would not release ' + out.stuck.length + ' folder(s) yet:\\n  ' + out.stuck.join('\\n  ')
         + '\\n\\nThey are archived and retired — the review page ignores them. Delete runs/ later if you want the disk space.' : ''));
   location.href = '/';
@@ -1176,12 +1195,16 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === 'GET' && url.pathname.startsWith('/shot/')) {
     const [, , dir, file] = url.pathname.split('/').map(decodeURIComponent)
-    const p = path.join(RUNS, dir, '.captures', file)
-    if (!p.startsWith(RUNS) || !fs.existsSync(p)) {
+    if (!dir || !file || !/^[\w.-]+$/.test(dir) || !/^[\w.-]+\.(png|webm)$/.test(file)) {
       res.writeHead(404).end('not found')
       return
     }
-    res.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' })
+    const p = path.join(RUNS, dir, '.captures', file)
+    if (!p.startsWith(RUNS + path.sep) || !fs.existsSync(p)) {
+      res.writeHead(404).end('not found')
+      return
+    }
+    res.writeHead(200, { 'content-type': file.endsWith('.webm') ? 'video/webm' : 'image/png', 'cache-control': 'no-store' })
     fs.createReadStream(p).pipe(res)
     return
   }
@@ -1193,7 +1216,7 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && url.pathname.startsWith('/blindshot/')) {
     const [, , scenarioName, letter, file] = url.pathname.split('/').map(decodeURIComponent)
     const pair = loadPairs().find((x) => x.scenario === scenarioName)
-    if (!pair || (letter !== 'A' && letter !== 'B') || !/^[\w.-]+\.png$/.test(file)) {
+    if (!pair || (letter !== 'A' && letter !== 'B') || !/^[\w.-]+\.(png|webm)$/.test(file)) {
       res.writeHead(404).end('not found')
       return
     }
@@ -1202,7 +1225,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(404).end('not found')
       return
     }
-    res.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' })
+    res.writeHead(200, { 'content-type': file.endsWith('.webm') ? 'video/webm' : 'image/png', 'cache-control': 'no-store' })
     fs.createReadStream(shot).pipe(res)
     return
   }

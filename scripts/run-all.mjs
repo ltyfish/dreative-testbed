@@ -693,6 +693,8 @@ const roundMeta = {
   agent: AGENT,
   model: MODEL && MODEL !== true ? String(MODEL) : null,
   yolo: Boolean(YOLO),
+  readOnceExperiment: process.env.DREATIVE_EXPERIMENT_READ_ONCE === '1',
+  captureProtocol: 'native-input-playback-v1',
   direction,
   skills: { ...(previousMeta?.skills ?? {}), ...Object.fromEntries(ARMS.filter(isSkillArm).map((a) => [a, ARM_SKILL[a]?.label ?? 'installed'])) },
   scenarios: [...new Set([...(previousMeta?.scenarios ?? []), ...SCENARIOS])],

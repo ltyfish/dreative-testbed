@@ -37,11 +37,13 @@ const writeJson = (p, value) => {
 function buildPortableSite(runDir, destDir) {
   const staging = path.join(runDir, '.archive-dist')
   fs.rmSync(staging, { recursive: true, force: true })
-  const build = spawnSync(
-    'npx',
-    ['vite', 'build', '--base', './', '--outDir', '.archive-dist', '--emptyOutDir'],
-    { cwd: runDir, shell: true, encoding: 'utf8', windowsHide: true },
-  )
+  // Prefer the run's own vite entry script over `npx`: no cmd.exe window, and one process
+  // instead of a wrapper chain. See npmCommand in capture.mjs.
+  const viteBin = path.join(runDir, 'node_modules', 'vite', 'bin', 'vite.js')
+  const args = ['build', '--base', './', '--outDir', '.archive-dist', '--emptyOutDir']
+  const build = fs.existsSync(viteBin)
+    ? spawnSync(process.execPath, [viteBin, ...args], { cwd: runDir, encoding: 'utf8', windowsHide: true })
+    : spawnSync('npx', ['vite', ...args], { cwd: runDir, shell: true, encoding: 'utf8', windowsHide: true })
   if (build.status !== 0 || !fs.existsSync(path.join(staging, 'index.html'))) {
     return { ok: false, error: (build.stderr || build.stdout || 'build failed').split('\n').slice(-20).join('\n') }
   }

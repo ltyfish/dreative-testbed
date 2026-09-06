@@ -1,10 +1,25 @@
 # How to score a comparison
 
-You do not need design training to score these well. You need to look at two images and
+You do not need design training to score these well. Use the rendered experiences,
+normal-motion playback, and separately labeled reduced-motion stills, then
 answer specific questions honestly. Vague questions ("which is better?") are what make
 non-designers feel unqualified; specific questions are answerable by anyone.
 
 Score each criterion **A / Tie / B** in the blind comparison page.
+
+For motion-led briefs, watch both normal desktop and touch-emulated recordings,
+then use the live page to complete the primary task. Pause, reverse, move quickly,
+and check the transition out of the focal scene. If a recording is missing or did
+not reach the end, record coverage as unknown and inspect live. Do not infer absent
+motion from a reduced-motion screenshot. Emulation does not establish real-phone
+smoothness; use a physical phone before making that claim.
+
+Keep the ordinary clothing-shop and explicit clothing-motion briefs separate.
+Compare frozen skill revisions on the same brief, agent/model, tools, and limits.
+Count truncation and tool failures as completion/cost outcomes; exclude them only
+from completed-output taste comparisons, never from overall reliability reporting.
+An interrupted run cannot prove the missing final design would have been bad,
+but repeated inability to finish within budget is a system failure worth measuring.
 
 ---
 
@@ -77,9 +92,9 @@ geometry). Then count.
 - Untextured construction is the specific tell — flat fills, invented colour,
   edges too clean, gradients standing in for light.
 
-Then ask what the material is *doing*. Sourced stills that only fade in are
-decoration; a page whose transitions feel absent is often a page with nothing
-animatable in it, because a flat vector offers only position, scale and opacity.
+Then ask what the material is doing in the requested experience. A still can
+support authored framing, masking, pixelation or depth; vector graphics can morph
+and deform. Score visible identity, composition and timing, not the medium count.
 
 Both arms get judged the same way. A control that never sources anything is not
 excused for it, and a skill arm that sources well and places badly does not get
@@ -100,8 +115,9 @@ most important information is still above the fold.
 
 > Is the effort spent where it matters, or is there decoration doing no work?
 
-For every visible effect, ask what it is *for*. An animation that helps you understand a
-process earns its place. An animation that exists because the section looked empty does not.
+For every visible effect, ask what it contributes to the brief: understanding,
+attention, atmosphere, continuity or response. Entertainment and atmosphere are
+valid goals in a motion-led brief; unnecessary delay in buying is still a defect.
 
 This is the criterion most likely to reveal that a design skill is over-firing.
 

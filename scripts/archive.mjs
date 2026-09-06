@@ -25,6 +25,7 @@ const MIME = {
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json',
   '.png': 'image/png',
+  '.webm': 'video/webm',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
@@ -65,7 +66,7 @@ function roundSummary(round) {
         exists: fs.existsSync(armDir),
         meta: readJson(path.join(armDir, 'meta.json'), {}),
         shots: fs.existsSync(path.join(armDir, 'shots'))
-          ? fs.readdirSync(path.join(armDir, 'shots')).filter((f) => f.endsWith('.png')).sort()
+          ? fs.readdirSync(path.join(armDir, 'shots')).filter((f) => /\.(png|webm)$/.test(f)).sort()
           : [],
         site: fs.existsSync(path.join(armDir, 'site', 'index.html')),
         log: fs.existsSync(path.join(armDir, 'agent.log')),
@@ -174,7 +175,9 @@ function roundPage(round) {
       ? `<div class="lbl">Build failed — itself a finding</div><div class="fail">${esc(fs.readFileSync(path.join(ARCHIVE, round, scenario, a.arm, 'build-error.log'), 'utf8'))}</div>`
       : ''
     const shots = a.shots
-      .map((f) => `<div class="lbl">${esc(f.replace('.png', ''))}</div><img class="shot${f.startsWith('mobile') ? ' mob' : ''}" loading="lazy" src="${base}/shots/${encodeURIComponent(f)}" alt="${esc(a.arm)} ${esc(f)}">`)
+      .map((f) => f.endsWith('.webm')
+        ? `<div class="lbl">${esc(f)} · playback</div><video controls preload="metadata" style="width:100%;max-height:700px" src="${base}/shots/${encodeURIComponent(f)}"></video>`
+        : `<div class="lbl">${esc(f.replace('.png', ''))}</div><img class="shot${f.startsWith('mobile') ? ' mob' : ''}" loading="lazy" src="${base}/shots/${encodeURIComponent(f)}" alt="${esc(a.arm)} ${esc(f)}">`)
       .join('')
     return `<div class="col">
       <div class="tagrow"><span class="tag ${a.arm}">${label}</span>${a.meta.direction ? `<span class="sub">${esc(a.meta.direction)}</span>` : ''}${links}</div>

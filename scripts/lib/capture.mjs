@@ -7,6 +7,7 @@ import path from 'node:path'
 import { RUNS } from './scaffold.mjs'
 import { measureSmoke, smokeAvailable, smokeUnavailableReason, writeSmoke } from './smoke.mjs'
 import { builderLook, lookAvailable, measureLook } from './look.mjs'
+import { capturePlayback } from './motion.mjs'
 
 /**
  * Reserve a port the OS says is actually free.
@@ -45,6 +46,21 @@ export function killTree(pid) {
 }
 
 /**
+ * How to run an npm script without a shell.
+ *
+ * `spawn('npm', …, { shell: true })` goes through cmd.exe on Windows, which flashes a console
+ * window on every build and preview — a round of three runs is a stream of them across the
+ * screen — and puts a wrapper between us and the process we later need to kill. Calling npm's
+ * own entry script under this node keeps it to one process, no console, and a real pid.
+ */
+const NPM_CLI = path.join(path.dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js')
+export function npmCommand(args) {
+  return fs.existsSync(NPM_CLI)
+    ? { command: process.execPath, args: [NPM_CLI, ...args], shell: false }
+    : { command: 'npm', args, shell: true }
+}
+
+/**
  * Start a preview server for a run and return a process we can actually kill.
  *
  * `npm run preview` puts two wrappers between us and vite, and on Windows the npm shim
@@ -57,7 +73,8 @@ export function spawnPreview(runDir, port) {
   const vite = path.join(runDir, 'node_modules', 'vite', 'bin', 'vite.js')
   if (!fs.existsSync(vite)) {
     // No local install to point at — fall back, and accept the wrapper.
-    return spawn('npm', ['run', 'preview', '--', '--port', String(port), '--strictPort'], { cwd: runDir, shell: true, stdio: 'ignore', windowsHide: true })
+    const npm = npmCommand(['run', 'preview', '--', '--port', String(port), '--strictPort'])
+    return spawn(npm.command, npm.args, { cwd: runDir, shell: npm.shell, stdio: 'ignore', windowsHide: true })
   }
   return spawn(process.execPath, [vite, 'preview', '--port', String(port), '--strictPort'], { cwd: runDir, stdio: 'ignore', windowsHide: true })
 }
@@ -69,19 +86,39 @@ export function spawnPreview(runDir, port) {
  */
 export function killProcessesIn(runDir) {
   if (process.platform !== 'win32') return 0
-  const probe = spawnSync('wmic', ['process', 'where', "name='node.exe'", 'get', 'ProcessId,CommandLine', '/format:csv'], {
-    encoding: 'utf8',
-    windowsHide: true,
-  })
-  if (probe.status !== 0 || !probe.stdout) return 0
+  // `wmic` was the original probe and is REMOVED from Windows 11 24H2 and later, where it
+  // does not error usefully — it just exits non-zero with no output, so this returned 0 and
+  // every leaked vite server survived every reset. That is how one run directory became
+  // undeletable and its round could never be retired. PowerShell's CIM query is the
+  // supported replacement; wmic stays as the fallback for machines that still ship it.
+  // cmd.exe is scanned too: the npm-wrapper fallback in spawnPreview leaves one holding the
+  // directory even after its node child is gone.
+  const scan = [
+    [
+      'powershell',
+      [
+        '-NoProfile',
+        '-NonInteractive',
+        '-Command',
+        'Get-CimInstance Win32_Process -Filter "Name=\'node.exe\' or Name=\'cmd.exe\'" | ForEach-Object { "$($_.ProcessId)|$($_.CommandLine)" }',
+      ],
+    ],
+    ['wmic', ['process', 'where', "name='node.exe'", 'get', 'ProcessId,CommandLine', '/format:csv']],
+  ]
   const needle = path.resolve(runDir).toLowerCase()
   let killed = 0
-  for (const line of probe.stdout.split('\n')) {
-    if (!line.toLowerCase().includes(needle)) continue
-    const pid = line.trim().split(',').pop()
-    if (!/^\d+$/.test(pid)) continue
-    killTree(pid)
-    killed++
+  for (const [command, args] of scan) {
+    const probe = spawnSync(command, args, { encoding: 'utf8', windowsHide: true })
+    if (probe.status !== 0 || !probe.stdout) continue
+    for (const line of probe.stdout.split('\n')) {
+      if (!line.toLowerCase().includes(needle)) continue
+      // powershell: `<pid>|<command line>`. wmic csv: `<node>,<command line>,<pid>`.
+      const pid = command === 'powershell' ? line.trim().split('|')[0] : line.trim().split(',').pop()
+      if (!/^\d+$/.test(pid)) continue
+      killTree(pid)
+      killed++
+    }
+    break
   }
   return killed
 }
@@ -96,7 +133,8 @@ export async function captureRun(runName, port, log = console.log, profile = 're
   if (!fs.existsSync(runDir)) throw new Error(`no such run: ${runName}`)
 
   log(`[${runName}] building…`)
-  const build = spawnSync('npm', ['run', 'build'], { cwd: runDir, shell: true, encoding: 'utf8', windowsHide: true })
+  const buildCmd = npmCommand(['run', 'build'])
+  const build = spawnSync(buildCmd.command, buildCmd.args, { cwd: runDir, shell: buildCmd.shell, encoding: 'utf8', windowsHide: true })
   if (build.status !== 0) {
     const tail = (build.stderr || build.stdout || '').split('\n').slice(-20).join('\n')
     fs.writeFileSync(path.join(runDir, 'build-error.log'), tail, 'utf8')
@@ -109,10 +147,11 @@ export async function captureRun(runName, port, log = console.log, profile = 're
   const server = spawnPreview(runDir, chosen)
 
   const warnings = []
+  let browser
   try {
     const { chromium } = await import('playwright')
     const base = `http://127.0.0.1:${chosen}/`
-    const browser = await chromium.launch()
+    browser = await chromium.launch()
     const outDir = path.join(runDir, '.captures')
     fs.rmSync(outDir, { recursive: true, force: true })
     fs.mkdirSync(outDir, { recursive: true })
@@ -218,6 +257,21 @@ export async function captureRun(runName, port, log = console.log, profile = 're
     }
 
     await browser.close()
+    browser = null
+
+    // Stills above are explicitly reduced-motion composition views. Review
+    // actual time behavior separately under normal motion and native inputs.
+    try {
+      const motion = await capturePlayback(base, outDir)
+      for (const result of motion) {
+        if (!result.reachedEnd) warnings.push(`${result.profile}: playback capture reached its input limit before the page end; inspect the rest live`)
+        if (result.errors.length) warnings.push(`${result.profile} playback: ${result.errors.join(' | ')}`)
+      }
+      log(`[${runName}] recorded desktop wheel/keyboard, mobile touch, and reduced-motion playback`)
+    } catch (err) {
+      warnings.push(`Motion playback unavailable: ${err.message}. Do not judge motion from stills.`)
+      log(`[${runName}] motion capture failed: ${err.message}`)
+    }
 
     // Measured here because the preview server is already up; a second build-and-serve
     // cycle per run is pure cost. A blocked result is a finding about the run, so it is
@@ -264,6 +318,7 @@ export async function captureRun(runName, port, log = console.log, profile = 're
     log(`[${runName}] capture failed: ${err.message}`)
     return { runName, ok: false, error: err.message }
   } finally {
+    if (browser) await browser.close().catch(() => {})
     // Kill the whole tree first. `npm run preview` spawns vite as a child, so killing the
     // wrapper on its own orphans vite, which then holds the port and the run directory
     // open — enough to leak one server per run across a full round.

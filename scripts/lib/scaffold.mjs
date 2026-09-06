@@ -209,15 +209,18 @@ export function scaffoldRun({ scenario, arm, label, seq, direction, skillTree, s
     if (fs.existsSync(agents)) fs.cpSync(agents, path.join(runDir, 'AGENTS.md'))
     if (skillTree) useSkillTree(runDir, skillTree)
 
-    // Enforce the read-once rule the skill only states. See scripts/hooks/read-once.mjs
-    // for why this is a harness instrument rather than shipped behaviour. It guards paths
-    // under skills/dreative only, so it is inert for anything the run legitimately reads.
-    // Read *and* Bash: this builder opens most skill files with `cat`, so a Read-only
-    // matcher guarded the minority path and the hook had no observable effect at all.
-    const hookCommand = `node "${path.join(ROOT, 'scripts', 'hooks', 'read-once.mjs').replace(/\\/g, '/')}"`
-    const settings = { hooks: { PreToolUse: [{ matcher: 'Read|Bash', hooks: [{ type: 'command', command: hookCommand }] }] } }
-    fs.mkdirSync(path.join(runDir, '.claude'), { recursive: true })
-    fs.writeFileSync(path.join(runDir, '.claude', 'settings.json'), JSON.stringify(settings, null, 2), 'utf8')
+    // Extra enforcement changes the treatment being tested. Ordinary rounds use
+    // the installed skill; this historical intervention is an explicit experiment.
+    if (process.env.DREATIVE_EXPERIMENT_READ_ONCE === '1') {
+      const hookCommand = `node "${path.join(ROOT, 'scripts', 'hooks', 'read-once.mjs').replace(/\\/g, '/')}"`
+      const settingsFile = path.join(runDir, '.claude', 'settings.json')
+      const settings = fs.existsSync(settingsFile) ? JSON.parse(fs.readFileSync(settingsFile, 'utf8')) : {}
+      settings.hooks ??= {}
+      settings.hooks.PreToolUse ??= []
+      settings.hooks.PreToolUse.push({ matcher: 'Read|Bash', hooks: [{ type: 'command', command: hookCommand }] })
+      fs.mkdirSync(path.dirname(settingsFile), { recursive: true })
+      fs.writeFileSync(settingsFile, JSON.stringify(settings, null, 2), 'utf8')
+    }
   }
 
   // Both arms, always. See writeMcpConfig.
@@ -236,6 +239,7 @@ export function scaffoldRun({ scenario, arm, label, seq, direction, skillTree, s
         direction: isSkillArm(arm) ? (direction ?? null) : null,
         // Which skill this arm ran, so a verdict cannot be attributed to the wrong build.
         skill: isSkillArm(arm) ? (skillLabel ?? 'installed') : null,
+        readOnceExperiment: isSkillArm(arm) && process.env.DREATIVE_EXPERIMENT_READ_ONCE === '1',
         product: meta.product,
         field: meta.field,
       },
