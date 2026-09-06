@@ -200,8 +200,13 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
   const gate = pendingGate()
   const gatePanel = gate
     ? `<div class="panel" style="border-color:#3b82f6">
-        <h2 style="margin:0 0 6px;font-size:16px">${esc(gate.question || 'A round is waiting on you')}</h2>
-        <p class="sub" style="margin:0 0 14px">It has built <code>${esc(gate.current)}</code> and stopped. Nothing else runs until you answer.</p>
+        <div class="lbl" style="color:#3b82f6">${esc(gate.heading || (gate.stage === 'finished' ? 'Finished-build gate' : 'Prototype gate'))}</div>
+        <h2 style="margin:4px 0 6px;font-size:16px">${esc(gate.question || 'A round is waiting on you')}</h2>
+        <p class="sub" style="margin:0 0 14px">It has built <code>${esc(gate.current)}</code> and stopped. ${
+          gate.stage === 'finished'
+            ? 'This is the last stop before it can be scored.'
+            : 'Only the signature moment exists — the page itself has not been built, and the review will not offer it for scoring until it is.'
+        } Nothing else runs until you answer.</p>
         ${gate.briefing.truncated ? `<div class="fail">TRUNCATED — ${esc(gate.briefing.truncated)}. This build did not finish, so its defects and missing stages are unattributable. Reject it and re-run.</div>` : ''}
         ${
           gate.briefing.looked
@@ -217,8 +222,8 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
         ${gate.briefing.smokeBlockers ? `<div class="warn">visual smoke blocked: ${esc(gate.briefing.smokeBlockers.slice(0, 3).join(' | '))}</div>` : ''}
         <p style="margin-top:14px"><a class="livebtn" href="${esc(gate.url)}" target="_blank" rel="noopener">Open the build ↗</a></p>
         <p style="margin-top:14px">
-          <button id="gateKeep">Keep it</button>
-          <button id="gateReject" style="margin-left:8px">Throw it out</button>
+          <button id="gateKeep">${esc(gate.labels?.keep || 'Keep it')}</button>
+          <button id="gateReject" style="margin-left:8px">${esc(gate.labels?.reject || 'Throw it out')}</button>
           <span class="sub" id="gateMsg" style="margin-left:10px"></span>
         </p>
         ${gate.remaining.length ? `<p class="sub">${gate.remaining.length} more run(s) after this one.</p>` : ''}
@@ -296,12 +301,16 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
 
       <label for="f-gate">Gate the finished build</label>
       <label class="sub" style="text-transform:none;letter-spacing:0">
-        <input type="checkbox" id="f-gate" checked style="width:auto"> stop after each build and ask me here before it can be scored</label>
+        <input type="checkbox" id="f-gate" checked style="width:auto"> stop again once the page is built and ask me here before it can be scored</label>
 
       <label for="f-yolo">Permissions</label>
       <label class="sub" style="text-transform:none;letter-spacing:0">
         <input type="checkbox" id="f-yolo" style="width:auto"> scope tools instead of full bypass (slower, closer to a cautious user)</label>
     </div>
+    <p class="sub" style="margin:14px 0 0">With both boxes ticked the round runs:
+      <strong>prototype → you continue → the page is built → you keep or throw out → review</strong>.
+      Each stop appears at the top of this page, and a run is not offered for scoring until it has
+      been through them.</p>
     <p style="margin-top:16px"><button id="go"${launch?.alive ? ' disabled' : ''}>${launch?.alive ? 'Round running' : 'Start round'}</button>
       <span class="sub" id="msg" style="margin-left:10px">${launch?.alive ? `pid ${launch.pid}, started ${esc(launch.startedAt.slice(11, 19))} — only one round at a time` : ''}</span></p>
     <p class="sub"><strong>An arm is one side of the comparison</strong> — one agent session, on the
@@ -392,7 +401,8 @@ for (const [id, decision] of [['gateKeep', 'keep'], ['gateReject', 'reject']]) {
   btn.addEventListener('click', async () => {
     document.getElementById('gateKeep').disabled = true;
     document.getElementById('gateReject').disabled = true;
-    document.getElementById('gateMsg').textContent = 'sending…';
+    document.getElementById('gateMsg').textContent =
+      decision === 'keep' ? 'sending — the round picks up where it stopped, this takes a moment' : 'sending…';
     const res = await fetch('/api/gate', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },

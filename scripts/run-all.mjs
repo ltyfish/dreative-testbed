@@ -545,6 +545,9 @@ async function runPrototypeJob(job) {
 
   const keep = await gateOne(job.runName, {
     question: 'Is this the moment this route is for? Build the rest of the page on it?',
+    stage: 'prototype',
+    heading: 'Prototype gate · phase 1 of 2 — only the signature moment is built, the page is not',
+    labels: { keep: 'Continue — build the rest of the page', reject: 'Throw it out and stop this run' },
     log,
   })
   if (!keep) {
@@ -575,6 +578,19 @@ async function runPrototypeJob(job) {
 const sessions = PROTOTYPE
   ? await pool(jobs, 1, runPrototypeJob)
   : await pool(jobs, CONCURRENCY, runSession)
+// Stamp each run as done building. The review page reads this: a run with no stamp whose
+// log is still moving is mid-round, and offering it for scoring is how a prototype — one
+// phase of two, with the round still paused at its gate — got scored as a finished site.
+for (const s of sessions) {
+  const rj = path.join(RUNS, s.runName, 'run.json')
+  try {
+    const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
+    fs.writeFileSync(rj, JSON.stringify({ ...meta, builtAt: new Date().toISOString() }, null, 2), 'utf8')
+  } catch {
+    /* best effort — a run with no run.json is already reported elsewhere */
+  }
+}
+
 const failed = sessions.filter((s) => s.code !== 0)
 
 console.log(`\nAll sessions done in ${((Date.now() - sessionStart) / 60_000).toFixed(1)}m.`)
@@ -639,9 +655,8 @@ if (SKIP_CAPTURE) {
 // ---------------------------------------------------------------- gate
 
 let kept = jobs.map((j) => j.runName)
-// A prototype round already asked, mid-round, with the decision that mattered. Asking again
-// about the finished build is a different question and worth having — but only when the
-// round was not already gated at its prototype.
+// A run thrown out at the prototype gate never became a page: it is not offered to the
+// finished-build gate below, and not offered for scoring either.
 if (PROTOTYPE) {
   kept = kept.filter((name) => {
     try {
@@ -650,8 +665,13 @@ if (PROTOTYPE) {
       return true
     }
   })
-} else if (GATE) {
-  console.log('\nPrototype gate — look at each build, then keep it or throw it out.')
+}
+// Both gates can be on at once, and that is the intended flow: prototype -> continue ->
+// the page is built -> keep or throw out -> review. This used to be an `else if`, so asking
+// for the prototype gate silently disabled the finished-build gate, and the built page went
+// into the review with nobody having looked at it.
+if (GATE && kept.length) {
+  console.log('\nFinished-build gate — the page is built. Look at each one, then keep it or throw it out.')
   kept = await gateRuns(kept, sessions, log)
   const rejected = jobs.length - kept.length
   if (rejected) {

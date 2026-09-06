@@ -19,7 +19,7 @@ import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
 import { clearRoundLog, roundLog, startRound, statusPage } from './lib/launcher.mjs'
 import { runStatuses } from './lib/status.mjs'
-import { answerGate } from './lib/gate.mjs'
+import { answerGate, pendingGate } from './lib/gate.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
@@ -105,6 +105,29 @@ function liveRuns() {
     // directories. The marker is what retires it — leftover folders must never reappear
     // as something still waiting to be scored.
     .filter((r) => !clearedRounds().includes(r.meta.seq))
+    // …and a round that has not finished is not ready to be scored. See stillBuilding.
+    .filter((r) => !stillBuilding(r.dir, r.meta))
+}
+
+/**
+ * Is this run still being worked on?
+ *
+ * On 2026-09-06 a prototype was scored 1/5 as a finished shop. It was one phase of two: the
+ * round was paused at its prototype gate, waiting for an answer that was never given, and the
+ * review page offered the half-built page for scoring with nothing saying so. The verdict is
+ * about a page that was never built.
+ *
+ * Two ways to know. `builtAt` is stamped by run-all once a run's sessions are done, which is
+ * the direct answer. Runs from before that stamp existed, and rounds killed before they could
+ * write it, fall back to the log: a session whose agent.log is still growing is still working.
+ * A stalled or dead run stays scoreable — its health banner already says what is wrong with it.
+ */
+function stillBuilding(dir, meta) {
+  if (meta.rejected) return false
+  if (meta.builtAt) return false
+  const gate = pendingGate()
+  if (gate?.current === dir) return true
+  return runStatuses().some((r) => r.run === dir && r.state === 'running')
 }
 
 const isCaptured = (r) => fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png'))
@@ -794,7 +817,7 @@ function viewPage(pairs, solos, view) {
     }</div></div>
   <nav class="tabs"><a class="tab" href="/status">Status &amp; new round</a>${tabStrip(pairs, solos, `v:${view.scenario}`)}<button class="tab reset" id="resetTop" title="Archive this round and clear runs/">Reset round</button></nav>
 </header>
-<main>
+<main>${waitingBanner()}
   <div class="brief">
     <h2>${esc(view.product)}</h2>
     <p><strong>${esc(view.field)}</strong>${view.challenge ? ' — ' + esc(view.challenge) : ''}</p>
@@ -905,6 +928,26 @@ document.getElementById('resetTop').addEventListener('click', (e) => resetRound(
 </script>`
 }
 
+/**
+ * A round paused at a gate is the reason the review page has less on it than you expect, so
+ * say so where you are rather than on a page you have to know to visit. Without this, hiding
+ * an unfinished run just makes the page look empty for no stated reason.
+ */
+function waitingBanner() {
+  const gate = pendingGate()
+  if (!gate) return ''
+  const proto = gate.stage !== 'finished'
+  return `<div class="invalid" style="border-color:var(--acc)">
+    <h3 style="color:var(--acc)">${esc(gate.heading || (proto ? 'A round is paused at its prototype gate' : 'A round is paused at its finished-build gate'))}</h3>
+    <p class="sub" style="margin:8px 0 0">It built <code>${esc(gate.current)}</code> and stopped. ${
+      proto
+        ? 'Only the signature moment exists — the page has not been built, so it is not offered for scoring here.'
+        : 'The page is built and is waiting on your keep or throw-out before it can be scored.'
+    } Nothing else in the round runs until you answer.</p>
+    <p style="margin:12px 0 0"><a class="livebtn" href="/status">Answer it on the status page →</a></p>
+  </div>`
+}
+
 function page(pairs, solos, active, viewName) {
   const view = solos.find((v) => v.scenario === viewName)
   if (view) return viewPage(pairs, solos, view)
@@ -918,7 +961,7 @@ function page(pairs, solos, active, viewName) {
     // the launcher already sitting on /status went unfound.
     return `<!doctype html><meta charset="utf-8"><title>Review</title><style>${STYLE}</style>
     <header><h1>Blind review</h1><div class="sub">Nothing waiting to be scored.</div></header>
-    <main><p class="empty">Nothing captured in <code>runs/</code>.<br><br>
+    <main>${waitingBanner()}<p class="empty">Nothing captured in <code>runs/</code>.<br><br>
       <a class="livebtn" href="/status">Start a round →</a><br><br>
       <span class="sub">Scenarios, versions, direction and the time cap are all on that page. From a terminal it is
       <code>node scripts/run-all.mjs --scenarios civic-clinic,coffee-roaster</code>.</span>${
@@ -1001,7 +1044,7 @@ function page(pairs, solos, active, viewName) {
     }</div></div>
   <nav class="tabs">${tabs}<button class="tab reset" id="resetTop" title="Archive this round and clear runs/">Reset round</button></nav>
 </header>
-<main>
+<main>${waitingBanner()}
   <div class="brief">
     <h2>${esc(pair.product)}</h2>
     <p><strong>${esc(pair.field)}</strong>${pair.challenge ? ' — ' + esc(pair.challenge) : ''}</p>

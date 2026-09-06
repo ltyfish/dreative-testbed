@@ -195,7 +195,23 @@ async function waitForBrowser(runName, log) {
  * @param question  what is actually being decided — a prototype gate and a finished-build
  *                  gate ask different things and conflating them cost a verdict already.
  */
-export async function gateOne(runName, { question, keepWord = "y", log = console.log, port = 4500, remaining = [] } = {}) {
+export async function gateOne(
+  runName,
+  {
+    question,
+    keepWord = 'y',
+    log = console.log,
+    port = 4500,
+    remaining = [],
+    // Which of the two gates this is, and what its buttons say. The prototype gate asks
+    // "carry on and build the page"; the finished-build gate asks "is this worth scoring".
+    // Both used to say "Keep it", with nothing on the page saying which one you were
+    // looking at — which is how a prototype came to be scored as a finished site.
+    stage = 'prototype',
+    heading = 'Prototype gate · phase 1 of 2 — the page has not been built yet',
+    labels = { keep: 'Continue — build the rest of the page', reject: 'Throw it out and stop this run' },
+  } = {},
+) {
   const interactive = Boolean(stdin.isTTY)
   const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
   const runDir = path.join(RUNS, runName)
@@ -221,6 +237,9 @@ export async function gateOne(runName, { question, keepWord = "y", log = console
       current: runName,
       url,
       question,
+      stage,
+      heading,
+      labels,
       remaining,
       askedAt: new Date().toISOString(),
       briefing: brief,
@@ -262,7 +281,7 @@ export async function gateRuns(runNames, sessions, log = console.log) {
           console.log('')
           let answer = ''
           while (!/^[yn]$/i.test(answer)) {
-            answer = (await rl.question('  Keep this prototype and score it?  [y/n]  ')).trim()
+            answer = (await rl.question('  The page is built. Keep it and offer it for scoring?  [y/n]  ')).trim()
             if (answer === '') answer = 'y'
           }
           keep = /^y$/i.test(answer)
@@ -271,7 +290,10 @@ export async function gateRuns(runNames, sessions, log = console.log) {
             current: runName,
             url,
             remaining: runNames.slice(runNames.indexOf(runName) + 1),
-            question: 'Keep this prototype and score it?',
+            question: 'The page is built. Keep it and offer it for scoring?',
+            stage: 'finished',
+            heading: 'Finished-build gate · the page is built — this is the last stop before review',
+            labels: { keep: 'Keep it — send it to review', reject: 'Throw it out' },
             askedAt: new Date().toISOString(),
             briefing: brief,
             answer: null,
