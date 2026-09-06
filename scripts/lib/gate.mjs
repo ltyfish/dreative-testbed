@@ -165,11 +165,33 @@ function withStage(gate) {
   }
 }
 
+/**
+ * Delete the question. Only ever litter — the answer has already been read by then.
+ *
+ * Windows fails a delete with EPERM when another process is touching the same file, and both
+ * the round and the review server used to reach for this one. That crashed the round in
+ * `gateOne`'s `finally` immediately after Continue was pressed: phase two never started, and
+ * the UI showed a round that had simply stopped. Never let cleanup of a scratch file end a
+ * round.
+ */
+export function clearGate() {
+  try {
+    fs.rmSync(GATE_FILE, { force: true, maxRetries: 10, retryDelay: 100 })
+  } catch {
+    /* someone else is holding it; it is answered and stale either way */
+  }
+}
+
 export function pendingGate() {
   const state = readJson(GATE_FILE)
   if (!state?.current) return null
-  if (state.answer || !askerAlive(state)) {
-    fs.rmSync(GATE_FILE, { force: true })
+  // An answered gate is hidden here but NOT deleted: the round is still polling this file for
+  // the answer, and deleting it from under the reader lost the decision entirely — the round
+  // then waited out its six-hour limit on a question that had been answered seconds earlier.
+  // The asker publishes it and the asker removes it. See clearGate.
+  if (state.answer) return null
+  if (!askerAlive(state)) {
+    clearGate()
     return null
   }
   return withStage(state)
@@ -182,7 +204,7 @@ export function answerGate(runName, decision) {
   if (decision !== 'keep' && decision !== 'reject') return false
   // Answering a question nobody is listening to would report success and change nothing.
   if (!askerAlive(state)) {
-    fs.rmSync(GATE_FILE, { force: true })
+    clearGate()
     return false
   }
   fs.writeFileSync(GATE_FILE, JSON.stringify({ ...state, answer: decision, answeredAt: new Date().toISOString() }, null, 2), 'utf8')
@@ -192,16 +214,26 @@ export function answerGate(runName, decision) {
 function publish(state) {
   fs.mkdirSync(RUNS, { recursive: true })
   // Stamp who is asking, so a question can be told from litter. See pendingGate.
-  fs.writeFileSync(GATE_FILE, JSON.stringify({ ...state, pid: process.pid }, null, 2), 'utf8')
+  const published = { ...state, pid: process.pid }
+  fs.writeFileSync(GATE_FILE, JSON.stringify(published, null, 2), 'utf8')
+  return published
 }
 
-/** Wait for the browser to answer the question we just published. */
-async function waitForBrowser(runName, log) {
+/**
+ * Wait for the browser to answer the question we just published.
+ *
+ * The question is re-published if it disappears. An older review server deletes an answered
+ * gate the moment it renders the page, which can take the answer away before this loop reads
+ * it — and then the round waits six hours for a decision that was made in seconds. Rewriting
+ * the question is always safe: it carries no answer, and the page simply shows it again.
+ */
+async function waitForBrowser(runName, log, published = null) {
   const started = Date.now()
   log(`[${runName}] waiting for a keep/reject decision in the review UI (/status)`)
   for (;;) {
     const state = readJson(GATE_FILE)
     if (state?.current === runName && state.answer) return state.answer === 'keep'
+    if (!state && published) publish(published)
     if (Date.now() - started > WAIT_LIMIT_MS) {
       log(`[${runName}] no decision after 6h — keeping it rather than losing the round`)
       return true
@@ -260,7 +292,7 @@ export async function gateOne(
       }
       return /^y$/i.test(answer)
     }
-    publish({
+    const question0 = publish({
       current: runName,
       url,
       question,
@@ -272,11 +304,11 @@ export async function gateOne(
       briefing: brief,
       answer: null,
     })
-    return await waitForBrowser(runName, log)
+    return await waitForBrowser(runName, log, question0)
   } finally {
     killTree(server.pid)
     rl?.close()
-    fs.rmSync(GATE_FILE, { force: true })
+    clearGate()
   }
 }
 
@@ -313,7 +345,7 @@ export async function gateRuns(runNames, sessions, log = console.log) {
           }
           keep = /^y$/i.test(answer)
         } else {
-          publish({
+          const question1 = publish({
             current: runName,
             url,
             remaining: runNames.slice(runNames.indexOf(runName) + 1),
@@ -325,7 +357,7 @@ export async function gateRuns(runNames, sessions, log = console.log) {
             briefing: brief,
             answer: null,
           })
-          keep = await waitForBrowser(runName, log)
+          keep = await waitForBrowser(runName, log, question1)
         }
       } finally {
         killTree(server.pid)
@@ -341,7 +373,7 @@ export async function gateRuns(runNames, sessions, log = console.log) {
     }
   } finally {
     rl?.close()
-    fs.rmSync(GATE_FILE, { force: true })
+    clearGate()
   }
 
   return kept

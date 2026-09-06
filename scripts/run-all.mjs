@@ -76,6 +76,28 @@ import { writeMaterialSummary, addContinuitySignal } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
 import { ROOT, RUNS, isSkillArm, listScenarios, scaffoldRun, skillInstalled } from './lib/scaffold.mjs'
 
+// A round started from the review UI keeps its own log, because there is no terminal to read.
+//
+// It writes the file itself rather than being redirected into one: the launcher has to hand
+// back a pid that IS the round — a wrapper that redirects for us dies seconds later and takes
+// the liveness check and the kill with it — and PowerShell blocks for the whole round if it
+// does the redirecting. Writes are synchronous so a crash lands in the file before the process
+// goes, which is the difference between a round that "just stopped" and one that says why.
+if (process.env.DREATIVE_ROUND_LOG) {
+  const fd = fs.openSync(process.env.DREATIVE_ROUND_LOG, 'w')
+  for (const stream of ['stdout', 'stderr']) {
+    const write = process[stream].write.bind(process[stream])
+    process[stream].write = (chunk, encoding, callback) => {
+      try {
+        fs.writeSync(fd, typeof chunk === 'string' ? chunk : Buffer.from(chunk))
+      } catch {
+        /* the log is a convenience; never let it end the round */
+      }
+      return write(chunk, encoding, callback)
+    }
+  }
+}
+
 function arg(name, fallback) {
   const i = process.argv.indexOf(`--${name}`)
   if (i === -1) return fallback
@@ -532,6 +554,17 @@ const sessionStart = Date.now()
 // different questions is not a review, it is an interruption.
 async function runPrototypeJob(job) {
   const sessionId = crypto.randomUUID()
+  // Written down, not just held in memory. Phase two is a `--resume` of this exact id, so a
+  // round that dies between the phases — a crash at the gate, a Ctrl-C, a reboot — took the
+  // only copy of it with it, and sixteen minutes of phase-one work could never be continued.
+  // On disk it can: `npm run continue -- <run>`.
+  try {
+    const rj = path.join(RUNS, job.runName, 'run.json')
+    const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
+    fs.writeFileSync(rj, JSON.stringify({ ...meta, sessionId, phase: 1 }, null, 2), 'utf8')
+  } catch {
+    /* the note is best-effort; the round matters more */
+  }
   const first = await runSession({
     ...job,
     prompt: `${job.prompt}\n${PROTOTYPE_PHASE}`,

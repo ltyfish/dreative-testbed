@@ -11,7 +11,7 @@
 // the form, including --gate: a round with no terminal publishes its keep/reject question to
 // `.gate.json` and blocks until this page answers it (see gate.mjs).
 
-import { spawn } from 'node:child_process'
+import { spawn, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { LAUNCH_FILE, readLaunch, runStatuses } from './status.mjs'
@@ -108,6 +108,36 @@ export function buildArgs(body) {
   return args
 }
 
+/**
+ * Start the round under a hidden console and return the pid to track, or null to fall back.
+ *
+ * Redirection is done by cmd's own `>`, not by `-RedirectStandardOutput`: PowerShell waits for
+ * a redirected process to finish, so passing those switches made this block for the entire
+ * round instead of returning a pid — measured at exactly the launch timeout, 236ms without
+ * them. The pid is cmd's; node is its only child, so it lives and dies with the round, which
+ * is all the liveness check and `killTree` need. `2>&1` puts a crash in the same log, where
+ * the panel already looks.
+ */
+function startHidden(args, logFile) {
+  const psQuote = (s) => `'${String(s).replace(/'/g, "''")}'`
+  // The round writes its own log (see DREATIVE_ROUND_LOG in run-all.mjs) rather than being
+  // redirected here. Going through `cmd /c … > log` worked but made the tracked pid cmd's,
+  // and that cmd was gone seconds later — so status read a live round as exited and killTree
+  // had nothing to kill. Start node itself and the pid is the round.
+  const command =
+    `$env:DREATIVE_ROUND_LOG = ${psQuote(logFile)}; ` +
+    `$p = Start-Process -FilePath ${psQuote(process.execPath)} ` +
+    `-ArgumentList @(${args.map(psQuote).join(',')}) ` +
+    `-WorkingDirectory ${psQuote(ROOT)} -WindowStyle Hidden -PassThru; $p.Id`
+  const out = spawnSync('powershell', ['-NoProfile', '-NonInteractive', '-Command', command], {
+    encoding: 'utf8',
+    windowsHide: true,
+    timeout: 20_000,
+  })
+  const pid = Number(String(out.stdout ?? '').trim().split(/\s+/).pop())
+  return out.status === 0 && Number.isInteger(pid) && pid > 0 ? pid : null
+}
+
 /** Spawn the round detached, and record enough for status to recognise it later. */
 export function startRound(body) {
   const running = readLaunch()
@@ -116,23 +146,37 @@ export function startRound(body) {
   const args = buildArgs(body)
   const logFile = LOG_FILE
   fs.mkdirSync(path.dirname(logFile), { recursive: true })
-  // A new round owns the log. Appending meant the panel opened on the tail of the *last*
-  // round — output that looked like this round's progress and never moved.
-  const out = fs.openSync(logFile, 'w')
 
-  const child = spawn(process.execPath, args, {
-    cwd: ROOT,
-    detached: true,
-    shell: false,
-    // Without this every child the round spawns (npm, wmic, taskkill, the agent CLI) opens
-    // its own console window, because a detached process has no console to inherit.
-    windowsHide: true,
-    stdio: ['ignore', out, out],
-  })
-  child.unref()
+  // Windows: give the round a console that exists but is hidden, rather than no console.
+  //
+  // `detached: true` maps to DETACHED_PROCESS, which leaves the round with NO console at all —
+  // and `windowsHide` cannot fix that, because it only applies to the process node spawns, not
+  // to its descendants. Every console program deeper in the tree (the agent CLI's own shell
+  // calls, npm, vite, taskkill) then has no console to inherit and allocates a fresh, visible
+  // one: a round is a stream of command-prompt windows opening and closing across the screen.
+  //
+  // `Start-Process -WindowStyle Hidden` starts it with a real console whose window is hidden,
+  // and every descendant inherits that instead of making its own. `-PassThru` gives back the
+  // pid, which is what status and Reset check for liveness.
+  const pid = process.platform === 'win32' ? startHidden(args, logFile) : null
+  let child = null
+  if (pid === null) {
+    // A new round owns the log. Appending meant the panel opened on the tail of the *last*
+    // round — output that looked like this round's progress and never moved. (The hidden-console
+    // path above gets the same effect from Start-Process, which overwrites what it redirects to.)
+    const out = fs.openSync(logFile, 'w')
+    child = spawn(process.execPath, args, {
+      cwd: ROOT,
+      detached: true,
+      shell: false,
+      windowsHide: true,
+      stdio: ['ignore', out, out],
+    })
+    child.unref()
+  }
 
   const record = {
-    pid: child.pid,
+    pid: pid ?? child.pid,
     startedAt: new Date().toISOString(),
     command: `node scripts/run-all.mjs ${args.slice(1).join(' ')}`,
     log: path.relative(ROOT, logFile),
@@ -141,11 +185,26 @@ export function startRound(body) {
   return record
 }
 
-/** The last N lines of the launched round's log, so the page can show progress. */
+/**
+ * The last N lines of the launched round's log, so the page can show progress.
+ *
+ * A crash is appended when there is one. A round that dies on an exception writes its stack to
+ * stderr and nothing to the log, so the panel simply stopped updating and the round looked
+ * like it was thinking — which is how a crash at the prototype gate read as "still running"
+ * for a day. If it died, the page should say what killed it.
+ */
 export function roundLog(lines = 40) {
   if (!fs.existsSync(LOG_FILE)) return ''
   const text = fs.readFileSync(LOG_FILE, 'utf8')
-  return text.split('\n').slice(-lines).join('\n')
+  const tail = text.split('\n').slice(-lines).join('\n')
+  let crash = ''
+  try {
+    crash = fs.readFileSync(`${LOG_FILE}.err`, 'utf8').trim()
+  } catch {
+    /* no stderr file, or nothing in it */
+  }
+  if (!crash) return tail
+  return `${tail}\n\n----- the round exited with an error -----\n${crash.split('\n').slice(-20).join('\n')}`
 }
 
 /**
@@ -157,6 +216,7 @@ export function clearRoundLog() {
   const running = readLaunch()
   if (running?.alive) throw new Error(`the round from ${running.startedAt.slice(11, 19)} is still running (pid ${running.pid}) — it is writing this log`)
   fs.rmSync(LOG_FILE, { force: true })
+  fs.rmSync(`${LOG_FILE}.err`, { force: true })
   fs.rmSync(LAUNCH_FILE, { force: true })
 }
 
