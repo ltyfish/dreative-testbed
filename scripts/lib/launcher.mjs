@@ -89,6 +89,12 @@ export function buildArgs(body) {
   if (body.gate) args.push('--gate')
   if (body.noYolo) args.push('--no-yolo')
 
+  // Which CLI runs the session. Left out of the UI until now, so the provider was whatever
+  // run-all defaulted to and a codex round could only be started from a terminal.
+  const agent = String(body.agent ?? 'claude').trim()
+  if (!['claude', 'codex'].includes(agent)) throw new Error('agent must be claude or codex')
+  if (agent !== 'claude') args.push('--agent', agent)
+
   const model = String(body.model ?? '').trim()
   if (model) {
     if (!/^[\w.:-]{1,60}$/.test(model)) throw new Error('model name looks wrong')
@@ -350,6 +356,12 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
       <label for="f-timeout">Time cap (min)</label>
       <input id="f-timeout" type="number" min="5" max="240" value="40">
 
+      <label for="f-agent">Provider</label>
+      <select id="f-agent">
+        <option value="claude">Claude Code</option>
+        <option value="codex">Codex CLI</option>
+      </select>
+
       <label for="f-model">Model</label>
       <input id="f-model" placeholder="blank uses your CLI default — e.g. opus">
 
@@ -433,6 +445,7 @@ sel('go').addEventListener('click', async (e) => {
       repeat: Number(sel('f-sessions').value),
       timeout: Number(sel('f-timeout').value),
       label: sel('f-label').value,
+      agent: sel('f-agent').value,
       model: sel('f-model').value,
       concurrency: Number(sel('f-conc').value),
       gate: sel('f-gate').checked,

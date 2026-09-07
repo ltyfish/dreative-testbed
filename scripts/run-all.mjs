@@ -66,6 +66,7 @@
 import { execFileSync, spawn } from 'node:child_process'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
@@ -279,6 +280,58 @@ if (!skillInstalled()) {
   process.exit(1)
 }
 
+// The agent CLI has to exist before a single project is scaffolded. Without this the round
+// builds a run per arm, spends a build on each, then spawn() fails ENOENT and every session
+// reports code -1 — which reads in the log like the agent refused the work rather than like
+// it was never installed. `codex` in particular is absent on a machine set up only for
+// Claude, and --agent codex looked supported because the flag parsed.
+// Codex on Windows installs outside PATH — the CLI ships inside the app's own bin directory,
+// so `codex` is not a command even on a machine that has it. Look there before giving up, and
+// let an env var override for an install in a third place.
+function agentFallbacks(bin) {
+  const home = os.homedir()
+  if (bin === 'codex') {
+    return [
+      process.env.DREATIVE_CODEX_BIN,
+      path.join(home, '.codex', '.sandbox-bin', 'codex.exe'),
+      path.join(home, '.codex', 'bin', 'codex.exe'),
+    ].filter(Boolean)
+  }
+  return [process.env.DREATIVE_CLAUDE_BIN, path.join(home, '.local', 'bin', 'claude.exe')].filter(Boolean)
+}
+
+function resolveAgentBinary(bin) {
+  const exts = process.platform === 'win32'
+    ? String(process.env.PATHEXT || '.COM;.EXE;.BAT;.CMD').split(';').filter(Boolean)
+    : ['']
+  for (const dir of String(process.env.PATH || '').split(path.delimiter).filter(Boolean)) {
+    for (const ext of exts) {
+      const full = path.join(dir.replace(/^"|"$/g, ''), bin + ext)
+      if (fs.existsSync(full)) return full
+    }
+  }
+  for (const cand of agentFallbacks(bin)) if (fs.existsSync(cand)) return cand
+  return null
+}
+
+if (!['claude', 'codex'].includes(AGENT)) {
+  console.error(`unknown agent: ${AGENT} (expected claude or codex)`)
+  process.exit(1)
+}
+const AGENT_BIN = resolveAgentBinary(AGENT)
+if (!AGENT_BIN) {
+  console.error(`\n--agent ${AGENT} but there is no \`${AGENT}\` on PATH.\n`)
+  if (AGENT === 'codex') console.error('  npm i -g @openai/codex\n')
+  process.exit(1)
+}
+// Node cannot spawn a .cmd/.bat shim with shell:false, and going through a shell would
+// mangle a multi-line prompt passed as an argument. Say so here rather than once per run.
+if (/\.(cmd|bat)$/i.test(AGENT_BIN)) {
+  console.error(`\n\`${AGENT}\` resolves to a shell shim (${AGENT_BIN}), which cannot be`)
+  console.error('spawned directly without corrupting the prompt. Install a native executable.\n')
+  process.exit(1)
+}
+
 for (const s of SCENARIOS) {
   if (!listScenarios().includes(s)) {
     console.error(`unknown scenario: ${s}\nknown: ${listScenarios().join(', ')}`)
@@ -333,17 +386,35 @@ function agentCommand(prompt, runDir, { sessionId = null, resume = false } = {})
     if (YOLO) args.push('--permission-mode', 'bypassPermissions')
     else args.push('--permission-mode', 'acceptEdits', '--allowedTools', ...ALLOWED_TOOLS)
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
-    return { cmd: 'claude', args }
+    return { cmd: AGENT_BIN, args }
   }
   if (AGENT === 'codex') {
-    // --full-auto sandboxes the workspace with the network off, which silently blocks
-    // both reference lookups and npm installs. Turn it back on explicitly.
+    // The sandboxed path turns the network off, which silently blocks both reference
+    // lookups and npm installs, so turn it back on explicitly. --full-auto was removed from
+    // codex-cli by 0.142; -s workspace-write is the same policy under the current name.
     const args = YOLO
       ? ['exec', '--dangerously-bypass-approvals-and-sandbox']
-      : ['exec', '--full-auto', '-c', 'sandbox_workspace_write.network_access=true']
+      : ['exec', '-s', 'workspace-write', '-c', 'sandbox_workspace_write.network_access=true']
+    // The same browser the Claude arm gets. codex has no --mcp-config, so the server goes in
+    // as TOML config overrides instead. Without this the codex arm ran with no eyes at all
+    // while the Claude arm had them, so any cross-provider comparison was measuring the
+    // instrument rather than the provider — the exact failure 202609050422 was about.
+    const mcpFile = path.join(runDir, '.mcp.json')
+    if (fs.existsSync(mcpFile)) {
+      const servers = JSON.parse(fs.readFileSync(mcpFile, 'utf8')).mcpServers ?? {}
+      for (const [name, def] of Object.entries(servers)) {
+        args.push('-c', `mcp_servers.${name}.command=${JSON.stringify(def.command)}`)
+        if (def.args) args.push('-c', `mcp_servers.${name}.args=${JSON.stringify(def.args)}`)
+      }
+    }
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
+    // Phase two has to be the same conversation, or the gate is pointless: a fresh session
+    // re-reads the files without the reasoning that chose the mechanism. codex cannot be
+    // handed an id up front the way claude can, so it resumes its own last session — safe
+    // only because runPrototypeJob is sequential by design.
+    if (resume) args.push('resume', '--last')
     args.push(prompt)
-    return { cmd: 'codex', args }
+    return { cmd: AGENT_BIN, args }
   }
   throw new Error(`unknown agent: ${AGENT} (expected claude or codex)`)
 }
