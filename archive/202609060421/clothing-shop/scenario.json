@@ -1,0 +1,20 @@
+{
+  "product": "Marlow & Vale — an ordinary clothing shop",
+  "field": "Multi-product ecommerce · clothing",
+  "designChallenge": "The most ordinary brief on the list, and the point is that it is ordinary. Every other scenario hands the page something to hide behind — a smith who makes eleven knives a month, a two-person kiln, a movement caliber nobody has seen. Take the story away and what is left is nine garments, a size chart, a bag, and delivery costs: the shop almost every real user of this skill is actually building. If the design only works when the product has a legend attached, that is worth knowing, and this is the scenario that shows it. Material is as abundant as it gets — clothing is the single most photographed and most filmed subject in the free archives, with editorial stills, fabric macro, and full lookbook footage of people wearing garments and moving in them — so a thin page here cannot blame the archive; it is a choice not to search. Nine products also means the catalogue is unavoidable: a grid of nine rectangles is the default answer, it is what every competitor already ships, and getting past it is the actual work. What to read off it: is there footage of clothes being worn rather than laid flat; do the nine products read as one shop with one art direction or as nine unrelated pictures; does the catalogue find any form other than an even grid, and does that form still let you compare and buy; do the size chart and the delivery costs find a form other than a table; and does the bag exist as part of the page rather than bolted to a corner.",
+  "prompt": "This is the shop for Marlow & Vale, a small clothing label with eleven staff, one shop in Leeds, and nine garments for sale. There is no story here beyond clothes that are made well and priced the same all year — the buyer is choosing between this and any other clothing site open in another tab. Redesign the site.",
+  "baseline": "content-only",
+  "promptContentOnly": "This is the shop for Marlow & Vale, a small clothing label with eleven staff, one shop in Leeds, and nine garments for sale. There is no story here beyond clothes that are made well and priced the same all year — the buyer is choosing between this and any other clothing site open in another tab, and has to be able to see the clothes, find their size, and buy. Design and build that shop.",
+  "preserve": [
+    "All nine garments with their exact names, categories, prices, colour lists, fabric statements, and detail sentences",
+    "The per-garment sold-out sizes, which cannot be added to the bag: XS on the Oxford Shirt, S and XL on the Chore Jacket, M on the Pleated Trouser, L on the Lambswool Crew, XS and S on the Shawl Cardigan, XL on the Camp Short",
+    "The category filter, including its counts and the All state",
+    "Choosing a size before adding to the bag, and the bag itself, which must name each line's garment, size, and price, allow a line to be removed, and show a running subtotal",
+    "The delivery thresholds and the amount still needed to reach free delivery over £100",
+    "The full size chart — every size row with its chest, waist, and sleeve measurement in centimetres — and the between-sizes advice",
+    "Every care fact, including which garments cannot be machine washed, that nothing goes in a tumble dryer, that the denim is unwashed and will bleed, and the repair offer",
+    "The shipping and returns statement for all three regions, the 60 day return window, and the same-day exchange",
+    "All three customer reviews with their names and what they bought",
+    "The three shop facts: eleven people and one shop in Leeds, four named factories, and that there are never any sales"
+  ]
+}

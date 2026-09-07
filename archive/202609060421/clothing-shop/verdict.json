@@ -1,0 +1,21 @@
+{
+  "kind": "solo",
+  "scenario": "clothing-shop",
+  "judgedAt": "2026-09-06T05:02:51.221Z",
+  "run": "clothing-shop__with-a__202609060421",
+  "arm": "with-a",
+  "direction": "recommended",
+  "skill": "git:4d620e1",
+  "round": "202609060421",
+  "truncated": null,
+  "scores": {
+    "material": 1,
+    "subject": 1,
+    "motion": 1,
+    "craft": 1,
+    "structure": 1
+  },
+  "overall": 1,
+  "notes": "bro this is bunz, is really damn bad, no motion, video, static images, no insane creativity, transition or design, just a normal websiute, i think even normal calude can do btr, this is ridiculously ugly",
+  "keep": ""
+}

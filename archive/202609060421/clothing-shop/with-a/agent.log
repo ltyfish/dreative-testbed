@@ -1,0 +1,391 @@
+
+
+===== PHASE 1 — signature mechanism =====
+
+$ claude (claude)
+
+Work in the project at C:/Users/lty/Downloads/dreative-testbed/runs/clothing-shop__with-a__202609060421
+
+This is the shop for Marlow & Vale, a small clothing label with eleven staff, one shop in Leeds, and nine garments for sale. There is no story here beyond clothes that are made well and priced the same all year — the buyer is choosing between this and any other clothing site open in another tab, and has to be able to see the clothes, find their size, and buy. Design and build that shop.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Build the recommended direction; treat this message as the user's explicit choice of direction and settings. Nobody is available to answer during this session, so take the recommended configuration and build — do not pause for any confirmation.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All nine garments with their exact names, categories, prices, colour lists, fabric statements, and detail sentences
+- The per-garment sold-out sizes, which cannot be added to the bag: XS on the Oxford Shirt, S and XL on the Chore Jacket, M on the Pleated Trouser, L on the Lambswool Crew, XS and S on the Shawl Cardigan, XL on the Camp Short
+- The category filter, including its counts and the All state
+- Choosing a size before adding to the bag, and the bag itself, which must name each line's garment, size, and price, allow a line to be removed, and show a running subtotal
+- The delivery thresholds and the amount still needed to reach free delivery over £100
+- The full size chart — every size row with its chest, waist, and sleeve measurement in centimetres — and the between-sizes advice
+- Every care fact, including which garments cannot be machine washed, that nothing goes in a tumble dryer, that the denim is unwashed and will bleed, and the repair offer
+- The shipping and returns statement for all three regions, the 60 day return window, and the same-day exchange
+- All three customer reviews with their names and what they bought
+- The three shop facts: eleven people and one shop in Leeds, four named factories, and that there are never any sales
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+STOP AFTER THE SIGNATURE MOMENT. This session has two phases and you are in the first.
+
+Build only the one moment this route exists for — the thing the subject does that a static
+picture cannot show — at full intended fidelity, on a route that renders and can be scrolled.
+Its material must already be on disk and already treated before you write it. Do not build
+the other sections. Do not build a simplified version meant to be upgraded later: a
+placeholder here is precisely what this checkpoint exists to catch, and a placeholder that
+renders correctly never gets replaced.
+
+When it runs, stop and report: what the moment is, what material it moves, what drives it,
+and what you could not get. Then end your turn. Someone will look at it and decide whether
+the rest of the page gets built. Nothing you write after that report is used.
+
+---
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I'll start with the Dreative skill.
+  → Skill
+
+  → Bash
+
+  → Bash
+
+  → Bash references/MEDIA_SOURCES.md
+
+  → Bash references/MEDIA_SOURCES.md
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Different. Reading the contact sheets.
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\.scratch\grid1.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → ToolSearch
+
+  → mcp__playwright__browser_navigate
+
+  → Bash
+Dev server is up. Capturing the baseline route and the contact sheet.
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Bash
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\sheet-full.png
+Sheet 1 is not a keeper set — amateur snapshots, branded garments, no shared world. Running a second, targeted search.
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\sheet2.png
+Sheet 2 has real keepers — fabric macros that match the copy's exact fabric statements. Pulling the rest of that search.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\sheet3.png
+
+  → Bash
+
+  → Bash skills/motion.md skills/interaction.md references/CREATIVE_EXECUTION.md
+
+  → Bash references/MOTION_MATERIAL.md
+
+  → Bash references/MOTION_MATERIAL.md
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\sheet4.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\treated.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\treated2.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\treated3.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\treated4.png
+Material is done: nine CC0 cloth macros, cropped and graded to one set. Installing the driver.
+  → Bash
+
+  → Bash
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\index.html
+Now the moment itself.
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Write C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\styles.css
+
+  → Bash
+
+  → Bash
+Now the mobile bag bar and its flight target.
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Bash
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Bash
+Build passes. Now looking at it running.
+  → mcp__playwright__browser_resize
+
+  → mcp__playwright__browser_navigate
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\shot-desktop.png
+
+  → Bash
+
+  → mcp__playwright__browser_click
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\card-xl.png
+
+  → Bash
+
+  → Edit C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\src\App.jsx
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+Exercising the moment: choose sizes, refuse a sold-out one, add to the bag.
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_evaluate
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\shot-live.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\shot-live2.png
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-mid.png
+
+  → mcp__playwright__browser_resize
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-390.png
+
+  → Bash references/VISUAL_REFINEMENT.md
+
+  → Bash
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-390-top.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-390-b.png
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-390-filter.png
+
+  → mcp__playwright__browser_resize
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-1440-top.png
+
+  → Bash
+
+  → mcp__playwright__browser_navigate
+
+  → mcp__playwright__browser_evaluate
+
+  → mcp__playwright__browser_take_screenshot
+
+  → Read C:\Users\lty\Downloads\dreative-testbed\runs\clothing-shop__with-a__202609060421\vp-xl-vs-xs.png
+
+  → mcp__playwright__browser_evaluate
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → PowerShell
+
+  → PowerShell
+
+  → Bash
+
+  → Bash
+The moment runs. Stopping here as instructed.
+
+## What the moment is
+
+**The size decision on the shop floor** — the one thing a photograph of a clothing site cannot show. Nine garments, each one a panel of its own cloth. Pressing a size does three things at once, all from one value: the cloth **pulls back** (a bigger size is literally more cloth in frame), a **tape rule** laid across the bottom of the cloth extends to that size's chest measurement, and the chest/waist/sleeve numbers **count** to it. Sold-out sizes are struck through, refuse the press with a spring-back, and say why. Adding to the bag **cuts a swatch of that cloth and carries it** into the bag, where it lands as that line's thumbnail; the subtotal counts up and the £100 free-delivery threshold is drawn on the same rule, filling as you approach it.
+
+One measuring language throughout: cloth, a rule across it, a number at the end of the rule. That is the shop's actual pitch — fabric weights and body measurements — given a form.
+
+## What material it moves
+
+Nine real fabric macros, on disk at `public/cloth/`, all **CC0** (rawpixel/StockSnap via the Openverse API), each matched to the fabric statement the copy makes — the white cotton oxford weave, a 240gsm jersey loop, indigo canvas, brushed grey wool with a button, brown wool twill, a denim waistband with its rivet and selvedge stitching, navy lambswool rib, a stack of camel/oat drape, washed slub twill. Not downloads: each was cropped to a 4:5 crop family, graded to one temperature and contrast so the nine read as one shoot, and emitted as webp derivatives at two widths in the same pass. Sources and licences are in `public/cloth/CREDITS.txt`.
+
+## What drives it
+
+GSAP 3.15, installed for this. Each card tweens **one authored value** — a fractional index into the real size chart — and an `onUpdate` writes the panel zoom, the rule span, and every number from it, so the cloth and the numbers can never disagree. The bag runs the same way off the subtotal. The add-to-bag flight is a measured FLIP between the panel's rect and the bag's. Reduced motion sets every value instantly instead of switching the mechanism off. Underneath it, the interaction baseline: designed hover/focus/press/disabled on every chip, filter, button and remove link.
+
+Verified running at 1440 and 390 in Chromium against `npm run preview`: filter counts and the All state, per-garment sold-out enforcement, size→cloth→numbers, add, remove, subtotal, the free-delivery gap. `npm run build` succeeds. Nothing committed.
+
+## What I could not get
+
+**Photographs of the garments themselves.** I searched Openverse (144 candidates over 12 queries), Wikimedia Commons (56), and Unsplash's API — and read all three as contact sheets. Openverse returned amateur snapshots of other labels' branded clothing; Commons returned museum portraits and retail-shelf photos with price tags; Unsplash and Pexels both need an API key I don't have. Putting another brand's shirt on this page would be a fabricated claim, so I did not. The cloth is the honest rung available, and it is genuinely this shop's subject — but a buyer cannot yet see the shape of the garment, only its fabric. **If a Pexels/Unsplash key or a real product shoot can be supplied, that is the single biggest upgrade available to this page**, and the card is built so the panel can take a garment photo without changing the mechanism.
+
+Also not verified: reduced motion under browser emulation (the code path exists and the CSS guard is in; I couldn't toggle the media feature in this harness). And a full-page screenshot at 1440 drops the offscreen cloth images — a Chrome capture artifact, not a page defect; the viewport captures show them all painting.
+
+Not built, per the checkpoint: the size chart section, care, shipping and returns, reviews, the three shop facts, and the hero/about. Their content is untouched in `src/App.jsx`.

@@ -1,0 +1,16 @@
+{
+  "scenario": "clothing-motion",
+  "arm": "with-a",
+  "seq": "202609060820",
+  "label": null,
+  "direction": "recommended",
+  "skill": "git:4d620e1",
+  "readOnceExperiment": false,
+  "product": "Marlow & Vale — motion-led clothing shop",
+  "field": "Multi-product ecommerce · clothing",
+  "phase": 2,
+  "builtAt": "2026-09-06T09:27:56.526Z",
+  "runName": "clothing-motion__with-a__202609060820",
+  "site": true,
+  "archivedAt": "2026-09-06T10:22:32.374Z"
+}

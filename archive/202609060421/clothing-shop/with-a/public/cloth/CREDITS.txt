@@ -1,0 +1,12 @@
+Cloth photography — all CC0, sourced via the Openverse API (rawpixel / stocksnap),
+then cropped and graded into one set for this shop.
+
+oxford    <- https://www.rawpixel.com/image/5905389  (CC0) "Free white cloth image"
+tee       <- https://www.rawpixel.com/image/5963658  (CC0)
+chore     <- https://www.rawpixel.com/image/11524177 (CC0) denim close-up
+overshirt <- https://www.rawpixel.com/image/5967407  (CC0) "Suit Coat Close up"
+trouser   <- https://www.rawpixel.com/image/5967286  (CC0) "Suit Coat Close up"
+jean      <- https://www.rawpixel.com/image/5916350  (CC0) "close blue jeans pocket"
+knit      <- https://www.rawpixel.com/image/5941771  (CC0)
+cardigan  <- https://www.rawpixel.com/image/5945811  (CC0)
+shorts    <- https://www.rawpixel.com/image/5957967  (CC0)

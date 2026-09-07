@@ -1,0 +1,14 @@
+{
+  "round": "202609060421",
+  "archivedAt": "2026-09-06T05:03:54.095Z",
+  "scenarios": [
+    "clothing-shop"
+  ],
+  "runs": [
+    {
+      "runName": "clothing-shop__with-a__202609060421",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

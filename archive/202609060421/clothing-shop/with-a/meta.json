@@ -1,0 +1,13 @@
+{
+  "scenario": "clothing-shop",
+  "arm": "with-a",
+  "seq": "202609060421",
+  "label": null,
+  "direction": "recommended",
+  "skill": "git:4d620e1",
+  "product": "Marlow & Vale — an ordinary clothing shop",
+  "field": "Multi-product ecommerce · clothing",
+  "runName": "clothing-shop__with-a__202609060421",
+  "site": true,
+  "archivedAt": "2026-09-06T05:03:54.092Z"
+}
