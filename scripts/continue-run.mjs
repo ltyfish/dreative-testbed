@@ -18,8 +18,9 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { extractSessionId, inferAgent, resolveAgentBinary } from './lib/agent.mjs'
 import { RUNS } from './lib/scaffold.mjs'
-import { captureMany } from './lib/capture.mjs'
+import { captureMany, killTree } from './lib/capture.mjs'
 import { CONTINUE_PHASE } from './lib/prototype.mjs'
 import { addContinuitySignal, writeMaterialSummary } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
@@ -38,45 +39,60 @@ if (!fs.existsSync(metaFile)) {
 }
 const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
 
-/** The id run-all recorded, or the one the agent itself printed on its first event. */
-function sessionIdFor() {
-  if (meta.sessionId) return meta.sessionId
-  const raw = path.join(runDir, 'agent.jsonl')
-  if (!fs.existsSync(raw)) return null
-  for (const line of fs.readFileSync(raw, 'utf8').split('\n')) {
-    if (!line.trim()) continue
-    try {
-      const id = JSON.parse(line).session_id
-      if (id) return id
-    } catch {
-      /* the stream is not all JSON lines */
-    }
-  }
-  return null
-}
-
-const sessionId = sessionIdFor()
+const logFile = path.join(runDir, 'agent.log')
+const rawFile = path.join(runDir, 'agent.jsonl')
+const priorLog = fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8') : ''
+const priorRaw = fs.existsSync(rawFile) ? fs.readFileSync(rawFile, 'utf8') : ''
+const agent = inferAgent(meta, priorLog)
+const sessionId = extractSessionId(agent, { meta, logText: priorLog, rawText: priorRaw })
 if (!sessionId) {
-  console.error(`${runName} has no session id in run.json or agent.jsonl — it cannot be resumed.`)
+  console.error(`${runName} has no ${agent} session id in run.json or provider output — it cannot be resumed.`)
   console.error('Re-run the scenario instead.')
   process.exit(1)
 }
 if (meta.builtAt) console.log(`note: ${runName} is already stamped built — continuing it anyway.`)
 
 const timeoutMin = Number(process.env.DREATIVE_TIMEOUT ?? 60)
-const args = [
-  '-p',
-  CONTINUE_PHASE,
-  '--output-format',
-  'stream-json',
-  '--verbose',
-  '--resume',
-  sessionId,
-  '--permission-mode',
-  'bypassPermissions',
-]
 const mcpFile = path.join(runDir, '.mcp.json')
-if (fs.existsSync(mcpFile)) args.push('--mcp-config', mcpFile, '--strict-mcp-config')
+let args
+if (agent === 'codex') {
+  args = ['exec', '--dangerously-bypass-approvals-and-sandbox']
+  if (fs.existsSync(mcpFile)) {
+    const servers = JSON.parse(fs.readFileSync(mcpFile, 'utf8')).mcpServers ?? {}
+    for (const [name, def] of Object.entries(servers)) {
+      args.push('-c', `mcp_servers.${name}.command=${JSON.stringify(def.command)}`)
+      if (def.args) args.push('-c', `mcp_servers.${name}.args=${JSON.stringify(def.args)}`)
+    }
+  }
+  if (meta.model) args.push('--model', String(meta.model))
+  args.push('resume', sessionId, CONTINUE_PHASE)
+} else {
+  args = [
+    '-p',
+    CONTINUE_PHASE,
+    '--output-format',
+    'stream-json',
+    '--verbose',
+    '--resume',
+    sessionId,
+    '--permission-mode',
+    'bypassPermissions',
+  ]
+  if (fs.existsSync(mcpFile)) args.push('--mcp-config', mcpFile, '--strict-mcp-config')
+  if (meta.model) args.push('--model', String(meta.model))
+}
+
+const agentBin = resolveAgentBinary(agent)
+if (!agentBin) {
+  console.error(`could not find a native ${agent} executable`)
+  process.exit(1)
+}
+
+fs.writeFileSync(
+  metaFile,
+  JSON.stringify({ ...meta, agent, providerSessionId: agent === 'codex' ? sessionId : meta.providerSessionId }, null, 2),
+  'utf8',
+)
 
 const logStream = fs.createWriteStream(path.join(runDir, 'agent.log'), { flags: 'a' })
 const rawStream = fs.createWriteStream(path.join(runDir, 'agent.jsonl'), { flags: 'a' })
@@ -84,13 +100,18 @@ const transcript = createTranscript()
 const PHASE_TWO_MARKER = '===== PHASE 2 — the full route (resumed by continue-run) ====='
 logStream.write(`\n\n${PHASE_TWO_MARKER}\n\n`)
 
-console.log(`resuming ${runName} (session ${sessionId}), ${timeoutMin}m cap…`)
+console.log(`resuming ${runName} with ${agent} (session ${sessionId}), ${timeoutMin}m cap…`)
 const started = Date.now()
-const child = spawn('claude', args, { cwd: runDir, shell: false, windowsHide: true })
+const child = spawn(agentBin, args, {
+  cwd: runDir,
+  shell: false,
+  windowsHide: true,
+  stdio: ['ignore', 'pipe', 'pipe'],
+})
 let timedOut = false
 const timer = setTimeout(() => {
   timedOut = true
-  child.kill()
+  killTree(child.pid)
 }, timeoutMin * 60_000)
 
 child.stdout.on('data', (d) => {
@@ -148,10 +169,27 @@ child.on('close', async (code) => {
   if (truncated) console.log(`TRUNCATED (${truncated}) - this continuation did not finish either.`)
 
   const current = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
-  const continued = { ...current, phase: 2, builtAt: new Date().toISOString() }
-  if (truncated) continued.truncated = truncated
-  else delete continued.truncated
+  let continued
+  if (code === 0 && !truncated) {
+    continued = { ...current, phase: 2, builtAt: new Date().toISOString() }
+    delete continued.truncated
+    delete continued.continuationError
+  } else {
+    const { builtAt: _builtAt, ...notBuilt } = current
+    continued = {
+      ...notBuilt,
+      phase: 1,
+      truncated: truncated ?? current.truncated ?? 'provider error',
+      continuationError: `exit ${code}`,
+    }
+  }
   fs.writeFileSync(metaFile, JSON.stringify(continued, null, 2), 'utf8')
+
+  if (code !== 0 || truncated) {
+    console.log('continuation did not finish — preserving the phase-one capture and leaving the run resumable.')
+    process.exitCode = code || 1
+    return
+  }
 
   console.log('capturing…')
   await captureMany([runName], 4173, console.log, meta.direction ?? 'recommended')

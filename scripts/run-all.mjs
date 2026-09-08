@@ -66,8 +66,8 @@
 import { execFileSync, spawn } from 'node:child_process'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
+import { extractSessionId, resolveAgentBinary } from './lib/agent.mjs'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { gateRuns, gateOne } from './lib/gate.mjs'
@@ -285,35 +285,6 @@ if (!skillInstalled()) {
 // reports code -1 — which reads in the log like the agent refused the work rather than like
 // it was never installed. `codex` in particular is absent on a machine set up only for
 // Claude, and --agent codex looked supported because the flag parsed.
-// Codex on Windows installs outside PATH — the CLI ships inside the app's own bin directory,
-// so `codex` is not a command even on a machine that has it. Look there before giving up, and
-// let an env var override for an install in a third place.
-function agentFallbacks(bin) {
-  const home = os.homedir()
-  if (bin === 'codex') {
-    return [
-      process.env.DREATIVE_CODEX_BIN,
-      path.join(home, '.codex', '.sandbox-bin', 'codex.exe'),
-      path.join(home, '.codex', 'bin', 'codex.exe'),
-    ].filter(Boolean)
-  }
-  return [process.env.DREATIVE_CLAUDE_BIN, path.join(home, '.local', 'bin', 'claude.exe')].filter(Boolean)
-}
-
-function resolveAgentBinary(bin) {
-  const exts = process.platform === 'win32'
-    ? String(process.env.PATHEXT || '.COM;.EXE;.BAT;.CMD').split(';').filter(Boolean)
-    : ['']
-  for (const dir of String(process.env.PATH || '').split(path.delimiter).filter(Boolean)) {
-    for (const ext of exts) {
-      const full = path.join(dir.replace(/^"|"$/g, ''), bin + ext)
-      if (fs.existsSync(full)) return full
-    }
-  }
-  for (const cand of agentFallbacks(bin)) if (fs.existsSync(cand)) return cand
-  return null
-}
-
 if (!['claude', 'codex'].includes(AGENT)) {
   console.error(`unknown agent: ${AGENT} (expected claude or codex)`)
   process.exit(1)
@@ -408,11 +379,12 @@ function agentCommand(prompt, runDir, { sessionId = null, resume = false } = {})
       }
     }
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
-    // Phase two has to be the same conversation, or the gate is pointless: a fresh session
-    // re-reads the files without the reasoning that chose the mechanism. codex cannot be
-    // handed an id up front the way claude can, so it resumes its own last session — safe
-    // only because runPrototypeJob is sequential by design.
-    if (resume) args.push('resume', '--last')
+    // Codex assigns its id after launch. Phase one captures that id from the provider output;
+    // phase two names it explicitly so another Codex task cannot steal `--last`.
+    if (resume) {
+      if (!sessionId) throw new Error('Codex continuation has no captured session id')
+      args.push('resume', sessionId)
+    }
     args.push(prompt)
     return { cmd: AGENT_BIN, args }
   }
@@ -439,12 +411,36 @@ function runSession({ runName, runDir, prompt, sessionId = null, resume = false,
     const logStream = fs.createWriteStream(path.join(runDir, 'agent.log'), { flags: mode })
     const rawStream = fs.createWriteStream(path.join(runDir, 'agent.jsonl'), { flags: mode })
     const transcript = createTranscript()
+    let providerOutput = ''
+    let providerSessionId = sessionId
     logStream.write(`${phase ? `\n\n===== ${phase} =====\n\n` : ''}$ ${cmd} (${AGENT}${MODEL && MODEL !== true ? `, ${MODEL}` : ''})\n\n${prompt}\n\n---\n\n`)
 
     log(`[${runName}] session started`)
-    const child = spawn(cmd, args, { cwd: runDir, shell: false, windowsHide: true })
+    // Codex appends piped stdin to an argument prompt and waits for EOF before starting.
+    // An implicit pipe stays open for the lifetime of this parent, leaving the session at
+    // "Reading additional input from stdin..." forever. Ignore stdin so headless agents
+    // receive EOF immediately; stdout and stderr remain piped for the transcript.
+    const child = spawn(cmd, args, {
+      cwd: runDir,
+      shell: false,
+      windowsHide: true,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    })
 
     const watch = (d) => {
+      providerOutput = `${providerOutput}${String(d)}`.slice(-32_000)
+      if (AGENT === 'codex' && !providerSessionId) {
+        providerSessionId = extractSessionId('codex', { logText: providerOutput })
+        if (providerSessionId) {
+          try {
+            const metaFile = path.join(runDir, 'run.json')
+            const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
+            fs.writeFileSync(metaFile, JSON.stringify({ ...meta, providerSessionId }, null, 2), 'utf8')
+          } catch {
+            // Recovery can still parse agent.log if this best-effort metadata write fails.
+          }
+        }
+      }
       rawStream.write(d)
       logStream.write(transcript.write(d))
       if (!limitHit && LIMIT_RE.test(String(d))) {
@@ -522,7 +518,7 @@ function runSession({ runName, runDir, prompt, sessionId = null, resume = false,
     stages and absent decisions are all unattributable here; do not score it against the skill.`,
         )
       }
-      resolve({ runName, code, minutes: Number(mins), timedOut, truncated, reads, material })
+      resolve({ runName, code, minutes: Number(mins), timedOut, truncated, reads, material, sessionId: providerSessionId })
     })
 
     child.on('error', (err) => {
@@ -624,7 +620,7 @@ const sessionStart = Date.now()
 // purpose: the gate asks one question at a time, and three sessions racing to ask you three
 // different questions is not a review, it is an interruption.
 async function runPrototypeJob(job) {
-  const sessionId = crypto.randomUUID()
+  const sessionId = AGENT === 'claude' ? crypto.randomUUID() : null
   // Written down, not just held in memory. Phase two is a `--resume` of this exact id, so a
   // round that dies between the phases — a crash at the gate, a Ctrl-C, a reboot — took the
   // only copy of it with it, and sixteen minutes of phase-one work could never be continued.
@@ -632,7 +628,11 @@ async function runPrototypeJob(job) {
   try {
     const rj = path.join(RUNS, job.runName, 'run.json')
     const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
-    fs.writeFileSync(rj, JSON.stringify({ ...meta, sessionId, phase: 1 }, null, 2), 'utf8')
+    fs.writeFileSync(
+      rj,
+      JSON.stringify({ ...meta, agent: AGENT, model: MODEL && MODEL !== true ? String(MODEL) : null, sessionId, phase: 1 }, null, 2),
+      'utf8',
+    )
   } catch {
     /* the note is best-effort; the round matters more */
   }
@@ -667,7 +667,7 @@ async function runPrototypeJob(job) {
   const second = await runSession({
     ...job,
     prompt: CONTINUE_PHASE,
-    sessionId,
+    sessionId: first.sessionId ?? sessionId,
     resume: true,
     phase: 'PHASE 2 — the full route',
   })
@@ -682,14 +682,19 @@ async function runPrototypeJob(job) {
 const sessions = PROTOTYPE
   ? await pool(jobs, 1, runPrototypeJob)
   : await pool(jobs, CONCURRENCY, runSession)
-// Stamp each run as done building. The review page reads this: a run with no stamp whose
-// log is still moving is mid-round, and offering it for scoring is how a prototype — one
-// phase of two, with the round still paused at its gate — got scored as a finished site.
+// Stamp only cleanly completed runs as built. A provider rejection, usage cutoff, or failed
+// resume may still leave styled files and screenshots, but it did not finish the requested
+// route and must never enter review as a completed design.
 for (const s of sessions) {
   const rj = path.join(RUNS, s.runName, 'run.json')
   try {
     const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
-    fs.writeFileSync(rj, JSON.stringify({ ...meta, builtAt: new Date().toISOString() }, null, 2), 'utf8')
+    if (s.code === 0 && !s.truncated && !s.prototypeRejected) {
+      fs.writeFileSync(rj, JSON.stringify({ ...meta, builtAt: new Date().toISOString() }, null, 2), 'utf8')
+    } else if (meta.builtAt) {
+      const { builtAt: _builtAt, ...notBuilt } = meta
+      fs.writeFileSync(rj, JSON.stringify(notBuilt, null, 2), 'utf8')
+    }
   } catch {
     /* best effort — a run with no run.json is already reported elsewhere */
   }
@@ -746,7 +751,8 @@ if (SKIP_CAPTURE) {
   console.log('\nCapturing screenshots…')
   // Building and photographing an untouched seed produces five identical screenshots of
   // the starting point. Skip them — the health check already recorded why.
-  const toCapture = jobs.map((j) => j.runName).filter((name) => !runHealth(name).untouched)
+  const completed = new Set(sessions.filter((s) => s.code === 0 && !s.truncated).map((s) => s.runName))
+  const toCapture = jobs.map((j) => j.runName).filter((name) => completed.has(name) && !runHealth(name).untouched)
   const shots = await captureMany(toCapture, 4173, log, direction ?? 'recommended')
   const broken = shots.filter((s) => !s.ok)
   if (broken.length) {
@@ -758,7 +764,8 @@ if (SKIP_CAPTURE) {
 
 // ---------------------------------------------------------------- gate
 
-let kept = jobs.map((j) => j.runName)
+const completedRuns = new Set(sessions.filter((s) => s.code === 0 && !s.truncated).map((s) => s.runName))
+let kept = jobs.map((j) => j.runName).filter((name) => completedRuns.has(name))
 // A run thrown out at the prototype gate never became a page: it is not offered to the
 // finished-build gate below, and not offered for scoring either.
 if (PROTOTYPE) {
