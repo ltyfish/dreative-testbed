@@ -144,6 +144,61 @@ function startHidden(args, logFile) {
   return out.status === 0 && Number.isInteger(pid) && pid > 0 ? pid : null
 }
 
+/**
+ * Is something writing this run right now?
+ *
+ * Not runStatuses(): its `running` state also requires an uncaptured run, and a run being
+ * continued was captured in phase one — so a live continuation reads there as `truncated`,
+ * which is the one answer that must not let a second resumption start.
+ */
+export function isRunLive(runName) {
+  try {
+    const log = fs.statSync(path.join(ROOT, 'runs', runName, 'agent.log'))
+    return Date.now() - log.mtimeMs < 6 * 60_000
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Resume a run whose session died mid-build, the way the gate would have continued it.
+ *
+ * The Continue button on /status answers a gate held by a LIVE round process. A round killed
+ * by a provider limit leaves no process and therefore no gate, so the review could only show
+ * the red TRUNCATED banner with no action on it, and the recovery lived in a terminal command
+ * nobody visiting the page would know to run. This is the same recovery, spawned from the UI.
+ */
+export function startContinue(runName) {
+  if (!new RegExp('^[' + String.fromCharCode(92) + 'w.@-]{1,120}$').test(runName)) {
+    throw new Error('that does not look like a run name')
+  }
+  const runDir = path.join(ROOT, 'runs', runName)
+  if (!fs.existsSync(path.join(runDir, 'run.json'))) throw new Error(`no such run: ${runName}`)
+
+  // Two resumptions of one session would interleave into the same log and the same build.
+  if (isRunLive(runName)) {
+    throw new Error(`${runName} is being written to right now — something is already running it`)
+  }
+
+  const args = [path.join(ROOT, 'scripts', 'continue-run.mjs'), runName]
+  const logFile = path.join(runDir, 'continue.log')
+  // continue-run appends the session to the run's own agent.log, which is where status and the
+  // review already look; this log only catches a crash before that starts.
+  const pid = process.platform === 'win32' ? startHidden(args, logFile) : null
+  if (pid === null) {
+    const out = fs.openSync(logFile, 'w')
+    const child = spawn(process.execPath, args, {
+      cwd: ROOT,
+      detached: true,
+      shell: false,
+      windowsHide: true,
+      stdio: ['ignore', out, out],
+    })
+    child.unref()
+    return { pid: child.pid, run: runName }
+  }
+  return { pid, run: runName }
+}
 /** Spawn the round detached, and record enough for status to recognise it later. */
 export function startRound(body) {
   const running = readLaunch()

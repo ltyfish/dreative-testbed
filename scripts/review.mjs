@@ -17,7 +17,7 @@ import { freePort, killProcessesIn, killTree, npmCommand, spawnPreview } from '.
 import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
-import { clearRoundLog, roundLog, startRound, statusPage } from './lib/launcher.mjs'
+import { clearRoundLog, isRunLive, roundLog, startContinue, startRound, statusPage } from './lib/launcher.mjs'
 import { readLaunch, runStatuses } from './lib/status.mjs'
 import { answerGate, pendingGate } from './lib/gate.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
@@ -121,6 +121,24 @@ function liveRuns() {
  * from before that stamp, and rounds killed before writing it, fall back to the gate and the
  * log: the run a gate is asking about, or one whose agent.log is still growing, is not built.
  */
+/**
+ * Can this run be picked up where it died?
+ *
+ * Only a truncated run needs it: one that stopped because the provider cut the session off,
+ * not one that finished. It needs the session id continue-run resumes, and it must not be
+ * running already — a second resumption of the same session would build over the first.
+ */
+function isResumable(dir, meta) {
+  if (!meta.truncated || meta.rejected) return false
+  if (isRunLive(dir)) return false
+  if (meta.sessionId) return true
+  try {
+    return /"session_id"/.test(fs.readFileSync(path.join(RUNS, dir, 'agent.jsonl'), 'utf8').slice(0, 4000))
+  } catch {
+    return false
+  }
+}
+
 function isUnbuilt(dir, meta) {
   if (meta.rejected || meta.builtAt) return false
   const gate = pendingGate()
@@ -829,7 +847,20 @@ function viewPage(pairs, solos, view) {
              The round is paused and <a href="/status">waiting for you to continue or throw it out</a>.</div>`
           : ''
       }
-      ${run.meta.truncated ? `<div class="fail">TRUNCATED (${esc(run.meta.truncated)}) — this build did not finish. Missing stages and craft defects here are unattributable.</div>` : ''}
+      ${
+        run.meta.truncated
+          ? `<div class="fail">TRUNCATED (${esc(run.meta.truncated)}) — this build did not finish. Missing stages and craft defects here are unattributable.
+             ${
+               isResumable(run.dir, run.meta)
+                 ? `<br><br>The session is still on disk, so this is recoverable: continuing resumes it with the phase-two prompt,
+                    then re-captures and re-measures. Score it after that, not now.
+                    <br><br><button class="livebtn" onclick="continueRun(this, '${esc(run.dir)}')">Continue this run</button>`
+                 : isRunLive(run.dir)
+                   ? '<br><br>Being continued right now — this card is the state it died in, not what it will be. Reload once the session stops writing.'
+                   : '<br><br>No session id on disk, so this one cannot be resumed — only re-run.'
+             }</div>`
+          : ''
+      }
       ${buildFailure(run.dir) ? `<div class="lbl">Build failed — this is itself a finding</div><div class="fail">${esc(buildFailure(run.dir))}</div>` : ''}
       ${captureWarnings(run.dir) ? `<div class="warn">Capture warning — ${esc(captureWarnings(run.dir))}</div>` : ''}
       ${smokeNote(run.dir) ? `<div class="${smokeNote(run.dir).kind === 'fail' ? 'fail' : 'warn'}">${esc(smokeNote(run.dir).text)}</div>` : ''}
@@ -915,6 +946,28 @@ function viewPage(pairs, solos, view) {
   </div>
 </main>
 <script>
+// Recovery for a run the provider cut off. The gate's Continue answers a live round; this one
+// starts the resumption itself, so a round that died has an action on the page it died on.
+async function continueRun(btn, run) {
+  const warn = 'Resume ' + run + ' where its session died?' + String.fromCharCode(10,10) +
+    'It picks up in the same agent session with the phase-two prompt, then re-captures and re-measures. This takes a while and spends usage.';
+  if (!confirm(warn)) return;
+  btn.disabled = true;
+  btn.textContent = 'Resuming...';
+  const res = await fetch('/api/continue', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ run }),
+  });
+  if (!res.ok) {
+    alert('Could not continue it: ' + await res.text());
+    btn.disabled = false;
+    btn.textContent = 'Continue this run';
+    return;
+  }
+  btn.textContent = 'Resumed - follow it on the status page';
+  setTimeout(() => location.reload(), 3000);
+}
 const SCENARIO = ${JSON.stringify(view.scenario)};
 const AXES = ${JSON.stringify([...SOLO_AXES.map(([k]) => k), 'overall'])};
 document.getElementById('soloSubmit').addEventListener('click', async (e) => {
@@ -1131,6 +1184,28 @@ function page(pairs, solos, active, viewName) {
   </div>
 </main>
 <script>
+// Recovery for a run the provider cut off. The gate's Continue answers a live round; this one
+// starts the resumption itself, so a round that died has an action on the page it died on.
+async function continueRun(btn, run) {
+  const warn = 'Resume ' + run + ' where its session died?' + String.fromCharCode(10,10) +
+    'It picks up in the same agent session with the phase-two prompt, then re-captures and re-measures. This takes a while and spends usage.';
+  if (!confirm(warn)) return;
+  btn.disabled = true;
+  btn.textContent = 'Resuming...';
+  const res = await fetch('/api/continue', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ run }),
+  });
+  if (!res.ok) {
+    alert('Could not continue it: ' + await res.text());
+    btn.disabled = false;
+    btn.textContent = 'Continue this run';
+    return;
+  }
+  btn.textContent = 'Resumed - follow it on the status page';
+  setTimeout(() => location.reload(), 3000);
+}
 const SCENARIO = ${JSON.stringify(pair.scenario)};
 const UNSCORED = ${JSON.stringify(pairs.filter((p) => p.health.judgeable && !p.scored).map((p) => p.scenario))};
 
@@ -1319,6 +1394,20 @@ const server = http.createServer(async (req, res) => {
       console.log(`gate: ${body.decision} ${body.run}`)
     } catch (err) {
       res.writeHead(400).end(err.message)
+    }
+    return
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/continue') {
+    let raw = ''
+    for await (const chunk of req) raw += chunk
+    try {
+      const record = startContinue(JSON.parse(raw).run)
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify(record))
+      console.log(`continue: ${record.run} (pid ${record.pid})`)
+    } catch (err) {
+      res.writeHead(409).end(err.message)
     }
     return
   }
