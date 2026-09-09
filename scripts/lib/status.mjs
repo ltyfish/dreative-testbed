@@ -32,6 +32,7 @@ const readJson = (p, fallback = null) => {
  *
  * state is one of:
  *   running    — the log is still growing
+ *   prototype  — phase one was captured but the same agent session has not continued yet
  *   stalled    — a log that stopped growing without the session closing it out
  *   truncated  — the provider or the time cap ended it mid-work
  *   rejected   — thrown out at the prototype gate
@@ -67,6 +68,7 @@ export function runStatuses() {
     // everything. A log still growing means the session is alive whatever else is true.
     let state
     if (meta.rejected) state = 'rejected'
+    else if (Number(meta.phase) === 1 && !meta.builtAt && captured) state = 'prototype'
     else if (log && idleMs < 90_000 && !captured) state = 'running'
     else if (meta.truncated) state = 'truncated'
     else if (!touched) state = 'empty'
@@ -91,6 +93,7 @@ export function runStatuses() {
       looked: Boolean(look),
       lookedByBuilder: look ? look.byBuilder : null,
       smokeOk: smoke ? smoke.ok : null,
+      resumable: Boolean(meta.providerSessionId || meta.sessionId),
       scored: Boolean(verdict && (verdict.run === dir || Object.values(verdict.runs ?? {}).includes(dir))),
     })
   }
@@ -116,6 +119,7 @@ export function readLaunch() {
 
 const ICON = {
   running: '●',
+  prototype: '◆',
   stalled: '◌',
   truncated: '✕',
   rejected: '✕',
@@ -141,6 +145,7 @@ export function formatStatus(rows = runStatuses(), launch = readLaunch()) {
   for (const r of rows) {
     const bits = []
     if (r.state === 'running') bits.push(`${r.logKb}kb of log, last wrote ${r.idleMinutes}m ago`)
+    if (r.state === 'prototype') bits.push(r.resumable ? 'awaiting continuation' : 'continuation id missing')
     if (r.truncated) bits.push(r.truncated)
     if (r.buildFailed) bits.push('BUILD FAILED')
     if (r.looked) bits.push(`${r.broken} broken, ${r.inertSections} inert section(s)`)

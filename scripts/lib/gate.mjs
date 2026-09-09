@@ -39,6 +39,16 @@ export const GATE_FILE = path.join(RUNS, '.gate.json')
 /** Nobody is coming back to answer after this long; keep the build rather than lose the round. */
 const WAIT_LIMIT_MS = 6 * 60 * 60_000
 
+/**
+ * A round launched from the browser has a hidden Windows console so its descendants do not
+ * flash terminal windows. That console still makes stdin report isTTY=true, but nobody can
+ * answer it. DREATIVE_ROUND_LOG is stamped only on those UI-launched processes, so it is the
+ * authoritative signal that gate questions belong in the browser.
+ */
+export function usesTerminalGate({ isTTY = stdin.isTTY, uiLaunched = Boolean(process.env.DREATIVE_ROUND_LOG) } = {}) {
+  return Boolean(isTTY) && !uiLaunched
+}
+
 const readJson = (p, fallback = null) => {
   try {
     return JSON.parse(fs.readFileSync(p, 'utf8'))
@@ -271,7 +281,7 @@ export async function gateOne(
     labels = { keep: 'Continue — build the rest of the page', reject: 'Throw it out and stop this run' },
   } = {},
 ) {
-  const interactive = Boolean(stdin.isTTY)
+  const interactive = usesTerminalGate()
   const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
   const runDir = path.join(RUNS, runName)
   const brief = gateBriefing(runName)
@@ -313,7 +323,7 @@ export async function gateOne(
 }
 
 export async function gateRuns(runNames, sessions, log = console.log) {
-  const interactive = Boolean(stdin.isTTY)
+  const interactive = usesTerminalGate()
   const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
   const kept = []
   let port = 4500

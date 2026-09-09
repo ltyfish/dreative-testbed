@@ -285,6 +285,7 @@ export function clearRoundLog() {
 
 const DOT = {
   running: '#3b82f6',
+  prototype: '#2563eb',
   stalled: '#a16207',
   truncated: '#b91c1c',
   rejected: '#b91c1c',
@@ -299,6 +300,13 @@ function statusTable(rows) {
     .map((r) => {
       const bits = []
       if (r.state === 'running') bits.push(`${r.logKb}kb of log · last wrote ${r.idleMinutes}m ago`)
+      if (r.state === 'prototype') {
+        bits.push(
+          r.resumable
+            ? `phase 1 captured · <button class="livebtn" onclick="continuePrototype(this, '${esc(r.run)}')">Continue with the same agent session</button>`
+            : '<strong>phase 1 captured but its continuation id is missing</strong>',
+        )
+      }
       if (r.truncated) bits.push(esc(r.truncated))
       if (r.buildFailed) bits.push('<strong>build failed</strong>')
       if (r.looked) bits.push(`${r.broken} broken · ${r.inertSections} inert section(s)`)
@@ -463,6 +471,24 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
 <script>
 const GATE_RUN = ${JSON.stringify(gate?.current ?? null)};
 const sel = (id) => document.getElementById(id);
+async function continuePrototype(btn, run) {
+  if (!confirm('Continue ' + run + ' in its existing agent session and build the rest of the page?')) return;
+  btn.disabled = true;
+  btn.textContent = 'Resuming…';
+  const res = await fetch('/api/continue', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ run }),
+  });
+  if (!res.ok) {
+    alert('Could not continue it: ' + await res.text());
+    btn.disabled = false;
+    btn.textContent = 'Continue with the same agent session';
+    return;
+  }
+  btn.textContent = 'Resumed';
+  setTimeout(() => location.reload(), 1500);
+}
 // The second version only means anything in a version comparison; showing it the rest of the
 // time invited filling it in and quietly getting an arm nobody asked for.
 function syncCompare() {
