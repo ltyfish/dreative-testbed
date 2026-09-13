@@ -1,0 +1,238 @@
+{
+  "profile": "mobile",
+  "video": "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\mobile-motion.webm",
+  "screenshots": [
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\mobile-entry.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\mobile-development.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\mobile-end.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 17273,
+      "elapsedMs": 650
+    },
+    {
+      "input": "touch-forward",
+      "y": 365,
+      "height": 17273,
+      "elapsedMs": 1567
+    },
+    {
+      "input": "touch-forward",
+      "y": 730,
+      "height": 17273,
+      "elapsedMs": 2236
+    },
+    {
+      "input": "touch-forward",
+      "y": 1094,
+      "height": 17273,
+      "elapsedMs": 2874
+    },
+    {
+      "input": "pause",
+      "y": 1094,
+      "height": 17273,
+      "elapsedMs": 3386
+    },
+    {
+      "input": "touch-reverse",
+      "y": 687,
+      "height": 17273,
+      "elapsedMs": 4948
+    },
+    {
+      "input": "touch-forward",
+      "y": 1179,
+      "height": 17273,
+      "elapsedMs": 5429
+    },
+    {
+      "input": "touch-forward",
+      "y": 1544,
+      "height": 17273,
+      "elapsedMs": 6064
+    },
+    {
+      "input": "touch-forward",
+      "y": 1908,
+      "height": 17273,
+      "elapsedMs": 6691
+    },
+    {
+      "input": "touch-forward",
+      "y": 2273,
+      "height": 17273,
+      "elapsedMs": 7341
+    },
+    {
+      "input": "touch-forward",
+      "y": 2765,
+      "height": 17273,
+      "elapsedMs": 7809
+    },
+    {
+      "input": "touch-forward",
+      "y": 3129,
+      "height": 17273,
+      "elapsedMs": 8466
+    },
+    {
+      "input": "touch-forward",
+      "y": 3494,
+      "height": 17273,
+      "elapsedMs": 9113
+    },
+    {
+      "input": "touch-forward",
+      "y": 3859,
+      "height": 17273,
+      "elapsedMs": 9759
+    },
+    {
+      "input": "touch-forward",
+      "y": 4350,
+      "height": 17273,
+      "elapsedMs": 10206
+    },
+    {
+      "input": "touch-forward",
+      "y": 4715,
+      "height": 17273,
+      "elapsedMs": 10845
+    },
+    {
+      "input": "touch-forward",
+      "y": 5080,
+      "height": 17273,
+      "elapsedMs": 11494
+    },
+    {
+      "input": "touch-forward",
+      "y": 5445,
+      "height": 17273,
+      "elapsedMs": 12144
+    },
+    {
+      "input": "touch-forward",
+      "y": 5936,
+      "height": 17273,
+      "elapsedMs": 12617
+    },
+    {
+      "input": "touch-forward",
+      "y": 6301,
+      "height": 17273,
+      "elapsedMs": 13253
+    },
+    {
+      "input": "touch-forward",
+      "y": 6666,
+      "height": 17273,
+      "elapsedMs": 13877
+    },
+    {
+      "input": "touch-forward",
+      "y": 7031,
+      "height": 17273,
+      "elapsedMs": 14531
+    },
+    {
+      "input": "touch-forward",
+      "y": 7522,
+      "height": 17273,
+      "elapsedMs": 15004
+    },
+    {
+      "input": "touch-forward",
+      "y": 7887,
+      "height": 17273,
+      "elapsedMs": 15648
+    },
+    {
+      "input": "touch-forward",
+      "y": 8252,
+      "height": 17273,
+      "elapsedMs": 16317
+    },
+    {
+      "input": "touch-forward",
+      "y": 8616,
+      "height": 17273,
+      "elapsedMs": 16953
+    },
+    {
+      "input": "touch-forward",
+      "y": 9108,
+      "height": 17273,
+      "elapsedMs": 17435
+    },
+    {
+      "input": "touch-forward",
+      "y": 9473,
+      "height": 17273,
+      "elapsedMs": 18056
+    },
+    {
+      "input": "touch-forward",
+      "y": 9837,
+      "height": 17273,
+      "elapsedMs": 18723
+    },
+    {
+      "input": "touch-forward",
+      "y": 10202,
+      "height": 17273,
+      "elapsedMs": 19364
+    },
+    {
+      "input": "touch-forward",
+      "y": 10694,
+      "height": 17273,
+      "elapsedMs": 19827
+    },
+    {
+      "input": "touch-forward",
+      "y": 11058,
+      "height": 17273,
+      "elapsedMs": 20472
+    },
+    {
+      "input": "touch-forward",
+      "y": 11423,
+      "height": 17273,
+      "elapsedMs": 21125
+    },
+    {
+      "input": "touch-forward",
+      "y": 11788,
+      "height": 17273,
+      "elapsedMs": 21797
+    },
+    {
+      "input": "touch-forward",
+      "y": 12279,
+      "height": 17273,
+      "elapsedMs": 22264
+    }
+  ],
+  "errors": [],
+  "reachedEnd": false,
+  "inputCoverage": [
+    "entry",
+    "touch-forward",
+    "pause",
+    "touch-reverse"
+  ],
+  "device": {
+    "coarsePointer": true,
+    "touchPoints": 1,
+    "reducedMotion": false
+  },
+  "receivedEvents": {
+    "touchstart": 33,
+    "touchmove": 188
+  }
+}

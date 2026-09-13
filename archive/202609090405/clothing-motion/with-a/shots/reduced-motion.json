@@ -1,0 +1,58 @@
+{
+  "profile": "reduced",
+  "video": "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\reduced-motion.webm",
+  "screenshots": [
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\reduced-entry.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\reduced-end.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\reduced-keyboard-focus.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 1458,
+      "elapsedMs": 717
+    },
+    {
+      "input": "wheel-slow",
+      "y": 405,
+      "height": 1458,
+      "elapsedMs": 1292
+    },
+    {
+      "input": "wheel-slow",
+      "y": 558,
+      "height": 1458,
+      "elapsedMs": 1634
+    },
+    {
+      "input": "keyboard-home",
+      "y": 0,
+      "height": 1458,
+      "elapsedMs": 2023
+    },
+    {
+      "input": "keyboard-page-down",
+      "y": 558,
+      "height": 1458,
+      "elapsedMs": 2381
+    }
+  ],
+  "errors": [],
+  "reachedEnd": true,
+  "inputCoverage": [
+    "entry",
+    "wheel-slow",
+    "keyboard-home",
+    "keyboard-page-down"
+  ],
+  "device": {
+    "coarsePointer": false,
+    "touchPoints": 0,
+    "reducedMotion": true
+  },
+  "receivedEvents": {
+    "wheel": 2,
+    "keydown": 3
+  }
+}

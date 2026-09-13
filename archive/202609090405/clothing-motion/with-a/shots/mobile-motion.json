@@ -1,0 +1,94 @@
+{
+  "profile": "mobile",
+  "video": "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\mobile-motion.webm",
+  "screenshots": [
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\mobile-entry.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\mobile-development.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\mobile-end.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 3308,
+      "elapsedMs": 611
+    },
+    {
+      "input": "touch-forward",
+      "y": 365,
+      "height": 3308,
+      "elapsedMs": 1456
+    },
+    {
+      "input": "touch-forward",
+      "y": 730,
+      "height": 3308,
+      "elapsedMs": 2068
+    },
+    {
+      "input": "touch-forward",
+      "y": 1094,
+      "height": 3308,
+      "elapsedMs": 2651
+    },
+    {
+      "input": "pause",
+      "y": 1094,
+      "height": 3308,
+      "elapsedMs": 3165
+    },
+    {
+      "input": "touch-reverse",
+      "y": 687,
+      "height": 3308,
+      "elapsedMs": 4145
+    },
+    {
+      "input": "touch-forward",
+      "y": 1179,
+      "height": 3308,
+      "elapsedMs": 4565
+    },
+    {
+      "input": "touch-forward",
+      "y": 1544,
+      "height": 3308,
+      "elapsedMs": 5140
+    },
+    {
+      "input": "touch-forward",
+      "y": 1908,
+      "height": 3308,
+      "elapsedMs": 5763
+    },
+    {
+      "input": "touch-forward",
+      "y": 2273,
+      "height": 3308,
+      "elapsedMs": 6385
+    },
+    {
+      "input": "touch-forward",
+      "y": 2464,
+      "height": 3308,
+      "elapsedMs": 6819
+    }
+  ],
+  "errors": [],
+  "reachedEnd": true,
+  "inputCoverage": [
+    "entry",
+    "touch-forward",
+    "pause",
+    "touch-reverse"
+  ],
+  "device": {
+    "coarsePointer": true,
+    "touchPoints": 1,
+    "reducedMotion": false
+  },
+  "receivedEvents": {
+    "touchstart": 9,
+    "touchmove": 54
+  }
+}

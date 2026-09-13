@@ -1,0 +1,1 @@
+mobile: playback capture reached its input limit before the page end; inspect the rest live

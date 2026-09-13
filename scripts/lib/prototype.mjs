@@ -1,57 +1,65 @@
-// The two-phase round: build the signature mechanism, stop, get a decision, then continue.
-//
-// This is the gate the user actually asked for, and it is a different instrument from the one
-// that gates a finished build. That one can only tell you a round was wasted. This one can
-// stop it while there is still budget left, which matters because five of the last six rounds
-// died mid-work and every one of them spent its best hour on the wrong half of the page.
-//
-// It also attacks the failure named in every recent verdict: the builder implements the page
-// and *then* decorates it, so the expensive moment is whatever was left over — a fade. Phase
-// one makes the expensive moment the first thing built, at full fidelity, while the budget is
-// untouched, and refuses to let the rest of the page exist until someone has seen it.
-//
-// The mechanics: `claude -p --session-id <uuid>` assigns the id, `claude -p --resume <uuid>`
-// picks the same conversation back up with its context intact. So phase two is genuinely the
-// same session continuing, not a second agent reading someone else's work. I previously said
-// this was impossible because `-p` is one-shot; that was wrong.
-//
-// Both arms get identical phase wording. The skill already asks for this (SKILL.md step 3:
-// "Build the signature mechanism before the page that will hold it… and look at it running"),
-// so the harness is enforcing the protocol the skill states, not adding a requirement to it.
+import { DESIGN_PROTOCOL, selectedDesign } from './design-directions.mjs'
+import fs from 'node:fs'
+import path from 'node:path'
 
-/**
- * Appended to the brief for phase one. Identical for every arm.
- *
- * Deliberately does not say what the mechanism should be, what it should use, or how many of
- * anything. It says when to stop and what "finished" means for this phase.
- */
+// Identical protocol for all arms. Version it separately from the skill.
 export const PROTOTYPE_PHASE = `
-STOP AFTER THE SIGNATURE MOMENT. This session has two phases and you are in the first.
+VISUAL DIRECTION GATE — phase 1 of 2. Do not implement the website yet.
 
-Build only the one moment this route exists for — the thing the subject does that a static
-picture cannot show — at full intended fidelity, on a route that renders and can be scrolled.
-Its material must already be on disk and already treated before you write it. Do not build
-the other sections. Do not build a simplified version meant to be upgraded later: a
-placeholder here is precisely what this checkpoint exists to catch, and a placeholder that
-renders correctly never gets replaced.
+Generate multiple materially different page design images (normally two or three), each
+with a concrete plan. Explore composition, typography, imagery and structure through the
+working middle and ending, not palette variants of one hero. Inspect the actual generated
+images. Use supplied subject material and preserve the brief's real content and behavior.
+For each option explain the primary journey, asset sourcing/generation, mobile adaptation,
+implementation approach, motion/scroll ideas where useful, uncertainties and relative cost.
+Recommend one with a reason in its plan; do not choose it on the reviewer's behalf.
 
-When it runs, stop and report: what the moment is, what material it moves, what drives it,
-and what you could not get. Then end your turn. Someone will look at it and decide whether
-the rest of the page gets built. Nothing you write after that report is used.`
+Save the actual PNG/JPEG/WebP mockups under design/ in this run directory, and write
+design-directions.json with this exact transport shape (replace the examples):
+{"version":1,"directions":[{"id":"direction-a","title":"First direction","images":["design/a.png"],"plan":"Concrete plan for this direction"},{"id":"direction-b","title":"Second direction","images":["design/b.png"],"plan":"Concrete plan for this direction"}]}
+Use multiple related images per direction when necessary. The testbed displays these
+files and plans directly; no coded gallery, site build or delivery finalization is needed
+in phase one. Do not change src/ to implement a direction. A prompt or source URL is not
+a generated mockup. Discover actual image-generation capability. If unavailable, record
+the precise blocker in design-blocker.md and end the turn; do not fake images or skip
+selection. The reviewer can supply visual alternatives before resuming the gate.
 
-/** Sent to the resumed session once the prototype is accepted. Identical for every arm. */
-export const CONTINUE_PHASE = `The prototype was accepted. Build the full route around it now.
+Stop after presenting the direction images and plans. Wait for an explicit selection.
+The same session will receive the selected id, image paths, plan and feedback in phase two.`
 
-Keep what you built — it is the anchor, not a draft to be replaced or toned down to match the
-rest. Everything else on the page is designed to lead into it and out of it. The interaction
-baseline (hover, focus, press, entrance) is part of the route and is not optional.
+// Kept for recovery of historical runs made under the coded-slice protocol.
+export const CONTINUE_PHASE = `The demonstrated prototype slice was accepted. Complete the route now.
+Preserve its accepted visual intent, reuse successful material and implementation, and
+complete the primary task, unresolved passages and ending. Inspect the full desktop/mobile
+route, normal and reduced motion, fix visible defects, and run the applicable delivery checks.`
 
-When you are done, make sure \`npm run build\` succeeds.`
+export function continuationPrompt(runDir) {
+  const meta = JSON.parse(fs.readFileSync(path.join(runDir, 'run.json'), 'utf8'))
+  if (meta.phaseProtocol !== DESIGN_PROTOCOL) return CONTINUE_PHASE
+  const d = selectedDesign(runDir)
+  return `VISUAL DIRECTION SELECTED — phase 2 of 2. Implement the selected design now.
 
-/** Sent when the reviewer rejects the prototype but the round is continuing anyway. */
-export const RETRY_PHASE = `The prototype was rejected.
+Selected id: ${d.id}
+Title: ${d.title}
+Design image paths (open and inspect these actual files): ${d.images.join(', ')}
+Plan: ${d.plan}
+User changes: ${d.feedback || 'No additional changes.'}
+Other direction images and plans remain in design-directions.json. Consult them when the
+user's feedback explicitly combines parts of different options; retain the selected base.
 
-What was built is not the moment this route is for, or is not at the fidelity it needs. Do not
-repair it and do not soften it into something safer. Go back to the question — what does this
-subject do that a static picture cannot show — and build a different answer, at full fidelity,
-with material you have actually obtained. Then stop and report again.`
+Preserve the selected composition, subject scale, typography, structure and visual character.
+Source/generate usable separate assets; keep text and controls live. Build in the real app.
+Compare a representative composition and its adjacent region with the selected image before
+extending the route. Use motion, scroll animation or spatial mechanisms when they serve this
+design and the brief. Prototype uncertain mechanisms with real material and destinations;
+a still does not demonstrate timing. This is not another automatic approval stop.
+
+Inspect the full route and matching reference states at desktop and mobile, test the primary
+task and motion/reduced motion, and correct visible discrepancies. Do not change the reference
+images to match weak implementation. Disclose material deviations. Run npm run build and
+applicable delivery checks before reporting implementation complete.`
+}
+
+export const RETRY_PHASE = `Revise the visual directions using the reviewer's feedback.
+Update the affected design images and plans, preserve the requested content and ambition,
+then stop again for selection. Do not implement the website before a direction is selected.`

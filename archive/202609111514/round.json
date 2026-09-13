@@ -1,0 +1,61 @@
+{
+  "round": "202609111514",
+  "archivedAt": "2026-09-11T16:43:31.301Z",
+  "scenarios": [
+    "clothing-motion"
+  ],
+  "label": null,
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "readOnceExperiment": false,
+  "captureProtocol": "native-input-playback-v1",
+  "direction": "recommended",
+  "skills": {
+    "with-a": "git:2912db8"
+  },
+  "arms": [
+    "with-a"
+  ],
+  "repeat": 1,
+  "sessions": [
+    {
+      "runName": "clothing-motion__with-a__202609111514",
+      "code": 1,
+      "minutes": 38.4,
+      "timedOut": false,
+      "truncated": "provider limit",
+      "reads": {
+        "skillFilesRead": {},
+        "toolCalls": {
+          "Bash": 6,
+          "Write": 2
+        }
+      },
+      "material": {
+        "workingOriginals": 21,
+        "workingSequences": [],
+        "shippedRasters": 4,
+        "shippedVideo": [],
+        "shippedModels": [],
+        "frameSequences": [],
+        "drivers": [
+          "observer",
+          "rafLoop",
+          "cssTransition"
+        ],
+        "indexesIntoMaterial": false,
+        "verdict": "stills only, moved by reveal or transition"
+      },
+      "sessionId": "bf4162c7-1429-458b-bea1-be9932cf4dda",
+      "phases": 2
+    }
+  ],
+  "runs": [
+    {
+      "runName": "clothing-motion__with-a__202609111514",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "skillFilesRead": {
+    "PLAN.md": 1,
+    "references/MEDIA_SOURCES.md": 1,
+    "skills/motion.md": 1
+  },
+  "toolCalls": {
+    "Bash": 94,
+    "Read": 60,
+    "mcp__playwright__browser_evaluate": 45,
+    "mcp__playwright__browser_take_screenshot": 33,
+    "mcp__playwright__browser_run_code_unsafe": 17,
+    "Write": 15,
+    "mcp__playwright__browser_navigate": 9,
+    "Edit": 6,
+    "mcp__playwright__browser_console_messages": 5,
+    "ToolSearch": 3,
+    "mcp__playwright__browser_click": 3,
+    "mcp__playwright__browser_resize": 2,
+    "Skill": 1,
+    "mcp__playwright__browser_press_key": 1
+  }
+}

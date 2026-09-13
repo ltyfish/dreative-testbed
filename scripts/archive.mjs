@@ -13,6 +13,7 @@ import http from 'node:http'
 import path from 'node:path'
 import { ARCHIVE, listRounds, readJson } from './lib/archive.mjs'
 import { armTitle } from './lib/scaffold.mjs'
+import { readDirections } from './lib/design-directions.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4322
 // The archive is usually opened from the review page, and a new tab with no link back is a
@@ -179,9 +180,25 @@ function roundPage(round) {
         ? `<div class="lbl">${esc(f)} · playback</div><video controls preload="metadata" style="width:100%;max-height:700px" src="${base}/shots/${encodeURIComponent(f)}"></video>`
         : `<div class="lbl">${esc(f.replace('.png', ''))}</div><img class="shot${f.startsWith('mobile') ? ' mob' : ''}" loading="lazy" src="${base}/shots/${encodeURIComponent(f)}" alt="${esc(a.arm)} ${esc(f)}">`)
       .join('')
+    const correspondence = a.meta.captureCorrespondence ?? 'unknown'
+    let designReview = ''
+    if (a.meta.phaseProtocol === 'visual-directions-v1') {
+      try {
+        const study = readDirections(path.join(ARCHIVE, round, scenario, a.arm))
+        designReview = `<details><summary>Visual directions — ${a.meta.designSelection ? `selected ${esc(a.meta.designSelection.directionId)}` : 'no selection recorded'}</summary>${study.directions.map(d => `<h3>${esc(d.title)}</h3>${d.images.map(img => `<a href="${base}/${img}" target="_blank" rel="noopener"><img class="shot" loading="lazy" src="${base}/${img}" alt="${esc(d.title)} design"></a>`).join('')}<p style="white-space:pre-wrap">${esc(d.plan)}</p>`).join('')}${a.meta.designSelection?.feedback ? `<p>User changes: ${esc(a.meta.designSelection.feedback)}</p>` : ''}</details>`
+      } catch { designReview = '<p class="fail">Visual direction artifacts are incomplete. This is not a completed design selection.</p>' }
+    }
+    const captureNotice = correspondence === 'matching'
+      ? 'Captures match the archived app inputs.'
+      : correspondence === 'different-source'
+        ? 'Captures are from different app inputs than the archived source/site. Review the site separately.'
+        : correspondence === 'changed-during-capture'
+          ? 'App inputs changed during capture. These recordings cannot establish the archived state.'
+          : 'Capture/source correspondence was not recorded. These recordings may precede the archived site.'
     return `<div class="col">
       <div class="tagrow"><span class="tag ${a.arm}">${label}</span>${a.meta.direction ? `<span class="sub">${esc(a.meta.direction)}</span>` : ''}${links}</div>
-      ${fail}${shots}
+      <p class="sub">${esc(captureNotice)}${a.meta.truncated ? ` Run incomplete: ${esc(a.meta.truncated)}.` : ''}</p>
+      ${designReview}${fail}${shots}
     </div>`
   }
 

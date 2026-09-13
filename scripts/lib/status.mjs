@@ -68,7 +68,7 @@ export function runStatuses() {
     // everything. A log still growing means the session is alive whatever else is true.
     let state
     if (meta.rejected) state = 'rejected'
-    else if (Number(meta.phase) === 1 && !meta.builtAt && captured) state = 'prototype'
+    else if (Number(meta.phase) === 1 && !meta.builtAt && (captured || meta.designPhaseEndedAt)) state = 'prototype'
     else if (log && idleMs < 90_000 && !captured) state = 'running'
     else if (meta.truncated) state = 'truncated'
     else if (!touched) state = 'empty'
@@ -82,6 +82,7 @@ export function runStatuses() {
       arm: meta.arm,
       round: meta.seq,
       direction: meta.direction,
+      phaseProtocol: meta.phaseProtocol,
       skill: meta.skill,
       state,
       truncated: meta.truncated ?? null,

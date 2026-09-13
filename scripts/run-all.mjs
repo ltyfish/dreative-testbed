@@ -13,7 +13,7 @@
 //
 //   node scripts/run-all.mjs --scenarios storefront-ceramics --arms with-a --gate --label "eyes + look report"
 //
-// Two-phase: the session builds the signature mechanism, stops, you decide, and the SAME
+// Two-phase: the session produces design images/plans, stops, you choose, and the SAME
 // session is resumed for the rest of the route. This is the gate that can save a round
 // rather than only report on a wasted one:
 //
@@ -71,7 +71,9 @@ import { extractSessionId, resolveAgentBinary } from './lib/agent.mjs'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { gateRuns, gateOne } from './lib/gate.mjs'
-import { CONTINUE_PHASE, PROTOTYPE_PHASE, RETRY_PHASE } from './lib/prototype.mjs'
+import { continuationPrompt, PROTOTYPE_PHASE, RETRY_PHASE } from './lib/prototype.mjs'
+import { DESIGN_PROTOCOL } from './lib/design-directions.mjs'
+import { codexToolArgs } from './lib/tool-config.mjs'
 import { runHealth } from './lib/health.mjs'
 import { writeMaterialSummary, addContinuitySignal } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
@@ -157,7 +159,7 @@ if (!Number.isInteger(REPEAT) || REPEAT < 1) {
 const SKIP_CAPTURE = arg('no-capture', false)
 // Stop and look at each build before deciding to score it. See lib/gate.mjs.
 const GATE = arg('gate', false)
-// Two-phase: build the signature mechanism, stop, decide, then continue the SAME session.
+// Two-phase: generate visual directions, stop for selection, then continue the SAME session.
 // See lib/prototype.mjs for why this is the gate that can actually save a round.
 const PROTOTYPE = arg('prototype', false)
 // A name for this round, so a verdict months later says what was being tested rather than
@@ -373,10 +375,7 @@ function agentCommand(prompt, runDir, { sessionId = null, resume = false } = {})
     const mcpFile = path.join(runDir, '.mcp.json')
     if (fs.existsSync(mcpFile)) {
       const servers = JSON.parse(fs.readFileSync(mcpFile, 'utf8')).mcpServers ?? {}
-      for (const [name, def] of Object.entries(servers)) {
-        args.push('-c', `mcp_servers.${name}.command=${JSON.stringify(def.command)}`)
-        if (def.args) args.push('-c', `mcp_servers.${name}.args=${JSON.stringify(def.args)}`)
-      }
+      args.push(...codexToolArgs(servers))
     }
     if (MODEL && MODEL !== true) args.push('--model', String(MODEL))
     // Codex assigns its id after launch. Phase one captures that id from the provider output;
@@ -615,8 +614,8 @@ const sessionStart = Date.now()
 
 // ---------------------------------------------------------------- two-phase
 //
-// A prototype round runs each job as: signature mechanism -> build it -> look at it -> your
-// decision -> the same session resumed for the rest of the route. It is sequential on
+// A prototype round runs each job as: visual directions -> your selection -> the same
+// session resumed for implementation and browser refinement. It is sequential on
 // purpose: the gate asks one question at a time, and three sessions racing to ask you three
 // different questions is not a review, it is an interruption.
 async function runPrototypeJob(job) {
@@ -630,7 +629,7 @@ async function runPrototypeJob(job) {
     const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
     fs.writeFileSync(
       rj,
-      JSON.stringify({ ...meta, agent: AGENT, model: MODEL && MODEL !== true ? String(MODEL) : null, sessionId, phase: 1 }, null, 2),
+      JSON.stringify({ ...meta, agent: AGENT, model: MODEL && MODEL !== true ? String(MODEL) : null, sessionId, phase: 1, phaseProtocol: DESIGN_PROTOCOL }, null, 2),
       'utf8',
     )
   } catch {
@@ -640,20 +639,23 @@ async function runPrototypeJob(job) {
     ...job,
     prompt: `${job.prompt}\n${PROTOTYPE_PHASE}`,
     sessionId,
-    phase: 'PHASE 1 — signature mechanism',
+    phase: 'PHASE 1 — visual directions and plans',
   })
   if (first.skipped || first.code === -1) return { ...first, phases: 1 }
 
-  log(`[${job.runName}] prototype built — capturing it so you can see it`)
-  await captureMany([job.runName], 4400, log, direction ?? 'recommended')
+  log(`[${job.runName}] design phase ended — showing its actual images and plans`)
+  const metaFile = path.join(RUNS, job.runName, 'run.json')
+  const phaseMeta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
+  fs.writeFileSync(metaFile, JSON.stringify({ ...phaseMeta, designPhaseEndedAt: new Date().toISOString() }, null, 2))
 
   const keep = await gateOne(job.runName, {
-    question: 'Is this the moment this route is for? Build the rest of the page on it?',
-    stage: 'prototype',
-    heading: 'Prototype gate · phase 1 of 2 — only the signature moment is built, the page is not',
-    labels: { keep: 'Continue — build the rest of the page', reject: 'Throw it out and stop this run' },
+    question: 'Which visual direction should become the website?',
+    stage: 'design',
+    heading: 'Design prototype · choose before implementation',
+    labels: { keep: 'Build selected direction', reject: 'Stop this run' },
     log,
   })
+  if (keep === null) return { ...first, code: 1, phases: 1, truncated: 'awaiting design selection' }
   if (!keep) {
     log(`[${job.runName}] prototype REJECTED — stopping this run here`)
     try {
@@ -664,9 +666,12 @@ async function runPrototypeJob(job) {
     return { ...first, phases: 1, prototypeRejected: true }
   }
 
+  const selectedPrompt = continuationPrompt(path.join(RUNS, job.runName))
+  const selectedMeta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
+  fs.writeFileSync(metaFile, JSON.stringify({ ...selectedMeta, phase: 2 }, null, 2))
   const second = await runSession({
     ...job,
-    prompt: CONTINUE_PHASE,
+    prompt: selectedPrompt,
     sessionId: first.sessionId ?? sessionId,
     resume: true,
     phase: 'PHASE 2 — the full route',
@@ -727,9 +732,13 @@ if (cut.length) {
   console.log('them are unattributable — they are not evidence about the skill. Re-run before scoring.')
 }
 
-// A session that ended without touching the seed is not a design. Say so here, loudly,
-// rather than letting it reach the blind review looking like one.
-const empty = jobs.map((j) => j.runName).filter((name) => runHealth(name).untouched)
+// An implementation that leaves the seed untouched is incomplete. Visual-direction
+// sessions intentionally leave src/ alone and must not be reported as failed websites.
+const empty = jobs.map((j) => j.runName).filter((name) => {
+  if (!runHealth(name).untouched) return false
+  const meta = JSON.parse(fs.readFileSync(path.join(RUNS, name, 'run.json'), 'utf8'))
+  return !(meta.phaseProtocol === DESIGN_PROTOCOL && Number(meta.phase) === 1)
+})
 if (empty.length) {
   console.log(`\n${empty.length} session(s) produced NO design (the seed is untouched):`)
   for (const name of empty) console.log(`  ${name}`)
@@ -806,6 +815,7 @@ const roundMeta = {
   yolo: Boolean(YOLO),
   readOnceExperiment: process.env.DREATIVE_EXPERIMENT_READ_ONCE === '1',
   captureProtocol: 'native-input-playback-v1',
+  phaseProtocol: PROTOTYPE ? DESIGN_PROTOCOL : 'autonomous-one-pass',
   direction,
   skills: { ...(previousMeta?.skills ?? {}), ...Object.fromEntries(ARMS.filter(isSkillArm).map((a) => [a, ARM_SKILL[a]?.label ?? 'installed'])) },
   scenarios: [...new Set([...(previousMeta?.scenarios ?? []), ...SCENARIOS])],

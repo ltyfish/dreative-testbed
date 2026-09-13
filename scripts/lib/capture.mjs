@@ -8,6 +8,7 @@ import { RUNS } from './scaffold.mjs'
 import { measureSmoke, smokeAvailable, smokeUnavailableReason, writeSmoke } from './smoke.mjs'
 import { builderLook, lookAvailable, measureLook } from './look.mjs'
 import { capturePlayback } from './motion.mjs'
+import { sourceEvidence } from './source-evidence.mjs'
 
 /**
  * Reserve a port the OS says is actually free.
@@ -133,6 +134,8 @@ export async function captureRun(runName, port, log = console.log, profile = 're
   if (!fs.existsSync(runDir)) throw new Error(`no such run: ${runName}`)
 
   log(`[${runName}] building…`)
+  const capturedInputs = sourceEvidence(runDir)
+  const captureStartedAt = new Date().toISOString()
   const buildCmd = npmCommand(['run', 'build'])
   const build = spawnSync(buildCmd.command, buildCmd.args, { cwd: runDir, shell: buildCmd.shell, encoding: 'utf8', windowsHide: true })
   if (build.status !== 0) {
@@ -313,6 +316,12 @@ export async function captureRun(runName, port, log = console.log, profile = 're
     if (warnings.length) {
       fs.writeFileSync(path.join(runDir, '.captures', 'warnings.txt'), warnings.join('\n'), 'utf8')
     }
+    const sourceChangedDuringCapture = sourceEvidence(runDir).inputHash !== capturedInputs.inputHash
+    const runMeta = JSON.parse(fs.readFileSync(path.join(runDir, 'run.json'), 'utf8'))
+    fs.writeFileSync(path.join(runDir, '.captures', 'source-evidence.json'), JSON.stringify({
+      ...capturedInputs, captureStartedAt, capturedAt: new Date().toISOString(),
+      phase: runMeta.phase ?? null, sourceChangedDuringCapture,
+    }, null, 2))
     return { runName, ok: true, warnings }
   } catch (err) {
     log(`[${runName}] capture failed: ${err.message}`)

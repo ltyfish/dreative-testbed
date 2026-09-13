@@ -28,3 +28,6 @@ scratch/skill-*/
 # it, so a fresh clone cannot accidentally run against nothing.
 .claude/
 .codex/
+
+# Local MCP configuration may contain credentials; runs receive a private copy.
+/.mcp.json

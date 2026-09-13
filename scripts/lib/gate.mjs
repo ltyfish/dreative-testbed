@@ -20,7 +20,7 @@
 // for exactly the people who asked for the gate to be on a screen.
 //
 // `gateRuns` gates finished builds. `gateOne` gates a single run mid-round, which is what a
-// two-phase prototype round uses: the session stops after the signature mechanism, this asks,
+// two-phase design round uses: the session stops after visual options and plans, this asks,
 // and the same session is resumed afterwards. An earlier version of this comment said a
 // mid-build gate was impossible because `claude -p` is one-shot. That was wrong — the CLI
 // takes `--session-id` and `--resume`, so a round can genuinely pause and carry on.
@@ -33,10 +33,11 @@ import { RUNS } from './scaffold.mjs'
 import { freePort, killTree, spawnPreview } from './capture.mjs'
 import { readSmoke } from './smoke.mjs'
 import { bestLook } from './look.mjs'
+import { readDirections, saveDesignSelection } from './design-directions.mjs'
 
 export const GATE_FILE = path.join(RUNS, '.gate.json')
 
-/** Nobody is coming back to answer after this long; keep the build rather than lose the round. */
+/** Stop waiting without treating elapsed time as approval. */
 const WAIT_LIMIT_MS = 6 * 60 * 60_000
 
 /**
@@ -208,14 +209,20 @@ export function pendingGate() {
 }
 
 /** The browser's answer. Returns false when it is not the question actually being asked. */
-export function answerGate(runName, decision) {
+export function answerGate(runName, decision, selection = {}) {
   const state = readJson(GATE_FILE)
   if (!state?.current || state.current !== runName) return false
-  if (decision !== 'keep' && decision !== 'reject') return false
+  if (decision !== 'keep' && decision !== 'reject' && !(decision === 'pause' && state.stage === 'design')) return false
+  if (state.answer) return false
   // Answering a question nobody is listening to would report success and change nothing.
   if (!askerAlive(state)) {
     clearGate()
     return false
+  }
+  if (decision === 'keep' && state.stage === 'design') {
+    if (!state.study || selection.evidenceHash !== state.study.evidenceHash)
+      throw new Error('Reload the current design options before selecting.')
+    saveDesignSelection(path.join(RUNS, runName), selection)
   }
   fs.writeFileSync(GATE_FILE, JSON.stringify({ ...state, answer: decision, answeredAt: new Date().toISOString() }, null, 2), 'utf8')
   return true
@@ -237,18 +244,18 @@ function publish(state) {
  * it — and then the round waits six hours for a decision that was made in seconds. Rewriting
  * the question is always safe: it carries no answer, and the page simply shows it again.
  */
-async function waitForBrowser(runName, log, published = null) {
+async function waitForBrowser(runName, log, published = null, waitLimitMs = WAIT_LIMIT_MS) {
   const started = Date.now()
   log(`[${runName}] waiting for a keep/reject decision in the review UI (/status)`)
   for (;;) {
     const state = readJson(GATE_FILE)
-    if (state?.current === runName && state.answer) return state.answer === 'keep'
+    if (state?.current === runName && state.answer) return state.answer === 'pause' ? null : state.answer === 'keep'
     if (!state && published) publish(published)
-    if (Date.now() - started > WAIT_LIMIT_MS) {
-      log(`[${runName}] no decision after 6h — keeping it rather than losing the round`)
-      return true
+    if (Date.now() - started > waitLimitMs) {
+      log(`[${runName}] no decision after 6h — paused without approval; resume to answer the gate`)
+      return null
     }
-    await new Promise((r) => setTimeout(r, 2000))
+    await new Promise((r) => setTimeout(r, Math.min(2000, waitLimitMs)))
   }
 }
 
@@ -279,18 +286,40 @@ export async function gateOne(
     stage = 'prototype',
     heading = 'Prototype gate · phase 1 of 2 — the page has not been built yet',
     labels = { keep: 'Continue — build the rest of the page', reject: 'Throw it out and stop this run' },
+    waitLimitMs = WAIT_LIMIT_MS,
   } = {},
 ) {
   const interactive = usesTerminalGate()
   const rl = interactive ? readline.createInterface({ input: stdin, output: stdout }) : null
   const runDir = path.join(RUNS, runName)
   const brief = gateBriefing(runName)
-  const chosen = await freePort(port)
-  const server = spawnPreview(runDir, chosen)
-  const url = `http://127.0.0.1:${chosen}/`
+  let study = null, designError = null
+  if (stage === 'design') {
+    try { study = readDirections(runDir) } catch (err) {
+      const blocker = path.join(runDir, 'design-blocker.md')
+      designError = fs.existsSync(blocker) ? fs.readFileSync(blocker, 'utf8').slice(0, 8000) : err.message
+    }
+  }
+  const chosen = stage === 'design' ? null : await freePort(port)
+  const server = chosen ? spawnPreview(runDir, chosen) : null
+  const url = chosen ? `http://127.0.0.1:${chosen}/` : null
 
   try {
     if (interactive) {
+      if (stage === 'design') {
+        if (!study) throw new Error(`Design gate incomplete: ${designError}. Fix the visual artifacts and resume; no implementation started.`)
+        console.log(`\nDesign images and plans: ${runDir}`)
+        for (const d of study.directions) console.log(`\n${d.id}: ${d.title}\n${d.images.join('\n')}\n${d.plan}`)
+        for (;;) {
+          const id = (await rl.question('Select a direction id, n to reject, or p to pause: ')).trim()
+          if (id === 'n') return false
+          if (id === 'p') return null
+          if (!study.directions.some((d) => d.id === id)) continue
+          const feedback = await rl.question('Changes to include (optional): ')
+          saveDesignSelection(runDir, { directionId: id, feedback, evidenceHash: study.evidenceHash })
+          return true
+        }
+      }
       printBriefing(brief)
       console.log('')
       console.log(`  Live:  ${url}`)
@@ -312,11 +341,13 @@ export async function gateOne(
       remaining,
       askedAt: new Date().toISOString(),
       briefing: brief,
+      study,
+      designError,
       answer: null,
     })
-    return await waitForBrowser(runName, log, question0)
+    return await waitForBrowser(runName, log, question0, waitLimitMs)
   } finally {
-    killTree(server.pid)
+    if (server) killTree(server.pid)
     rl?.close()
     clearGate()
   }
@@ -373,6 +404,7 @@ export async function gateRuns(runNames, sessions, log = console.log) {
         killTree(server.pid)
       }
 
+      if (keep === null) throw new Error('Gate timed out without a decision. Runs are preserved; no approval was inferred.')
       if (keep) {
         kept.push(runName)
         log(`[${runName}] kept`)

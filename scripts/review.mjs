@@ -20,6 +20,7 @@ import { recordVerdict } from './lib/vault.mjs'
 import { clearRoundLog, isRunLive, roundLog, startContinue, startRound, statusPage } from './lib/launcher.mjs'
 import { readLaunch, runStatuses } from './lib/status.mjs'
 import { answerGate, pendingGate } from './lib/gate.mjs'
+import { readDirections } from './lib/design-directions.mjs'
 import { armTitle, ROOT, RUNS, readScenario } from './lib/scaffold.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4321
@@ -1040,7 +1041,7 @@ function waitingBanner() {
     <h3 style="color:var(--acc)">${esc(gate.heading || (proto ? 'A round is paused at its prototype gate' : 'A round is paused at its finished-build gate'))}</h3>
     <p class="sub" style="margin:8px 0 0">It built <code>${esc(gate.current)}</code> and stopped. ${
       proto
-        ? 'Only the signature moment exists — the page has not been built, so it is not offered for scoring here.'
+        ? gate.stage === 'design' ? 'Visual directions are awaiting selection. The website has not been implemented.' : 'A historical coded prototype is awaiting review; the full page has not been built.'
         : 'The page is built and is waiting on your keep or throw-out before it can be scored.'
     } Nothing else in the round runs until you answer.</p>
     <p style="margin:12px 0 0"><a class="livebtn" href="/status">Answer it on the status page →</a></p>
@@ -1267,6 +1268,22 @@ document.getElementById('submit').addEventListener('click', async () => {
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`)
+  if (req.method === 'GET' && url.pathname === '/design-image') {
+    try {
+      const run = url.searchParams.get('run') || ''
+      if (!/^[\w.@-]{1,120}$/.test(run) || run === '.' || run === '..') throw new Error('Invalid run')
+      const runDir = path.join(RUNS, run)
+      const study = readDirections(runDir)
+      const direction = study.directions.find(d => d.id === url.searchParams.get('direction'))
+      const i = Number(url.searchParams.get('image'))
+      if (!Number.isInteger(i) || i < 0 || !direction?.images[i]) throw new Error('Unknown design image')
+      const file = path.join(runDir, direction.images[i])
+      const type = /\.png$/i.test(file) ? 'image/png' : /\.webp$/i.test(file) ? 'image/webp' : 'image/jpeg'
+      res.writeHead(200, { 'content-type': type, 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' })
+      res.end(fs.readFileSync(file))
+    } catch { res.writeHead(404).end('Design image unavailable') }
+    return
+  }
 
   if (req.method === 'GET' && url.pathname.startsWith('/shot/')) {
     const [, , dir, file] = url.pathname.split('/').map(decodeURIComponent)
@@ -1385,7 +1402,7 @@ const server = http.createServer(async (req, res) => {
     for await (const chunk of req) raw += chunk
     try {
       const body = JSON.parse(raw)
-      if (!answerGate(body.run, body.decision)) {
+      if (!answerGate(body.run, body.decision, body)) {
         res.writeHead(409).end('Nothing is waiting on that answer any more — the round either moved on or exited. Reload the page.')
         return
       }

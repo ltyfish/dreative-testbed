@@ -1,0 +1,18 @@
+{
+  "scenario": "clothing-motion",
+  "arm": "with-a",
+  "seq": "202609090405",
+  "label": null,
+  "direction": "recommended",
+  "skill": "git:2912db8",
+  "readOnceExperiment": false,
+  "product": "Marlow & Vale — motion-led clothing shop",
+  "field": "Multi-product ecommerce · clothing",
+  "agent": "codex",
+  "model": null,
+  "sessionId": null,
+  "phase": 1,
+  "providerSessionId": "01a08457-faf0-7882-9b82-67c6f5ae7b14",
+  "truncated": "provider limit",
+  "continuationError": "exit 1"
+}

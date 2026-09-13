@@ -21,7 +21,10 @@ import path from 'node:path'
 import { extractSessionId, inferAgent, resolveAgentBinary } from './lib/agent.mjs'
 import { RUNS } from './lib/scaffold.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
-import { CONTINUE_PHASE } from './lib/prototype.mjs'
+import { continuationPrompt } from './lib/prototype.mjs'
+import { DESIGN_PROTOCOL, selectedDesign } from './lib/design-directions.mjs'
+import { gateOne } from './lib/gate.mjs'
+import { codexToolArgs } from './lib/tool-config.mjs'
 import { addContinuitySignal, writeMaterialSummary } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
 
@@ -38,6 +41,21 @@ if (!fs.existsSync(metaFile)) {
   process.exit(2)
 }
 const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
+
+if (meta.phaseProtocol === DESIGN_PROTOCOL) {
+  let selected = false
+  try { selectedDesign(runDir); selected = true } catch {}
+  if (!selected) {
+    const keep = await gateOne(runName, {
+      stage: 'design', heading: 'Design prototype · choose before implementation',
+      question: 'Which visual direction should become the website?',
+      labels: { keep: 'Build selected direction', reject: 'Stop this run' },
+    })
+    if (!keep) process.exit(1)
+    Object.assign(meta, JSON.parse(fs.readFileSync(metaFile, 'utf8')))
+  }
+}
+const phasePrompt = continuationPrompt(runDir)
 
 const logFile = path.join(runDir, 'agent.log')
 const rawFile = path.join(runDir, 'agent.jsonl')
@@ -59,17 +77,14 @@ if (agent === 'codex') {
   args = ['exec', '--dangerously-bypass-approvals-and-sandbox']
   if (fs.existsSync(mcpFile)) {
     const servers = JSON.parse(fs.readFileSync(mcpFile, 'utf8')).mcpServers ?? {}
-    for (const [name, def] of Object.entries(servers)) {
-      args.push('-c', `mcp_servers.${name}.command=${JSON.stringify(def.command)}`)
-      if (def.args) args.push('-c', `mcp_servers.${name}.args=${JSON.stringify(def.args)}`)
-    }
+    args.push(...codexToolArgs(servers))
   }
   if (meta.model) args.push('--model', String(meta.model))
-  args.push('resume', sessionId, CONTINUE_PHASE)
+  args.push('resume', sessionId, phasePrompt)
 } else {
   args = [
     '-p',
-    CONTINUE_PHASE,
+    phasePrompt,
     '--output-format',
     'stream-json',
     '--verbose',
@@ -90,7 +105,7 @@ if (!agentBin) {
 
 fs.writeFileSync(
   metaFile,
-  JSON.stringify({ ...meta, agent, providerSessionId: agent === 'codex' ? sessionId : meta.providerSessionId }, null, 2),
+  JSON.stringify({ ...meta, phase: meta.phaseProtocol === DESIGN_PROTOCOL ? 2 : meta.phase, agent, providerSessionId: agent === 'codex' ? sessionId : meta.providerSessionId }, null, 2),
   'utf8',
 )
 
@@ -178,7 +193,7 @@ child.on('close', async (code) => {
     const { builtAt: _builtAt, ...notBuilt } = current
     continued = {
       ...notBuilt,
-      phase: 1,
+      phase: current.phaseProtocol === DESIGN_PROTOCOL ? 2 : 1,
       truncated: truncated ?? current.truncated ?? 'provider error',
       continuationError: `exit ${code}`,
     }
@@ -186,7 +201,7 @@ child.on('close', async (code) => {
   fs.writeFileSync(metaFile, JSON.stringify(continued, null, 2), 'utf8')
 
   if (code !== 0 || truncated) {
-    console.log('continuation did not finish — preserving the phase-one capture and leaving the run resumable.')
+    console.log('continuation did not finish — preserving design/capture artifacts and leaving the run resumable.')
     process.exitCode = code || 1
     return
   }

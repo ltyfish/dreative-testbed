@@ -1,0 +1,106 @@
+{
+  "profile": "mobile",
+  "video": "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609111514\\.captures\\mobile-motion.webm",
+  "screenshots": [
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609111514\\.captures\\mobile-entry.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609111514\\.captures\\mobile-development.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609111514\\.captures\\mobile-end.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 4051,
+      "elapsedMs": 569
+    },
+    {
+      "input": "touch-forward",
+      "y": 365,
+      "height": 4051,
+      "elapsedMs": 1772
+    },
+    {
+      "input": "touch-forward",
+      "y": 730,
+      "height": 4051,
+      "elapsedMs": 2339
+    },
+    {
+      "input": "touch-forward",
+      "y": 1094,
+      "height": 4051,
+      "elapsedMs": 2921
+    },
+    {
+      "input": "pause",
+      "y": 1094,
+      "height": 4051,
+      "elapsedMs": 3423
+    },
+    {
+      "input": "touch-reverse",
+      "y": 687,
+      "height": 4051,
+      "elapsedMs": 4485
+    },
+    {
+      "input": "touch-forward",
+      "y": 1179,
+      "height": 4051,
+      "elapsedMs": 4902
+    },
+    {
+      "input": "touch-forward",
+      "y": 1544,
+      "height": 4051,
+      "elapsedMs": 5488
+    },
+    {
+      "input": "touch-forward",
+      "y": 1908,
+      "height": 4051,
+      "elapsedMs": 6096
+    },
+    {
+      "input": "touch-forward",
+      "y": 2273,
+      "height": 4051,
+      "elapsedMs": 6740
+    },
+    {
+      "input": "touch-forward",
+      "y": 2765,
+      "height": 4051,
+      "elapsedMs": 7103
+    },
+    {
+      "input": "touch-forward",
+      "y": 3129,
+      "height": 4051,
+      "elapsedMs": 7666
+    },
+    {
+      "input": "touch-forward",
+      "y": 3207,
+      "height": 4051,
+      "elapsedMs": 8232
+    }
+  ],
+  "errors": [],
+  "reachedEnd": true,
+  "inputCoverage": [
+    "entry",
+    "touch-forward",
+    "pause",
+    "touch-reverse"
+  ],
+  "device": {
+    "coarsePointer": true,
+    "touchPoints": 1,
+    "reducedMotion": false
+  },
+  "receivedEvents": {
+    "touchstart": 11,
+    "touchmove": 65
+  }
+}

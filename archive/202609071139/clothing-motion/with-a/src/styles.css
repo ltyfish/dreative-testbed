@@ -1,0 +1,409 @@
+@import './route.css';
+/* Marlow & Vale — signature moment slice.
+   Only the loom scene and the row it hands the shop to are styled here. */
+
+:root {
+  --ink: #10131a;
+  --ink-2: #1b2029;
+  --paper: #e9e5dd;
+  --paper-2: #f3f0ea;
+  --indigo: #2f4360;
+  --thread: #c2a878;
+  --head-h: 72px;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: Inter, "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: auto;
+  /* anchors land below the fixed masthead, not underneath it */
+  scroll-padding-top: calc(var(--head-h, 72px) + 14px);
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------- the scene */
+
+.loom {
+  position: relative;
+  height: 340vh;
+  background: var(--ink);
+}
+
+.loom__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* the ground the cloth is seen against: dark at thread scale, daylight in the shop */
+.loom__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  z-index: 0;
+}
+.loom__stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 18% 8%, var(--paper-2), transparent 60%),
+    var(--paper);
+  opacity: var(--ground, 1);
+  z-index: 0;
+}
+
+.loom:not(.loom--still) .loom__stage { --ground: 0; }
+.loom:not(.loom--still) .loom__hero,
+.loom:not(.loom--still) .loom__caption,
+.loom:not(.loom--still) .loom__shop { --in: 0; }
+
+.loom__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* the editorial frame the garment is pulled into: a measured rectangle,
+   with a hairline that draws itself in as the weave closes */
+.loom__frame {
+  position: absolute;
+  left: 6.5vw;
+  top: 11vh;
+  width: min(37vw, 520px);
+  aspect-ratio: 3 / 4;
+  z-index: 2;
+}
+.loom__frame::before,
+.loom__frame::after {
+  content: "";
+  position: absolute;
+  background: rgba(16, 19, 26, 0.28);
+  opacity: var(--frame-in, 1);
+}
+.loom__frame::before { left: -18px; top: -18px; width: 1px; height: calc(100% + 36px); transform-origin: top; transform: scaleY(var(--frame-in, 1)); }
+.loom__frame::after { left: -18px; top: -18px; height: 1px; width: calc(100% + 36px); transform-origin: left; transform: scaleX(var(--frame-in, 1)); }
+.loom__frame img { display: none; }
+
+/* --------------------------------------------------------------- hero type */
+
+.loom__hero {
+  position: absolute;
+  right: 6.5vw;
+  top: 16vh;
+  width: min(38vw, 470px);
+  z-index: 4;
+  color: var(--paper);
+  opacity: var(--in, 1);
+  transform: translateY(calc((1 - var(--in, 1)) * 14px));
+}
+
+.loom__eyebrow {
+  margin: 0 0 22px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(233, 229, 221, 0.62);
+}
+
+.loom__title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(38px, 4.6vw, 72px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+}
+.loom__title span { display: block; }
+.loom__title em {
+  font-style: italic;
+  color: var(--thread);
+}
+
+.loom__lede {
+  margin: 26px 0 0;
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.62;
+  color: rgba(233, 229, 221, 0.72);
+}
+
+/* -------------------------------------------- the held state, read at rest */
+
+.loom__caption {
+  position: absolute;
+  left: calc(6.5vw + min(37vw, 520px) + 56px);
+  top: 30vh;
+  margin: 0;
+  z-index: 4;
+  opacity: var(--in, 1);
+  transform: translateY(calc((1 - var(--in, 1)) * 10px));
+}
+.loom__caption figcaption { display: grid; gap: 10px; }
+.loom__cat {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(16, 19, 26, 0.5);
+}
+.loom__name {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.loom__fab {
+  max-width: 26ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(16, 19, 26, 0.66);
+}
+.loom__price {
+  margin-top: 6px;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- the arrival */
+
+.loom__shop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(18px, 3vh, 34px);
+  padding: 8vh 5vw;
+}
+
+.shop__head {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  opacity: var(--in, 1);
+  transform: translateY(calc((1 - var(--in, 1)) * 12px));
+}
+.shop__head h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2.2vw, 32px);
+  letter-spacing: -0.01em;
+}
+.shop__head p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(16, 19, 26, 0.58);
+}
+
+.shop__row {
+  opacity: var(--in, 1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.tile__media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: rgba(16, 19, 26, 0.035);
+  overflow: hidden;
+}
+.tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+}
+/* the canvas has landed the row exactly here, so the swap to real markup is invisible */
+.is-handed-off .tile__media img { opacity: 1; }
+
+.tile__meta {
+  display: grid;
+  gap: 3px;
+  margin-top: 14px;
+  opacity: var(--in, 1);
+}
+.tile__name { font-size: 15px; letter-spacing: -0.01em; }
+.tile__cat {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(16, 19, 26, 0.45);
+}
+.tile__price { font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.shop__note {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: rgba(16, 19, 26, 0.45);
+  opacity: var(--in, 1);
+}
+
+/* --------------------------------------------- reduced motion / no WebGL2 */
+/* No scrub, no canvas: the scene resolves to the composition it would have ended
+   on, read as one held frame. Everything below it behaves exactly as it does with
+   motion on. */
+
+.loom--still { height: auto; }
+.loom--still .loom__stage {
+  position: static;
+  height: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(28px, 5vw, 76px);
+  padding: 18vh 6.5vw 8vh;
+}
+.loom--still .loom__stage::before { display: none; }
+.loom--still .loom__stage::after { opacity: 1; }
+.loom--still .loom__canvas { display: none; }
+
+.loom--still .loom__frame {
+  position: relative;
+  left: 0; top: 0;
+  grid-row: 1;
+  width: 100%;
+  max-width: 520px;
+}
+.loom--still .loom__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.loom--still .loom__hero,
+.loom--still .loom__caption {
+  position: relative;
+  right: auto; left: auto; top: auto; bottom: auto;
+  grid-column: 2;
+  grid-row: 1;
+  width: auto;
+  transform: none;
+  opacity: 1;
+}
+.loom--still .loom__hero { color: var(--ink); align-self: end; padding-bottom: 26px; }
+.loom--still .loom__eyebrow { color: rgba(16, 19, 26, 0.55); }
+.loom--still .loom__lede { color: rgba(16, 19, 26, 0.68); }
+.loom--still .loom__caption {
+  align-self: start;
+  padding-top: 26px;
+  border-top: 1px solid rgba(16, 19, 26, 0.18);
+}
+.loom--still .loom__shop {
+  position: relative;
+  inset: auto;
+  grid-column: 1 / -1;
+  padding: 10vh 0 0;
+}
+.loom--still .tile__media img { opacity: 1; }
+
+/* the header can no longer sit in the dark, because the hero is now daylight */
+.scene-still .site {
+  background: rgba(233, 229, 221, 0.94);
+  backdrop-filter: blur(10px);
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(16, 19, 26, 0.12);
+}
+
+/* ------------------------------------------------------------------ mobile */
+
+@media (max-width: 860px) {
+  .loom { height: 320vh; }
+  .loom__frame {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 8vh;
+    width: min(74vw, 420px);
+  }
+  .loom__hero {
+    right: auto;
+    left: 6vw;
+    top: auto;
+    bottom: 6vh;
+    width: 88vw;
+  }
+  .loom__lede { display: none; }
+  .loom__caption {
+    left: 6vw;
+    top: auto;
+    bottom: 8vh;
+  }
+  .loom__shop { padding: 6vh 6vw; justify-content: center; }
+  .shop__row { grid-template-columns: repeat(2, 1fr); gap: 14px 16px; }
+  .shop__note { display: none; }
+  .loom--still .loom__frame { margin: 0 auto; transform: none; left: auto; }
+  .loom--still .loom__hero, .loom--still .loom__caption { bottom: auto; left: auto; }
+}
+
+/* the landed row is a way into the grid, but only once it has actually landed */
+.shop__row { pointer-events: none; }
+.is-handed-off .shop__row { pointer-events: auto; }
+.tile__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.tile__link .tile__media { transition: box-shadow 220ms ease; }
+.tile__link:hover .tile__media,
+.tile__link:focus-visible .tile__media { box-shadow: 0 0 0 1px rgba(16, 19, 26, 0.35); }
+.tile__link:hover .tile__name { text-decoration: underline; text-underline-offset: 3px; }
+
+/* The still scene is a composition in its own right, not a fallback: the garment
+   is held at the same size beside the same words, with the row below it. */
+.loom--still .loom__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 76px);
+  align-items: center;
+  padding: calc(var(--head-h, 72px) + 6vh) 6.5vw 2vh;
+}
+.loom--still .loom__frame {
+  grid-area: 1 / 1 / 3 / 2;
+  margin: 0;
+  width: 100%;
+  max-width: 520px;
+  justify-self: center;
+}
+.loom--still .loom__hero { grid-area: 1 / 2 / 2 / 3; padding: 0; }
+.loom--still .loom__caption { grid-area: 2 / 2 / 3 / 3; padding: 0; margin-top: 26px; }
+.loom--still .loom__shop { grid-column: 1 / -1; padding: 8vh 0 0; }
+.loom--still .loom__frame::before,
+.loom--still .loom__frame::after { display: none; }
+
+@media (max-width: 860px) {
+  .loom--still .loom__stage { grid-template-columns: 1fr; }
+  .loom--still .loom__frame { grid-area: auto; }
+  .loom--still .loom__hero,
+  .loom--still .loom__caption { grid-area: auto; }
+}
+
+/* copy that has faded out is out of the way of the shop underneath it */
+.loom__hero.is-spent,
+.loom__caption.is-spent { visibility: hidden; pointer-events: none; }
+.loom:not(.loom--still) .loom__frame { pointer-events: none; }
+
+/* the arrival is not in the room until the scene hands to it: while the hero type
+   is being read, the row underneath must not be sitting behind the words */
+.loom:not(.loom--still) .loom__shop { visibility: hidden; }
+.loom:not(.loom--still) .loom__shop.is-live { visibility: visible; }

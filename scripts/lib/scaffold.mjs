@@ -3,6 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
+import { validateToolServers } from './tool-config.mjs'
 
 export const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..', '..')
 export const RUNS = path.join(ROOT, 'runs')
@@ -49,7 +50,7 @@ export function buildPrompt(meta, arm, runDir, direction) {
   // harness. The control never sees these gates, and the line costs it nothing.
   const directionLine =
     isSkillArm(arm) && direction
-      ? ` Build the ${direction} direction; treat this message as the user's explicit choice of direction and settings. Nobody is available to answer during this session, so take the recommended configuration and build — do not pause for any confirmation.`
+      ? ` Use the ${direction} delivery profile and infer routine configuration. This profile is not a visual design selection. If a visual-direction phase is appended, stop at its selection gate. Otherwise this is an autonomous one-pass run: choose a design and complete it without waiting for a reply.`
       : ''
 
   const skillLine =
@@ -125,13 +126,16 @@ function useSkillTree(runDir, treeDir) {
  */
 export function writeMcpConfig(runDir) {
   const cli = path.join(ROOT, 'node_modules', '@playwright', 'mcp', 'cli.js')
-  if (!fs.existsSync(cli)) return null
+  const extraFile = process.env.DREATIVE_MCP_CONFIG || path.join(ROOT, '.mcp.json')
+  const extra = fs.existsSync(extraFile) ? validateToolServers(JSON.parse(fs.readFileSync(extraFile, 'utf8')).mcpServers) : {}
+  if (process.env.DREATIVE_MCP_CONFIG && !fs.existsSync(extraFile)) throw new Error('DREATIVE_MCP_CONFIG does not exist')
   const config = {
     mcpServers: {
-      playwright: {
+      ...(fs.existsSync(cli) ? { playwright: {
         command: process.execPath,
         args: [cli, '--headless', '--isolated', '--viewport-size', '1440,900'],
-      },
+      } } : {}),
+      ...extra,
     },
   }
   const file = path.join(runDir, '.mcp.json')
@@ -233,6 +237,7 @@ export function scaffoldRun({ scenario, arm, label, seq, direction, skillTree, s
     JSON.stringify(
       {
         scenario,
+        toolServers: Object.keys(JSON.parse(fs.readFileSync(path.join(runDir, '.mcp.json'), 'utf8')).mcpServers),
         arm,
         seq: index,
         label: label ?? null,

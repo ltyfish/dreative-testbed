@@ -1,0 +1,104 @@
+{
+  "profile": "desktop",
+  "video": "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\desktop-motion.webm",
+  "screenshots": [
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\desktop-entry.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\desktop-development.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\desktop-end.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609090405\\.captures\\desktop-keyboard-focus.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 3942,
+      "elapsedMs": 656
+    },
+    {
+      "input": "wheel-slow",
+      "y": 405,
+      "height": 3942,
+      "elapsedMs": 1090
+    },
+    {
+      "input": "wheel-slow",
+      "y": 810,
+      "height": 3942,
+      "elapsedMs": 1436
+    },
+    {
+      "input": "wheel-slow",
+      "y": 1215,
+      "height": 3942,
+      "elapsedMs": 1790
+    },
+    {
+      "input": "pause",
+      "y": 1215,
+      "height": 3942,
+      "elapsedMs": 2303
+    },
+    {
+      "input": "wheel-reverse",
+      "y": 765,
+      "height": 3942,
+      "elapsedMs": 2820
+    },
+    {
+      "input": "wheel-fast",
+      "y": 2205,
+      "height": 3942,
+      "elapsedMs": 3005
+    },
+    {
+      "input": "wheel-slow",
+      "y": 2610,
+      "height": 3942,
+      "elapsedMs": 3363
+    },
+    {
+      "input": "wheel-slow",
+      "y": 3015,
+      "height": 3942,
+      "elapsedMs": 3704
+    },
+    {
+      "input": "wheel-slow",
+      "y": 3042,
+      "height": 3942,
+      "elapsedMs": 4062
+    },
+    {
+      "input": "keyboard-home",
+      "y": 0,
+      "height": 3942,
+      "elapsedMs": 4420
+    },
+    {
+      "input": "keyboard-page-down",
+      "y": 787,
+      "height": 3942,
+      "elapsedMs": 4778
+    }
+  ],
+  "errors": [],
+  "reachedEnd": true,
+  "inputCoverage": [
+    "entry",
+    "wheel-slow",
+    "pause",
+    "wheel-reverse",
+    "wheel-fast",
+    "keyboard-home",
+    "keyboard-page-down"
+  ],
+  "device": {
+    "coarsePointer": false,
+    "touchPoints": 0,
+    "reducedMotion": false
+  },
+  "receivedEvents": {
+    "wheel": 8,
+    "keydown": 3
+  }
+}

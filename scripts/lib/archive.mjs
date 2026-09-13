@@ -11,6 +11,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { ROOT, RUNS, readScenario } from './scaffold.mjs'
 import { distillToolCalls } from './transcript.mjs'
+import { sourceEvidence, captureCorrespondence } from './source-evidence.mjs'
 
 export const ARCHIVE = path.join(ROOT, 'archive')
 
@@ -70,13 +71,14 @@ export function archiveRun(runName, roundDir, log = console.log) {
   if (fs.existsSync(src)) fs.cpSync(src, path.join(dest, 'src'), { recursive: true })
   // smoke.json is the per-run visual-smoke measurement; it only exists in runs/, so leaving
   // it out of the copy threw the measurement away at reset.
-  for (const file of ['index.html', 'BRIEF.md', 'run.json', 'build-error.log', 'reads.json', 'smoke.json']) {
+  for (const file of ['index.html', 'package.json', 'package-lock.json', 'vite.config.js', 'vite.config.ts', 'BRIEF.md', 'run.json', 'design-directions.json', 'design-blocker.md', 'build-error.log', 'reads.json', 'smoke.json']) {
     const from = path.join(runDir, file)
     if (fs.existsSync(from)) fs.cpSync(from, path.join(dest, file))
   }
   if (fs.existsSync(path.join(runDir, 'public'))) {
     fs.cpSync(path.join(runDir, 'public'), path.join(dest, 'public'), { recursive: true })
   }
+  if (fs.existsSync(path.join(runDir, 'design'))) fs.cpSync(path.join(runDir, 'design'), path.join(dest, 'design'), { recursive: true })
 
   const shots = path.join(runDir, '.captures')
   if (fs.existsSync(shots)) fs.cpSync(shots, path.join(dest, 'shots'), { recursive: true })
@@ -98,13 +100,19 @@ export function archiveRun(runName, roundDir, log = console.log) {
   }
 
   let site = { ok: false, error: 'not built' }
-  if (fs.existsSync(path.join(runDir, 'node_modules'))) {
+  const designOnly = meta.phaseProtocol === 'visual-directions-v1' && Number(meta.phase) === 1 && !meta.builtAt
+  if (!designOnly && fs.existsSync(path.join(runDir, 'node_modules'))) {
     log(`[archive] ${runName}: building portable site…`)
     site = buildPortableSite(runDir, path.join(dest, 'site'))
     if (!site.ok) fs.writeFileSync(path.join(dest, 'site-build-error.log'), site.error, 'utf8')
   }
 
-  writeJson(path.join(dest, 'meta.json'), { ...meta, runName, site: site.ok, archivedAt: new Date().toISOString() })
+  const source = sourceEvidence(runDir)
+  const capture = readJson(path.join(shots, 'source-evidence.json'))
+  writeJson(path.join(dest, 'source-evidence.json'), source)
+  writeJson(path.join(dest, 'meta.json'), { ...meta, runName, site: site.ok,
+    captureCorrespondence: captureCorrespondence(capture, source),
+    capturedPhase: capture?.phase ?? null, archivedAt: new Date().toISOString() })
   return { runName, ok: true, site: site.ok }
 }
 

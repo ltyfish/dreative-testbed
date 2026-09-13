@@ -54,13 +54,39 @@ node scripts/run-all.mjs --label "what this tests"   # a name you will still und
 
 ### The prototype gate
 
-With `--gate`, the round stops after every build and shows you what is already known about
-it — whether it was truncated, what `dreative look` found, whether visual smoke blocked — then
-serves it and asks:
+With `--prototype`, phase one generates multiple page design images and implementation
+plans. `/status` displays those actual images and plans. Choose a direction and optionally
+add changes, then press **Build selected direction**. The same provider session receives
+that specific id, image paths, plan and feedback before implementing the website.
 
+The protocol is `visual-directions-v1`, recorded independently of the skill version.
+It replaces the historical single coded-motion-slice prototype. Each run stores
+`design-directions.json` and its PNG/JPEG/WebP files under `design/`. The shape is:
+
+```json
+{"version":1,"directions":[
+  {"id":"a","title":"Direction A","images":["design/a.png"],"plan":"Composition, task, assets, mobile, motion if useful, implementation and cost/risk"},
+  {"id":"b","title":"Direction B","images":["design/b.png"],"plan":"A materially different design and its implementation plan"}
+]}
 ```
-  Keep this prototype and score it?  [y/n]
-```
+
+No site build or website-motion score applies to these mockups. A selected image is
+not a working interface. Phase two sources/generates separate assets, implements the
+chosen composition and useful motion, and verifies the real desktop/mobile browser.
+`--gate` is a separate finished-build Keep/Reject decision before scoring.
+
+The CLI sessions do not inherit the desktop chat's image-generation tool. Optional
+authorized stdio MCP servers can be configured in the testbed root `.mcp.json`, or in
+the file named by `DREATIVE_MCP_CONFIG`. Both providers receive the same commands,
+arguments and environment. These private configs are not archived. Only server names
+are recorded; their presence does not prove generation succeeded. Unsupported transports
+fail explicitly. Missing generation should produce `design-blocker.md`, not fake images.
+
+An empty selection cannot continue. Changed designs require a new selection. **Pause and
+keep options** retains the run; supply missing artifacts if needed, then reopen selection
+using the status page's resume control. Recovered new-protocol runs also require selection;
+old runs retain their historical continuation prompt. No answer after six hours pauses
+without approval. Images, plans and selection feedback are preserved in the archive.
 
 `n` writes `rejected` into that run's `run.json`. The review UI then labels it and will not
 offer it for scoring, so a build you already threw out cannot pick up a verdict later. The
@@ -128,12 +154,9 @@ direction, sessions each, time cap, model, concurrency, label, permissions, and 
 
 **The prototype gate works from the browser.** A round started here has no terminal, so
 instead of skipping itself the gate publishes its question to `runs/.gate.json` and blocks.
-`/status` then shows what is known about the build — truncation first, then what
-`dreative look` found, then whether smoke blocked — with a link to the running preview and
-Keep / Throw it out buttons. The round moves on when you answer, and waits up to six hours
-before keeping the build rather than losing the round. From a terminal it still prompts on
-stdin. Earlier it silently no-opped without a TTY, which turned `--gate` off for exactly the
-people who wanted it on a screen.
+The design gate shows images, plans and selection controls; the finished-build gate shows
+the preview and measured checks. Timeout is never approval. Terminal runs display direction
+ids, local image paths and plans, then require an explicit id or pause/reject response.
 
 ## Reviewing
 
@@ -212,34 +235,52 @@ drop it; nothing else refers to it.
 
 ## Working across two machines
 
-```sh
-git checkout measure-visual-smoke-per-run && git pull
-cd ../Dreative && git checkout fix-motion-floor-sampling && git pull && npm run build
-cd ../dreative-testbed && node scripts/setup.mjs --skill-from ../Dreative
-```
+The September 13 handoff pairs this testbed with Dreative commit `28ebc3e`
+(`Center Dreative on visual selection and faithful implementation`).
 
-**Check out the branch in the code repo, not just here.** Dreative's `main` is 114 commits
-behind the working branch and still on 0.5.4, and it is what a fresh clone gives you. Nothing
-errors if you skip this: `--skill-<arm> git:HEAD` resolves against whatever branch the code
-repo is on, so the round runs happily against a months-old skill and the result looks like a
-verdict on the current one. One line proves you are clear:
+The active branches are `fix-motion-floor-sampling` in Dreative and
+`measure-visual-smoke-per-run` here. Pull both; `main` is not the current work.
+Keep the repositories beside each other and preserve any laptop-local changes
+before switching branches.
+
+From Dreative:
 
 ```sh
-grep -c "Look at forty" ../Dreative/skill/dreative/references/MEDIA_SOURCES.md   # 1, not 0
+git fetch origin
+git switch fix-motion-floor-sampling
+git pull --ff-only origin fix-motion-floor-sampling
+npm ci
+npm run build
+npm run test:browser:install
 ```
 
-`setup.mjs` installs dependencies, installs the Chromium build Playwright uses (it lives
-outside the repo, so it never comes across with a pull), installs the skill from a sibling
-`../Dreative` checkout or the global `dreative` CLI, checks an agent CLI is on PATH, and
-prints what is still missing. `--check` verifies without changing anything.
+From this testbed:
 
-The skill itself is deliberately **not** committed here: the `with` arm has to test whatever
-version of Dreative you are working on now, and a committed copy would silently test a stale
-one. It was tracked anyway until 2026-08-30, by which point the committed tree predated
-`MOTION_MATERIAL.md` entirely — so a fresh clone now has no `.claude/` or `.codex/` at all and
-`run-all.mjs` refuses to start until `setup.mjs` installs one. That refusal is the guard, not a
-broken checkout. Everything else — scenarios, verdicts, and the whole archive — travels with
-the repo.
+```sh
+git fetch origin
+git switch measure-visual-smoke-per-run
+git pull --ff-only origin measure-visual-smoke-per-run
+node scripts/setup.mjs --skill-from ../Dreative
+node ../Dreative/dist/cli/index.js install-skill --codex --check
+node ../Dreative/dist/cli/index.js install-skill --claude --check
+node scripts/review.mjs
+```
+
+Open `/status`. Leave the skill-version field blank to use the freshly installed
+working skill, or freeze a known current commit for a comparison. The prototype
+checkbox now means multiple design images/plans and an explicit selection before
+implementation. Old archives retain their historical prototype meaning.
+
+Desktop image generation is not inherited by CLI runs. Configure an authorized
+stdio image-tool MCP locally as described under **The prototype gate** above.
+`.mcp.json`, credentials, dependencies and installed skills are not committed.
+Setup verifies basic dependencies, not successful image generation. A missing
+image capability should pause the design stage rather than silently weaken it.
+
+See the [Dreative handoff](https://github.com/ltyfish/DREATIVE/blob/fix-motion-floor-sampling/HANDOFF.md)
+for the complete implementation summary, validation and next experiment. The
+September run archives, verdicts and scratch audit reconstructions travel with
+this repository. The audit replay captures live in Dreative's `audit/2026-09-12`.
 
 ## The seven scenarios
 

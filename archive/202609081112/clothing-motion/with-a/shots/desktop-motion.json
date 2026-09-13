@@ -1,0 +1,170 @@
+{
+  "profile": "desktop",
+  "video": "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\desktop-motion.webm",
+  "screenshots": [
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\desktop-entry.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\desktop-development.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\desktop-end.png",
+    "C:\\Users\\lty\\Downloads\\dreative-testbed\\runs\\clothing-motion__with-a__202609081112\\.captures\\desktop-keyboard-focus.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 11490,
+      "elapsedMs": 685
+    },
+    {
+      "input": "wheel-slow",
+      "y": 405,
+      "height": 11490,
+      "elapsedMs": 1152
+    },
+    {
+      "input": "wheel-slow",
+      "y": 810,
+      "height": 11490,
+      "elapsedMs": 1495
+    },
+    {
+      "input": "wheel-slow",
+      "y": 1215,
+      "height": 11490,
+      "elapsedMs": 1837
+    },
+    {
+      "input": "pause",
+      "y": 1215,
+      "height": 11490,
+      "elapsedMs": 2351
+    },
+    {
+      "input": "wheel-reverse",
+      "y": 765,
+      "height": 11490,
+      "elapsedMs": 2990
+    },
+    {
+      "input": "wheel-fast",
+      "y": 2205,
+      "height": 11490,
+      "elapsedMs": 3161
+    },
+    {
+      "input": "wheel-slow",
+      "y": 2610,
+      "height": 11490,
+      "elapsedMs": 3504
+    },
+    {
+      "input": "wheel-slow",
+      "y": 3015,
+      "height": 11490,
+      "elapsedMs": 3855
+    },
+    {
+      "input": "wheel-slow",
+      "y": 3420,
+      "height": 11490,
+      "elapsedMs": 4201
+    },
+    {
+      "input": "wheel-fast",
+      "y": 4860,
+      "height": 11490,
+      "elapsedMs": 4384
+    },
+    {
+      "input": "wheel-slow",
+      "y": 5265,
+      "height": 11490,
+      "elapsedMs": 4758
+    },
+    {
+      "input": "wheel-slow",
+      "y": 5670,
+      "height": 11490,
+      "elapsedMs": 5107
+    },
+    {
+      "input": "wheel-slow",
+      "y": 6075,
+      "height": 11490,
+      "elapsedMs": 5461
+    },
+    {
+      "input": "wheel-fast",
+      "y": 7515,
+      "height": 11490,
+      "elapsedMs": 5649
+    },
+    {
+      "input": "wheel-slow",
+      "y": 7920,
+      "height": 11490,
+      "elapsedMs": 6029
+    },
+    {
+      "input": "wheel-slow",
+      "y": 8325,
+      "height": 11490,
+      "elapsedMs": 6386
+    },
+    {
+      "input": "wheel-slow",
+      "y": 8730,
+      "height": 11490,
+      "elapsedMs": 6729
+    },
+    {
+      "input": "wheel-fast",
+      "y": 10170,
+      "height": 11490,
+      "elapsedMs": 6898
+    },
+    {
+      "input": "wheel-slow",
+      "y": 10575,
+      "height": 11490,
+      "elapsedMs": 7242
+    },
+    {
+      "input": "wheel-slow",
+      "y": 10590,
+      "height": 11490,
+      "elapsedMs": 7599
+    },
+    {
+      "input": "keyboard-home",
+      "y": 0,
+      "height": 11490,
+      "elapsedMs": 7908
+    },
+    {
+      "input": "keyboard-page-down",
+      "y": 787,
+      "height": 11490,
+      "elapsedMs": 8270
+    }
+  ],
+  "errors": [],
+  "reachedEnd": true,
+  "inputCoverage": [
+    "entry",
+    "wheel-slow",
+    "pause",
+    "wheel-reverse",
+    "wheel-fast",
+    "keyboard-home",
+    "keyboard-page-down"
+  ],
+  "device": {
+    "coarsePointer": false,
+    "touchPoints": 0,
+    "reducedMotion": false
+  },
+  "receivedEvents": {
+    "wheel": 19,
+    "keydown": 3
+  }
+}

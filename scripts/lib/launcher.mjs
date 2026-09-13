@@ -16,6 +16,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { LAUNCH_FILE, readLaunch, runStatuses } from './status.mjs'
 import { pendingGate } from './gate.mjs'
+import { directionCards } from './design-directions.mjs'
 import { ROOT, isSkillArm, listScenarios } from './scaffold.mjs'
 
 const esc = (s) =>
@@ -176,7 +177,7 @@ export function startContinue(runName) {
   if (!fs.existsSync(path.join(runDir, 'run.json'))) throw new Error(`no such run: ${runName}`)
 
   // Two resumptions of one session would interleave into the same log and the same build.
-  if (isRunLive(runName)) {
+  if (isRunLive(runName) || pendingGate() || readLaunch()?.alive) {
     throw new Error(`${runName} is being written to right now — something is already running it`)
   }
 
@@ -303,7 +304,7 @@ function statusTable(rows) {
       if (r.state === 'prototype') {
         bits.push(
           r.resumable
-            ? `phase 1 captured · <button class="livebtn" onclick="continuePrototype(this, '${esc(r.run)}')">Continue with the same agent session</button>`
+            ? `phase 1 ready · <button class="livebtn" onclick="continuePrototype(this, '${esc(r.run)}')">${r.phaseProtocol === 'visual-directions-v1' ? 'Reopen selection / resume chosen design' : 'Continue with the same agent session'}</button>`
             : '<strong>phase 1 captured but its continuation id is missing</strong>',
         )
       }
@@ -338,11 +339,11 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
         <p class="sub" style="margin:0 0 14px">It has built <code>${esc(gate.current)}</code> and stopped. ${
           gate.stage === 'finished'
             ? 'This is the last stop before it can be scored.'
-            : 'Only the signature moment exists — the page itself has not been built, and the review will not offer it for scoring until it is.'
+            : gate.stage === 'design' ? 'Compare the images and plans, then choose a direction. The website has not been implemented.' : 'This is a historical coded prototype; the complete page has not been built.'
         } Nothing else runs until you answer.</p>
         ${gate.briefing.truncated ? `<div class="fail">TRUNCATED — ${esc(gate.briefing.truncated)}. This build did not finish, so its defects and missing stages are unattributable. Reject it and re-run.</div>` : ''}
         ${
-          gate.briefing.looked
+          gate.stage === 'design' ? '' : gate.briefing.looked
             ? gate.briefing.broken.length
               ? `<div class="lbl">Broken (${gate.briefing.broken.length})</div><ul class="sub">${gate.briefing.broken
                   .slice(0, 8)
@@ -353,10 +354,13 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
         }
         ${gate.briefing.inert && gate.briefing.inert.length ? `<p class="sub">${gate.briefing.inert.length} section(s) with nothing happening across them.</p>` : ''}
         ${gate.briefing.smokeBlockers ? `<div class="warn">visual smoke blocked: ${esc(gate.briefing.smokeBlockers.slice(0, 3).join(' | '))}</div>` : ''}
-        <p style="margin-top:14px"><a class="livebtn" href="${esc(gate.url)}" target="_blank" rel="noopener">Open the build ↗</a></p>
+        ${gate.study ? directionCards(gate.current, gate.study) : ''}
+        ${gate.designError ? `<p class="fail">Design options are incomplete: ${esc(gate.designError)}. Check design-blocker.md and the session log. No implementation can start. Supply the missing images/manifest and reopen selection.</p>` : ''}
+        ${gate.url ? `<p style="margin-top:14px"><a class="livebtn" href="${esc(gate.url)}" target="_blank" rel="noopener">Open the build ↗</a></p>` : ''}
         <p style="margin-top:14px">
-          <button id="gateKeep">${esc(gate.labels?.keep || 'Keep it')}</button>
+          <button id="gateKeep"${gate.stage === 'design' ? ' disabled' : ''}>${esc(gate.labels?.keep || 'Keep it')}</button>
           <button id="gateReject" style="margin-left:8px">${esc(gate.labels?.reject || 'Throw it out')}</button>
+          ${gate.stage === 'design' ? '<button id="gatePause" style="margin-left:8px">Pause and keep options</button>' : ''}
           <span class="sub" id="gateMsg" style="margin-left:10px"></span>
         </p>
         ${gate.remaining.length ? `<p class="sub">${gate.remaining.length} more run(s) after this one.</p>` : ''}
@@ -373,10 +377,14 @@ export function statusPage({ style = '', reviewPath = '/' } = {}) {
 .status{width:100%;border-collapse:collapse;margin:8px 0 24px}
 .status th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut,#6b7280);padding:6px 10px;border-bottom:1px solid var(--line,#ddd)}
 .status td{padding:7px 10px;border-bottom:1px solid var(--line,#eee);font-size:13px;vertical-align:top}
+button.livebtn{background:transparent}
+button:hover:not(:disabled){filter:brightness(1.1)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--acc,#2563eb);outline-offset:3px}
 .form{display:grid;grid-template-columns:150px 1fr;gap:10px 14px;align-items:center;max-width:760px}
 .form label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut,#6b7280)}
 .form input,.form select{padding:7px 9px;font:inherit;font-size:13px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--card,#fff);color:inherit;width:100%}
 pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px;overflow:auto;max-height:320px;white-space:pre-wrap}
+@media(max-width:640px){.form{grid-template-columns:1fr;gap:6px}.form>label{margin-top:10px}.status td code{overflow-wrap:anywhere}#gateKeep,#gateReject,#gatePause{margin:4px 4px 4px 0!important}}
 </style>
 <header>
   <div><h1>Status <span class="sub">· ${rows.length} run(s) in runs/</span></h1>
@@ -403,12 +411,12 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
       </select>
 
       <label for="f-skill-a">Dreative version</label>
-      <input id="f-skill-a" value="git:HEAD" placeholder="git:HEAD, git:&lt;sha&gt;, a branch, or a directory — blank uses what is installed">
+      <input id="f-skill-a" value="" placeholder="Installed working skill (default), or git:&lt;sha&gt; / directory">
 
       <label for="f-skill-b" id="l-skill-b">Compared against</label>
       <input id="f-skill-b" value="" placeholder="the other version, e.g. git:e9638f5 — only for Dreative vs Dreative">
 
-      <label for="f-dir">Direction</label>
+      <label for="f-dir">Delivery profile</label>
       <select id="f-dir">${['recommended', 'efficient', 'showcase', 'random', 'none']
         .map((d) => `<option${d === 'recommended' ? ' selected' : ''}>${d}</option>`)
         .join('')}</select>
@@ -436,7 +444,7 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
 
       <label for="f-proto">Prototype first</label>
       <label class="sub" style="text-transform:none;letter-spacing:0">
-        <input type="checkbox" id="f-proto" checked style="width:auto"> build the signature moment first and stop — I decide before the page is built</label>
+        <input type="checkbox" id="f-proto" checked style="width:auto"> generate multiple design images and plans — I choose before implementation</label>
 
       <label for="f-gate">Gate the finished build</label>
       <label class="sub" style="text-transform:none;letter-spacing:0">
@@ -447,7 +455,7 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
         <input type="checkbox" id="f-yolo" style="width:auto"> scope tools instead of full bypass (slower, closer to a cautious user)</label>
     </div>
     <p class="sub" style="margin:14px 0 0">With both boxes ticked the round runs:
-      <strong>prototype → you continue → the page is built → you keep or throw out → review</strong>.
+      <strong>design images + plans → you choose → faithful implementation + browser correction → finished-build review</strong>.
       Each stop appears at the top of this page, and a run is not offered for scoring until it has
       been through them.</p>
     <p style="margin-top:16px"><button id="go"${launch?.alive ? ' disabled' : ''}>${launch?.alive ? 'Round running' : 'Start round'}</button>
@@ -457,8 +465,10 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
       a pair, and the review shows them side by side as A and B without telling you which is which
       until you submit. One arm is not a comparison, so it is scored on its own axes instead.</p>
     <p class="sub">Every run is scaffolded with its own headless browser (Playwright MCP) and the
-      installed Dreative CLI, on every arm — the same tools a normal user's agent has. Nothing in
-      the brief mentions either; whether the agent uses them is the finding.</p>
+      installed Dreative CLI on every arm. Image generation in this desktop chat is not
+      automatically available to a CLI run. Configure an authorized stdio image-tool MCP in
+      the testbed root .mcp.json (or DREATIVE_MCP_CONFIG) for both providers. Missing generation
+      pauses the design stage; it never substitutes a coded hero or pretends prompts are images.</p>
   </div>
 
   <div class="panel">
@@ -470,9 +480,10 @@ pre.log{background:#111;color:#ddd;padding:12px;border-radius:8px;font-size:12px
 </main>
 <script>
 const GATE_RUN = ${JSON.stringify(gate?.current ?? null)};
+const DESIGN_HASH = ${JSON.stringify(gate?.study?.evidenceHash ?? null)};
 const sel = (id) => document.getElementById(id);
 async function continuePrototype(btn, run) {
-  if (!confirm('Continue ' + run + ' in its existing agent session and build the rest of the page?')) return;
+  if (!confirm('Resume ' + run + '? If a visual choice is pending, selection opens before the agent implements anything.')) return;
   btn.disabled = true;
   btn.textContent = 'Resuming…';
   const res = await fetch('/api/continue', {
@@ -553,18 +564,33 @@ clear?.addEventListener('click', async () => {
   sel('clearMsg').textContent = 'cleared';
   setTimeout(() => location.reload(), 800);
 });
-for (const [id, decision] of [['gateKeep', 'keep'], ['gateReject', 'reject']]) {
+function updateDesignChoice() {
+  if (!DESIGN_HASH) return;
+  const chosen = document.querySelector('input[name="designDirection"]:checked');
+  const images = chosen ? [...chosen.closest('article').querySelectorAll('[data-design-image]')] : [];
+  sel('gateKeep').disabled = !chosen || !images.length || images.some(img => !img.complete || !img.naturalWidth);
+}
+document.querySelectorAll('input[name="designDirection"]').forEach(el => el.addEventListener('change', updateDesignChoice));
+document.querySelectorAll('[data-design-image]').forEach(el => {
+  el.addEventListener('load', updateDesignChoice);
+  el.addEventListener('error', () => { updateDesignChoice(); sel('gateMsg').textContent = 'A design image failed to load. Repair it before selecting that direction.'; });
+});
+updateDesignChoice();
+for (const [id, decision] of [['gateKeep', 'keep'], ['gateReject', 'reject'], ['gatePause', 'pause']]) {
   const btn = document.getElementById(id);
   if (!btn) continue;
   btn.addEventListener('click', async () => {
     document.getElementById('gateKeep').disabled = true;
     document.getElementById('gateReject').disabled = true;
+    if (sel('gatePause')) sel('gatePause').disabled = true;
     document.getElementById('gateMsg').textContent =
       decision === 'keep' ? 'sending — the round picks up where it stopped, this takes a moment' : 'sending…';
     const res = await fetch('/api/gate', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ run: GATE_RUN, decision }),
+      body: JSON.stringify({ run: GATE_RUN, decision, evidenceHash: DESIGN_HASH,
+        directionId: document.querySelector('input[name="designDirection"]:checked')?.value,
+        feedback: sel('designFeedback')?.value || '' }),
     });
     document.getElementById('gateMsg').textContent = res.ok ? 'sent — the round is moving on' : await res.text();
     setTimeout(() => location.reload(), 2000);
