@@ -1,0 +1,18 @@
+{
+  "inputHash": "18cba14b80c1aa525e7306fdf678eb8a18db463cc23ade9e4b1cad54cf00aa89",
+  "files": {
+    "index.html": "bda3c8074bd5a7bd359f446dd08deeda807eae0e738c5425b4e2f3917467cb32",
+    "package.json": "2867533490857948fced5d157f4997cb231d9567babfc12ff25ac266547e1b91",
+    "public/media/README.md": "6db92abd6a2e7d078c7dec9ea760e6c92e63f62257f1ce0bac575a7d517bf219",
+    "public/media/mv-garment-grid.png": "86353ff3e7791abed803e2338eb95193809f5d9c7522ac7be5077adc0f3d403b",
+    "public/media/mv-hero-cast.png": "c953a45675bd5a4abad3a96a4cce8fbf7954951aa7c230a1a792e4d9bdfe8584",
+    "src/App.jsx": "7a3a32d39747605ed2875a230913e66d0858655f638fb2ba976a4d1462fde5da",
+    "src/main.jsx": "fd13a2ac3a28c7ec6cc3a1fbbff63285c0d6a9e91c5b1be2ee55fab3204b7fcb",
+    "src/styles.css": "4db9ae0f66356aa9364d00b7645af7674eba91727a7d6dc3a12c306ced9be5de",
+    "vite.config.js": "38b894ac6aaaf2c7429395664c8e07644c4476c98af7efb1f3b002ffce87c97a"
+  },
+  "captureStartedAt": "2026-09-14T07:58:40.695Z",
+  "capturedAt": "2026-09-14T07:59:07.055Z",
+  "phase": 2,
+  "sourceChangedDuringCapture": false
+}

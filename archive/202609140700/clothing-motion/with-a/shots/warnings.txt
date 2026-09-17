@@ -1,0 +1,1 @@
+Motion playback unavailable: motion capture unavailable: build Dreative at C:\Users\User\AppData\Roaming\npm\node_modules\dreative\dist\cli\motionCapture.js. Do not judge motion from stills.

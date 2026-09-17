@@ -985,3 +985,97 @@ Change the definition. Watch everything downstream move with it. and a true inte
 **What is wrong with it:** is so teribble, i dont know whatr top say, it just feels like it backtrack and became even worser bruh. can u verdict urself im out of it, same problems everytime, images such, no motion, not much outsource, goopd transition, just nirmal tables, styatic images and everything. go take a look urslf
 
 **What to keep:** —
+
+## clothing-motion — 2026-09-14 — single arm
+
+- run:   `clothing-motion__with-a__202609140700`
+- arm:   with-a · direction recommended · skill installed
+
+| Axis | Score |
+|---|---|
+| Material | 4 / 5 |
+| Subject | 4 / 5 |
+| Motion | 2 / 5 |
+| Craft | 2 / 5 |
+| Structure and pacing | 2 / 5 |
+| **Overall** | 3 / 5 |
+
+**What is wrong with it:** the spacing, responsiveness is really bad, on desktop and mobile it cuts alot, idk. urm. i mean the images is fine and the subject is shown, nice interactivity i guess. but there isnt any motion, awwward style kind of website i wanted. structure is find i guess, but really messy. u have to verdict urself and tell me on what u think
+
+Yeah — **as a Dreative output, I would fail this**. Not because the page is visually awful, but because it misses the thing Dreative is supposed to prove: **a visually distinctive website that feels alive in the browser, not a nice static mockup translated into code.**
+
+Based on the screenshots, and your note that the actual build has barely any motion:
+
+| Axis                   |     Score | Verdict                                                                                                                                                                                  |
+| ---------------------- | --------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Material**           |   **4/5** | Strong. The photography feels consistent and intentionally art-directed rather than random assets.                                                                                       |
+| **Subject**            |   **4/5** | Products are very clearly shown. Hero, rail, product detail, colors/sizing all communicate the clothes well.                                                                             |
+| **Motion**             |   **1/5** | **Big failure.** This looks designed as a static editorial page. If movement is mostly fades/reveals, Dreative hasn't added meaningful browser-native creativity.                        |
+| **Craft**              |   **3/5** | Desktop is fairly polished. Mobile technically works, but feels like a compressed desktop editorial layout rather than something re-composed for mobile. Some type becomes cramped/tiny. |
+| **Structure & pacing** |   **4/5** | Actually one of its strongest parts. Huge hero → product rail → PDP → editorial break → info → social proof → brand story. There's clear rhythm.                                         |
+| **Overall**            | **2.5/5** | I'd show the visual direction internally, but **I would not ship this as evidence that Dreative is working.**                                                                            |
+
+### The real problem
+
+It feels like Dreative did:
+
+**make static design → implement static design → add a couple transitions**
+
+when what you want is closer to:
+
+**design the experience → decide how elements behave → make scrolling/interactions part of the composition → implement that faithfully.**
+
+For example, this particular design is begging for movement. The opening models could shift laterally or change depth as you scroll; **“NINE GOOD THINGS / NO SEASONS”** could progressively separate/recompose; the horizontal clothing rail could become a scroll-driven sequence; the trouser model could remain pinned while copy/sizes transition beside her; the pixelated **“A CLEARER PICTURE”** section could literally resolve from pixels into clarity; the blue information section could have typography and rules reacting to scroll; and the final models could enter into formation before revealing the manifesto.
+
+Those wouldn't be decorations. **The motion would explain the content.**
+
+That's what I think your scoring criterion:
+
+> “Does anything move that carries meaning?”
+
+should punish extremely hard.
+
+### I think your current Dreative test is too easy to pass
+
+A page can score well on Material, Subject, Craft and Structure while basically being a **well-built screenshot**.
+
+For Dreative, I would almost make **Motion / Browser Experience a gate**, not merely another equally weighted category:
+
+**If Motion ≤ 2 → Overall cannot exceed 3.**
+
+Because otherwise Dreative can keep producing exactly this type of thing and technically receive a decent score.
+
+For this one I'd give it roughly **18.5 / 30**, but the actual verdict would simply be:
+
+> **REJECT — visually competent, but too static. The implementation preserves the look while failing to invent an experience around it. Dreative should substantially rework interaction and motion before this counts as a successful output.**
+
+And importantly, I **wouldn't tell Dreative “add more animations.”** That'll probably give you random fade-ins, floating text, and parallax everywhere.
+
+The instruction should be closer to:
+
+> **Motion must be designed as part of the concept. Identify 3–5 moments where movement can communicate hierarchy, product, transformation, navigation, or story. A page consisting primarily of static sections plus entrance animations is considered incomplete.**
+
+That feels much closer to the Dreative you're actually trying to build.
+
+
+this is chatgpt verdict
+
+**What to keep:** —
+
+## clothing-motion — 2026-09-17 — single arm
+
+- run:   `clothing-motion__with-a__202609170405`
+- arm:   with-a · direction recommended · skill installed
+
+| Axis | Score |
+|---|---|
+| Material | 3 / 5 |
+| Subject | 3 / 5 |
+| Motion | 2 / 5 |
+| Craft | 2 / 5 |
+| Structure and pacing | 2 / 5 |
+| **Overall** | 2 / 5 |
+
+**What is wrong with it:** well comparing with the image, it did execute identically,not sure if claude did make images or wha tbut is quit faithful. but its not the best result/a good result of dreative i seen. i like its unique animation when u go in, quite clean, but theres not much animation, or any good motion, transition, video or anything, nothing feels awwward, no story telling or anything. it just feels like a generic clothing website, the images are even fake/svg, very disapopointing cause is suppose to source, generate etc. no useful/motion interaction, generic choosing/layout of clothing store. boring tables, boring descripotion boring flow and explanation, boring footer and sections and transititoning, no scroll animation, parallexing, interesting ideas etc. u can verdict urself too
+
+**What to keep:** —
