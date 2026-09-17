@@ -125,16 +125,16 @@ function liveRuns() {
 /**
  * Can this run be picked up where it died?
  *
- * Only a truncated run needs it: one that stopped because the provider cut the session off,
- * not one that finished. It needs the session id continue-run resumes, and it must not be
- * running already — a second resumption of the same session would build over the first.
+ * Any unstamped run whose process stopped can need it. A process crash can strand phase two
+ * without getting far enough to write `truncated`; Codex also stores its id in
+ * `providerSessionId`, not the Claude-oriented `sessionId` field.
  */
 function isResumable(dir, meta) {
-  if (!meta.truncated || meta.rejected) return false
+  if (meta.builtAt || meta.rejected) return false
   if (isRunLive(dir)) return false
-  if (meta.sessionId) return true
+  if (meta.providerSessionId || meta.sessionId) return true
   try {
-    return /"session_id"/.test(fs.readFileSync(path.join(RUNS, dir, 'agent.jsonl'), 'utf8').slice(0, 4000))
+    return /"session_id"|session id:\s*[0-9a-f-]{20,}/i.test(fs.readFileSync(path.join(RUNS, dir, 'agent.jsonl'), 'utf8').slice(0, 4000))
   } catch {
     return false
   }
@@ -144,7 +144,7 @@ function isUnbuilt(dir, meta) {
   if (meta.rejected || meta.builtAt) return false
   const gate = pendingGate()
   if (gate?.current === dir) return true
-  return runStatuses().some((r) => r.run === dir && r.state === 'running')
+  return runStatuses().some((r) => r.run === dir && r.state !== 'built' && r.state !== 'rejected')
 }
 
 const isCaptured = (r) => fs.existsSync(path.join(RUNS, r.dir, '.captures', 'desktop.png'))
@@ -849,8 +849,8 @@ function viewPage(pairs, solos, view) {
           : ''
       }
       ${
-        run.meta.truncated
-          ? `<div class="fail">TRUNCATED (${esc(run.meta.truncated)}) — this build did not finish. Missing stages and craft defects here are unattributable.
+        !run.meta.builtAt && !run.meta.rejected && (run.meta.truncated || isResumable(run.dir, run.meta) || isRunLive(run.dir))
+          ? `<div class="fail">${run.meta.truncated ? `TRUNCATED (${esc(run.meta.truncated)})` : 'INCOMPLETE'} — this build did not finish. Missing stages and craft defects here are unattributable.
              ${
                isResumable(run.dir, run.meta)
                  ? `<br><br>The session is still on disk, so this is recoverable: continuing resumes it with the phase-two prompt,

@@ -17,13 +17,19 @@
 import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { resolveDreativeCliFile } from './dreative-runtime.mjs'
 
-const CLI = process.env.DREATIVE_CLI
-  ? path.resolve(process.env.DREATIVE_CLI)
-  : path.resolve('C:/Users/lty/Downloads/Dreative/dist/cli/index.js')
+const CLI = resolveDreativeCliFile('index.js', process.env.DREATIVE_CLI)
 
 export function lookAvailable() {
-  return fs.existsSync(CLI)
+  if (!fs.existsSync(CLI)) return false
+  // Some published CLI builds contain index.js but predate the `look` command. Treat that
+  // as unavailable instead of spawning the help screen and reporting a measurement error.
+  try {
+    return /case\s+["']look["']/.test(fs.readFileSync(CLI, 'utf8'))
+  } catch {
+    return false
+  }
 }
 
 /** Where the builder's own report lands, if it ran the command itself. */

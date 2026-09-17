@@ -28,6 +28,21 @@ import { codexToolArgs } from './lib/tool-config.mjs'
 import { addContinuitySignal, writeMaterialSummary } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
 
+// UI-launched continuations have a hidden console. Mirror lifecycle messages to the file the
+// status page records so a launch failure or a long capture does not look like a dead button.
+const progressFile = process.env.DREATIVE_ROUND_LOG
+if (progressFile) {
+  fs.mkdirSync(path.dirname(progressFile), { recursive: true })
+  fs.writeFileSync(progressFile, '', 'utf8')
+  const mirror = (base) => (...values) => {
+    const line = values.map((value) => typeof value === 'string' ? value : JSON.stringify(value)).join(' ')
+    fs.appendFileSync(progressFile, `${line}\n`, 'utf8')
+    base(...values)
+  }
+  console.log = mirror(console.log.bind(console))
+  console.error = mirror(console.error.bind(console))
+}
+
 const runName = process.argv[2]
 if (!runName) {
   console.error('usage: node scripts/continue-run.mjs <run-name>')

@@ -69,8 +69,14 @@ export function runStatuses() {
     let state
     if (meta.rejected) state = 'rejected'
     else if (Number(meta.phase) === 1 && !meta.builtAt && (captured || meta.designPhaseEndedAt)) state = 'prototype'
-    else if (log && idleMs < 90_000 && !captured) state = 'running'
+    // A phase-two continuation can still have phase-one captures on disk. Captures are not
+    // evidence that the resumed process has finished; a fresh log is.
+    else if (!meta.builtAt && log && idleMs < 90_000) state = 'running'
     else if (meta.truncated) state = 'truncated'
+    // Two-phase runs have an explicit completion stamp. A stale phase-two process must not
+    // become "built" merely because an earlier phase (or a nearly-finished continuation)
+    // left a capture behind.
+    else if (meta.phaseProtocol && !meta.builtAt && log && idleMs > STALL_MS) state = 'stalled'
     else if (!touched) state = 'empty'
     else if (captured) state = 'built'
     else if (log && idleMs > STALL_MS) state = 'stalled'
@@ -147,6 +153,7 @@ export function formatStatus(rows = runStatuses(), launch = readLaunch()) {
     const bits = []
     if (r.state === 'running') bits.push(`${r.logKb}kb of log, last wrote ${r.idleMinutes}m ago`)
     if (r.state === 'prototype') bits.push(r.resumable ? 'awaiting continuation' : 'continuation id missing')
+    if (['stalled', 'truncated', 'finished'].includes(r.state) && r.resumable) bits.push('continuation available')
     if (r.truncated) bits.push(r.truncated)
     if (r.buildFailed) bits.push('BUILD FAILED')
     if (r.looked) bits.push(`${r.broken} broken, ${r.inertSections} inert section(s)`)

@@ -186,9 +186,10 @@ export function startContinue(runName) {
   // continue-run appends the session to the run's own agent.log, which is where status and the
   // review already look; this log only catches a crash before that starts.
   const pid = process.platform === 'win32' ? startHidden(args, logFile) : null
+  let child = null
   if (pid === null) {
     const out = fs.openSync(logFile, 'w')
-    const child = spawn(process.execPath, args, {
+    child = spawn(process.execPath, args, {
       cwd: ROOT,
       detached: true,
       shell: false,
@@ -196,9 +197,18 @@ export function startContinue(runName) {
       stdio: ['ignore', out, out],
     })
     child.unref()
-    return { pid: child.pid, run: runName }
   }
-  return { pid, run: runName }
+  const record = {
+    pid: pid ?? child.pid,
+    run: runName,
+    startedAt: new Date().toISOString(),
+    command: `node scripts/continue-run.mjs ${runName}`,
+    log: path.relative(ROOT, logFile),
+  }
+  // The original round record is dead at this point. Replacing it makes the status page
+  // track the continuation it just launched and prevents a second resume from starting.
+  fs.writeFileSync(LAUNCH_FILE, JSON.stringify(record, null, 2), 'utf8')
+  return record
 }
 /** Spawn the round detached, and record enough for status to recognise it later. */
 export function startRound(body) {
@@ -256,12 +266,16 @@ export function startRound(body) {
  * for a day. If it died, the page should say what killed it.
  */
 export function roundLog(lines = 40) {
-  if (!fs.existsSync(LOG_FILE)) return ''
-  const text = fs.readFileSync(LOG_FILE, 'utf8')
+  const launch = readLaunch()
+  const recorded = launch?.log ? path.resolve(ROOT, launch.log) : LOG_FILE
+  const runsRoot = path.resolve(ROOT, 'runs') + path.sep
+  const logFile = recorded.startsWith(runsRoot) ? recorded : LOG_FILE
+  if (!fs.existsSync(logFile)) return ''
+  const text = fs.readFileSync(logFile, 'utf8')
   const tail = text.split('\n').slice(-lines).join('\n')
   let crash = ''
   try {
-    crash = fs.readFileSync(`${LOG_FILE}.err`, 'utf8').trim()
+    crash = fs.readFileSync(`${logFile}.err`, 'utf8').trim()
   } catch {
     /* no stderr file, or nothing in it */
   }
@@ -307,6 +321,9 @@ function statusTable(rows) {
             ? `phase 1 ready · <button class="livebtn" onclick="continuePrototype(this, '${esc(r.run)}')">${r.phaseProtocol === 'visual-directions-v1' ? 'Reopen selection / resume chosen design' : 'Continue with the same agent session'}</button>`
             : '<strong>phase 1 captured but its continuation id is missing</strong>',
         )
+      }
+      if (['stalled', 'truncated', 'finished'].includes(r.state) && r.resumable) {
+        bits.push(`session stopped before completion · <button class="livebtn" onclick="continuePrototype(this, '${esc(r.run)}')">Resume this run</button>`)
       }
       if (r.truncated) bits.push(esc(r.truncated))
       if (r.buildFailed) bits.push('<strong>build failed</strong>')

@@ -14,12 +14,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { resolveDreativeCliFile } from './dreative-runtime.mjs'
 
 // The CLI lives in the code project, not here. The testbed has no Dreative dependency and
 // should not grow one — it consumes the shipped build the same way an installed user would.
-const CLI_DIST = process.env.DREATIVE_DIST
-  ? path.resolve(process.env.DREATIVE_DIST)
-  : path.resolve('C:/Users/lty/Downloads/Dreative/dist/cli/visualSmoke.js')
+const CLI_DIST = resolveDreativeCliFile('visualSmoke.js', process.env.DREATIVE_DIST)
 
 /** Missing or stale build is a harness fault, not a finding about the run. */
 export function smokeAvailable() {
