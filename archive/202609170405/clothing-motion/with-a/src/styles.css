@@ -1,0 +1,1066 @@
+@import './fonts.css';
+
+/* Marlow & Vale — Plate & Press.
+   A printed catalogue: paper ground, ink, one press red for registration and
+   state. Editorial voice is Instrument Serif; every technical caption is
+   Roboto Mono; reading text is Newsreader. */
+
+:root {
+  --paper: #efe9dd;
+  --paper2: #e6dfd0;
+  --ink: #16150f;
+  --red: #b3301c;
+  --rule: #c3bba9;
+  --mut: #6c675b;
+  --gut: 50px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Newsreader, Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 var(--gut);
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+.rule2 {
+  border-top: 3px double var(--rule);
+}
+
+.m {
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mut);
+  margin: 0;
+}
+
+.m.r {
+  color: var(--red);
+}
+
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 16px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 40;
+}
+
+.skip:focus {
+  left: var(--gut);
+  top: 8px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Captions may be small; anything you press may not be. */
+button.m,
+.reg .f,
+.sz,
+.addbtn,
+.co,
+.rm {
+  font-size: 12px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------- masthead */
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 0 12px;
+}
+
+.head .m {
+  margin-bottom: 8px;
+}
+
+.head h1 {
+  font-size: 54px;
+}
+
+.bagbtn {
+  border: 1px solid var(--ink);
+  background: none;
+  padding: 8px 15px;
+  color: var(--ink);
+}
+
+.bagbtn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* --------------------------------------------------------- frontispiece */
+
+.front {
+  display: grid;
+  grid-template-columns: 1fr 610px;
+  gap: 56px;
+  padding: 46px 0 0;
+}
+
+.front h2 {
+  font-size: 62px;
+  max-width: 560px;
+}
+
+.front h2 em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.front .lede {
+  margin: 22px 0 0;
+  font-size: 18px;
+  max-width: 460px;
+  color: var(--mut);
+}
+
+.idxhead {
+  margin-top: 40px;
+}
+
+.index {
+  margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.index td {
+  padding: 7px 0;
+  border-bottom: 1px dotted var(--rule);
+  font-size: 15px;
+  vertical-align: baseline;
+}
+
+.index td.n {
+  width: 54px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--mut);
+}
+
+.index td.c {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.index td.p {
+  text-align: right;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+}
+
+.idxlink {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  border-bottom: 1px solid transparent;
+}
+
+.idxlink:hover {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+figure {
+  margin: 0;
+}
+
+.halftone {
+  width: 100%;
+  display: block;
+  background: var(--paper2);
+  aspect-ratio: 5 / 6;
+}
+
+.resolve .halftone {
+  aspect-ratio: 4 / 3;
+}
+
+figcaption {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* ------------------------------------------------------------ the device */
+
+.resolve {
+  margin-top: 80px;
+  padding-top: 26px;
+}
+
+.resolve .m:first-of-type {
+  margin-top: 22px;
+}
+
+.resolve h2 {
+  font-size: 40px;
+  max-width: 700px;
+  margin-top: 10px;
+}
+
+.resolve .three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 26px;
+}
+
+/* -------------------------------------------------------------- the sheet */
+
+.sheet {
+  margin-top: 90px;
+  padding-top: 24px;
+}
+
+.reg {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 12px 0;
+  margin-top: 12px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 5;
+}
+
+.reg .f {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 4px 0;
+  color: var(--mut);
+}
+
+.reg .f:hover {
+  color: var(--ink);
+}
+
+.reg .f.on {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+.regfilters {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.showing {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.sheetgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pl {
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 26px 26px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pl:nth-child(3n) {
+  border-right: 0;
+}
+
+.pl .img {
+  position: relative;
+  background: var(--paper2);
+  height: 270px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.pl .img .no {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.pl .img .lift {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  opacity: 0;
+  color: var(--red);
+  transition: opacity 0.18s;
+}
+
+.pl .img:hover .lift,
+.pl .img:focus-visible .lift {
+  opacity: 1;
+}
+
+.flat {
+  width: 168px;
+  height: 252px;
+  display: block;
+}
+
+.flat.big {
+  width: 300px;
+  height: 450px;
+}
+
+.flat.spec {
+  width: 190px;
+  height: 285px;
+}
+
+.pl h3 {
+  font-size: 29px;
+}
+
+.cat {
+  margin: 4px 0 12px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.det {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.fab {
+  margin: 0 0 3px;
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.szrow {
+  display: flex;
+  margin: 16px 0 8px;
+  border: 1px solid var(--ink);
+  width: max-content;
+}
+
+.sz {
+  width: 44px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-right: 1px solid var(--ink);
+  background: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+}
+
+.sz:last-child {
+  border-right: 0;
+}
+
+.sz:hover:not(:disabled) {
+  background: var(--paper2);
+}
+
+.sz.on {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.sz.out {
+  color: #b3ac9c;
+  background: repeating-linear-gradient(135deg, transparent 0 3px, var(--rule) 3px 4px);
+  cursor: not-allowed;
+}
+
+.chose {
+  margin: 0 0 12px;
+}
+
+.addbtn {
+  width: 100%;
+  margin-top: auto;
+  padding: 12px;
+  background: none;
+  border: 1px solid var(--ink);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.addbtn:disabled {
+  color: var(--mut);
+  border-color: var(--rule);
+  cursor: default;
+}
+
+.addbtn.go {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.addbtn.go:hover {
+  background: #972816;
+}
+
+/* ---------------------------------------------- opened plate and the bag */
+
+.open {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  border-bottom: 1px solid var(--rule);
+  scroll-margin-top: 60px;
+}
+
+.openimg {
+  background: var(--paper2);
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 44px 36px 92px;
+  border-right: 1px solid var(--rule);
+}
+
+.openinner {
+  display: grid;
+  place-items: center;
+}
+
+.openimg .cap {
+  position: absolute;
+  left: 22px;
+  bottom: 20px;
+  max-width: 60%;
+}
+
+.openbuy {
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  width: 232px;
+}
+
+.openbuy .szrow {
+  width: 100%;
+  margin-top: 0;
+}
+
+.openbuy .sz {
+  flex: 1;
+  width: auto;
+}
+
+.bagp {
+  padding: 30px 0 34px 34px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bagempty {
+  margin: 14px 0 0;
+  color: var(--mut);
+}
+
+.baglines {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.bagline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px dotted var(--rule);
+  font-size: 15px;
+}
+
+.bagline.plain {
+  border: 0;
+}
+
+.bagline .right {
+  white-space: nowrap;
+}
+
+.rm {
+  background: none;
+  border: 0;
+  padding: 0 0 0 12px;
+  color: var(--mut);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rm:hover {
+  color: var(--red);
+}
+
+.tot {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0 10px;
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px;
+}
+
+.prog {
+  height: 2px;
+  background: var(--rule);
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.prog i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--red);
+  transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.co {
+  margin-top: 16px;
+  width: 100%;
+  padding: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- spec sheet */
+
+.spec {
+  margin-top: 88px;
+  padding-top: 24px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 60px;
+}
+
+.specimg {
+  background: var(--paper2);
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 400px;
+}
+
+.specdraw {
+  position: relative;
+  width: 190px;
+}
+
+.ann {
+  position: absolute;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.ann.chest {
+  top: 40%;
+  left: -88px;
+}
+
+.ann.waist {
+  top: 55%;
+  left: -80px;
+}
+
+.ann.sleeve {
+  top: 46%;
+  right: -84px;
+}
+
+.specimg .base {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+}
+
+h2.mid {
+  font-size: 46px;
+  margin-top: 8px;
+}
+
+.chart {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.chart th,
+.chart td {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.chart th {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mut);
+  font-weight: 500;
+}
+
+.chart td {
+  font-size: 16px;
+}
+
+.chart td:first-child {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  width: 80px;
+}
+
+.advice {
+  margin-top: 20px;
+  font-size: 21px;
+  font-family: 'Instrument Serif', serif;
+  max-width: 560px;
+}
+
+/* ---------------------------------------------------------- care marginalia */
+
+.margin {
+  margin-top: 88px;
+  padding-top: 24px;
+}
+
+.marginhead {
+  margin-bottom: 26px;
+}
+
+/* One grid row per fact, so the marginal number always sits on its statement. */
+.carerow {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 60px;
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.carerow .m {
+  padding-top: 10px;
+}
+
+.carefact {
+  font-size: 24px;
+  font-family: 'Instrument Serif', serif;
+  margin: 0;
+  max-width: 820px;
+}
+
+/* -------------------------------------------------------------- shipping */
+
+.shiprow {
+  margin-top: 88px;
+  padding-top: 24px;
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 60px;
+}
+
+.shiprow h2 {
+  font-size: 40px;
+}
+
+.shiprow ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shiprow li {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 16px;
+}
+
+/* --------------------------------------------------------------- reviews */
+
+.quotes {
+  margin-top: 88px;
+  padding-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px;
+}
+
+.quotes q {
+  font-family: 'Instrument Serif', serif;
+  font-size: 23px;
+  display: block;
+  line-height: 1.24;
+}
+
+.quotes cite {
+  display: block;
+  margin-top: 16px;
+  font-style: normal;
+}
+
+/* -------------------------------------------------------------- colophon */
+
+.colophon {
+  margin-top: 88px;
+  padding: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px;
+}
+
+.colophon p:last-child {
+  margin: 12px 0 0;
+  font-size: 15.5px;
+}
+
+.foot {
+  padding: 60px 0;
+  font-size: 12px;
+  color: var(--mut);
+  max-width: 760px;
+}
+
+/* ---------------------------------------------------------------- mobile */
+
+@media (max-width: 900px) {
+  .front,
+  .spec,
+  .margin,
+  .shiprow {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .sheetgrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pl:nth-child(3n) {
+    border-right: 1px solid var(--rule);
+  }
+
+  .pl:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .open {
+    grid-template-columns: 1fr;
+  }
+
+  .openimg {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .bagp {
+    padding: 28px 0 32px;
+  }
+
+  .quotes,
+  .colophon {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 620px) {
+  :root {
+    --gut: 18px;
+  }
+
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .head h1 {
+    font-size: 40px;
+  }
+
+  .front {
+    padding-top: 26px;
+  }
+
+  .front h2 {
+    font-size: 38px;
+  }
+
+  .front .lede {
+    font-size: 16px;
+  }
+
+  .index td {
+    font-size: 14px;
+  }
+
+  .index td.n {
+    width: 34px;
+  }
+
+  .index td.c {
+    display: none;
+  }
+
+  .resolve,
+  .sheet,
+  .spec,
+  .margin,
+  .shiprow,
+  .quotes,
+  .colophon {
+    margin-top: 56px;
+  }
+
+  .resolve h2,
+  h2.mid,
+  .shiprow h2 {
+    font-size: 28px;
+  }
+
+  .resolve .three {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .reg {
+    position: static;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+  }
+
+  .regfilters {
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .regfilters .f {
+    flex: 0 0 auto;
+  }
+
+  .showing {
+    margin-left: 0;
+    white-space: normal;
+  }
+
+  .sheetgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pl,
+  .pl:nth-child(3n),
+  .pl:nth-child(2n) {
+    border-right: 0;
+    padding: 22px 0 26px;
+  }
+
+  .pl .img {
+    height: 250px;
+  }
+
+  .szrow {
+    width: 100%;
+  }
+
+  .sz {
+    flex: 1;
+    width: auto;
+    height: 46px;
+  }
+
+  .openimg {
+    padding: 28px 18px 24px;
+  }
+
+  .openimg .cap {
+    position: static;
+    max-width: none;
+    margin-top: 18px;
+  }
+
+  .openbuy {
+    position: static;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .flat.big {
+    width: 220px;
+    height: 330px;
+  }
+
+  .specimg {
+    min-height: 320px;
+    padding: 24px 0;
+  }
+
+  /* No room in the margins at this width: the measurements become a legend
+     under the drawing rather than hanging off it. */
+  .specdraw {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 18px;
+  }
+
+  .specdraw .flat {
+    flex: 0 0 100%;
+  }
+
+  .specdraw .ann {
+    position: static;
+    inset: auto;
+  }
+
+  .specimg .base {
+    position: static;
+    margin-top: 16px;
+  }
+
+  .carerow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .carerow .m {
+    padding-top: 0;
+  }
+
+  .carefact {
+    font-size: 20px;
+  }
+
+  .chart td {
+    font-size: 14px;
+  }
+
+  .chart th,
+  .chart td {
+    padding: 11px 4px;
+  }
+
+  .quotes q {
+    font-size: 21px;
+  }
+}
+
+/* -------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .prog i {
+    transition: none;
+  }
+}

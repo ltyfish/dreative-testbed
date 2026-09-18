@@ -1,0 +1,31 @@
+{
+  "inputHash": "657f26d5f0125739d12a3e2b99f9900ce2151199d66fdfa52d6ebfb0ebe7ea71",
+  "files": {
+    "index.html": "bda3c8074bd5a7bd359f446dd08deeda807eae0e738c5425b4e2f3917467cb32",
+    "package.json": "2867533490857948fced5d157f4997cb231d9567babfc12ff25ac266547e1b91",
+    "src/App.jsx": "fb40dfda7c916c4dc220b4dca4df77a86e9014ce795ef65bdd37286b47a66ac0",
+    "src/Halftone.jsx": "cff70de8b7b421ee631249a3d557e01dcfdd2d61267cd50f485d76ed578d7306",
+    "src/assets/CREDITS.md": "0a11a5e64092a4112575aff94446a4b8318941c50d5bc9180feb21d93b52e18e",
+    "src/assets/cloth-folded.jpg": "4aa49a3a694316a9037715e6acb5e4ba8387b5f13403e06f6d8b802f3f94d436",
+    "src/assets/cotton-collar.jpg": "77cd74ded4099f68692ba0c5b1029e8a1db697423f2c8467b314538363bc4ddc",
+    "src/assets/hung-cotton.jpg": "231d549f2157e35fe9c011c9ef8e10bb64d9fa21b9c481fb38d221a6d98b65ef",
+    "src/assets/tee-folded.jpg": "65b7c2691318e8549b30d23a8c87535260a8249058de5df905af30f97ed4973b",
+    "src/flats.js": "f53c23abdb9884466ce4e64b2ab9ca9dc30c2affa8bc13993a0c6d4ebbb2329f",
+    "src/flip.js": "95ced7effcb66b9c56bdead8617fe8c274894894caf45812599e632f49f734e8",
+    "src/fonts/instrument-serif-italic-400.woff2": "5a51946dfffa82972bc98745359c46761515641fda557c25116459a9f83da4a7",
+    "src/fonts/instrument-serif-normal-400.woff2": "5eb09b5ac0e28b67c2f041c8ba6d244604ca0c0980d65912ab2d47fed84ddc31",
+    "src/fonts/newsreader-italic-300-500.woff2": "5dfcd10d24af8c82927ba57f7983dd997f7b200594c09c35a1b1ed9fc4597506",
+    "src/fonts/newsreader-normal-300-500.woff2": "6e4f2958c3a7c4a80acde4e5a679abe7e01bc1e30b92be3c7a8b696ef401d101",
+    "src/fonts/roboto-mono-normal-400.woff2": "b81cd55177300649be8f95b3b747d721ce607e8ed2856e25bd0c630cfd631faf",
+    "src/fonts/roboto-mono-normal-500.woff2": "b81cd55177300649be8f95b3b747d721ce607e8ed2856e25bd0c630cfd631faf",
+    "src/fonts.css": "9538b84a092c5a805cf6ddd61daeb883bd0b4a7b246d7e48e5b5ff987586c210",
+    "src/halftone.js": "a4d76513fba33d9687c8e8825af19dea13a9fe927b869b959b677bf4a021867e",
+    "src/main.jsx": "fd13a2ac3a28c7ec6cc3a1fbbff63285c0d6a9e91c5b1be2ee55fab3204b7fcb",
+    "src/styles.css": "95aa8709208344ae95e37f902a97b86c3da7adeb042b0110c49f06110c8535fe",
+    "vite.config.js": "38b894ac6aaaf2c7429395664c8e07644c4476c98af7efb1f3b002ffce87c97a"
+  },
+  "captureStartedAt": "2026-09-17T05:51:56.867Z",
+  "capturedAt": "2026-09-17T05:53:28.700Z",
+  "phase": 2,
+  "sourceChangedDuringCapture": false
+}

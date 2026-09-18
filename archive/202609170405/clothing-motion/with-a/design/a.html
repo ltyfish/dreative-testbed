@@ -1,0 +1,501 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap">
+<style>
+:root{--bg:#0f1216;--panel:#171c22;--cloth:#ded6c6;--ink:#12151a;--mut:#878d97;--acc:#c5462c;--line:#262c34}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--cloth);font-family:Archivo,system-ui,sans-serif;font-size:15px;line-height:1.55}
+h1,h2,h3{margin:0;font-weight:700;font-stretch:112%;letter-spacing:-.02em;line-height:.92;text-transform:uppercase}
+.k{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut);font-weight:600;font-stretch:100%}
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+
+/* ---- top bar ---- */
+.bar{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 40px;border-bottom:1px solid var(--line);background:rgba(15,18,22,.9);z-index:9}
+.bar nav{display:flex;gap:28px}
+.brand{font-weight:800;font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;font-size:17px}
+.bagbtn{border:1px solid var(--cloth);border-radius:999px;padding:5px 14px;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+
+/* ---- hero ---- */
+.hero{position:relative;height:880px;display:grid;grid-template-columns:1fr 640px;align-items:end;
+  gap:40px;padding:0 40px 56px;max-width:1360px;margin:0 auto;overflow:hidden}
+.hero h1{font-size:132px;font-stretch:125%;letter-spacing:-.045em}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero .lede{max-width:430px;color:var(--mut);margin:26px 0 0;font-size:17px}
+.hero .cue{margin-top:44px;display:flex;align-items:center;gap:14px}
+.hero .cue .rail{height:1px;width:170px;background:var(--line);position:relative}
+.hero .cue .rail i{position:absolute;left:0;top:-1px;height:3px;width:38px;background:var(--acc)}
+/* the cloth column: the object that persists all the way down the page */
+.column{position:relative;height:820px;background:linear-gradient(180deg,#232932,#1a1f26);
+  border-left:1px solid var(--line);border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.column:before{content:'';position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(222,214,198,.05) 0 1px,transparent 1px 7px)}
+.column svg{position:relative;filter:drop-shadow(0 40px 60px rgba(0,0,0,.6))}
+.tag{position:absolute;left:0;bottom:34px;background:var(--cloth);color:var(--ink);
+  padding:7px 14px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+
+/* ---- unroll stage ---- */
+.stage{border-top:1px solid var(--line);padding:70px 0 20px}
+.frames{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:34px}
+.fr{position:relative;background:var(--panel);height:430px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.fr svg{transition:none}
+.fr.f1 svg{transform:scale(1)}
+.fr.f2 svg{transform:scale(2.5) translate(6%,14%)}
+.fr.f3 svg{transform:scale(1.5) translate(-12%,-8%)}
+.fr b{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.2em;color:var(--mut)}
+.fr p{position:absolute;left:16px;right:16px;bottom:14px;margin:0;font-size:12.5px;color:var(--mut);line-height:1.4}
+.scrub{margin-top:18px;display:flex;align-items:center;gap:16px}
+.scrub .track{flex:1;height:2px;background:var(--line);position:relative}
+.scrub .track i{position:absolute;height:2px;background:var(--acc);left:0;width:58%}
+.scrub .track s{position:absolute;top:-4px;width:10px;height:10px;background:var(--acc);left:58%;transform:rotate(45deg)}
+
+/* ---- handoff ---- */
+.handoff{margin-top:72px;border-top:1px solid var(--line);padding-top:56px}
+.split{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:30px;height:300px}
+.split div{background:linear-gradient(180deg,#232932,#1a1f26);position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+.split div:nth-child(1){transform:translateY(-14px)}
+.split div:nth-child(3){transform:translateY(14px)}
+.split span{font-size:10px;letter-spacing:.2em;color:var(--mut);text-transform:uppercase}
+
+/* ---- shop ---- */
+.shop{margin-top:96px;border-top:1px solid var(--line)}
+.filters{position:sticky;top:57px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:18px 0;border-bottom:1px solid var(--line);background:rgba(15,18,22,.95);z-index:8}
+.f{border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:12px;letter-spacing:.06em;color:var(--mut)}
+.f.on{background:var(--cloth);color:var(--ink);border-color:var(--cloth);font-weight:700}
+.showing{margin-left:auto;font-size:12px;color:var(--mut);letter-spacing:.06em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2px}
+.card{background:var(--panel);padding:0 0 24px}
+.plate{position:relative;background:linear-gradient(180deg,#232932,#1a1f26);height:360px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.plate:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(222,214,198,.045) 0 1px,transparent 1px 7px)}
+.plateno{position:absolute;top:12px;left:14px;font-size:10px;letter-spacing:.2em;color:var(--mut)}
+.card header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:0 20px}
+.card h3{font-size:22px;font-stretch:108%}
+.price{font-size:15px;font-weight:700}
+.card .cat{margin:4px 20px 12px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+.card .detail{margin:0 20px 10px;font-size:13.5px;color:#b9b3a6}
+.card .fabric,.card .colours{margin:0 20px 4px;font-size:11.5px;color:var(--mut)}
+.chips{display:flex;gap:6px;margin:16px 20px 12px}
+.chip{width:42px;height:34px;display:grid;place-items:center;border:1px solid var(--line);font-size:12px;color:var(--cloth)}
+.chip.on{background:var(--cloth);color:var(--ink);border-color:var(--cloth);font-weight:700}
+.chip.out{color:#4d535c;border-style:dashed;position:relative}
+.chip.out:after{content:'';position:absolute;left:6px;right:6px;top:50%;height:1px;background:#4d535c}
+.add{display:block;width:calc(100% - 40px);margin:0 20px;padding:12px;background:none;border:1px solid var(--line);
+  color:var(--mut);font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.add.ready{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+
+/* ---- bag ---- */
+.bag{margin-top:2px;background:var(--panel);display:grid;grid-template-columns:1fr 380px;gap:40px;padding:36px 40px}
+.line{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+.line .rm{font-size:11px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
+.sub{display:flex;justify-content:space-between;padding:16px 0;font-size:20px;font-weight:700}
+.prog{height:3px;background:var(--line);position:relative;margin:6px 0 10px}
+.prog i{position:absolute;height:3px;background:var(--acc);width:78%}
+.checkout{margin-top:14px;width:100%;padding:15px;background:var(--cloth);color:var(--ink);border:0;font:inherit;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+
+/* ---- ending ---- */
+.sizing{margin-top:96px;border-top:1px solid var(--line);padding-top:56px;display:grid;grid-template-columns:400px 1fr;gap:56px}
+.diagram{background:linear-gradient(180deg,#232932,#1a1f26);position:relative;display:grid;place-items:center;padding:24px}
+.ann{position:absolute;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc)}
+table{width:100%;border-collapse:collapse;margin-top:18px}
+th,td{text-align:left;padding:14px 6px;border-bottom:1px solid var(--line);font-size:14px}
+th{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);font-weight:600}
+td:first-child{font-weight:700;font-size:17px}
+.advice{margin-top:22px;font-size:17px;max-width:520px}
+.care{margin-top:96px;border-top:1px solid var(--line);padding-top:56px;display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.care .f2{background:var(--panel);padding:30px;font-size:19px;line-height:1.4}
+.care .f2 b{display:block;color:var(--acc);font-size:11px;letter-spacing:.2em;margin-bottom:14px}
+.ship{margin-top:96px;border-top:1px solid var(--line);padding-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.ship ul{margin:0;padding:0;list-style:none}
+.ship li{padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;color:#b9b3a6}
+.revs{margin-top:96px;border-top:1px solid var(--line);padding-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.rev p{font-size:18px;line-height:1.45;margin:0 0 18px}
+.rev cite{font-style:normal;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+.colo{margin-top:96px;border-top:1px solid var(--line);padding:56px 0 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.colo p{margin:14px 0 0;font-size:14.5px;color:#b9b3a6}
+
+@media (max-width:520px){
+  body{font-size:15px}
+  .wrap{padding:0 18px}
+  .bar{padding:12px 18px}
+  .bar nav{display:none}
+  .hero{grid-template-columns:1fr;height:auto;padding:28px 18px 40px;gap:26px;align-items:start}
+  .hero h1{font-size:62px}
+  .hero .lede{font-size:16px}
+  .column{height:440px;order:2;margin:0 -18px}
+  .column svg{width:230px;height:345px}
+  .tag{left:18px;bottom:18px}
+  .stage{padding-top:44px}
+  .stage h2,.handoff h2,.sizing h2,.ship h2{font-size:30px!important}
+  .frames{grid-template-columns:1fr;gap:1px}
+  .fr{height:300px}
+  .split{grid-template-columns:1fr;height:auto}
+  .split div{height:180px;transform:none!important}
+  .shop{margin-top:56px}
+  .filters{top:49px;gap:7px;overflow-x:auto;flex-wrap:nowrap;padding:12px 0}
+  .f{flex:0 0 auto}
+  .showing{margin-left:0;flex:0 0 auto}
+  .grid{grid-template-columns:1fr;gap:1px}
+  .plate{height:300px}
+  .chips{gap:5px}
+  .chip{flex:1;width:auto}
+  .bag{grid-template-columns:1fr;gap:20px;padding:24px 18px}
+  .sizing,.ship{grid-template-columns:1fr;gap:26px;margin-top:56px}
+  .diagram{height:300px}
+  .care{grid-template-columns:1fr;margin-top:56px}
+  .revs{grid-template-columns:1fr;gap:28px;margin-top:56px}
+  .colo{grid-template-columns:1fr;gap:24px;margin-top:56px}
+  th,td{padding:11px 4px;font-size:13px}
+}
+.note{padding:0 0 60px;font-size:11.5px;color:var(--mut);max-width:720px}
+</style></head><body>
+
+<div class="bar">
+  <span class="brand">Marlow &amp; Vale</span>
+  <nav class="k"><span>Lookbook</span><span>Shop</span><span>Sizing</span><span>Care</span><span>Shipping</span></nav>
+  <span class="bagbtn">Bag (2) — £243</span>
+</div>
+
+<section class="hero">
+  <div>
+    <p class="k">Leeds · Autumn</p>
+    <h1>One<br>price<br><em>all year</em></h1>
+    <p class="lede">Clothes made in four factories we have been to, sold at one price all year.</p>
+    <div class="cue"><span class="k">Scroll to unroll</span><span class="rail"><i></i></span></div>
+  </div>
+  <div class="column"><svg viewBox="0 0 200 300" width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M80 48 L100 66 L120 48 L120 37 L80 37 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M63 92 L137 92" /><path d="M68 118 h26 v30 h-26 z" /><path d="M106 118 h26 v30 h-26 z" /><path d="M72 162 h26 v34 h-26 z" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="78" r="2.4"/><circle cx="95" cy="108" r="2.4"/><circle cx="95" cy="138" r="2.4"/><circle cx="95" cy="168" r="2.4"/><circle cx="95" cy="198" r="2.4"/></g>
+  </g></svg><span class="tag">01 — Chore Jacket · 12oz canvas · £165</span></div>
+</section>
+
+<div class="wrap">
+  <section class="stage">
+    <p class="k">The unroll — one continuous length of cloth</p>
+    <h2 style="font-size:46px;margin-top:14px;max-width:820px">The camera never cuts. It pushes in, holds on the construction, and pulls back out.</h2>
+    <div class="frames">
+      <div class="fr f1"><b>01 / ENTRY</b><svg viewBox="0 0 200 300" width="240" height="360" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M82 48 L100 66 L118 48 L126 39 L74 39 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M68 122 h26 v7 h-26 z" /><path d="M106 122 h26 v7 h-26 z" /><path d="M63 204 L137 204" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="84" r="2.4"/><circle cx="95" cy="114" r="2.4"/><circle cx="95" cy="144" r="2.4"/><circle cx="95" cy="174" r="2.4"/><circle cx="95" cy="202" r="2.4"/></g>
+  </g></svg><p>Wool Overshirt — 80% wool, 20% nylon, brushed. £210</p></div>
+      <div class="fr f2"><b>02 / HOLD</b><svg viewBox="0 0 200 300" width="240" height="360" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M82 48 L100 66 L118 48 L126 39 L74 39 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M68 122 h26 v7 h-26 z" /><path d="M106 122 h26 v7 h-26 z" /><path d="M63 204 L137 204" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="84" r="2.4"/><circle cx="95" cy="114" r="2.4"/><circle cx="95" cy="144" r="2.4"/><circle cx="95" cy="174" r="2.4"/><circle cx="95" cy="202" r="2.4"/></g>
+  </g></svg><p>Warm enough to be the only layer down to about 8°C.</p></div>
+      <div class="fr f3"><b>03 / RELEASE</b><svg viewBox="0 0 200 300" width="240" height="360" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L64 208 L136 208 L134 104 L142 52 Z" />
+    <path d="M78 48 Q100 74 122 48 L122 38 Q100 62 78 38 Z" fill="#c7bda9"/>
+    
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><g opacity=".55"><path d="M74 110 L74 196" /><path d="M88 110 L88 196" /><path d="M102 110 L102 196" /><path d="M116 110 L116 196" /><path d="M130 110 L130 196" /></g><path d="M64 192 L136 192" /></g>
+    <g fill="#12151a" stroke="none"></g>
+  </g></svg><p>Lambswool Crew — fully fashioned, spun in Scotland. £135</p></div>
+    </div>
+    <div class="scrub"><span class="k">04 / 09</span><span class="track"><i></i><s></s></span><span class="k">Lambswool Crew</span></div>
+  </section>
+
+  <section class="handoff">
+    <p class="k">The handoff — the same column becomes the shop</p>
+    <h2 style="font-size:46px;margin-top:14px;max-width:760px">The last frame splits into three and keeps its cloth.</h2>
+    <div class="split">
+      <div><svg viewBox="0 0 200 300" width="150" height="225" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L64 208 L136 208 L134 104 L142 52 Z" />
+    <path d="M78 48 Q100 74 122 48 L122 38 Q100 62 78 38 Z" fill="#c7bda9"/>
+    
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><g opacity=".55"><path d="M74 110 L74 196" /><path d="M88 110 L88 196" /><path d="M102 110 L102 196" /><path d="M116 110 L116 196" /><path d="M130 110 L130 196" /></g><path d="M64 192 L136 192" /></g>
+    <g fill="#12151a" stroke="none"></g>
+  </g></svg><span style="position:absolute;top:14px;left:16px">Card 07</span></div>
+      <div><svg viewBox="0 0 200 300" width="150" height="225" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M76 46 L100 92 L124 46 L136 58 L110 108 L100 212 L90 108 L64 58 Z" fill="#c7bda9"/>
+    
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><g opacity=".5"><path d="M72 118 L72 202" /><path d="M82 124 L82 202" /><path d="M118 124 L118 202" /><path d="M128 118 L128 202" /></g><path d="M63 206 L137 206" /></g>
+    <g fill="#12151a" stroke="none"></g>
+  </g></svg><span style="position:absolute;top:14px;left:16px">Card 08</span></div>
+      <div><svg viewBox="0 0 200 300" width="150" height="225" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round">
+      <path d="M52 60 L148 60 L150 92 L156 190 L108 190 L100 150 L92 190 L44 190 L50 92 Z" />
+      <path d="M52 60 L148 60 L149 82 L51 82 Z" fill="#c7bda9"/>
+      <g fill="none">
+        <path d="M100 82 L100 150" />
+        <path d="M47 180 L92 180" /><path d="M108 180 L153 180" />
+        <path d="M56 90 q12 10 16 26" /><path d="M144 90 q-12 10 -16 26" />
+        <g stroke-dasharray="3 3" opacity=".8"><path d="M100 62 L100 80" /><path d="M112 62 L112 80" /><path d="M124 62 L124 80" /><path d="M136 62 L136 80" /></g>
+      </g>
+      <g fill="#12151a" stroke="none"><circle cx="76" cy="71" r="2.3"/></g>
+    </g></svg><span style="position:absolute;top:14px;left:16px">Card 09</span></div>
+    </div>
+  </section>
+
+  <section class="shop">
+    <div class="filters">
+      <span class="f on">All (9)</span>
+      <span class="f">Shirts (2)</span><span class="f">Outerwear (2)</span><span class="f">Trousers (3)</span><span class="f">Knitwear (2)</span>
+      <span class="showing">Showing 9 of 9 garments.</span>
+    </div>
+    <div class="grid">
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M82 50 L100 68 L118 50 L122 41 L78 41 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M68 122 h26 v28 h-26 z" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="86" r="2.4"/><circle cx="95" cy="112" r="2.4"/><circle cx="95" cy="138" r="2.4"/><circle cx="95" cy="164" r="2.4"/><circle cx="95" cy="190" r="2.4"/></g>
+  </g></svg><span class="plateno">01</span></div>
+  <header><h3>The Oxford Shirt</h3><span class="price">£78</span></header>
+  <p class="cat">Shirts</p>
+  <p class="detail">Cut straight through the body with a soft collar that stands without fusing.</p>
+  <p class="fabric">100% long-staple cotton oxford, 140gsm, woven in Portugal</p>
+  <p class="colours">White · Pale blue · Faded navy</p>
+  <div class="chips"><span class="chip out">XS</span><span class="chip">S</span><span class="chip">M</span><span class="chip">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L32 66 L24 122 L64 132 L66 104 Z" />
+    <path d="M142 52 L168 66 L176 122 L136 132 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <g fill="none"><path d="M78 50 Q100 76 122 50"/><path d="M81 55 Q100 79 119 55"/></g>
+    
+    <g fill="none"><path d="M63 204 L137 204" /></g>
+    <g fill="#12151a" stroke="none"></g>
+  </g></svg><span class="plateno">02</span></div>
+  <header><h3>Heavy Cotton Tee</h3><span class="price">£34</span></header>
+  <p class="cat">Shirts</p>
+  <p class="detail">Heavy enough to hold its shape after a year of washing.</p>
+  <p class="fabric">100% organic cotton, 240gsm, tubular knit</p>
+  <p class="colours">White · Black · Ecru · Washed olive</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip">S</span><span class="chip">M</span><span class="chip">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M80 48 L100 66 L120 48 L120 37 L80 37 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M63 92 L137 92" /><path d="M68 118 h26 v30 h-26 z" /><path d="M106 118 h26 v30 h-26 z" /><path d="M72 162 h26 v34 h-26 z" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="78" r="2.4"/><circle cx="95" cy="108" r="2.4"/><circle cx="95" cy="138" r="2.4"/><circle cx="95" cy="168" r="2.4"/><circle cx="95" cy="198" r="2.4"/></g>
+  </g></svg><span class="plateno">03</span></div>
+  <header><h3>Chore Jacket</h3><span class="price">£165</span></header>
+  <p class="cat">Outerwear</p>
+  <p class="detail">Three patch pockets, a corozo button front, and a back yoke.</p>
+  <p class="fabric">12oz cotton canvas, unlined</p>
+  <p class="colours">Indigo · Sand</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip out">S</span><span class="chip on">M</span><span class="chip">L</span><span class="chip out">XL</span></div>
+  <button class="add ready">Add size M — £165</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M82 48 L100 66 L118 48 L126 39 L74 39 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M68 122 h26 v7 h-26 z" /><path d="M106 122 h26 v7 h-26 z" /><path d="M63 204 L137 204" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="84" r="2.4"/><circle cx="95" cy="114" r="2.4"/><circle cx="95" cy="144" r="2.4"/><circle cx="95" cy="174" r="2.4"/><circle cx="95" cy="202" r="2.4"/></g>
+  </g></svg><span class="plateno">04</span></div>
+  <header><h3>Wool Overshirt</h3><span class="price">£210</span></header>
+  <p class="cat">Outerwear</p>
+  <p class="detail">Warm enough to be the only layer down to about 8°C.</p>
+  <p class="fabric">80% wool, 20% nylon, brushed</p>
+  <p class="colours">Charcoal · Oat</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip">S</span><span class="chip">M</span><span class="chip">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round">
+      <path d="M52 30 L148 30 L146 60 L140 286 L108 286 L100 150 L92 286 L60 286 L54 60 Z" />
+      <path d="M52 30 L148 30 L147 48 L53 48 Z" fill="#c7bda9"/>
+      <g fill="none">
+        <path d="M84 48 L90 190" /><path d="M116 48 L110 190" />
+        <path d="M100 48 L100 150" />
+        <path d="M60 276 L92 276" /><path d="M108 276 L140 276" />
+        <path d="M58 56 q14 12 20 30" /><path d="M142 56 q-14 12 -20 30" />
+      </g>
+      <g fill="#12151a" stroke="none"><circle cx="100" cy="39" r="2.4"/></g>
+    </g></svg><span class="plateno">05</span></div>
+  <header><h3>Pleated Trouser</h3><span class="price">£120</span></header>
+  <p class="cat">Trousers</p>
+  <p class="detail">A single forward pleat, a mid rise, and a leg that tapers from the knee.</p>
+  <p class="fabric">58% wool, 42% cotton twill</p>
+  <p class="colours">Black · Stone · Brown</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip">S</span><span class="chip out">M</span><span class="chip">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round">
+      <path d="M54 32 L146 32 L144 62 L138 288 L106 288 L100 154 L94 288 L62 288 L56 62 Z" />
+      <path d="M54 32 L146 32 L145 50 L55 50 Z" fill="#c7bda9"/>
+      <g fill="none" stroke-dasharray="4 3" opacity=".85">
+        <path d="M68 58 h28 q0 24 -14 28 q-14 -4 -14 -28 z" />
+        <path d="M104 58 h28 q0 24 -14 28 q-14 -4 -14 -28 z" />
+        <path d="M100 50 L100 154" />
+        <path d="M62 278 L94 278" /><path d="M106 278 L138 278" />
+        <path d="M55 50 L145 50" />
+      </g>
+      <g fill="#12151a" stroke="none"><circle cx="100" cy="41" r="2.3"/></g>
+    </g></svg><span class="plateno">06</span></div>
+  <header><h3>Straight Jean</h3><span class="price">£98</span></header>
+  <p class="cat">Trousers</p>
+  <p class="detail">Rigid, not stretch. Stiff for two weeks and then fits only you.</p>
+  <p class="fabric">13.5oz rigid cotton denim, selvedge</p>
+  <p class="colours">Rinse · Mid wash · Ecru</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip">S</span><span class="chip">M</span><span class="chip">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L64 208 L136 208 L134 104 L142 52 Z" />
+    <path d="M78 48 Q100 74 122 48 L122 38 Q100 62 78 38 Z" fill="#c7bda9"/>
+    
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><g opacity=".55"><path d="M74 110 L74 196" /><path d="M88 110 L88 196" /><path d="M102 110 L102 196" /><path d="M116 110 L116 196" /><path d="M130 110 L130 196" /></g><path d="M64 192 L136 192" /></g>
+    <g fill="#12151a" stroke="none"></g>
+  </g></svg><span class="plateno">07</span></div>
+  <header><h3>Lambswool Crew</h3><span class="price">£135</span></header>
+  <p class="cat">Knitwear</p>
+  <p class="detail">Fully fashioned, so the panels are knitted to shape.</p>
+  <p class="fabric">100% lambswool, spun in Scotland</p>
+  <p class="colours">Navy · Grey melange · Rust</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip">S</span><span class="chip">M</span><span class="chip out">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M76 46 L100 92 L124 46 L136 58 L110 108 L100 212 L90 108 L64 58 Z" fill="#c7bda9"/>
+    
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><g opacity=".5"><path d="M72 118 L72 202" /><path d="M82 124 L82 202" /><path d="M118 124 L118 202" /><path d="M128 118 L128 202" /></g><path d="M63 206 L137 206" /></g>
+    <g fill="#12151a" stroke="none"></g>
+  </g></svg><span class="plateno">08</span></div>
+  <header><h3>Shawl Cardigan</h3><span class="price">£155</span></header>
+  <p class="cat">Knitwear</p>
+  <p class="detail">A heavy shawl collar that stays up without a scarf.</p>
+  <p class="fabric">70% wool, 30% alpaca</p>
+  <p class="colours">Charcoal · Camel</p>
+  <div class="chips"><span class="chip out">XS</span><span class="chip out">S</span><span class="chip">M</span><span class="chip">L</span><span class="chip">XL</span></div>
+  <button class="add">Choose a size</button>
+</article>
+<article class="card">
+  <div class="plate"><svg viewBox="0 0 200 300" width="210" height="315" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round">
+      <path d="M52 60 L148 60 L150 92 L156 190 L108 190 L100 150 L92 190 L44 190 L50 92 Z" />
+      <path d="M52 60 L148 60 L149 82 L51 82 Z" fill="#c7bda9"/>
+      <g fill="none">
+        <path d="M100 82 L100 150" />
+        <path d="M47 180 L92 180" /><path d="M108 180 L153 180" />
+        <path d="M56 90 q12 10 16 26" /><path d="M144 90 q-12 10 -16 26" />
+        <g stroke-dasharray="3 3" opacity=".8"><path d="M100 62 L100 80" /><path d="M112 62 L112 80" /><path d="M124 62 L124 80" /><path d="M136 62 L136 80" /></g>
+      </g>
+      <g fill="#12151a" stroke="none"><circle cx="76" cy="71" r="2.3"/></g>
+    </g></svg><span class="plateno">09</span></div>
+  <header><h3>Camp Short</h3><span class="price">£64</span></header>
+  <p class="cat">Trousers</p>
+  <p class="detail">A 7 inch inseam and an elasticated back half of the waistband.</p>
+  <p class="fabric">8oz washed cotton twill</p>
+  <p class="colours">Khaki · Navy</p>
+  <div class="chips"><span class="chip">XS</span><span class="chip">S</span><span class="chip">M</span><span class="chip">L</span><span class="chip out">XL</span></div>
+  <button class="add">Choose a size</button>
+</article></div>
+
+    <div class="bag">
+      <div>
+        <p class="k">Your bag — 2 items</p>
+        <div class="line"><span>Chore Jacket — size M</span><span>£165 &nbsp; <span class="rm">Remove</span></span></div>
+        <div class="line"><span>Heavy Cotton Tee — size L</span><span>£34 &nbsp; <span class="rm">Remove</span></span></div>
+        <div class="line"><span>Camp Short — size S</span><span>£64 &nbsp; <span class="rm">Remove</span></span></div>
+      </div>
+      <div>
+        <div class="sub"><span>Subtotal</span><span>£263.00</span></div>
+        <div class="prog"><i></i></div>
+        <p class="k" style="color:var(--acc)">Delivery free — over £100</p>
+        <div class="sub" style="font-size:15px;font-weight:400;color:var(--mut)"><span>Total</span><span>£263.00</span></div>
+        <button class="checkout">Checkout</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sizing">
+    <div class="diagram"><svg viewBox="0 0 200 300" width="260" height="390" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ded6c6" stroke="#12151a" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 52 L30 66 L20 168 L50 178 L66 104 Z" />
+    <path d="M142 52 L170 66 L180 168 L150 178 L134 104 Z" />
+    <path d="M58 52 L66 104 L63 212 L137 212 L134 104 L142 52 Z" />
+    <path d="M82 50 L100 68 L118 50 L122 41 L78 41 Z" fill="#c7bda9"/>
+    <g fill="none"><path d="M100 62 L100 212"/><path d="M90 64 L90 212"/></g>
+    <g fill="none"><path d="M22 150 L51 160" /><path d="M178 150 L149 160" /><path d="M68 122 h26 v28 h-26 z" /></g>
+    <g fill="#12151a" stroke="none"><circle cx="95" cy="86" r="2.4"/><circle cx="95" cy="112" r="2.4"/><circle cx="95" cy="138" r="2.4"/><circle cx="95" cy="164" r="2.4"/><circle cx="95" cy="190" r="2.4"/></g>
+  </g></svg>
+      <span class="ann" style="top:120px;left:20px">chest 104</span>
+      <span class="ann" style="top:230px;left:20px">waist 90</span>
+      <span class="ann" style="top:180px;right:20px">sleeve 65</span>
+    </div>
+    <div>
+      <p class="k">Sizing — measured on the body, in centimetres</p>
+      <h2 style="font-size:46px;margin-top:14px">The size chart</h2>
+      <table><tr><th>Size</th><th>Chest</th><th>Waist</th><th>Sleeve</th></tr>
+        <tr><td>XS</td><td>88 cm</td><td>74 cm</td><td>61 cm</td></tr><tr><td>S</td><td>96 cm</td><td>82 cm</td><td>63 cm</td></tr><tr><td>M</td><td>104 cm</td><td>90 cm</td><td>65 cm</td></tr><tr><td>L</td><td>112 cm</td><td>98 cm</td><td>66 cm</td></tr><tr><td>XL</td><td>120 cm</td><td>107 cm</td><td>67 cm</td></tr>
+      </table>
+      <p class="advice">Between two sizes? Everything except the knitwear is cut with room, so take the smaller one.</p>
+    </div>
+  </section>
+
+  <section class="care">
+    <div class="f2"><b>Care / 01</b>Everything here is washable at 30°C except the knitwear and the wool overshirt, which are hand wash or wool cycle only.</div><div class="f2"><b>Care / 02</b>Nothing we sell should go in a tumble dryer.</div><div class="f2"><b>Care / 03</b>The denim is unwashed. Wash it cold and inside out, and expect it to bleed onto light upholstery for the first few wears.</div><div class="f2"><b>Care / 04</b>We will repair anything we made, for as long as we are trading. Send it back and we quote before doing the work.</div>
+  </section>
+
+  <section class="ship">
+    <div><p class="k">Shipping &amp; returns</p><h2 style="font-size:46px;margin-top:14px">Three regions,<br>sixty days.</h2></div>
+    <ul><li>Free delivery on orders over £100, otherwise £4.95. Two to three working days in the UK.</li><li>Europe is £12 and five to seven working days, duties included.</li><li>Rest of the world is £22 and seven to fourteen working days, duties not included.</li><li>60 days to return anything unworn with its tags on, and return postage is free in the UK.</li><li>Exchanges for a different size ship the same day the return is scanned, so you are not waiting twice.</li></ul>
+  </section>
+
+  <section class="revs">
+    <div class="rev"><p>“I am 5ft 9in and it is the first shirt in years that has not been too short in the body. The collar does what they say it does.”</p><cite>Priya N. — bought The Oxford Shirt, M</cite></div><div class="rev"><p>“Genuinely stiff for the first fortnight, exactly as warned. Now they are the only pair I wear. Sizing ran true for me.”</p><cite>Daniel O. — bought Straight Jean, 32</cite></div><div class="rev"><p>“Softer than I expected for the weight. It pilled a little under the arms in the first month and then settled.”</p><cite>Marta K. — bought Lambswool Crew, S</cite></div>
+  </section>
+
+  <section class="colo">
+    <div><p class="k">01</p><p>Eleven people, one shop in Leeds, and a website. We make about thirty styles a year and keep the ones that sell for a decade.</p></div><div><p class="k">02</p><p>Every garment is made in one of four factories we have visited, and each product page names which one.</p></div><div><p class="k">03</p><p>We do not run sales. The price is the price all year, and it is the same price in the shop as it is here.</p></div>
+  </section>
+  <p class="note">Garment images on this site are drawn technical illustrations of each style, not photographs of stock.</p>
+</div>
+</body></html>

@@ -1,0 +1,501 @@
+
+
+===== PHASE 1 — visual directions and plans =====
+
+$ C:\Users\User\.local\bin\claude.exe (claude)
+
+Work in the project at C:/Users/User/Downloads/dreative-test-bed/dreative-testbed/runs/clothing-motion__with-a__202609170405
+
+Build a distinctive, motion-led ecommerce experience for this fictional clothing label. I want ambitious art direction and perceptible continuity as I scroll, including authored image framing and a transition that carries the visual idea into the shopping experience. It must feel good in motion, not only in a screenshot. Source or create coherent, representative clothing imagery; do not imply those images are verified photographs of this fictional inventory. Consider video, pixelation, parallax, or a spatial treatment where they strengthen your concept, and choose the approach rather than adding every effect. Briefly compare two materially different creative treatments, choose the strongest autonomously, and build one faithful prototype slice with its entry and exit before completing the route. Nobody is available to answer during the build. Preserve the practical shopping flow: seeing garments, checking sizes, filtering, and using the bag on desktop and touch mobile. Test normal motion and reduced motion separately. A successful result should be memorable and coherent beyond the hero while remaining easy to buy from.
+
+`src/App.jsx` holds the required content and behaviour as unstyled markup in no meaningful order, and `src/styles.css` is empty. There is no existing design to keep or improve. Decide what sections this page has, in what order, and what it looks like.
+
+Use the Dreative skill for this work. It is installed in this project. Use the recommended delivery profile and infer routine configuration. This profile is not a visual design selection. If a visual-direction phase is appended, stop at its selection gate. Otherwise this is an autonomous one-pass run: choose a design and complete it without waiting for a reply.
+
+Work only inside this directory. Preserve the following, which are product requirements rather than design opinions:
+- All nine garments with their exact names, categories, prices, colour lists, fabric statements, and detail sentences
+- The per-garment sold-out sizes, which cannot be added to the bag: XS on the Oxford Shirt, S and XL on the Chore Jacket, M on the Pleated Trouser, L on the Lambswool Crew, XS and S on the Shawl Cardigan, XL on the Camp Short
+- The category filter, including its counts and the All state
+- Choosing a size before adding to the bag, and the bag itself, which must name each line's garment, size, and price, allow a line to be removed, and show a running subtotal
+- The delivery thresholds and the amount still needed to reach free delivery over £100
+- The full size chart — every size row with its chest, waist, and sleeve measurement in centimetres — and the between-sizes advice
+- Every care fact, including which garments cannot be machine washed, that nothing goes in a tumble dryer, that the denim is unwashed and will bleed, and the repair offer
+- The shipping and returns statement for all three regions, the 60 day return window, and the same-day exchange
+- All three customer reviews with their names and what they bought
+- The three shop facts: eleven people and one shop in Leeds, four named factories, and that there are never any sales
+
+When you are done, make sure `npm run build` succeeds. Do not commit anything.
+
+VISUAL DIRECTION GATE — phase 1 of 2. Do not implement the website yet.
+
+Generate multiple materially different page design images (normally two or three), each
+with a concrete plan. Explore composition, typography, imagery and structure through the
+working middle and ending, not palette variants of one hero. Inspect the actual generated
+images. Use supplied subject material and preserve the brief's real content and behavior.
+For each option explain the primary journey, asset sourcing/generation, mobile adaptation,
+implementation approach, motion/scroll ideas where useful, uncertainties and relative cost.
+Recommend one with a reason in its plan; do not choose it on the reviewer's behalf.
+
+Save the actual PNG/JPEG/WebP mockups under design/ in this run directory, and write
+design-directions.json with this exact transport shape (replace the examples):
+{"version":1,"directions":[{"id":"direction-a","title":"First direction","images":["design/a.png"],"plan":"Concrete plan for this direction"},{"id":"direction-b","title":"Second direction","images":["design/b.png"],"plan":"Concrete plan for this direction"}]}
+Use multiple related images per direction when necessary. The testbed displays these
+files and plans directly; no coded gallery, site build or delivery finalization is needed
+in phase one. Do not change src/ to implement a direction. A prompt or source URL is not
+a generated mockup. Discover actual image-generation capability. If unavailable, record
+the precise blocker in design-blocker.md and end the turn; do not fake images or skip
+selection. The reviewer can supply visual alternatives before resuming the gate.
+
+Stop after presenting the direction images and plans. Wait for an explicit selection.
+The same session will receive the selected id, image paths, plan and feedback in phase two.
+
+---
+
+I'll start by invoking the Dreative skill, which governs this work.
+  → Skill
+
+  → Bash
+
+  → Bash PLAN.md
+
+  → Bash
+
+  → Bash
+
+  → Bash references/VISUAL_DESIGN.md
+
+  → Bash references/MEDIA_SOURCES.md
+
+  → ToolSearch
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\AppData\Local\Temp\claude\C--Users-User-Downloads-dreative-test-bed-dreative-testbed-runs-clothing-motion--with-a--202609170405\1181b91d-9e4d-4ecc-9625-d32a59091c21\tasks\bffd94z7u.output
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shoot.mjs
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\contact.png
+
+  → Read C:\Users\User\AppData\Local\Temp\claude\C--Users-User-Downloads-dreative-test-bed-dreative-testbed-runs-clothing-motion--with-a--202609170405\1181b91d-9e4d-4ecc-9625-d32a59091c21\tasks\bffd94z7u.output
+
+  → Bash
+Now I'll author the garment flats (coherent, drawn — not photographs of fictional inventory) and inspect them.
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\flats.mjs
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\flatsheet.mjs
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\flats.png
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\flats.mjs
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\flats.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\flats.png
+Now I'll author the two direction mockups as real rendered page compositions.
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\content.mjs
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\a.mjs
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\crop.mjs
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmp1.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmp2.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmp4.png
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\b.mjs
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmpb1.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmpb1.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmpb1.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmpb2.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\tmpb4.png
+
+  → Bash
+
+  → Bash
+Now rendering the final deliverable mockups at desktop and mobile.
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\a-5-mobile-shop.png
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design-blocker.md
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\write-directions.mjs
+
+  → Bash
+
+  → Bash
+Two directions are ready at the selection gate. `src/` is untouched.
+
+## What I found first
+
+There is **no callable image generator here** — no MCP servers, no generation credentials, no local diffusion tooling. Stock sourcing was also mostly closed: Pexels' API needs a key, Unsplash serves a bot challenge to both curl and a real Chromium session, and Pexels' rendered gallery rate-limits after about two searches. I recorded all of it in `design-blocker.md`, along with the substitution I used instead of skipping the gate: both directions are **actual page compositions authored in HTML/CSS/SVG/canvas and rendered to PNG through headless Chromium** at 1440px and 390px. Real images of real designs — not prompts, not sourced references relabelled.
+
+The garment imagery is authored too: nine drawn technical flats on one shared scale, which I redrew twice after inspecting them at plate size (the first pass read as icons, the second as coats). They never imply photographs of fictional inventory, and both designs say so on the page.
+
+## The two directions
+
+**A — The Unroll** (`design/a-*.png`). Ink field, Archivo pushed to 125% width for a 132px hero lockup, one vermilion for state only. One "cloth column" holds plate 01 in the hero and is the *same element* that later splits into the product grid — continuity is literal. A pinned stage scrub-scrubs nine authored crops (push in on the corozo buttons, pull back out), then FLIPs into the shop. All motion budget on one continuous camera; no video, no pixelation.
+
+**B — Plate & Press** (`design/b-*.png`). A printed catalogue on paper: Instrument Serif against Roboto Mono captions, nine numbered plates on a ruled contact sheet. The focal device is a genuine halftone — a canvas routine samples each photograph, auto-levels it, and prints it back as ink dots, with the cell shrinking from coarse to fine as the image crosses the fold. That one is **already working in the mockup**, which is why the three resolve states in `b-1-opening.png` are rendered rather than described. Filtering re-registers the sheet; choosing a plate lifts it off the sheet into the opened view beside the bag.
+
+Both carry the whole route — all nine garments with exact copy and sold-out sizes, the filter with counts and the All state, the bag with named lines and subtotal and the free-delivery gap, the full five-row chart, every care fact, all three shipping regions, the three reviews, the three shop facts.
+
+**I recommend B**, and the reason is in its plan: its focal device is built rather than promised, its continuity sits inside the shopping task instead of in front of it, and it is the only one of the two that could absorb real photography later without a redesign — it already mixes drawn plates with halftoned photographs. A has the more spectacular opening but spends its budget on a runway before the first garment, and its FLIP across a sticky boundary is the riskiest thing in either plan.
+
+One honest caveat on B's mockup: the frontispiece halftone is handsome but abstract — you can't quite read it as a collar. Fixable with a different crop in phase two.
+
+`design-directions.json` is written in the required shape. Stopping here for your selection — tell me the id (or ask for a revision), and phase two builds the prototype slice first: for B, one plate resolving on real scroll and FLIPping into the opened view, with its entry and exit, at both widths.
+
+===== PHASE 2 — the full route =====
+
+$ C:\Users\User\.local\bin\claude.exe (claude)
+
+VISUAL DIRECTION SELECTED — phase 2 of 2. Implement the selected design now.
+
+Selected id: direction-b
+Title: Plate & Press — printed catalogue that halftones as you scroll
+Design image paths (open and inspect these actual files): design/b-1-opening.png, design/b-2-sheet.png, design/b-3-ending.png, design/b-4-mobile.png, design/b-5-mobile-sheet.png
+Plan: PLATE & PRESS — a printed catalogue on paper, where every photograph prints itself in halftone as you reach it.
+
+THE IDEA
+The shop is a printed object. Warm paper #EFE9DD, ink #16150F, one press red #B3301C for registration and
+state. Instrument Serif at 62px for the voice, Roboto Mono at 10.5px for every technical caption, Newsreader
+for reading text — the split between "editorial" and "specification" is the whole typographic system.
+The nine garments are nine numbered plates (I–IX) on a contact sheet. The focal device is a real halftone:
+photographs are re-printed as ink dots on paper by a canvas routine, and the dot cell shrinks from coarse to
+fine as the image crosses the fold — the picture literally prints itself as you arrive. This is already
+working and rendered, not described: see the three states in design/b-1-opening.png.
+
+PRIMARY JOURNEY
+Masthead ("Catalogue eleven — Leeds — no sales, ever") → frontispiece spread: a serif statement beside a
+full-height halftoned photograph, with a real index of all nine plates (roman numeral, name, category,
+price, dotted leaders) that doubles as the fastest route to any garment → The Device band, three states of
+one plate resolving → The Sheet: a registration bar carrying the filter with live counts and the
+"Showing N of 9" line, then a 3×3 ruled contact sheet where each plate carries name, category, price,
+detail, fabric, colours, a single joined five-cell size selector with sold-out cells hatched, and the
+add button → the opened plate: the chosen plate lifted off the sheet and enlarged beside the bag, which
+names each line's garment, size and price with per-line Remove, subtotal, free-delivery progress and total →
+spec sheet (annotated flat + the full five-row chart + between-sizes advice) → Care set as marginalia, mono
+notes in the left margin against large serif statements → Shipping & returns, all three regions, 60 days,
+same-day exchange → three reviews as pull quotes → colophon carrying the three shop facts.
+
+IMAGERY
+Two media, kept strictly apart. Product views are the same nine drawn flats (paper palette) — they are the
+only thing you buy from, and they are labelled as drawn illustrations. Atmosphere is real photography,
+sourced free-licence from Pexels (cotton detail, folded cloth, a making shot), used only halftoned and
+captioned "Representative image · not stock". Because halftone flattens exposure and colour, it unifies
+photographs that do not otherwise belong together — which is exactly the constraint this session is under,
+and the reason this direction is robust to it. Fonts: Instrument Serif, Roboto Mono, Newsreader.
+
+MOTION (the real mechanism)
+Halftone resolve: an offscreen canvas samples each photograph, auto-levels it, and prints it back as ink
+dots; scroll progress across the element drives the dot cell from ~22px to ~3px. One owner, one canvas,
+redrawn on a rAF tick with a work cap, at device-pixel-capped size. Filtering is a registration shift: the
+sheet does not fade, it re-registers — surviving plates FLIP to their new cells with a short red rule sliding
+under the active filter. Selecting a plate lifts it off the sheet and enlarges it into the opened-plate
+region, same node, so the garment you chose is the garment you see. Parallax is absent by design; the paper
+does not float.
+
+MOBILE (390px)
+Masthead stacks, the index stays full-width and stays the fast route. Frontispiece becomes a full-bleed
+halftone below the statement, at a coarser minimum cell so the dots stay legible small. The sheet becomes
+one plate per row with its rules retained; the size selector spans full width so each cell is a 60px+ target;
+the registration bar scrolls horizontally; the opened plate stacks above the bag. Rendered at 390px in
+design/b-4-mobile.png and design/b-5-mobile-sheet.png.
+
+REDUCED MOTION
+Every canvas renders once at its finest cell — the photograph, printed, immediately. Filtering cuts rather
+than re-registers; the plate opens without the lift. The halftone stays, because it is the art direction,
+not the animation.
+
+IMPLEMENTATION
+React + Vite, plain CSS, no runtime dependency. The halftone is ~40 lines of canvas already written and
+proven in design/b.mjs and reusable verbatim. Filter, size selection and bag remain ordinary React state on
+the existing App.jsx logic. The prototype slice to build first is one plate resolving from coarse to fine on
+real scroll and then FLIPping into the opened-plate view — entry, development and exit — at both widths.
+
+UNCERTAINTY
+Canvas cost: several halftone canvases resolving at once on a mid-range phone. Mitigated by only animating
+canvases intersecting the viewport, capping backing-store size, and quantising the cell to a small set of
+steps so most frames are cache hits. Second risk: at very small cells the dot pattern approaches the source
+photo and the device stops reading as a device — the floor stays at ~3px so it always looks printed.
+
+COST
+Lower and more predictable than A. The halftone and the sheet both already exist in working form; the
+remaining work is wiring scroll progress and the plate FLIP.
+
+RECOMMENDED — and here is the concrete reason. Both are ambitious, but B is the one whose ambition survives
+this project's actual constraints. Its focal device is already built and inspected rather than promised; its
+continuity (plate lifts off the sheet, sheet re-registers under the filter) sits *inside* the shopping task
+instead of in front of it, so the brief's "memorable and coherent beyond the hero" and "easy to buy from"
+stop competing; and its imagery strategy is the only one that can absorb photography later without a
+redesign, since it already mixes drawn plates with halftoned photographs. A's pinned nine-frame scrub is the
+more spectacular opening, but it puts its whole budget into a runway before the first garment, and its FLIP
+across a sticky boundary is the single riskiest thing in either plan. Choose A if the lookbook spectacle
+matters more than the sheet; otherwise B.
+User changes: No additional changes.
+Other direction images and plans remain in design-directions.json. Consult them when the
+user's feedback explicitly combines parts of different options; retain the selected base.
+
+Preserve the selected composition, subject scale, typography, structure and visual character.
+Source/generate usable separate assets; keep text and controls live. Build in the real app.
+Compare a representative composition and its adjacent region with the selected image before
+extending the route. Use motion, scroll animation or spatial mechanisms when they serve this
+design and the brief. Prototype uncertain mechanisms with real material and destinations;
+a still does not demonstrate timing. This is not another automatic approval stop.
+
+Inspect the full route and matching reference states at desktop and mobile, test the primary
+task and motion/reduced motion, and correct visible discrepancies. Do not change the reference
+images to match weak implementation. Disclose material deviations. Run npm run build and
+applicable delivery checks before reporting implementation complete.
+
+---
+
+Direction B it is. Starting with real assets — self-hosting the three typefaces and preparing the photographs.
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\fonts.mjs
+
+  → Bash
+
+  → Bash
+
+  → Bash
+Now the halftone engine — the focal mechanism.
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\halftone.js
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\Halftone.jsx
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\flip.js
+Now the application itself.
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\App.jsx
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\styles.css
+Now let me run it and inspect the prototype slice — the halftone resolve and the plate lift — against the reference.
+  → Bash
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots.mjs
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-01-top.png
+The frontispiece prints instantly at load, which undercuts the device at the exact place it's introduced. Fixing that, plus the band's stagger.
+  → Edit C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\Halftone.jsx
+
+  → Edit C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\Halftone.jsx
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\stroke-250.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-05-filter-midshift.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-04-sheet.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-08-opened-and-bag.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\mob-08-opened-and-bag.png
+
+  → Bash
+Now testing reduced motion separately, and re-checking mobile.
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\mob-01-top.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\mob-04-sheet.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-10-spec.png
+Two real defects in the ending: the spec annotations collide with the drawing, and the care numbers drift out of line with their statements. Fixing both.
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-10-spec.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\spec-top.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\spec-top.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-07-lift-midflight.png
+
+  → Bash
+The lift is animating from the wrong source box — it shrinks instead of growing. Measuring the drawing rather than its ground.
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\lift-90.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\w320-spec.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\w320-spec.png
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\rev-B.png
+The band's three captions repeat identical text. Making them a live readout of the press instead, which is both honest and in keeping with the specification idiom.
+  → Bash
+
+  → Bash
+The band's left plate jumps straight to fully inked — a real bug in my "already on screen at load" test, which used `lead` and so fires for any lead above 1.
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\band.png
+
+  → Bash
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\band.png
+
+  → Bash
+
+  → Bash
+Two real blockers from the check: mono text on buttons is below the readability floor, and the masthead eyebrow collides with the wordmark. Fixing both.
+  → Bash
+Checks pass. Final verification pass across the route after the typography changes.
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-01-top.png
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\desk-08-opened-and-bag.png
+
+  → Bash
+
+  → Read C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\design\shots\open-region.png
+
+  → Bash
+
+  → Bash
+
+  → Write C:\Users\User\Downloads\dreative-test-bed\dreative-testbed\runs\clothing-motion__with-a__202609170405\src\assets\CREDITS.md
+**Plate & Press** is built. `npm run build` succeeds and `dreative finalize --claude --profile recommended` prints `DREATIVE_CHECKS_PASSED`. Nothing committed.
+
+## What shipped
+
+The catalogue-as-printed-object from the selected images, in the real app: masthead → frontispiece with the live index of nine plates → the device band → the sheet (filter + 3×3 plates) → opened plate beside the bag → spec sheet → care marginalia → shipping → reviews → colophon.
+
+**The focal device is real.** `src/halftone.js` samples each photograph, auto-levels it and prints it back as ink dots on paper; scroll progress drives the dot cell down a quantised ladder from 26pt to a 3pt floor. One rAF loop and one scroll listener serve every canvas; only intersecting ones print; backing stores are DPR- and width-capped. I verified it under thrash — fast reversal coarsens it back (26pt), forward re-resolves (3pt), resize survives, no errors.
+
+**Continuity sits inside the shopping task.** Filtering re-registers the sheet (surviving plates FLIP to their new cells, rects re-measured every run). Choosing a plate lifts the drawing out of its sheet cell and grows it into the enlarged view. Reduced motion prints everything at the finest cell immediately, cuts instead of re-registering, and skips the lift — the halftone stays, because it is the art direction, not the animation.
+
+## Things I found and fixed by looking
+
+- The frontispiece printed instantly at load, killing the device where it's introduced. Above-the-fold plates now get a timed press stroke instead of scroll travel.
+- That fix had a real bug: the "already on screen" test compared against `lead`, so any lead above 1 matched everything and the band's first plate jumped to 100%. Now it tests the viewport.
+- The lift animated from the plate's paper ground rather than the drawing, so the garment *shrank* into place instead of growing.
+- Care marginalia numbers drifted off their statements; spec annotations collided with the drawing; 19px of horizontal overflow at 320px from those annotations.
+- The finalize check caught two I had not: 10.5px mono on buttons was below the readability floor, and the masthead eyebrow collided with the wordmark.
+
+## Tested
+
+Desktop 1440, mobile 390 with touch, 320, 900, and reduced motion as a separate pass — each driving the full purchase: filter, pick a size, add, remove, check the bag. Sold-out sizes are disabled everywhere (Oxford XS, Chore S/XL, Trouser M, Crew L, Cardigan XS/S, Short XL). Delivery arithmetic verified both sides of the threshold ("£66.00 more for free delivery" → free over £100). Keyboard opens a plate and selects a size. No console errors in any pass; zero horizontal overflow at every width.
+
+## Deviations worth naming
+
+- **Product views are drawn, not photographed** — the consequence of the phase-1 finding that no image generator is callable here and stock search is gated. The four Pexels photographs appear only halftoned, as atmosphere, captioned "Representative image · not stock", credited in `src/assets/CREDITS.md`.
+- **The filter bar is sticky on desktop only.** Below 620px it scrolls away; at two rows tall it cost too much screen, and the finalize check flagged it overlapping plate text.
+- **Mobile spec annotations became a legend under the drawing** rather than hanging off it — there is no margin to hang them in at 320px.
+- **The band's three captions are now live readouts** ("11pt dot · 44% inked") instead of the reference's static 0%/55%/100% labels, since in the real page those values are true and changing.
+- The frontispiece crop is still fairly abstract at full print — the caveat I raised at the gate. I kept the selected image's composition rather than swapping the photograph unasked.
+
+Implementation complete; human taste verdict: awaiting user review.

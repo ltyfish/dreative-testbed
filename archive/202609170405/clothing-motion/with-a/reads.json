@@ -1,0 +1,9 @@
+{
+  "skillFilesRead": {},
+  "toolCalls": {
+    "Bash": 43,
+    "Read": 22,
+    "Write": 8,
+    "Edit": 2
+  }
+}

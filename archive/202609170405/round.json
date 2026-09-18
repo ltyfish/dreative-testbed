@@ -1,0 +1,14 @@
+{
+  "round": "202609170405",
+  "archivedAt": "2026-09-18T02:08:50.653Z",
+  "scenarios": [
+    "clothing-motion"
+  ],
+  "runs": [
+    {
+      "runName": "clothing-motion__with-a__202609170405",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

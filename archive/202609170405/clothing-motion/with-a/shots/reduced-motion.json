@@ -1,0 +1,122 @@
+{
+  "profile": "reduced",
+  "video": "C:\\Users\\User\\Downloads\\dreative-test-bed\\dreative-testbed\\runs\\clothing-motion__with-a__202609170405\\.captures\\reduced-motion.webm",
+  "screenshots": [
+    "C:\\Users\\User\\Downloads\\dreative-test-bed\\dreative-testbed\\runs\\clothing-motion__with-a__202609170405\\.captures\\reduced-entry.png",
+    "C:\\Users\\User\\Downloads\\dreative-test-bed\\dreative-testbed\\runs\\clothing-motion__with-a__202609170405\\.captures\\reduced-development.png",
+    "C:\\Users\\User\\Downloads\\dreative-test-bed\\dreative-testbed\\runs\\clothing-motion__with-a__202609170405\\.captures\\reduced-end.png",
+    "C:\\Users\\User\\Downloads\\dreative-test-bed\\dreative-testbed\\runs\\clothing-motion__with-a__202609170405\\.captures\\reduced-keyboard-focus.png"
+  ],
+  "samples": [
+    {
+      "input": "entry",
+      "y": 0,
+      "height": 6442,
+      "elapsedMs": 727
+    },
+    {
+      "input": "wheel-slow",
+      "y": 405,
+      "height": 6442,
+      "elapsedMs": 1140
+    },
+    {
+      "input": "wheel-slow",
+      "y": 810,
+      "height": 6442,
+      "elapsedMs": 1494
+    },
+    {
+      "input": "wheel-slow",
+      "y": 1215,
+      "height": 6442,
+      "elapsedMs": 1833
+    },
+    {
+      "input": "pause",
+      "y": 1215,
+      "height": 6442,
+      "elapsedMs": 2346
+    },
+    {
+      "input": "wheel-reverse",
+      "y": 765,
+      "height": 6442,
+      "elapsedMs": 2779
+    },
+    {
+      "input": "wheel-fast",
+      "y": 2205,
+      "height": 6442,
+      "elapsedMs": 2949
+    },
+    {
+      "input": "wheel-slow",
+      "y": 2610,
+      "height": 6442,
+      "elapsedMs": 3292
+    },
+    {
+      "input": "wheel-slow",
+      "y": 3015,
+      "height": 6442,
+      "elapsedMs": 3632
+    },
+    {
+      "input": "wheel-slow",
+      "y": 3420,
+      "height": 6442,
+      "elapsedMs": 3974
+    },
+    {
+      "input": "wheel-fast",
+      "y": 4860,
+      "height": 6442,
+      "elapsedMs": 4157
+    },
+    {
+      "input": "wheel-slow",
+      "y": 5265,
+      "height": 6442,
+      "elapsedMs": 4500
+    },
+    {
+      "input": "wheel-slow",
+      "y": 5542,
+      "height": 6442,
+      "elapsedMs": 4839
+    },
+    {
+      "input": "keyboard-home",
+      "y": 0,
+      "height": 6442,
+      "elapsedMs": 5131
+    },
+    {
+      "input": "keyboard-page-down",
+      "y": 787,
+      "height": 6442,
+      "elapsedMs": 5489
+    }
+  ],
+  "errors": [],
+  "reachedEnd": true,
+  "inputCoverage": [
+    "entry",
+    "wheel-slow",
+    "pause",
+    "wheel-reverse",
+    "wheel-fast",
+    "keyboard-home",
+    "keyboard-page-down"
+  ],
+  "device": {
+    "coarsePointer": false,
+    "touchPoints": 0,
+    "reducedMotion": true
+  },
+  "receivedEvents": {
+    "wheel": 11,
+    "keydown": 3
+  }
+}
