@@ -465,11 +465,44 @@ function runSession({ runName, runDir, prompt, sessionId = null, resume = false,
       logStream.write(transcript.end())
       logStream.end()
       rawStream.end()
+      // A session the provider cut off is not a build that chose to stop. Three rounds in a row
+      // were killed mid-work by a usage limit and every one of them was read afterwards as if the
+      // agent had finished and made its choices — the missing refinement pass gets scored as bad
+      // craft, and an absent stage gets scored as an absent decision. Decide it BEFORE anything is
+      // measured: every instrument below reads a half-written build, and an unqualified
+      // `skill files opened: NONE` or `no drivable material to index` under a truncated session
+      // is a reading of an interrupted disk, not a finding about the skill.
+      let truncated = null
+      if (LIMIT_RE.test(providerOutput) || /hit your (session|usage) limit|usage limit reached|rate limit/i.test(providerOutput)) {
+        truncated = 'provider limit'
+      } else if (timedOut) {
+        truncated = 'killed at the time cap'
+      } else {
+        try {
+          const tail = fs.readFileSync(path.join(runDir, 'agent.log'), 'utf8').slice(-4000)
+          if (/hit your (session|usage) limit|usage limit reached|rate limit/i.test(tail)) truncated = 'provider limit'
+        } catch {}
+      }
+      if (truncated) {
+        try {
+          const rj = path.join(runDir, 'run.json')
+          const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
+          fs.writeFileSync(rj, JSON.stringify({ ...meta, truncated }, null, 2))
+        } catch {}
+        log(
+          `[${runName}] TRUNCATED (${truncated}) — this build did not finish. Defects of craft, missing
+    stages and absent decisions are all unattributable here; do not score it against the skill.`,
+        )
+        log(`[${runName}] the readings below are of an interrupted disk, not findings about the skill:`)
+      }
+      // Everything a truncated session prints is a partial state, so it is marked as one on
+      // every line rather than in a banner that scrolls away above it.
+      const mark = truncated ? '[partial] ' : ''
       const reads = transcript.summary()
       if (reads) {
         fs.writeFileSync(path.join(runDir, 'reads.json'), JSON.stringify(reads, null, 2))
         const opened = Object.keys(reads.skillFilesRead)
-        log(`[${runName}] skill files opened: ${opened.length ? opened.join(', ') : 'NONE'}`)
+        log(`[${runName}] ${mark}skill files opened: ${opened.length ? opened.join(', ') : 'NONE'}`)
       }
       // What shipped, materially. An instrument, not a gate — it blocks nothing and advises
       // nothing. Recorded because visual smoke passed `202608262140` with no blockers while
@@ -477,45 +510,28 @@ function runSession({ runName, runDir, prompt, sessionId = null, resume = false,
       let material = null
       try {
         material = writeMaterialSummary(runDir)
-        if (material) log(`[${runName}] material: ${material.verdict}`)
+        if (material) log(`[${runName}] ${mark}material: ${material.verdict}`)
         // Whether the set is one thing, and whether it was treated into one. Needs a browser
         // to decode webp, so it runs after the synchronous record is already on disk.
         if (material) {
           const continuity = await addContinuitySignal(runDir)
-          if (continuity) log(`[${runName}] continuity: ${continuity.note}`)
+          if (continuity) log(`[${runName}] ${mark}continuity: ${continuity.note}`)
           const sections = JSON.parse(fs.readFileSync(path.join(runDir, 'material.json'), 'utf8')).sectionCoverage
-          if (sections) log(`[${runName}] sections: ${sections.note}`)
+          if (sections) log(`[${runName}] ${mark}sections: ${sections.note}`)
         }
       } catch (err) {
         log(`[${runName}] material summary failed: ${err.message}`)
       }
       const mins = ((Date.now() - started) / 60_000).toFixed(1)
-      // A session the provider cut off is not a build that chose to stop. Three rounds in a row
-      // were killed mid-work by a usage limit and every one of them was read afterwards as if the
-      // agent had finished and made its choices — the missing refinement pass gets scored as bad
-      // craft, and an absent stage gets scored as an absent decision. Detect it here and say so
-      // everywhere the run is looked at.
-      let truncated = null
-      try {
-        const tail = fs.readFileSync(path.join(runDir, 'agent.log'), 'utf8').slice(-4000)
-        if (/hit your (session|usage) limit|usage limit reached|rate limit/i.test(tail)) truncated = 'provider limit'
-        else if (timedOut) truncated = 'killed at the time cap'
-      } catch {}
-      if (truncated) {
-        try {
-          const rj = path.join(runDir, 'run.json')
-          const meta = JSON.parse(fs.readFileSync(rj, 'utf8'))
-          fs.writeFileSync(rj, JSON.stringify({ ...meta, truncated }, null, 2))
-        } catch {}
-      }
       log(
         `[${runName}] session finished in ${mins}m (exit ${code})${timedOut ? ' — KILLED AT CAP, duration is a floor not a measurement' : ''}`,
       )
+      // The session is still on disk, so a cut-off build is recoverable rather than lost. Say so
+      // here, next to the truncation, because the round summary below sends you to the review and
+      // the review is the one place that used to drop an uncaptured run entirely.
       if (truncated) {
-        log(
-          `[${runName}] TRUNCATED (${truncated}) — this build did not finish. Defects of craft, missing
-    stages and absent decisions are all unattributable here; do not score it against the skill.`,
-        )
+        log(`[${runName}] recoverable — resume it where it died with:`)
+        log(`    node scripts/continue-run.mjs ${runName}`)
       }
       resolve({ runName, code, minutes: Number(mins), timedOut, truncated, reads, material, sessionId: providerSessionId })
     })
@@ -729,7 +745,10 @@ if (cut.length) {
   console.log(`\n${cut.length} session(s) were CUT OFF BY THE PROVIDER mid-work:`)
   for (const c of cut) console.log(`  ${c.runName}`)
   console.log('These builds did not finish. Craft defects, missing stages and absent decisions in')
-  console.log('them are unattributable — they are not evidence about the skill. Re-run before scoring.')
+  console.log('them are unattributable — they are not evidence about the skill.')
+  console.log('Continue them where they died rather than re-running from nothing:')
+  for (const c of cut) console.log(`  node scripts/continue-run.mjs ${c.runName}`)
+  console.log('They also appear in the review with a Continue button. Score them only after that.')
 }
 
 // An implementation that leaves the seed untouched is incomplete. Visual-direction

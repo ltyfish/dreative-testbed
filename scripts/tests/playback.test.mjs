@@ -90,3 +90,47 @@ test('a stalled Codex phase-two run stays incomplete and exposes session recover
     fs.rmSync(root, { recursive: true, force: true })
   }
 })
+
+// A provider-cut run is never captured — run-all skips capture for a build that did not finish —
+// and it writes no build-error.log, so the review's solo view dropped it entirely and the Continue
+// button it needs was on a card that was never rendered. `202609180358` was lost this way.
+test('a run the provider cut off is offered for recovery even with nothing captured', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dreative-cutoff-test-'))
+  assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir()) + path.sep))
+  let child
+  try {
+    fs.cpSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'), path.join(root, 'scripts'), { recursive: true })
+    fs.mkdirSync(path.join(root, 'scenarios', 'demo'), { recursive: true })
+    fs.writeFileSync(path.join(root, 'scenarios', 'demo', 'scenario.json'), JSON.stringify({ product: 'Demo', preserve: [] }))
+    const runName = 'demo__with-a__cutoff'
+    const run = path.join(root, 'runs', runName)
+    fs.mkdirSync(path.join(run, 'src'), { recursive: true })
+    fs.writeFileSync(path.join(run, 'run.json'), JSON.stringify({
+      scenario: 'demo', arm: 'with-a', seq: 'cutoff', phase: 2,
+      phaseProtocol: 'visual-directions-v1', sessionId: 'c43f0c73-fc72-4ba6-8539-59da4b45ce85',
+      truncated: 'provider limit',
+    }))
+    fs.writeFileSync(path.join(run, 'src', 'styles.css'), 'body { color: black }')
+    const agentLog = path.join(run, 'agent.log')
+    fs.writeFileSync(agentLog, 'usage limit reached')
+    const stale = new Date(Date.now() - 10 * 60_000)
+    fs.utimesSync(agentLog, stale, stale)
+
+    const port = await freePort(0)
+    child = spawn(process.execPath, [path.join(root, 'scripts', 'review.mjs'), '--port', String(port)], {
+      cwd: root, windowsHide: true, detached: process.platform !== 'win32', stdio: ['ignore', 'pipe', 'pipe'],
+    })
+    await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('review did not start')), 15_000)
+      child.once('error', reject)
+      child.stdout.on('data', data => { if (String(data).includes('Blind review ready')) { clearTimeout(timer); resolve() } })
+    })
+    const view = await (await fetch(`http://127.0.0.1:${port}/?v=demo`)).text()
+    assert.match(view, /TRUNCATED \(provider limit\)/)
+    assert.match(view, /Continue this run/)
+    assert.match(view, new RegExp(runName))
+  } finally {
+    if (child) killTree(child.pid)
+    fs.rmSync(root, { recursive: true, force: true })
+  }
+})

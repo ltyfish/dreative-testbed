@@ -252,7 +252,18 @@ function loadSolos(pairs) {
     // A run whose build broke has no screenshot, but it is still the most informative
     // thing in the round — hiding it is how a session that was killed mid-edit silently
     // disappears from the only page anyone opens.
-    const runs = list.filter((r) => !used.has(r.dir) && (isCaptured(r) || buildFailure(r.dir)))
+    // A run the provider cut off is never captured — run-all skips capture for a build that
+    // did not finish — and it writes no build-error.log either, so requiring one of those two
+    // dropped it out of the only page that offers the Continue button, which is exactly the
+    // case that button was written for. A recoverable run is shown with no screenshots; its
+    // card is the banner and the way back into the session.
+    const runs = list.filter(
+      (r) =>
+        !used.has(r.dir) &&
+        (isCaptured(r) ||
+          buildFailure(r.dir) ||
+          (!r.meta.builtAt && !r.meta.rejected && (r.meta.truncated || isResumable(r.dir, r.meta)))),
+    )
     if (!runs.length) continue
     const seq = [...new Set(runs.map((r) => r.meta.seq))].sort().reverse()[0]
     let info = {}
