@@ -27,6 +27,28 @@ selection. The reviewer can supply visual alternatives before resuming the gate.
 Stop after presenting the direction images and plans. Wait for an explicit selection.
 The same session will receive the selected id, image paths, plan and feedback in phase two.`
 
+// Asset-controlled comparison uses browser studies with the same selection transport.
+export function prototypePhase(meta = {}) {
+  if (meta.designProduction !== 'browser-supplied-v1') return PROTOTYPE_PHASE
+  return `VISUAL DIRECTION GATE — phase 1 of 2. Browser prototypes with supplied assets.
+
+Author two materially different visual studies under design/ using the supplied image pack.
+Use live HTML/CSS/JS and actual content. Include a representative moving passage and its
+receiving task; show the working middle and ending in the composition study. Do not build
+two complete sites. Inspect the studies at desktop and mobile, then save actual browser
+screenshots under design/. These are rendered prototypes, not generated page images.
+Do not call an external image generator or stop because none is available. The same
+supplied-assets constraint applies to both arms. Keep src/ unchanged until selection.
+
+Write design-directions.json using this existing selection format:
+{"version":1,"directions":[{"id":"direction-a","title":"First direction","images":["design/a.png"],"plan":"Concrete plan and live prototype path"},{"id":"direction-b","title":"Second direction","images":["design/b.png"],"plan":"Concrete plan and live prototype path"}]}
+Use additional sectional screenshots where helpful. Each plan names the live prototype
+path, compositions, motion actually demonstrated versus planned, task, mobile adaptation,
+asset crops, remaining uncertainty and relative cost. Screenshots alone do not prove motion.
+Recommend one, then stop for the reviewer's selection. Reuse the selected prototype in
+phase two. Do not implement the complete website before selection.`
+}
+
 // Kept for recovery of historical runs made under the coded-slice protocol.
 export const CONTINUE_PHASE = `The demonstrated prototype slice was accepted. Complete the route now.
 Preserve its accepted visual intent, reuse successful material and implementation, and
@@ -48,7 +70,7 @@ Other direction images and plans remain in design-directions.json. Consult them 
 user's feedback explicitly combines parts of different options; retain the selected base.
 
 Preserve the selected composition, subject scale, typography, structure and visual character.
-Source/generate usable separate assets; keep text and controls live. Build in the real app.
+${meta.designProduction === 'browser-supplied-v1' ? 'Keep using the supplied image pack only for photographic material; reuse the selected browser prototype. Do not call external image generation or source additional photos/videos.' : 'Source/generate usable separate assets;'} Keep text and controls live. Build in the real app.
 Compare a representative composition and its adjacent region with the selected image before
 extending the route. Use motion, scroll animation or spatial mechanisms when they serve this
 design and the brief. Prototype uncertain mechanisms with real material and destinations;

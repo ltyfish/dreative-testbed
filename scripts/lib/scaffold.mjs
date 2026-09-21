@@ -3,6 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
+import crypto from 'node:crypto'
 import { validateToolServers } from './tool-config.mjs'
 
 export const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..', '..')
@@ -237,6 +238,11 @@ export function scaffoldRun({ scenario, arm, label, seq, direction, skillTree, s
     JSON.stringify(
       {
         scenario,
+        ...(meta.designProduction ? { designProduction: meta.designProduction } : {}),
+        ...(meta.assetPack ? { assetPack: {
+          ...meta.assetPack,
+          manifestSha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(runDir, 'public', meta.assetPack.manifest))).digest('hex'),
+        } } : {}),
         toolServers: Object.keys(JSON.parse(fs.readFileSync(path.join(runDir, '.mcp.json'), 'utf8')).mcpServers),
         arm,
         seq: index,

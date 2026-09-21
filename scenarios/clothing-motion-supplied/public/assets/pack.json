@@ -1,0 +1,91 @@
+{
+  "id": "mv-representative-v1",
+  "kind": "generated-representative-imagery",
+  "image": "garments.png",
+  "sha256": "86353ff3e7791abed803e2338eb95193809f5d9c7522ac7be5077adc0f3d403b",
+  "width": 1024,
+  "height": 1536,
+  "provenance": {
+    "archive": "202609140700/clothing-motion/with-a/public/media/mv-garment-grid.png",
+    "record": "Archive README records built-in image generation on September 14, 2026 for this fictional project; reused unchanged, not newly generated or actual inventory."
+  },
+  "limitations": [
+    "Each of nine cells is approximately 341 by 512 pixels; do not use it to claim macro detail.",
+    "Outfits are representative concepts, not exact construction or colour-variant evidence.",
+    "Study crops at placement size. Do not present the entire atlas as one product."
+  ],
+  "cells": [
+    {
+      "garmentId": "oxford",
+      "column": 0,
+      "row": 0,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "0% 0%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "tee",
+      "column": 1,
+      "row": 0,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "50% 0%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "chore",
+      "column": 2,
+      "row": 0,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "100% 0%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "overshirt",
+      "column": 0,
+      "row": 1,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "0% 50%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "trouser",
+      "column": 1,
+      "row": 1,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "50% 50%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "jean",
+      "column": 2,
+      "row": 1,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "100% 50%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "knit",
+      "column": 0,
+      "row": 2,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "0% 100%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "cardigan",
+      "column": 1,
+      "row": 2,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "50% 100%",
+      "aspectRatio": "2 / 3"
+    },
+    {
+      "garmentId": "shorts",
+      "column": 2,
+      "row": 2,
+      "cssBackgroundSize": "300% 300%",
+      "cssBackgroundPosition": "100% 100%",
+      "aspectRatio": "2 / 3"
+    }
+  ]
+}

@@ -71,7 +71,7 @@ import { extractSessionId, resolveAgentBinary } from './lib/agent.mjs'
 import { archiveRound } from './lib/archive.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { gateRuns, gateOne } from './lib/gate.mjs'
-import { continuationPrompt, PROTOTYPE_PHASE, RETRY_PHASE } from './lib/prototype.mjs'
+import { continuationPrompt, prototypePhase, RETRY_PHASE } from './lib/prototype.mjs'
 import { DESIGN_PROTOCOL } from './lib/design-directions.mjs'
 import { codexToolArgs } from './lib/tool-config.mjs'
 import { resolveDreativeRepo } from './lib/dreative-runtime.mjs'
@@ -654,7 +654,7 @@ async function runPrototypeJob(job) {
   }
   const first = await runSession({
     ...job,
-    prompt: `${job.prompt}\n${PROTOTYPE_PHASE}`,
+    prompt: `${job.prompt}\n${prototypePhase(job.meta)}`,
     sessionId,
     phase: 'PHASE 1 — visual directions and plans',
   })

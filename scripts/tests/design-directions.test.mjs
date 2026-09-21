@@ -4,7 +4,9 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { DESIGN_PROTOCOL, readDirections, saveDesignSelection, selectedDesign, directionCards } from '../lib/design-directions.mjs'
-import { continuationPrompt, CONTINUE_PHASE } from '../lib/prototype.mjs'
+import { continuationPrompt, CONTINUE_PHASE, prototypePhase, PROTOTYPE_PHASE } from '../lib/prototype.mjs'
+import crypto from 'node:crypto'
+import { scaffoldRun, RUNS } from '../lib/scaffold.mjs'
 import { codexToolArgs, validateToolServers } from '../lib/tool-config.mjs'
 
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=', 'base64')
@@ -72,4 +74,43 @@ test('both providers can receive the same stdio tool configuration without dropp
   assert.ok(args.includes('mcp_servers.images.command="image-server"'))
   assert.ok(args.includes('mcp_servers.images.env."TEST_KEY"="not-a-secret"'))
   assert.throws(() => validateToolServers({ images: {url:'https://example.invalid'} }), /stdio/)
+})
+
+test('supplied-assets arms receive identical imagery and browser-study instructions', t => {
+  const runs = []
+  t.after(() => {
+    for (const run of runs) {
+      assert.ok(path.resolve(run.runDir).startsWith(path.resolve(RUNS) + path.sep))
+      fs.rmSync(run.runDir, { recursive: true, force: true })
+    }
+  })
+  const seq = `test-supplied-${process.pid}-${Date.now()}`
+  for (const arm of ['with-a', 'without']) runs.push(scaffoldRun({ scenario: 'clothing-motion-supplied', arm, seq }))
+  const hashes = runs.map(run => {
+    const meta = JSON.parse(fs.readFileSync(path.join(run.runDir, 'run.json'), 'utf8'))
+    const manifestBytes = fs.readFileSync(path.join(run.runDir, 'public/assets/pack.json'))
+    const pack = JSON.parse(manifestBytes)
+    const hash = crypto.createHash('sha256').update(fs.readFileSync(path.join(run.runDir, 'public/assets/garments.png'))).digest('hex')
+    assert.equal(pack.sha256, hash)
+    assert.equal(meta.assetPack.manifestSha256, crypto.createHash('sha256').update(manifestBytes).digest('hex'))
+    assert.equal(meta.designProduction, 'browser-supplied-v1')
+    assert.equal(new Set(pack.cells.map(cell => cell.garmentId)).size, 9)
+    assert.ok(run.prompt.includes('Use only this pack'))
+    return hash
+  })
+  assert.equal(hashes[0], hashes[1])
+  assert.equal(prototypePhase(runs[0].meta), prototypePhase(runs[1].meta))
+  assert.ok(prototypePhase(runs[0].meta).includes('actual browser'))
+  assert.equal(prototypePhase({}), PROTOTYPE_PHASE)
+})
+
+test('supplied-assets continuation preserves the constraint after selection', t => {
+  const { root } = fixture(t)
+  const metadataFile = path.join(root, 'run.json')
+  const meta = JSON.parse(fs.readFileSync(metadataFile, 'utf8'))
+  fs.writeFileSync(metadataFile, JSON.stringify({ ...meta, designProduction: 'browser-supplied-v1' }))
+  saveDesignSelection(root, { directionId: 'a', feedback: '', evidenceHash: readDirections(root).evidenceHash })
+  const prompt = continuationPrompt(root)
+  assert.ok(prompt.includes('Keep using the supplied image pack only'))
+  assert.ok(!prompt.includes('Source/generate usable separate assets'))
 })
