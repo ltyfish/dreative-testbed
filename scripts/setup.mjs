@@ -12,6 +12,7 @@ import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { ROOT, listScenarios, skillInstalled } from './lib/scaffold.mjs'
+import { resolveDreativeRepo } from './lib/dreative-runtime.mjs'
 
 const argv = process.argv.slice(2)
 const CHECK_ONLY = argv.includes('--check')
@@ -37,12 +38,13 @@ console.log('\nDreative testbed setup\n')
 
 // ---------------------------------------------------------------- node deps
 
-const depsPresent = fs.existsSync(path.join(ROOT, 'node_modules', 'vite'))
+const depsPresent = ['vite', 'react', 'playwright', '@playwright/mcp/cli.js']
+  .every(name => fs.existsSync(path.join(ROOT, 'node_modules', name)))
 if (!depsPresent && !CHECK_ONLY) {
   console.log('Installing dependencies…')
   run('npm', ['install'])
 }
-note(fs.existsSync(path.join(ROOT, 'node_modules', 'vite')), 'node dependencies', 'vite, react, playwright')
+note(['vite', 'react', 'playwright', '@playwright/mcp/cli.js'].every(name => fs.existsSync(path.join(ROOT, 'node_modules', name))), 'node dependencies', 'vite, react, playwright, Playwright MCP')
 
 // ---------------------------------------------------------------- chromium
 //
@@ -80,7 +82,7 @@ note(chromiumOk, 'playwright chromium', chromiumOk ? '' : 'run: npx playwright i
 // arm tests the working tree. Skipping on presence let a pre-strip skill survive three setup
 // runs and would have measured last week's rulebook.
 if (!CHECK_ONLY) {
-  const local = SKILL_FROM ? path.resolve(ROOT, SKILL_FROM) : path.resolve(ROOT, '..', 'Dreative')
+  const local = SKILL_FROM ? path.resolve(ROOT, SKILL_FROM) : resolveDreativeRepo(path.resolve(ROOT, '..', 'Dreative'))
   const cli = path.join(local, 'dist', 'cli', 'index.js')
   if (fs.existsSync(cli)) {
     console.log(`Installing the skill from ${local}…`)
@@ -123,7 +125,7 @@ note(true, 'archived rounds', rounds.length ? rounds.join(', ') : 'none yet')
 const blocking = steps.filter((s) => !s.ok)
 console.log('')
 if (!blocking.length) {
-  console.log('Ready.\n\n  node scripts/run-all.mjs 2       run two random scenarios')
+  console.log('Ready for agent runs. External image generation is not verified by this setup check.\n\n  node scripts/run-all.mjs 2       run two random scenarios')
   console.log('  node scripts/review.mjs          score them blind')
   console.log('  node scripts/archive.mjs         browse every past round\n')
 } else {

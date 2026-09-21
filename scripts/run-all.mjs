@@ -74,6 +74,7 @@ import { gateRuns, gateOne } from './lib/gate.mjs'
 import { continuationPrompt, PROTOTYPE_PHASE, RETRY_PHASE } from './lib/prototype.mjs'
 import { DESIGN_PROTOCOL } from './lib/design-directions.mjs'
 import { codexToolArgs } from './lib/tool-config.mjs'
+import { resolveDreativeRepo } from './lib/dreative-runtime.mjs'
 import { runHealth } from './lib/health.mjs'
 import { writeMaterialSummary, addContinuitySignal } from './lib/material.mjs'
 import { createTranscript } from './lib/transcript.mjs'
@@ -222,7 +223,7 @@ const ARM_DIRECTION = Object.fromEntries(ARMS.map((a) => [a, directionFor(a)]))
 // A skill tree per arm. `git:<ref>` is extracted from the code repository into scratch/,
 // which is why an old skill can be run without checking anything out or disturbing the
 // working tree. A plain path is used as it is.
-const CODE_REPO = process.env.DREATIVE_REPO || path.resolve(ROOT, '..', 'Dreative')
+const CODE_REPO = resolveDreativeRepo(path.resolve(ROOT, '..', 'Dreative'))
 function skillTreeFor(armName) {
   if (!isSkillArm(armName)) return null
   const suffix = armName === 'with' ? null : armName.slice(5)
