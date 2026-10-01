@@ -1,0 +1,215 @@
+<html><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0B0B0A;--bone:#F3EFE6;--signal:#D9531E;--dim:rgba(243,239,230,.55);--line:rgba(243,239,230,.16)}
+body{background:var(--black);color:var(--bone);font-family:'Space Grotesk',sans-serif;-webkit-font-smoothing:antialiased}
+.anton{font-family:Anton,sans-serif;font-weight:400;text-transform:uppercase;line-height:.82;letter-spacing:-.01em}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.duo{position:relative;overflow:hidden;background:#1a0f08;isolation:isolate}
+.duo img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.55) brightness(.82);mix-blend-mode:screen}
+.duo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--signal),#7A2A0B);mix-blend-mode:multiply;opacity:.8;pointer-events:none}
+.duo.cool::after{background:#2B4C7E;opacity:.42}
+.px{position:relative;overflow:hidden;background:#1a0f08;isolation:isolate}
+.px img{image-rendering:pixelated;transform-origin:top left;display:block;filter:grayscale(1) contrast(1.6) brightness(.85);mix-blend-mode:screen}
+.px::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--signal),#7A2A0B);mix-blend-mode:multiply;opacity:.8}
+section{position:relative}
+.bone{background:var(--bone);color:var(--black)}
+.bone .mono{color:rgba(11,11,10,.6)}
+table{width:100%;border-collapse:collapse}
+</style></head><body>
+<section style="height:880px;overflow:hidden">
+ <div class="duo" style="position:absolute;inset:0"><img src="img/g-rail.jpg"></div>
+ <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,10,.55),rgba(11,11,10,.2) 40%,rgba(11,11,10,.92))"></div>
+ <div style="position:absolute;left:36px;right:36px;top:54px;display:flex;justify-content:space-between;align-items:center">
+  <span class="mono">Marlow &amp; Vale</span>
+  <span class="mono">Index &nbsp;&nbsp; Measure &nbsp;&nbsp; Care &nbsp;&nbsp; Shipping &nbsp;&nbsp; Bag (2)</span>
+ </div>
+ <h1 class="anton" style="position:absolute;left:30px;right:30px;top:170px;font-size:236px">Thirty<br>styles<br>a year.</h1>
+ <div style="position:absolute;left:36px;right:36px;bottom:46px;display:flex;justify-content:space-between;align-items:flex-end">
+  <p style="max-width:390px;font-size:15px;line-height:1.5">Clothes made in four factories we have been to, sold at one price all year. Eleven people, one shop in Leeds.</p>
+  <p class="mono" style="color:var(--signal)">Scroll &mdash; the rail moves &rarr;</p>
+ </div>
+</section>
+<section style="height:840px;overflow:hidden;border-top:1px solid var(--line)">
+ <div style="position:absolute;inset:0;opacity:.3"><div class="duo cool" style="position:absolute;inset:0"><img src="img/g-hangers.jpg"></div></div>
+ <div style="position:absolute;left:0;right:0;top:84px;height:3px;background:var(--dim)"></div>
+ <div style="position:absolute;left:-64px;top:104px;display:flex;gap:34px;align-items:flex-start">
+  <figure style="width:330px;transform:translateY(36px);opacity:0.62">
+      <div class="duo" style="height:350px"><img src="img/g-jacketflat.jpg"></div>
+      <figcaption style="margin-top:14px"><p class="anton" style="font-size:22px">Chore Jacket</p>
+      <p class="mono" style="margin-top:8px;color:var(--dim)">Outerwear &mdash; &pound;165</p></figcaption>
+    </figure><figure style="width:330px;transform:translateY(0px);opacity:0.62">
+      <div class="duo" style="height:350px"><img src="img/g-woolcoat.jpg"></div>
+      <figcaption style="margin-top:14px"><p class="anton" style="font-size:22px">Wool Overshirt</p>
+      <p class="mono" style="margin-top:8px;color:var(--dim)">Outerwear &mdash; &pound;210</p></figcaption>
+    </figure><figure style="width:420px;transform:translateY(74px);opacity:1">
+      <div class="duo" style="height:430px"><img src="img/g-knitform.jpg"></div>
+      <figcaption style="margin-top:14px"><p class="anton" style="font-size:30px">Lambswool Crew</p>
+      <p class="mono" style="margin-top:8px;color:var(--dim)">Knitwear &mdash; &pound;135</p></figcaption>
+    </figure><figure style="width:330px;transform:translateY(8px);opacity:0.62">
+      <div class="duo" style="height:350px"><img src="img/g-knitpurple.jpg"></div>
+      <figcaption style="margin-top:14px"><p class="anton" style="font-size:22px">Shawl Cardigan</p>
+      <p class="mono" style="margin-top:8px;color:var(--dim)">Knitwear &mdash; &pound;155</p></figcaption>
+    </figure><figure style="width:330px;transform:translateY(52px);opacity:0.62">
+      <div class="duo" style="height:350px"><img src="img/g-denimdetail.jpg"></div>
+      <figcaption style="margin-top:14px"><p class="anton" style="font-size:22px">Straight Jean</p>
+      <p class="mono" style="margin-top:8px;color:var(--dim)">Trousers &mdash; &pound;98</p></figcaption>
+    </figure>
+ </div>
+ <div style="position:absolute;left:36px;bottom:40px;right:36px;display:flex;justify-content:space-between;align-items:flex-end">
+  <p class="anton" style="font-size:52px;background:var(--black);padding:6px 10px 10px;display:inline-block">The rail<br>travels</p>
+  <p class="mono" style="color:var(--dim);max-width:300px;text-align:right;line-height:2">Vertical scroll drives the rail sideways.<br>Three depth layers move at different rates.</p>
+ </div>
+</section>
+<section style="height:840px;overflow:hidden;border-top:1px solid var(--line)">
+ <div class="duo" style="position:absolute;inset:0"><img src="img/g-knitform.jpg"></div>
+ <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,10,.92) 34%,rgba(11,11,10,.1))"></div>
+ <div style="position:absolute;left:36px;top:80px;width:520px">
+  <p class="mono" style="color:var(--signal)">07 / 09 &mdash; Knitwear</p>
+  <h2 class="anton" style="font-size:96px;margin-top:16px">Lambswool<br>Crew</h2>
+  <p style="font-size:17px;line-height:1.5;margin-top:22px">Fully fashioned, so the panels are knitted to shape rather than cut out of a sheet of fabric.</p>
+  <p class="mono" style="margin-top:18px;color:var(--dim)">100% lambswool, spun in Scotland</p>
+  <p class="mono" style="margin-top:8px;color:var(--dim)">Navy / Grey melange / Rust</p>
+  <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid var(--line);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid var(--line);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid var(--signal);background:var(--signal);color:#fff;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid var(--line);background:transparent;color:rgba(243,239,230,.28);text-decoration:line-through;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid var(--line);background:transparent;color:inherit;">XL</span></div>
+  <p class="mono" style="margin-top:10px;color:var(--dim)">L is sold out</p>
+  <div style="display:flex;gap:12px;align-items:center;margin-top:20px">
+   <span class="anton" style="font-size:44px">&pound;135</span>
+   <span class="mono" style="background:var(--signal);color:#fff;padding:15px 30px">Add to bag</span>
+  </div>
+ </div>
+ <p class="mono" style="position:absolute;right:36px;bottom:40px;color:var(--dim)">Representative imagery &mdash; not a photograph of this garment</p>
+</section>
+<section class="bone" style="padding:60px 36px 80px">
+ <div style="display:flex;justify-content:space-between;align-items:flex-end">
+  <h2 class="anton" style="font-size:112px">The index</h2>
+  <p class="mono">Showing 9 of 9 garments</p>
+ </div>
+ <div style="display:flex;gap:8px;padding:16px 0;margin-top:20px;border-top:2px solid var(--black);border-bottom:1px solid rgba(11,11,10,.2);position:sticky;top:0;background:var(--bone);z-index:20">
+  <span class="mono" style="padding:9px 15px;border:1px solid var(--black);background:var(--black);color:var(--bone)">All (9)</span><span class="mono" style="padding:9px 15px;border:1px solid rgba(11,11,10,.2);background:transparent;color:var(--black)">Shirts (2)</span><span class="mono" style="padding:9px 15px;border:1px solid rgba(11,11,10,.2);background:transparent;color:var(--black)">Outerwear (2)</span><span class="mono" style="padding:9px 15px;border:1px solid rgba(11,11,10,.2);background:transparent;color:var(--black)">Trousers (3)</span><span class="mono" style="padding:9px 15px;border:1px solid rgba(11,11,10,.2);background:transparent;color:var(--black)">Knitwear (2)</span>
+ </div>
+ <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:44px 26px;margin-top:34px">
+  <article>
+   <div class="duo" style="height:330px"><img src="img/g-hangers.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">The Oxford Shirt</h3><span class="mono">&pound;78</span></div>
+   <p class="mono" style="margin-top:8px">Shirts &mdash; White / Pale blue / Faded navy</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">100% long-staple cotton oxford, 140gsm, woven in Portugal</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">Cut straight through the body with a soft collar that stands without fusing.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid var(--signal);background:var(--signal);color:#fff;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;background:var(--signal);color:#fff">Add to bag</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-knitfold.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Heavy Cotton Tee</h3><span class="mono">&pound;34</span></div>
+   <p class="mono" style="margin-top:8px">Shirts &mdash; White / Black / Ecru / Washed olive</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">100% organic cotton, 240gsm, tubular knit</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">Heavy enough to hold its shape after a year of washing. It shrinks about 2cm in length on the first wash and then stops.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-jacketflat.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Chore Jacket</h3><span class="mono">&pound;165</span></div>
+   <p class="mono" style="margin-top:8px">Outerwear &mdash; Indigo / Sand</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">12oz cotton canvas, unlined</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">Three patch pockets, a corozo button front, and a back yoke that lets you reach forward without the shoulders pulling.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-woolcoat.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Wool Overshirt</h3><span class="mono">&pound;210</span></div>
+   <p class="mono" style="margin-top:8px">Outerwear &mdash; Charcoal / Oat</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">80% wool, 20% nylon, brushed</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">Warm enough to be the only layer down to about 8°C. Sized to go over a shirt.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-trouserflat.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Pleated Trouser</h3><span class="mono">&pound;120</span></div>
+   <p class="mono" style="margin-top:8px">Trousers &mdash; Black / Stone / Brown</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">58% wool, 42% cotton twill</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">A single forward pleat, a mid rise, and a leg that tapers slightly from the knee.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-denimdetail.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Straight Jean</h3><span class="mono">&pound;98</span></div>
+   <p class="mono" style="margin-top:8px">Trousers &mdash; Rinse / Mid wash / Ecru</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">13.5oz rigid cotton denim, selvedge</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">Rigid, not stretch. It will feel stiff for two weeks and then fit only you.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-knitform.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Lambswool Crew</h3><span class="mono">&pound;135</span></div>
+   <p class="mono" style="margin-top:8px">Knitwear &mdash; Navy / Grey melange / Rust</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">100% lambswool, spun in Scotland</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">Fully fashioned, so the panels are knitted to shape rather than cut out of a sheet of fabric.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-knitpurple.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Shawl Cardigan</h3><span class="mono">&pound;155</span></div>
+   <p class="mono" style="margin-top:8px">Knitwear &mdash; Charcoal / Camel</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">70% wool, 30% alpaca</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">A heavy shawl collar that stays up without a scarf.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article><article>
+   <div class="duo" style="height:330px"><img src="img/g-shorts.jpg"></div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px"><h3 class="anton" style="font-size:28px">Camp Short</h3><span class="mono">&pound;64</span></div>
+   <p class="mono" style="margin-top:8px">Trousers &mdash; Khaki / Navy</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:8px">8oz washed cotton twill</p>
+   <p style="font-size:13px;line-height:1.5;margin-top:6px;opacity:.65">A 7 inch inseam and an elasticated back half of the waistband.</p>
+   <div style="display:flex;gap:6px;margin-top:12px"><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">XS</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">S</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">M</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:inherit;">L</span><span class="mono" style="padding:9px 0;width:42px;text-align:center;border:1px solid rgba(11,11,10,.2);background:transparent;color:rgba(11,11,10,.3);text-decoration:line-through;">XL</span></div>
+   <div class="mono" style="margin-top:12px;padding:12px;text-align:center;border:1px solid rgba(11,11,10,.25);opacity:.5">Choose a size</div>
+  </article>
+ </div>
+</section>
+<section style="padding:64px 36px;display:grid;grid-template-columns:1fr 1fr;gap:60px;border-top:1px solid var(--line)">
+ <div>
+  <h2 class="anton" style="font-size:72px">Your bag</h2>
+  <div style="margin-top:24px;border-top:1px solid var(--bone)">
+  
+   <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)">
+    <div class="duo" style="width:52px;height:64px;flex:none"><img src="img/g-hangers.jpg"></div>
+    <div style="flex:1"><p style="font-size:15px">The Oxford Shirt</p><p class="mono" style="margin-top:5px;color:var(--dim)">Size M</p></div>
+    <span class="mono">&pound;78</span><span class="mono" style="color:var(--signal)">Remove</span></div>
+   <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)">
+    <div class="duo" style="width:52px;height:64px;flex:none"><img src="img/g-knitform.jpg"></div>
+    <div style="flex:1"><p style="font-size:15px">Lambswool Crew</p><p class="mono" style="margin-top:5px;color:var(--dim)">Size M</p></div>
+    <span class="mono">&pound;135</span><span class="mono" style="color:var(--signal)">Remove</span></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:18px"><span class="mono">Subtotal</span><span class="anton" style="font-size:40px">&pound;213.00</span></div>
+  <div style="margin-top:14px;height:3px;background:var(--line)"><div style="width:100%;height:3px;background:var(--signal)"></div></div>
+  <p class="mono" style="margin-top:10px">Delivery free &mdash; over &pound;100</p>
+  <div class="mono" style="margin-top:20px;background:var(--signal);color:#fff;padding:15px;text-align:center">Checkout &mdash; &pound;213.00</div>
+ </div>
+ <div>
+  <h2 class="anton" style="font-size:72px">Measure</h2>
+  <p class="mono" style="margin-top:10px;color:var(--dim)">On the body, in centimetres</p>
+  <table style="margin-top:20px">
+   <tr class="mono" style="color:var(--dim)"><td style="padding:9px 0;border-bottom:1px solid var(--bone)">Size</td><td style="border-bottom:1px solid var(--bone)">Chest</td><td style="border-bottom:1px solid var(--bone)">Waist</td><td style="border-bottom:1px solid var(--bone)">Sleeve</td></tr>
+   <tr><td class="mono" style="padding:12px 0;border-bottom:1px solid var(--line)">XS</td><td style="border-bottom:1px solid var(--line);font-size:15px">88</td><td style="border-bottom:1px solid var(--line);font-size:15px">74</td><td style="border-bottom:1px solid var(--line);font-size:15px">61</td></tr><tr><td class="mono" style="padding:12px 0;border-bottom:1px solid var(--line)">S</td><td style="border-bottom:1px solid var(--line);font-size:15px">96</td><td style="border-bottom:1px solid var(--line);font-size:15px">82</td><td style="border-bottom:1px solid var(--line);font-size:15px">63</td></tr><tr><td class="mono" style="padding:12px 0;border-bottom:1px solid var(--line)">M</td><td style="border-bottom:1px solid var(--line);font-size:15px">104</td><td style="border-bottom:1px solid var(--line);font-size:15px">90</td><td style="border-bottom:1px solid var(--line);font-size:15px">65</td></tr><tr><td class="mono" style="padding:12px 0;border-bottom:1px solid var(--line)">L</td><td style="border-bottom:1px solid var(--line);font-size:15px">112</td><td style="border-bottom:1px solid var(--line);font-size:15px">98</td><td style="border-bottom:1px solid var(--line);font-size:15px">66</td></tr><tr><td class="mono" style="padding:12px 0;border-bottom:1px solid var(--line)">XL</td><td style="border-bottom:1px solid var(--line);font-size:15px">120</td><td style="border-bottom:1px solid var(--line);font-size:15px">107</td><td style="border-bottom:1px solid var(--line);font-size:15px">67</td></tr>
+  </table>
+  <p style="font-size:14px;line-height:1.55;margin-top:16px">Between two sizes? Everything except the knitwear is cut with room, so take the smaller one.</p>
+ </div>
+</section>
+<section style="padding:64px 36px;border-top:1px solid var(--line)">
+ <h2 class="anton" style="font-size:72px">Keeping it</h2>
+ <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:30px">
+  <div style="border-top:1px solid var(--signal);padding-top:12px"><p class="mono" style="color:var(--signal);margin-bottom:10px">01</p><p style="font-size:14px;line-height:1.55">Everything here is washable at 30°C except the knitwear and the wool overshirt, which are hand wash or wool cycle only.</p></div><div style="border-top:1px solid var(--signal);padding-top:12px"><p class="mono" style="color:var(--signal);margin-bottom:10px">02</p><p style="font-size:14px;line-height:1.55">Nothing we sell should go in a tumble dryer.</p></div><div style="border-top:1px solid var(--signal);padding-top:12px"><p class="mono" style="color:var(--signal);margin-bottom:10px">03</p><p style="font-size:14px;line-height:1.55">The denim is unwashed. Wash it cold and inside out, and expect it to bleed onto light upholstery for the first few wears.</p></div><div style="border-top:1px solid var(--signal);padding-top:12px"><p class="mono" style="color:var(--signal);margin-bottom:10px">04</p><p style="font-size:14px;line-height:1.55">We will repair anything we made, for as long as we are trading. Send it back and we quote before doing the work.</p></div>
+ </div>
+</section>
+<section class="bone" style="padding:64px 36px;display:grid;grid-template-columns:1fr 1fr;gap:56px">
+ <div><h2 class="anton" style="font-size:60px">Getting it,<br>sending it back</h2>
+ <div style="margin-top:22px"><p style="font-size:14.5px;line-height:1.6;padding:12px 0;border-bottom:1px solid rgba(11,11,10,.18)">Free delivery on orders over £100, otherwise £4.95. Two to three working days in the UK.</p><p style="font-size:14.5px;line-height:1.6;padding:12px 0;border-bottom:1px solid rgba(11,11,10,.18)">Europe is £12 and five to seven working days, duties included.</p><p style="font-size:14.5px;line-height:1.6;padding:12px 0;border-bottom:1px solid rgba(11,11,10,.18)">Rest of the world is £22 and seven to fourteen working days, duties not included.</p><p style="font-size:14.5px;line-height:1.6;padding:12px 0;border-bottom:1px solid rgba(11,11,10,.18)">60 days to return anything unworn with its tags on, and return postage is free in the UK.</p><p style="font-size:14.5px;line-height:1.6;padding:12px 0;border-bottom:1px solid rgba(11,11,10,.18)">Exchanges for a different size ship the same day the return is scanned, so you are not waiting twice.</p></div></div>
+ <div><h2 class="anton" style="font-size:60px">What people<br>said</h2>
+ <div style="margin-top:22px"><div style="padding:16px 0;border-bottom:1px solid rgba(11,11,10,.18)"><p style="font-size:15px;line-height:1.55">I am 5ft 9in and it is the first shirt in years that has not been too short in the body. The collar does what they say it does.</p><p class="mono" style="margin-top:10px">Priya N. &mdash; bought the The Oxford Shirt, M</p></div><div style="padding:16px 0;border-bottom:1px solid rgba(11,11,10,.18)"><p style="font-size:15px;line-height:1.55">Genuinely stiff for the first fortnight, exactly as warned. Now they are the only pair I wear. Sizing ran true for me.</p><p class="mono" style="margin-top:10px">Daniel O. &mdash; bought the Straight Jean, 32</p></div><div style="padding:16px 0;border-bottom:1px solid rgba(11,11,10,.18)"><p style="font-size:15px;line-height:1.55">Softer than I expected for the weight. It pilled a little under the arms in the first month and then settled.</p><p class="mono" style="margin-top:10px">Marta K. &mdash; bought the Lambswool Crew, S</p></div></div></div>
+</section>
+<section style="padding:70px 36px 60px;border-top:1px solid var(--line)">
+ <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+  <div><p class="anton" style="font-size:72px;color:var(--signal)">01</p><p style="font-size:16px;line-height:1.5;margin-top:12px">Eleven people, one shop in Leeds, and a website. We make about thirty styles a year and keep the ones that sell for a decade.</p></div><div><p class="anton" style="font-size:72px;color:var(--signal)">02</p><p style="font-size:16px;line-height:1.5;margin-top:12px">Every garment is made in one of four factories we have visited, and each product page names which one.</p></div><div><p class="anton" style="font-size:72px;color:var(--signal)">03</p><p style="font-size:16px;line-height:1.5;margin-top:12px">We do not run sales. The price is the price all year, and it is the same price in the shop as it is here.</p></div>
+ </div>
+ <div style="margin-top:70px;border-top:1px solid var(--bone);padding-top:20px;display:flex;justify-content:space-between;align-items:flex-end">
+  <p class="anton" style="font-size:150px">Marlow<br>&amp; Vale</p>
+  <p class="mono" style="text-align:right;line-height:2.2;color:var(--dim)">One shop, Leeds<br>Never any sales<br>Imagery is representative, not inventory photography</p>
+ </div>
+</section><script src="pixel.js"></script><script src="pixel.js"></script></body></html>

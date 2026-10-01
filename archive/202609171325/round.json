@@ -1,0 +1,61 @@
+{
+  "round": "202609171325",
+  "archivedAt": "2026-10-01T12:48:10.784Z",
+  "scenarios": [
+    "clothing-motion"
+  ],
+  "label": null,
+  "agent": "claude",
+  "model": null,
+  "yolo": true,
+  "readOnceExperiment": false,
+  "captureProtocol": "native-input-playback-v1",
+  "phaseProtocol": "visual-directions-v1",
+  "direction": "recommended",
+  "skills": {
+    "with-a": "installed"
+  },
+  "arms": [
+    "with-a"
+  ],
+  "repeat": 1,
+  "sessions": [
+    {
+      "runName": "clothing-motion__with-a__202609171325",
+      "code": 1,
+      "minutes": 29.2,
+      "timedOut": false,
+      "truncated": "provider limit",
+      "reads": {
+        "skillFilesRead": {},
+        "toolCalls": {
+          "Bash": 3,
+          "Write": 2
+        }
+      },
+      "material": {
+        "workingOriginals": 2,
+        "workingSequences": [],
+        "shippedRasters": 73,
+        "shippedVideo": [],
+        "shippedModels": [],
+        "frameSequences": [],
+        "drivers": [
+          "canvasFrame",
+          "rafLoop"
+        ],
+        "indexesIntoMaterial": true,
+        "verdict": "an indexing driver with no drivable material to index"
+      },
+      "sessionId": "381736b8-5fba-4eae-9317-a44c97731c67",
+      "phases": 2
+    }
+  ],
+  "runs": [
+    {
+      "runName": "clothing-motion__with-a__202609171325",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

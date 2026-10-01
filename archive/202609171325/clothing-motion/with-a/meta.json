@@ -1,0 +1,32 @@
+{
+  "scenario": "clothing-motion",
+  "toolServers": [
+    "playwright"
+  ],
+  "arm": "with-a",
+  "seq": "202609171325",
+  "label": null,
+  "direction": "recommended",
+  "skill": "installed",
+  "readOnceExperiment": false,
+  "product": "Marlow & Vale — motion-led clothing shop",
+  "field": "Multi-product ecommerce · clothing",
+  "agent": "claude",
+  "model": null,
+  "sessionId": "381736b8-5fba-4eae-9317-a44c97731c67",
+  "phase": 2,
+  "phaseProtocol": "visual-directions-v1",
+  "designPhaseEndedAt": "2026-09-17T13:51:50.278Z",
+  "designSelection": {
+    "directionId": "direction-b",
+    "feedback": "",
+    "evidenceHash": "6f48ad5bf3dd91436a4021005c0ced5c9a520bb6a9843d37b9f50d430b010631",
+    "selectedAt": "2026-09-17T13:52:42.415Z"
+  },
+  "truncated": "provider limit",
+  "runName": "clothing-motion__with-a__202609171325",
+  "site": true,
+  "captureCorrespondence": "unknown",
+  "capturedPhase": null,
+  "archivedAt": "2026-10-01T12:48:10.782Z"
+}
