@@ -120,12 +120,22 @@ const rounds = fs.existsSync(path.join(ROOT, 'archive'))
   : []
 note(true, 'archived rounds', rounds.length ? rounds.join(', ') : 'none yet')
 
+// ---------------------------------------------------------------- image generation (informational)
+// Both arms inherit this environment, so a key set here is available to both equally.
+const probe = spawnSync('dreative', ['media', 'probe', '--json'], { cwd: ROOT, shell: true, encoding: 'utf8' })
+let imageGeneration = 'unknown (dreative media probe failed)'
+try {
+  const ready = JSON.parse(probe.stdout).generators.filter((g) => g.ready && g.id !== 'pollinations').map((g) => g.id)
+  imageGeneration = ready.length ? `keyed: ${ready.join(', ')}` : 'keyless only (exploration quality) — set OPENAI_API_KEY, GEMINI_API_KEY, FAL_KEY or REPLICATE_API_TOKEN for production imagery'
+} catch {}
+console.log(`  info  image generation — ${imageGeneration}`)
+
 // ---------------------------------------------------------------- verdict
 
 const blocking = steps.filter((s) => !s.ok)
 console.log('')
 if (!blocking.length) {
-  console.log('Ready for agent runs. External image generation is not verified by this setup check.\n\n  node scripts/run-all.mjs 2       run two random scenarios')
+  console.log('Ready for agent runs.\n\n  node scripts/run-all.mjs 2       run two random scenarios')
   console.log('  node scripts/review.mjs          score them blind')
   console.log('  node scripts/archive.mjs         browse every past round\n')
 } else {
