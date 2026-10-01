@@ -1,0 +1,36 @@
+// Authored garment outlines. These are drawings, not photographs of stock — the shop says so.
+// Drawn in a 200 x 270 box so every garment shares one scale across hero, bolt and grid.
+
+export const SIL = {
+  oxford:
+    'M60,40 L38,52 L28,102 L46,108 L50,244 L150,244 L154,108 L172,102 L162,52 L140,40 L120,34 L100,54 L80,34 Z',
+  tee:
+    'M70,42 L32,60 L24,98 L52,110 L52,242 L148,242 L148,110 L176,98 L168,60 L130,42 L100,56 Z',
+  chore:
+    'M62,40 L34,56 L24,114 L48,120 L48,252 L152,252 L152,120 L176,114 L166,56 L138,40 L100,56 Z',
+  overshirt:
+    'M64,38 L36,54 L26,116 L50,122 L50,256 L150,256 L150,122 L174,116 L164,54 L136,38 L100,54 Z',
+  trouser:
+    'M54,18 L146,18 L152,62 L136,254 L108,254 L100,120 L92,254 L64,254 L48,62 Z',
+  jean:
+    'M56,18 L144,18 L150,58 L140,254 L112,254 L100,124 L88,254 L60,254 L50,58 Z',
+  knit:
+    'M72,38 L32,60 L22,106 L50,118 L50,240 L150,240 L150,118 L178,106 L168,60 L128,38 C120,52 80,52 72,38 Z',
+  cardigan:
+    'M70,36 L32,58 L22,108 L50,120 L50,246 L97,246 L97,116 L103,116 L103,246 L150,246 L150,120 L178,108 L168,58 L130,36 L112,42 L100,116 L88,42 Z',
+  shorts:
+    'M46,38 L154,38 L160,96 L146,250 L110,250 L100,152 L90,250 L54,250 L40,96 Z',
+}
+
+// Construction lines: the seams and details the copy actually describes.
+export const SIL_EXTRA = {
+  oxford: 'M80,34 L100,54 L120,34 M100,54 L100,244',
+  tee: 'M84,42 C90,52 110,52 116,42',
+  chore: 'M64,120 h32 v34 h-32 Z M104,120 h32 v34 h-32 Z M100,56 L100,252',
+  overshirt: 'M64,38 L100,54 L136,38 M100,54 L100,256 M62,128 h34 v30 h-34 Z M104,128 h34 v30 h-34 Z',
+  trouser: 'M100,18 L100,60 M78,18 L74,56',
+  jean: 'M56,34 h88 M132,34 v22',
+  knit: 'M72,38 C84,50 116,50 128,38',
+  cardigan: 'M88,42 L97,118 M112,42 L103,118 M70,36 L88,42 M130,36 L112,42',
+  shorts: 'M46,52 h108',
+}

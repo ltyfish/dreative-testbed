@@ -1,0 +1,22 @@
+{
+  "kind": "solo",
+  "scenario": "clothing-motion",
+  "judgedAt": "2026-09-18T08:38:17.604Z",
+  "run": "clothing-motion__with-a__202609180358",
+  "arm": "with-a",
+  "direction": "recommended",
+  "skill": "installed",
+  "round": "202609180358",
+  "truncated": null,
+  "phase": "built",
+  "scores": {
+    "material": 2,
+    "subject": 2,
+    "motion": 2,
+    "craft": 2,
+    "structure": 2
+  },
+  "overall": 2,
+  "notes": "IS BUNZZZZ, HOLY, material is bad, motion is bad, structure pacing is bad, eveyrthing is bad, im pretty sure uk whats the definition of bad, motion nthing crazy, everything sloppy, boring, not unique, no consideration to other motion and animation tehcniques and methods. no pacing, no transition, no storytelling, no key unquesness, no brand, sourced or generated images, product specification, uniqueness, telling, etc... verdict urself too",
+  "keep": ""
+}

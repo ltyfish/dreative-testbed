@@ -1,0 +1,253 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Expanded:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--pap:#E7E2D6;--pap2:#DDD7C8;--ink:#17181A;--dim:#6E6A60;--blue:#1E49C8;--red:#C4361F;--rule:rgba(23,24,26,.22)}
+body{background:var(--pap);color:var(--ink);font-family:Archivo,sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.grid-paper{background-image:linear-gradient(rgba(23,24,26,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,24,26,.055) 1px,transparent 1px),linear-gradient(rgba(23,24,26,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(23,24,26,.11) 1px,transparent 1px);background-size:16px 16px,16px 16px,96px 96px,96px 96px}
+section{position:relative}
+.nav{position:absolute;top:0;left:0;right:0;z-index:9;display:flex;justify-content:space-between;align-items:center;padding:0 28px;height:46px;border-bottom:1px solid var(--rule);background:rgba(231,226,214,.9)}
+.nav ul{display:flex;gap:26px;list-style:none}
+.nav .l{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:13px;letter-spacing:.26em;text-transform:uppercase}
+/* hero */
+.hero{height:880px;overflow:hidden;padding-top:46px}
+.hero .plate{position:absolute;inset:46px 0 0}
+.pieces{position:absolute;inset:0}
+.pieces svg{position:absolute}
+.hero h1{position:absolute;left:44px;top:112px;font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:62px;line-height:.95;letter-spacing:-.015em;text-transform:uppercase;max-width:9ch}
+.hero .lede{position:absolute;left:46px;top:452px;width:352px;font-size:15px;line-height:1.55}
+.hero .stamp{position:absolute;right:44px;top:104px;text-align:right;background:rgba(231,226,214,.94);padding:10px 8px 12px 18px;border-left:1px solid var(--rule)}
+.hero .stamp b{display:block;font-family:'IBM Plex Mono',monospace;font-size:52px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.ruler{position:absolute;left:0;right:0;bottom:0;height:34px;border-top:1px solid var(--ink);display:flex;align-items:flex-start}
+.ruler i{flex:1;border-left:1px solid rgba(23,24,26,.45);height:8px}
+.ruler i:nth-child(5n+1){height:16px}
+.ruler span{position:absolute;bottom:6px;left:0;right:0;display:flex;justify-content:space-between;padding:0 44px}
+.callout{position:absolute;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;color:var(--blue)}
+.callout:before{content:"";position:absolute;left:-30px;top:6px;width:26px;height:1px;background:var(--blue)}
+/* sheets */
+.sheets{padding:70px 44px 80px;border-top:1px solid var(--ink)}
+.sheets h2{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:44px;text-transform:uppercase;letter-spacing:-.01em;line-height:1;max-width:16ch}
+.sheetrow{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink)}
+.sheet{padding:28px;border-right:1px solid var(--rule);position:relative;background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0))}
+.sheet:last-child{border-right:0}
+.sheet b{display:block;font-family:'IBM Plex Mono',monospace;font-size:64px;font-weight:600;line-height:1;margin-bottom:14px}
+.sheet p{font-size:14.5px;line-height:1.6}
+.sheet .z{position:absolute;right:14px;top:12px}
+/* transition */
+.tr{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0 30px;overflow:hidden}
+.trhead{display:flex;justify-content:space-between;padding:0 44px 22px}
+.trhead h3{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:34px;text-transform:uppercase;letter-spacing:-.01em}
+.frames{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--rule)}
+.frame{position:relative;height:340px;border-right:1px solid var(--rule)}
+.frame:last-child{border-right:0}
+.frame svg{position:absolute;inset:0;width:100%;height:100%}
+.frame .n{position:absolute;left:12px;top:10px}
+.frame.done{background:#17181A}
+/* shop */
+.shop{padding:0 0 80px}
+.shopbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 44px;border-bottom:1px solid var(--ink);background:var(--pap)}
+.tabs{display:flex;gap:0;border:1px solid var(--ink)}
+.tabs button{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;border-right:1px solid var(--rule);color:var(--ink);padding:9px 14px}
+.tabs button:last-child{border-right:0}
+.tabs button.on{background:var(--ink);color:var(--pap)}
+.shophead{padding:56px 44px 22px}
+.shophead h3{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:64px;text-transform:uppercase;letter-spacing:-.02em;line-height:.95}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.card{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:0;background:var(--pap)}
+.card .draw{position:relative;height:330px;border-bottom:1px solid var(--rule)}
+.card .draw svg{position:absolute;inset:0;width:100%;height:100%}
+.card .draw .swatch{position:absolute;right:14px;top:14px;width:54px;height:54px;border:1px solid var(--ink);object-fit:cover}
+.card .draw .code{position:absolute;left:14px;top:12px}
+.card .body{padding:18px}
+.card .r1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card h4{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:-.005em}
+.card .pr{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500}
+.card .fab{margin-top:9px;font-size:13px;line-height:1.5;color:#4A4740}
+.sizes{display:flex;margin-top:14px;border:1px solid var(--ink)}
+.sizes span{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:9px 0;border-right:1px solid var(--rule)}
+.sizes span:last-child{border-right:0}
+.sizes span.sel{background:var(--blue);color:#fff}
+.sizes span.out{color:rgba(23,24,26,.3);background:repeating-linear-gradient(135deg,rgba(23,24,26,.09) 0 3px,transparent 3px 7px)}
+.atb{margin-top:10px;width:100%;padding:12px;background:var(--ink);border:1px solid var(--ink);color:var(--pap);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+.atb.off{background:none;color:rgba(23,24,26,.4);border-color:var(--rule)}
+/* docket */
+.docket{position:absolute;right:44px;top:104px;width:300px;background:#fff;border:1px solid var(--ink);padding:18px;z-index:8;box-shadow:6px 6px 0 rgba(23,24,26,.13)}
+.docket .hd{display:flex;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:9px}
+.dline{display:flex;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px dashed var(--rule);font-size:12.5px;font-family:'IBM Plex Mono',monospace}
+.dline i{font-style:normal;color:var(--red)}
+.dtot{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12.5px;margin-top:11px}
+.dtot.big{font-size:15px;font-weight:600;border-top:1px solid var(--ink);padding-top:9px;margin-top:9px}
+.co{margin-top:14px;width:100%;padding:12px;background:var(--blue);color:#fff;border:0;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+/* ending */
+.spec{border-top:1px solid var(--ink)}
+.specrow{display:grid;grid-template-columns:1.15fr 1fr;border-bottom:1px solid var(--ink)}
+.specrow>div{padding:48px 44px}
+.specrow>div:first-child{border-right:1px solid var(--ink)}
+h5{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:30px;text-transform:uppercase;letter-spacing:-.01em;line-height:1.05;margin-top:10px}
+.chart{width:100%;border-collapse:collapse;margin-top:24px}
+.chart th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);padding-bottom:9px;border-bottom:1px solid var(--ink)}
+.chart td{padding:14px 0;border-bottom:1px solid var(--rule);font-family:'IBM Plex Mono',monospace;font-size:14px}
+.chart td:first-child{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:15px}
+.clauses{margin-top:22px;counter-reset:c}
+.clauses p{counter-increment:c;position:relative;padding:14px 0 14px 46px;border-bottom:1px solid var(--rule);font-size:14.5px;line-height:1.55}
+.clauses p:before{content:counter(c,decimal-leading-zero);position:absolute;left:0;top:15px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);letter-spacing:.1em}
+.revs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--ink)}
+.rev{padding:34px 30px;border-right:1px solid var(--rule)}
+.rev:last-child{border-right:0}
+.rev q{display:block;font-size:16px;line-height:1.5}
+.rev .who{margin-top:16px}
+.titleblock{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;border-bottom:1px solid var(--ink)}
+.tb{padding:22px 24px;border-right:1px solid var(--rule)}
+.tb:last-child{border-right:0}
+.tb b{display:block;font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;margin-top:6px}
+.wordmark{padding:50px 44px 28px;text-align:center}
+.wordmark>div:first-child{font-family:'Archivo Expanded',Archivo,sans-serif;font-weight:700;font-size:96px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+
+@media(max-width:520px){
+ .nav{padding:0 16px}.nav ul li:nth-child(-n+4){display:none}
+ .hero{height:760px}.hero h1{left:16px;top:86px;font-size:34px;max-width:11ch}
+ .hero .lede{left:16px;top:250px;width:calc(100% - 32px);font-size:14px}
+ .hero .stamp{right:16px;top:auto;bottom:150px;background:none;border:0;padding:0}
+ .hero .stamp b{font-size:30px}
+ .pieces>div:first-child{left:16px!important;top:360px!important;width:calc(100% - 32px)!important;height:300px!important}
+ .pieces .mono{left:18px!important;top:342px!important}
+ .pieces svg:nth-of-type(1){left:26px!important;top:380px!important;width:150px!important;height:150px!important}
+ .pieces svg:nth-of-type(2){left:186px!important;top:380px!important;width:120px!important;height:120px!important}
+ .pieces svg:nth-of-type(3){left:280px!important;top:380px!important;width:120px!important;height:120px!important}
+ .pieces svg:nth-of-type(4){left:26px!important;top:520px!important;width:140px!important;height:140px!important}
+ .pieces svg:nth-of-type(5){left:170px!important;top:520px!important;width:140px!important;height:140px!important}
+ .pieces svg:nth-of-type(6){left:270px!important;top:530px!important;width:120px!important;height:120px!important}
+ .pieces svg:nth-of-type(7),.pieces svg:nth-of-type(8){display:none}
+ .callout{display:none}
+ .sheets{padding:40px 16px 48px}.sheets h2{font-size:26px}
+ .sheetrow{grid-template-columns:1fr}.sheet{border-right:0;border-bottom:1px solid var(--rule);padding:20px}
+ .sheet b{font-size:44px}
+ .trhead{flex-direction:column;gap:14px;padding:0 16px 18px}.trhead h3{font-size:22px}
+ .trhead .mono{text-align:left!important}
+ .frames{grid-template-columns:repeat(2,1fr)}.frame{height:190px;border-bottom:1px solid var(--rule)}
+ .shopbar{padding:10px 16px;overflow-x:auto}.shopbar .mono{display:none}.tabs{flex:0 0 auto}
+ .shophead{padding:28px 16px 16px}.shophead h3{font-size:34px}
+ .grid{grid-template-columns:1fr}
+ .docket{position:fixed;right:0;left:0;bottom:0;top:auto;width:auto;border-left:0;border-right:0;border-bottom:0;box-shadow:0 -6px 20px rgba(23,24,26,.18)}
+ .specrow{grid-template-columns:1fr}.specrow>div{padding:28px 16px;border-right:0!important;border-bottom:1px solid var(--rule)}
+ h5{font-size:22px}
+ .revs{grid-template-columns:1fr}.rev{padding:24px 16px;border-right:0;border-bottom:1px solid var(--rule)}
+ .titleblock{grid-template-columns:1fr 1fr}.tb{border-bottom:1px solid var(--rule)}
+ .wordmark{padding:32px 16px 22px}.wordmark>div:first-child{font-size:30px}
+}
+</style></head><body>
+<div id="app"></div>
+<script src="silhouettes.js"></script><script src="data.js"></script>
+<script>
+const CODE={oxford:'MV-01 SHT',tee:'MV-02 SHT',chore:'MV-03 OUT',overshirt:'MV-04 OUT',trouser:'MV-05 TRS',jean:'MV-06 TRS',knit:'MV-07 KNT',cardigan:'MV-08 KNT',shorts:'MV-09 TRS'};
+const flat=(id,opts={})=>{
+ const s=opts.stroke||'#17181A', f=opts.fill||'none', w=opts.w||1.1;
+ return `<svg viewBox="0 0 200 270" preserveAspectRatio="xMidYMid meet">
+ <path d="${SIL[id]}" fill="${f}" stroke="${s}" stroke-width="${w}" stroke-linejoin="round"/>
+ <path d="${SIL_EXTRA[id]||''}" fill="none" stroke="${s}" stroke-width="${w*0.72}" stroke-linejoin="round" opacity=".8"/>
+ ${opts.dims?`<g stroke="#1E49C8" stroke-width=".6" fill="none">
+   <path d="M22,42 L22,254 M18,42 h8 M18,254 h8"/><path d="M28,150 h8"/></g>
+   <text x="30" y="150" font-family="IBM Plex Mono" font-size="7" fill="#1E49C8">BODY</text>`:''}
+ </svg>`};
+const sel={oxford:'M',chore:'L',knit:'M'};
+function card(g){
+ const sz=SIZES.map(s=>`<span class="${g.s.includes(s)?'out':(sel[g.id]===s?'sel':'')}">${s}</span>`).join('');
+ return `<article class="card"><div class="draw grid-paper">${flat(g.id)}
+   <img class="swatch" src="../_src/cloth/${g.id}.jpg"><div class="code mono">${CODE[g.id]}</div></div>
+  <div class="body"><div class="r1"><h4>${g.n}</h4><div class="pr">£${g.p}</div></div>
+   <div class="fab">${g.f}</div><div class="mono" style="margin-top:9px">${g.col.join(' · ')}</div>
+   <div class="sizes">${sz}</div>
+   <button class="atb ${sel[g.id]?'':'off'}">${sel[g.id]?'Add to bag — size '+sel[g.id]:'Choose a size'}</button></div></article>`}
+
+// exploded pattern pieces for the hero (chore jacket)
+const PIECES=[
+ ['M6,6 L118,6 L132,64 L124,210 L14,210 L2,64 Z','520px','92px','300px','BACK PANEL · CUT 1 ON FOLD'],
+ ['M6,14 L80,4 L96,62 L88,210 L12,210 Z','856px','92px','232px','FRONT · CUT 2'],
+ ['M96,14 L22,4 L6,62 L14,210 L90,210 Z','1096px','92px','232px','FRONT FACING · CUT 2'],
+ ['M4,30 L128,6 L140,120 L16,140 Z','520px','420px','282px','SLEEVE · CUT 2'],
+ ['M136,30 L12,6 L2,120 L124,140 Z','816px','420px','282px','SLEEVE · CUT 2 (MIRROR)'],
+ ['M6,6 L150,6 L146,58 L10,58 Z','1108px','430px','252px','BACK YOKE · CUT 1'],
+ ['M6,6 L64,6 L64,72 L6,72 Z','1110px','596px','190px','PATCH POCKET · CUT 3'],
+ ['M6,6 L170,6 L168,40 L8,40 Z','520px','700px','340px','WAIST FACING · CUT 1']];
+
+document.getElementById('app').innerHTML=`
+<nav class="nav"><div class="l">Marlow &amp; Vale</div><ul class="mono"><li>Shop</li><li>Sizing</li><li>Care</li><li>Leeds</li><li style="color:#1E49C8">Bag · 2</li></ul></nav>
+
+<section class="hero" id="s-hero"><div class="plate grid-paper"></div>
+ <div class="pieces">
+ <div style="position:absolute;left:500px;top:74px;width:900px;height:700px;border:1px dashed rgba(23,24,26,.4)"></div>
+ <div class="mono" style="position:absolute;left:504px;top:56px">Lay plan · cloth width 150cm · 12oz cotton canvas</div>
+ ${PIECES.map(p=>`<svg style="left:${p[1]};top:${p[2]};width:${p[3]};height:${p[3]}" viewBox="0 -14 190 230"><path d="${p[0]}" fill="rgba(255,255,255,.5)" stroke="#17181A" stroke-width="1.3" stroke-linejoin="round"/><text x="4" y="-4" font-family="IBM Plex Mono" font-size="7.4" letter-spacing=".6" fill="#6E6A60">${p[4]}</text></svg>`).join('')}</div>
+ <h1>Every piece, before it is a coat</h1>
+ <div class="lede">Eleven people, one shop in Leeds. Nine garments, four factories we have been to, and one price all year. Scroll and the pieces come together.</div>
+ <div class="stamp"><div class="mono">Drawing no.</div><b>MV-03</b><div class="mono" style="margin-top:8px">Chore Jacket · 12oz canvas<br>Scale 1:8 · Sheet 1 of 9</div></div>
+ <div class="callout" style="left:730px;top:346px">BACK YOKE — REACH FORWARD</div>
+ <div class="callout" style="left:1190px;top:672px">COROZO BUTTON FRONT</div>
+ <div class="ruler">${Array.from({length:60},()=>'<i></i>').join('')}
+  <span class="mono"><em style="font-style:normal">Scroll — the pieces assemble</em><em style="font-style:normal">Nine garments</em><em style="font-style:normal">Never a sale</em></span></div>
+</section>
+
+<section class="sheets" id="s-sheets">
+ <div class="mono">The shop</div>
+ <h2>Three facts we print on every sheet</h2>
+ <div class="sheetrow">${ABOUT.map((a,i)=>`<div class="sheet grid-paper"><div class="z mono">SHEET ${i+1}/3</div><b>${['11','4','0'][i]}</b><p>${a}</p></div>`).join('')}</div>
+</section>
+
+<section class="tr" id="s-tr">
+ <div class="trhead"><div><div class="mono">Transition</div><h3>Pieces → Garment → Grid</h3></div>
+  <div class="mono" style="max-width:34ch;text-align:right">Scroll drives the assembly. The last frame is the first product tile of the shop below.</div></div>
+ <div class="frames">
+  ${[0,1,2,3].map(i=>{const t=i/3;
+   // each part: [path, final scale, final x, final y, final rot, scatter dx, scatter dy, scatter rot]
+   const P=[
+    ['M6,6 L118,6 L132,64 L124,210 L14,210 L2,64 Z', .78, 48, 44, -46, -34, -22],
+    ['M4,30 L128,6 L140,120 L16,140 Z',              .34, 22, 52, -58,  38, -26],
+    ['M136,30 L12,6 L2,120 L124,140 Z',              .34,128, 52,  62,  40,  24],
+    ['M6,6 L150,6 L146,58 L10,58 Z',                 .70, 46, 36,   4, -56,  18],
+    ['M6,6 L64,6 L64,72 L6,72 Z',                    .46, 62,116, -30,  62,  16],
+    ['M6,6 L64,6 L64,72 L6,72 Z',                    .46,106,116,  46,  58, -14]];
+   return `<div class="frame grid-paper"><div class="n mono">0${i+1}</div>
+   <svg viewBox="0 0 200 270">
+   ${i===3?`<path d="${SIL.chore}" fill="none" stroke="#1E49C8" stroke-width="1.6"/>`:''}
+   ${P.map(q=>{const x=q[2]+q[5]*(1-t), y=q[3]+q[6]*(1-t), r=q[4]*(1-t);
+     return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${r.toFixed(1)}) scale(${q[1]})"><path d="${q[0]}" fill="rgba(255,255,255,${(.28+t*.34).toFixed(2)})" stroke="#17181A" stroke-width="${(1.5/q[1]).toFixed(2)}" stroke-linejoin="round"/></g>`}).join('')}
+   </svg></div>`}).join('')}
+  <div class="frame done"><div class="n mono" style="color:#8E8A80">05</div>
+   <svg viewBox="0 0 200 270"><path d="${SIL.chore}" fill="none" stroke="#E7E2D6" stroke-width="1.4"/><path d="${SIL_EXTRA.chore}" fill="none" stroke="#E7E2D6" stroke-width="1" opacity=".8"/></svg>
+   <div style="position:absolute;left:0;right:0;bottom:0;padding:14px;color:#E7E2D6"><div style="font-family:'Archivo Expanded',Archivo;font-weight:700;font-size:15px;text-transform:uppercase">Chore Jacket</div><div class="mono" style="color:#8E8A80">£165 · In the shop</div></div></div>
+ </div>
+</section>
+
+<section class="shop" id="s-shop">
+ <div class="shopbar"><div class="tabs"><button class="on">All (9)</button><button>Shirts (2)</button><button>Outerwear (2)</button><button>Trousers (3)</button><button>Knitwear (2)</button></div>
+  <div class="mono">Showing 9 of 9 garments</div></div>
+ <div class="docket"><div class="hd"><div class="mono">Bag · docket</div><div class="mono">2 items</div></div>
+  <div class="dline"><span>Oxford Shirt · M</span><span>£78 &nbsp;<i>✕</i></span></div>
+  <div class="dline"><span>Lambswool Crew · M</span><span>£135 &nbsp;<i>✕</i></span></div>
+  <div class="dtot"><span>SUBTOTAL</span><span>£213.00</span></div>
+  <div class="dtot"><span>DELIVERY</span><span>FREE · OVER £100</span></div>
+  <div class="dtot big"><span>TOTAL</span><span>£213.00</span></div>
+  <button class="co">Checkout</button></div>
+ <div class="shophead"><div class="mono">Drawing set · Autumn</div><h3>Everything<br>we make</h3></div>
+ <div class="grid">${G.map(card).join('')}</div>
+</section>
+
+<section class="spec" id="s-end">
+ <div class="specrow"><div><div class="mono">Sizing · sheet A</div><h5>Measured on the body,<br>in centimetres</h5>
+   <table class="chart"><tr><th>Size</th><th>Chest</th><th>Waist</th><th>Sleeve</th></tr>
+    ${CHART.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</table>
+   <p style="margin-top:20px;font-size:14.5px;line-height:1.6">Between two sizes? Everything except the knitwear is cut with room, so take the smaller one.</p></div>
+  <div style="position:relative">${flat('oxford',{dims:true})}</div></div>
+ <div class="specrow"><div><div class="mono">Care · sheet B</div><h5>How to keep it</h5><div class="clauses">${CARE.map(c=>`<p>${c}</p>`).join('')}</div></div>
+  <div><div class="mono">Shipping &amp; returns · sheet C</div><h5>Where it goes</h5><div class="clauses">${SHIP.map(c=>`<p>${c}</p>`).join('')}</div></div></div>
+ <div class="revs">${REV.map(r=>`<div class="rev"><div class="mono">Worn in</div><q>${r[2]}</q><div class="who mono">${r[0]} · bought ${r[1]}</div></div>`).join('')}</div>
+ <div class="titleblock">
+  <div class="tb"><div class="mono">Maker</div><b>Marlow &amp; Vale</b></div>
+  <div class="tb"><div class="mono">Location</div><b>Leeds, England</b></div>
+  <div class="tb"><div class="mono">Pricing</div><b>One price, all year</b></div>
+  <div class="tb"><div class="mono">Sheet</div><b>9 of 9</b></div></div>
+ <div class="wordmark"><div>Marlow &amp; Vale</div><div class="mono" style="margin-top:14px">We do not run sales · © 2026</div></div>
+</section>`;
+</script></body></html>
