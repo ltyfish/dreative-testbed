@@ -89,7 +89,7 @@ const timeoutMin = Number(process.env.DREATIVE_TIMEOUT ?? 60)
 const mcpFile = path.join(runDir, '.mcp.json')
 let args
 if (agent === 'codex') {
-  args = ['exec', '--dangerously-bypass-approvals-and-sandbox']
+  args = ['exec', '--dangerously-bypass-approvals-and-sandbox', '-c', 'features.image_generation=true']
   if (fs.existsSync(mcpFile)) {
     const servers = JSON.parse(fs.readFileSync(mcpFile, 'utf8')).mcpServers ?? {}
     args.push(...codexToolArgs(servers))

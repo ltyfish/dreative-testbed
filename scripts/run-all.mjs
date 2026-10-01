@@ -369,6 +369,10 @@ function agentCommand(prompt, runDir, { sessionId = null, resume = false } = {})
     const args = YOLO
       ? ['exec', '--dangerously-bypass-approvals-and-sandbox']
       : ['exec', '-s', 'workspace-write', '-c', 'sandbox_workspace_write.network_access=true']
+    // Codex's built-in image_gen is how the Codex arm produces mockups and assets; enable it
+    // explicitly so a run never depends on the launching user's personal config. Files land in
+    // ~/.codex/generated_images and are copied into the run (Dreative: `dreative media import`).
+    args.push('-c', 'features.image_generation=true')
     // The same browser the Claude arm gets. codex has no --mcp-config, so the server goes in
     // as TOML config overrides instead. Without this the codex arm ran with no eyes at all
     // while the Claude arm had them, so any cross-provider comparison was measuring the

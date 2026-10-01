@@ -126,7 +126,7 @@ const probe = spawnSync('dreative', ['media', 'probe', '--json'], { cwd: ROOT, s
 let imageGeneration = 'unknown (dreative media probe failed)'
 try {
   const ready = JSON.parse(probe.stdout).generators.filter((g) => g.ready && g.id !== 'pollinations').map((g) => g.id)
-  imageGeneration = ready.length ? `keyed: ${ready.join(', ')}` : 'keyless only (exploration quality) — set OPENAI_API_KEY, GEMINI_API_KEY, FAL_KEY or REPLICATE_API_TOKEN for production imagery'
+  imageGeneration = (ready.length ? `Claude arm keyed: ${ready.join(', ')}` : 'Claude arm: no key, builds with placeholder shots (set OPENAI_API_KEY or GEMINI_API_KEY to fill them)') + ' · Codex arm: built-in image_gen (enabled per run)'
 } catch {}
 console.log(`  info  image generation — ${imageGeneration}`)
 
