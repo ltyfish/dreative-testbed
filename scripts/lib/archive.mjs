@@ -154,6 +154,13 @@ export function syncVerdict(scenario, roundDir) {
   if (!fs.existsSync(from)) return false
   const dest = path.join(roundDir, scenario)
   if (!fs.existsSync(dest)) return false
+  // runs/verdicts holds the LATEST verdict per scenario, whatever round it was for. Archiving
+  // an older round copied a newer round's verdict into it, so only copy a verdict that names
+  // a run of this round.
+  const round = path.basename(roundDir)
+  const verdict = readJson(from)
+  const runs = [verdict?.run, ...Object.values(verdict?.runs ?? {})].filter((r) => typeof r === 'string')
+  if (verdict?.round !== round && !runs.some((r) => r.endsWith(`__${round}`) || r.includes(`__${round}__`))) return false
   fs.cpSync(from, path.join(dest, 'verdict.json'))
   return true
 }

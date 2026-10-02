@@ -17,6 +17,7 @@ import { freePort, killProcessesIn, killTree, npmCommand, spawnPreview } from '.
 import { pairHealth } from './lib/health.mjs'
 import { readSmoke } from './lib/smoke.mjs'
 import { recordVerdict } from './lib/vault.mjs'
+import { commitRecord, pullRecord } from './lib/sync.mjs'
 import { clearRoundLog, isRunLive, roundLog, startContinue, startRound, statusPage } from './lib/launcher.mjs'
 import { readLaunch, runStatuses } from './lib/status.mjs'
 import { answerGate, pendingGate } from './lib/gate.mjs'
@@ -539,6 +540,9 @@ ${rows}
     }
   }
 
+  // A verdict given on one machine has to reach the other one too.
+  commitRecord([path.join(ROOT, 'VERDICTS.md'), ...(roundDir ? [roundDir] : [])], `Record ${body.scenario} verdict (${record.round ?? 'paired'})`)
+
   try {
     const written = recordVerdict(record)
     if (written) console.log(`recorded verdict in ${written}`)
@@ -616,6 +620,9 @@ ${feedback}
 
   // Project memory lives outside this repo and used to be updated by hand, which is how a
   // scored round could be reset and forgotten. No-ops when the vault is not on this machine.
+  // A verdict given on one machine has to reach the other one too.
+  commitRecord([path.join(ROOT, 'VERDICTS.md'), ...(roundDir ? [roundDir] : [])], `Record ${body.scenario} verdict (${record.round ?? 'paired'})`)
+
   try {
     const written = recordVerdict(record)
     if (written) console.log(`recorded verdict in ${written}`)
@@ -716,6 +723,7 @@ function resetRound() {
     if (!fs.existsSync(path.join(roundDir, 'round.json'))) throw new Error(`archiving round ${round} failed — nothing was deleted`)
     archived.push(round)
   }
+  commitRecord(archived.map((round) => path.join(ROOT, 'archive', round)), `Archive round ${archived.join(', ')} at reset`)
 
   // The round is retired here, by marker, before anything is deleted. Windows keeps
   // handles on a directory for a while after the process that used it exits — vite's
@@ -1502,6 +1510,8 @@ const server = http.createServer(async (req, res) => {
 })
 
 const swept = sweepCleared()
+// Show what every machine has built, not only this one.
+pullRecord()
 const pairs = loadPairs()
 const solos = loadSolos(pairs)
 await startArchiveViewer()

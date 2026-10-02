@@ -69,6 +69,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { extractSessionId, resolveAgentBinary } from './lib/agent.mjs'
 import { archiveRound } from './lib/archive.mjs'
+import { commitRecord, pullRecord } from './lib/sync.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { gateRuns, gateOne } from './lib/gate.mjs'
 import { continuationPrompt, prototypePhase, RETRY_PHASE } from './lib/prototype.mjs'
@@ -166,11 +167,10 @@ const PROTOTYPE = arg('prototype', false)
 // A name for this round, so a verdict months later says what was being tested rather than
 // only which commit it ran. Shows up in run.json, the round record and the review UI.
 const ROUND_LABEL = arg('label', null)
-// Archiving belongs to Reset, not to the end of a round: a round archived here but never
-// reset stayed in runs/ looking like live work, and review has no way to tell the two apart.
-// One command puts a round away. `--archive` is the escape hatch for a round you know you
-// will not score, since runs/ is gitignored and would otherwise be the only copy.
-const ARCHIVE_NOW = arg('archive', false)
+// Every finished round is archived, committed and pushed at the end — see lib/sync.mjs for
+// why. Reset still archives again (with the verdict) and clears runs/; review keys "retired"
+// off the cleared-rounds marker, not off archive/, so a round archived here is still live
+// work until then. `--archive` is still accepted and is now what always happens.
 const YOLO = !arg('no-yolo', false)
 const DIRECTION = arg('direction', POSITIONAL_DIRECTION ?? 'recommended')
 // Joining an existing round instead of opening a new one, so a second arm run hours later
@@ -274,6 +274,10 @@ const ARM_SKILL = Object.fromEntries(ARMS.map((a) => [a, skillTreeFor(a)]))
 
 const stamp = () => new Date().toISOString().slice(11, 19)
 const log = (msg) => console.log(`${stamp()} ${msg}`)
+
+// Join the shared record before adding to it, so this machine's round lands on top of the
+// other machine's rather than beside it.
+pullRecord(log)
 
 if (!skillInstalled()) {
   console.error('\nNo .claude or .codex skill at the repo root, so the "with" arm would be')
@@ -855,10 +859,9 @@ fs.writeFileSync(path.join(RUNS, `round-${roundStamp}.json`), JSON.stringify(rou
 // ---------------------------------------------------------------- archive
 //
 // runs/ is disposable and gitignored. The archive is the copy that gets committed and
-// survives a pull on another machine — but it is written by Reset, once the round has been
-// scored, so that "archived" and "finished with" mean the same thing. Reset archives before
-// it deletes anything, and node_modules is still linked at that point, so the portable
-// sites still build.
+// survives a pull on another machine, so it is written — and pushed — the moment the round
+// ends, while node_modules is still linked and the portable sites still build. Reset
+// archives again later with the verdict and only then clears runs/.
 
 if (REPEAT > 1) {
   console.log(`
@@ -866,15 +869,11 @@ This was a ×${REPEAT} variance round. Compare what the repeats read:
   node scripts/variance.mjs`)
 }
 
-if (ARCHIVE_NOW) {
-  console.log('\nArchiving round…')
-  const { roundDir } = archiveRound({ round: roundStamp, runNames: jobs.map((j) => j.runName), meta: roundMeta, log })
-  console.log(`Archived to ${path.relative(ROOT, roundDir)}/ — commit it to keep this round.`)
-} else {
-  console.log(`\nThis round is in runs/ only, which is gitignored. Reset in review.mjs archives it.`)
-  if (ARMS.length < 2) {
-    console.log(`\nOne arm only. Run the other into this same round — do not reset first:\n\n  node scripts/run-all.mjs --round ${roundStamp} --scenarios ${SCENARIOS.join(',')} --arms <other-arm>\n`)
-  }
+console.log('\nArchiving round so every machine sees it…')
+const { roundDir } = archiveRound({ round: roundStamp, runNames: jobs.map((j) => j.runName), meta: roundMeta, log })
+commitRecord([roundDir], `Archive round ${roundStamp} (${SCENARIOS.join(', ')} · ${ARMS.join(', ')})`, log)
+if (ARMS.length < 2) {
+  console.log(`\nOne arm only. Run the other into this same round — do not reset first:\n\n  node scripts/run-all.mjs --round ${roundStamp} --scenarios ${SCENARIOS.join(',')} --arms <other-arm>\n`)
 }
 
 console.log(`\nRound complete. Now judge it:\n\n  node scripts/review.mjs\n`)

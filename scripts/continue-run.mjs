@@ -20,6 +20,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { extractSessionId, inferAgent, resolveAgentBinary } from './lib/agent.mjs'
 import { RUNS } from './lib/scaffold.mjs'
+import { archiveRound, readJson } from './lib/archive.mjs'
+import { commitRecord, pullRecord } from './lib/sync.mjs'
 import { captureMany, killTree } from './lib/capture.mjs'
 import { continuationPrompt } from './lib/prototype.mjs'
 import { DESIGN_PROTOCOL, selectedDesign } from './lib/design-directions.mjs'
@@ -56,6 +58,19 @@ if (!fs.existsSync(metaFile)) {
   process.exit(2)
 }
 const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
+
+/** Re-archive this run's whole round and push it, so a continued build reaches every machine. */
+function archiveAndPush() {
+  try {
+    const round = meta.seq
+    const runNames = fs.readdirSync(RUNS).filter((d) => d.endsWith(`__${round}`) && fs.existsSync(path.join(RUNS, d, 'run.json')))
+    const roundMeta = readJson(path.join(RUNS, `round-${round}.json`)) ?? {}
+    const { roundDir } = archiveRound({ round, runNames, meta: roundMeta })
+    commitRecord([roundDir], `Archive round ${round} after continuing ${runName}`)
+  } catch (err) {
+    console.log(`archiving failed: ${err.message} — the run is still in runs/ on this machine only`)
+  }
+}
 
 if (meta.phaseProtocol === DESIGN_PROTOCOL) {
   let selected = false
@@ -218,10 +233,12 @@ child.on('close', async (code) => {
   if (code !== 0 || truncated) {
     console.log('continuation did not finish — preserving design/capture artifacts and leaving the run resumable.')
     process.exitCode = code || 1
+    archiveAndPush()
     return
   }
 
   console.log('capturing…')
   await captureMany([runName], 4173, console.log, meta.direction ?? 'recommended')
+  archiveAndPush()
   console.log('done — the run is in the review at http://127.0.0.1:4321/')
 })

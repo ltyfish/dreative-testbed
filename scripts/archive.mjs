@@ -13,6 +13,7 @@ import http from 'node:http'
 import path from 'node:path'
 import { ARCHIVE, listRounds, readJson } from './lib/archive.mjs'
 import { armTitle } from './lib/scaffold.mjs'
+import { pullRecord } from './lib/sync.mjs'
 import { readDirections } from './lib/design-directions.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 4322
@@ -292,6 +293,9 @@ const server = http.createServer((req, res) => {
   res.writeHead(404).end('not found')
 })
 
+// review.mjs pulls before it starts this viewer; on its own, pull here so the list is the
+// same one every machine sees.
+if (!process.argv.includes('--review-port')) pullRecord()
 const rounds = listRounds()
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`\nArchive:  http://127.0.0.1:${PORT}`)
