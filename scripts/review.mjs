@@ -1512,6 +1512,38 @@ const server = http.createServer(async (req, res) => {
 const swept = sweepCleared()
 // Show what every machine has built, not only this one.
 pullRecord()
+
+/**
+ * Rounds that finished before archiving happened at the end of a round — or on a machine
+ * whose push failed — exist only in this machine's runs/. Archive and push any of them whose
+ * archive copy is missing or older than the run, so nothing built here stays invisible to
+ * the other machine. A round still running is left alone; it archives itself when it ends.
+ */
+function archiveStranded() {
+  if (pendingGate() || readLaunch()?.alive) return
+  const byRound = new Map()
+  for (const r of liveRuns()) {
+    if (isRunLive(r.dir)) return
+    if (!byRound.has(r.meta.seq)) byRound.set(r.meta.seq, [])
+    byRound.get(r.meta.seq).push(r.dir)
+  }
+  const done = []
+  for (const [round, runNames] of byRound) {
+    const record = path.join(ROOT, 'archive', round, 'round.json')
+    const archivedAt = fs.existsSync(record) ? fs.statSync(record).mtimeMs : 0
+    const newest = Math.max(...runNames.map((d) => fs.statSync(path.join(RUNS, d, 'run.json')).mtimeMs))
+    if (archivedAt >= newest) continue
+    console.log(`Round ${round} is only on this machine — archiving it…`)
+    try {
+      archiveRound({ round, runNames, meta: readJson(path.join(RUNS, `round-${round}.json`), {}) })
+      done.push(round)
+    } catch (err) {
+      console.warn(`could not archive round ${round}: ${err.message}`)
+    }
+  }
+  if (done.length) commitRecord(done.map((round) => path.join(ROOT, 'archive', round)), `Archive round ${done.join(', ')} found only in runs/`)
+}
+archiveStranded()
 const pairs = loadPairs()
 const solos = loadSolos(pairs)
 await startArchiveViewer()
