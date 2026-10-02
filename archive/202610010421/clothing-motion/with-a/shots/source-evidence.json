@@ -1,0 +1,28 @@
+{
+  "inputHash": "b850eb7b8ec0bb2d2e51ac9fbb1b7a3bea35ef48f33e3c1ac20c586564206d22",
+  "files": {
+    "index.html": "bda3c8074bd5a7bd359f446dd08deeda807eae0e738c5425b4e2f3917467cb32",
+    "package.json": "30747b6d633fcca1f78128440f8291bcec16f9bd1dd359fbb15cf9008534ab3a",
+    "public/media/cardigan.png": "a8552aea0895b2e7bdc9ee77410410939dccfeec31d5f887291d9e5cf6245b5a",
+    "public/media/chore.png": "880be8b569847a9d149ede336a863b508cd74b1c92f253a51739ea0ee94e1f50",
+    "public/media/hero-carry.png": "803dc8d1e47a828e0325e70ee7de7412d15a5a3677e752f5e3817bffa2e8f3f6",
+    "public/media/jean.png": "d965a5be4a6816892a5d913d539373deae2082f5befc48596bebe1f114673dc7",
+    "public/media/knit.png": "427e63a6543e1af23fb1de9fa78850947a4bb5208bc4ae812fac9c3d56eb79a4",
+    "public/media/leeds-ending.png": "a33114d106495f70605b960c03b4d683b71611e8f50daded7132ca1b6c558c24",
+    "public/media/overshirt.png": "a2ea6a29b995c999551b3bb795afe6cc142a95b11dad69d958bf7a25ba6e0a98",
+    "public/media/oxford.png": "e08e70d469024db450b158a7d32ff04fae59c7950646f067e2e8cd0daf86f4f5",
+    "public/media/shorts.png": "c8f40c87c28ed65f71a839d3e33637285e0dd7f09170fa3e41cad520625ec996",
+    "public/media/tee.png": "c60a2b4abfaeae594b353c7e780be969dda3ffe64042e7cddc42a0541bce4b0c",
+    "public/media/trouser.png": "cd2c37e279ce5f0313995475938d7c1b3b395f35059fc59080fb6f3505e99eb6",
+    "public/media/worn-overshirt.png": "24628819146a6b6eae31f93b277018d2bb83a64cd27f55f98fbb8b2d793cd8af",
+    "public/media/worn-shorts.png": "2b9cc9bc142820ead79a34a94e6e46f404461f30dc13780551586cdae9c6fb60",
+    "src/App.jsx": "aebf4d63c83488077b1394fec0002f3f9fcff4b60e98b6fece29f4e3abbf8dc5",
+    "src/main.jsx": "fd13a2ac3a28c7ec6cc3a1fbbff63285c0d6a9e91c5b1be2ee55fab3204b7fcb",
+    "src/styles.css": "898369772fd4421aeed13f53433467157dbe5fc53fdb928bdbe0a361ecdce764",
+    "vite.config.js": "38b894ac6aaaf2c7429395664c8e07644c4476c98af7efb1f3b002ffce87c97a"
+  },
+  "captureStartedAt": "2026-10-01T08:15:26.830Z",
+  "capturedAt": "2026-10-01T08:17:40.302Z",
+  "phase": 2,
+  "sourceChangedDuringCapture": false
+}

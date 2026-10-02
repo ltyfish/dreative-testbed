@@ -1,0 +1,82 @@
+{
+  "round": "202610010421",
+  "archivedAt": "2026-10-02T02:51:01.697Z",
+  "scenarios": [
+    "clothing-motion"
+  ],
+  "label": null,
+  "agent": "codex",
+  "model": null,
+  "yolo": true,
+  "readOnceExperiment": false,
+  "captureProtocol": "native-input-playback-v1",
+  "phaseProtocol": "visual-directions-v1",
+  "direction": "recommended",
+  "skills": {
+    "with-a": "installed"
+  },
+  "arms": [
+    "with-a"
+  ],
+  "repeat": 1,
+  "sessions": [
+    {
+      "runName": "clothing-motion__with-a__202610010421",
+      "code": 0,
+      "minutes": 53.2,
+      "timedOut": false,
+      "truncated": null,
+      "reads": null,
+      "material": {
+        "workingOriginals": 159,
+        "workingSequences": [
+          {
+            "stem": ".dreative/look-final/desktop",
+            "frames": 12,
+            "first": 1,
+            "last": 12
+          },
+          {
+            "stem": ".dreative/look-final/mobile",
+            "frames": 12,
+            "first": 1,
+            "last": 12
+          },
+          {
+            "stem": ".dreative/look-initial/desktop",
+            "frames": 12,
+            "first": 1,
+            "last": 12
+          },
+          {
+            "stem": ".dreative/look-initial/mobile",
+            "frames": 12,
+            "first": 1,
+            "last": 12
+          }
+        ],
+        "shippedRasters": 15,
+        "shippedVideo": [],
+        "shippedModels": [],
+        "frameSequences": [],
+        "drivers": [
+          "scrollProgress",
+          "timeline",
+          "rafLoop",
+          "cssTransition"
+        ],
+        "indexesIntoMaterial": true,
+        "verdict": "an indexing driver with no drivable material to index"
+      },
+      "sessionId": "01a0f5b1-dcd8-7e63-8daf-a8a8b319f68c",
+      "phases": 2
+    }
+  ],
+  "runs": [
+    {
+      "runName": "clothing-motion__with-a__202610010421",
+      "ok": true,
+      "site": true
+    }
+  ]
+}

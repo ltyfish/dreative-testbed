@@ -1,0 +1,22 @@
+{
+  "kind": "solo",
+  "scenario": "clothing-motion",
+  "judgedAt": "2026-10-01T08:27:53.796Z",
+  "run": "clothing-motion__with-a__202610010421",
+  "arm": "with-a",
+  "direction": "recommended",
+  "skill": "installed",
+  "round": "202610010421",
+  "truncated": null,
+  "phase": "built",
+  "scores": {
+    "material": 4,
+    "subject": 4,
+    "motion": 2,
+    "craft": 2,
+    "structure": 2
+  },
+  "overall": 2,
+  "notes": "i mean is alright, animation are minimal and smooth, tho very weirdly done like, why would it move to the middle of the hero section, also, is always the same genric design for showing items, very badly designed and spaced too, no motion for the entire website aaexcept for some subtle ones, no video not ransition no story telling no elements and 3d props or anything, nothing unique or interesting. size chart and explanation text are so generically design with no creative , only footer typography is aight, hero animation is boring too. i want u to see the full website to judge too, and deep dive why the agent drift, did it product a ba dplan or smth etc",
+  "keep": ""
+}
